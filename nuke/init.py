@@ -145,3 +145,5 @@ if nuke.GUI:
 
 	nuke.addOnScriptLoad(PL_callbacks.updateWriteBeforeRenderPython, nodeClass="Write")
 	nuke.addOnScriptLoad(PL_callbacks.marikLut)
+
+	print 'yajca kozy'
