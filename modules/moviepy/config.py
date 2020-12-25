@@ -4,6 +4,8 @@ import subprocess as sp
 from .compat import DEVNULL
 from .config_defaults import FFMPEG_BINARY, IMAGEMAGICK_BINARY
 
+print
+
 if os.name == 'nt':
     try:
         import winreg as wr # py3k

@@ -11,7 +11,7 @@ except:
 
 import sys, subprocess, os
 
-path = "X:/app/win/Pipeline/modules"
+path = os.environ['PIPELINE_ROOT'] + "/modules"
 if not path in sys.path:
     sys.path.append(path)
     sys.path.append(path+"/moviepy")
