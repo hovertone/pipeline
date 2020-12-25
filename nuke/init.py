@@ -3,14 +3,14 @@ import nuke
 import time
 import socket
 # t = time.time()
-#nuke.pluginAddPath('X:/app/win/Pipeline')
-paths = ['X:/app/win/Pipeline', 'X:/app/win/Pipeline/uis222', 'X:/app/win/Pipeline/p_utils', 'X:/app/win/Pipeline/bot']
+pipeline = os.environ['PIPELINE_ROOT']
+paths = [pipeline, pipeline+'/uis222', pipeline+'/p_utils', pipeline+'/modules/bot']
 
 for path in paths:
 	if not path in sys.path:
 		sys.path.append(path)
 
-os.environ['OFX_PLUGIN_PATH'] = 'X:/app/win/Pipeline/nuke/ofx'
+os.environ['OFX_PLUGIN_PATH'] = pipeline+'/nuke/ofx'
 
 if nuke.GUI:
 	from getpass import getuser
@@ -145,5 +145,3 @@ if nuke.GUI:
 
 	nuke.addOnScriptLoad(PL_callbacks.updateWriteBeforeRenderPython, nodeClass="Write")
 	nuke.addOnScriptLoad(PL_callbacks.marikLut)
-
-	print 'yajca kozy'

@@ -24,7 +24,6 @@ class LoaderPreferencesUI (QWidget, Ui_Preferences):
         print "PATH", self.pref.path
         try:
             data = self.pref.load()["storage"]
-            print "XXXXXX", self.pref.load().keys()
             user = self.pref.load()['login']
             self.le_projects.setText(data["projects"])
             self.le_caches.setText(data["caches"])

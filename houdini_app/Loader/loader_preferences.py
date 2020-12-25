@@ -18,7 +18,7 @@ class LoaderPrefs(object):
         return self._path
 
     def create_default(self):
-        storage = dict(projects="P:", caches="Q:", lib="V:/assetLib")
+        storage = dict(projects="P:", caches="Q:", lib="V:/assetLib", pipeline_root="")
         user = dict(username="", key="")
         data = dict(storage=storage, login=user, indexes=[])
         with open(self.path, 'w') as f:

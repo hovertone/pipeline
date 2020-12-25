@@ -1,0 +1,1 @@
+setx PIPELINE_ROOT %CD%

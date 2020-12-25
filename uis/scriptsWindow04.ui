@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>607</width>
+    <height>269</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QGroupBox" name="viewerGroup">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>181</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Viewer Stuff</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>161</width>
+      <height>83</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="viewerLayout">
+     <item>
+      <widget class="QPushButton" name="flopflop">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Зеркалит картинку по горизонтали. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>FLOP FLOP</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>LH.mirrorViewer()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>flopflop</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="autocrop">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Создает &lt;span style=&quot; font-weight:600;&quot;&gt;CROP &lt;/span&gt;ноду, которой оставляет только &lt;span style=&quot; text-decoration: underline;&quot;&gt;нужные&lt;/span&gt; пиксели.&lt;/p&gt;&lt;p&gt;Перед выполнением нужно заселектить ноду.&lt;/p&gt;&lt;p&gt;Сканирует по альфе.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>AUTOCROP</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>frames = nuke.getInput('Set Frame Range', '%s-%s' % (int(nuke.root()['first_frame'].value()), int(nuke.root()['last_frame'].value()))).split('-')
+nukescripts.autocrop(first = frames[0], last = frames[1], layer = 'alpha')</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>autocrop</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="viewerToRGBA">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Пересчелкивает вьювер в &lt;span style=&quot; font-weight:600;&quot;&gt;rgba&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Viewer to RGBA</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>v = nuke.activeViewer().node().name()
+nuke.toNode(v)['channels'].setValue('rgba')</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>viewerToRGBA</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="nodegraphGroup">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>10</y>
+     <width>161</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>NodeGraph</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>141</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="nodegraphLayout">
+     <item>
+      <widget class="QPushButton" name="lineupHorizontally">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Выставляет выделенные ноды &lt;span style=&quot; font-weight:600;&quot;&gt;горизонтально&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Lineup Horizontally</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>scripts.lineupNodes()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>lineupHorizontally</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="lineupVertically">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Выставляет выделенные ноды &lt;span style=&quot; font-weight:600;&quot;&gt;вертикально&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Lineup Vertically</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>scripts.linedownNodes()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>lineupVertically</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="toggleViewerInputs">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Прячет все инпут коннекшены всех нод вьюверов в скрипте.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Toggle viewer inputs</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>LH.toggleViewerInput()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>toggleViewerInputs</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mirrorNodes">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Зеркалит расположение выделенных нод по горизонтали.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Mirror nodes</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>mirrorNodes.mirrorNodes()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>mirronNodes</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="w_scaletree">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Скейлер расположения выделеных нод.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>W_ScaleTree</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>W_scaleTree.scaleTreeFloatingPanel()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>w_scaleTree</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="writeGroup">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>120</y>
+     <width>181</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Write</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>161</width>
+      <height>54</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="writeLayout">
+     <item>
+      <widget class="QPushButton" name="deleteWriteFiles">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Удаляет файлы из папки, которая указана в пути &lt;span style=&quot; font-weight:600;&quot;&gt;write&lt;/span&gt; ноды.&lt;br/&gt;Перед выполнением нужно выделить &lt;span style=&quot; font-weight:600;&quot;&gt;write&lt;/span&gt; ноду.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Delete write files</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>deleteFilesFromWrite.deleteFilesFromWritePath(nuke.selectedNode())</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>deleteWriteFiles</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rerenderMissingFrames">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Дорендеривает недостающие кадры из секвенции &lt;span style=&quot; font-weight:600;&quot;&gt;write&lt;/span&gt; ноды.&lt;br/&gt;Перед выполнением выделить &lt;span style=&quot; font-weight:600;&quot;&gt;write&lt;/span&gt; ноду.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Rerender missing frames</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>rerenderMissingFrames.rerenderMissedFrame()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>rerenderMissingFrames</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="otherGroup">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>10</y>
+     <width>201</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Other</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>181</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="otherLayout">
+     <item>
+      <widget class="QPushButton" name="glezin">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Удобный сплиттер &lt;span style=&quot; font-weight:600;&quot;&gt;EXR&lt;/span&gt;'ов. &lt;br/&gt;Перед запуском выделить &lt;span style=&quot; font-weight:600;&quot;&gt;read &lt;/span&gt;ноду.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Glezin Split EXR</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>split_layers.main()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>glezin</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="batchRenamer">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Переименовывает секвенцию из &lt;span style=&quot; font-weight:600;&quot;&gt;read&lt;/span&gt; ноды.&lt;br/&gt;Перед испольхованием выделить &lt;span style=&quot; font-weight:600;&quot;&gt;read&lt;/span&gt; ноду.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Batch renamer</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>batchrenamer.main()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>batchRenamer</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="deepDefocusSlicer">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Разрезает &lt;span style=&quot; font-weight:600;&quot;&gt;deep exr&lt;/span&gt; по глубине от камеры на разные плейны и добавляет дефокус на каждый план отдельно.&lt;br/&gt;Перед запуском требуется выделать ноду с &lt;span style=&quot; font-weight:600;&quot;&gt;deep&lt;/span&gt; потоком.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Deep Defocus Slicer</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>deepDefocusSlicer.deepDefocus()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>deepDefocusSlicer</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="normalize">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нормализирует величины.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Normalize</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>LH.normalizeDepth()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>normalize</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="copyTrackingDataToRoto">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Перебрасывает треккинг данные в рут рото(ротопеинт) ноды.&lt;br/&gt;Перед выделением нужны выделить:&lt;br/&gt;1) Tracker&lt;br/&gt;2) Roto&lt;br/&gt;3) Root поле в ноде roto.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Copy Tracking data to Roto</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>Points3DToTracker.copyTrackingToRoto(True)</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>copyTrackingToRoto</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cameraFromExr">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Перебрасывает треккинг данные в рут рото(ротопеинт) ноды.&lt;br/&gt;Перед выделением нужны выделить:&lt;br/&gt;1) Tracker&lt;br/&gt;2) Roto&lt;br/&gt;3) Root поле в ноде roto.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Camera From EXR</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>ExportAnimationFromEXR.CamExp()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>copyTrackingToRoto</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="toolsetLoaderGroup">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>180</y>
+     <width>161</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Toolset loader</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>141</width>
+      <height>54</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="toolsetLoaderCreate">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Выставляет выделенные ноды &lt;span style=&quot; font-weight:600;&quot;&gt;горизонтально&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Toolset Create</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>tlc = toolsets_loader.toolsetCreate() tlc.show()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>toolsetLoaderCreate</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="toolsetLoader">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Выставляет выделенные ноды &lt;span style=&quot; font-weight:600;&quot;&gt;горизонтально&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Toolset Loader</string>
+       </property>
+       <property name="script" stdset="0">
+        <string>scripts.lineupNodes()</string>
+       </property>
+       <property name="name" stdset="0">
+        <string>lineupHorizontally</string>
+       </property>
+       <property name="gifname" stdset="0">
+        <string>giphy</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <zorder>writeGroup</zorder>
+  <zorder>otherGroup</zorder>
+  <zorder>viewerGroup</zorder>
+  <zorder>nodegraphGroup</zorder>
+  <zorder>toolsetLoaderGroup</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
