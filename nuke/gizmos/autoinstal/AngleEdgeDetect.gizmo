@@ -1,0 +1,391 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+ inputs 2
+ help "Gonzo FX\nDaniel Gonzalez Solozabal\nwww.retinaut.com "
+ tile_color 0xffbf00ff
+ addUserKnob {20 User l AngleEdgeDetect}
+ addUserKnob {26 pregrade_grp l Pregrade}
+ addUserKnob {41 gamma l Gamma T Alpha_Pregrade.gamma}
+ addUserKnob {41 white l gain T Alpha_Pregrade.white}
+ addUserKnob {41 maskChannelMask l mask T Alpha_Pregrade.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T Alpha_Pregrade.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Alpha_Pregrade.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Alpha_Pregrade.fringe}
+ addUserKnob {6 pregradeAlpha l "Show Pregraded alpha" +STARTLINE}
+ addUserKnob {26 edge_grp l Edge}
+ addUserKnob {41 Angler l Angle T Trance.Angler}
+ addUserKnob {41 weighter l Size T Trance.weighter}
+ addUserKnob {26 ""}
+ addUserKnob {7 Intensity l "Matte Intensity" R 1 5}
+ Intensity 1
+ addUserKnob {26 ""}
+ addUserKnob {14 size l Size R 0 100}
+ addUserKnob {7 Multiplier R 0 10}
+ addUserKnob {6 crop l "Crop to format" -STARTLINE}
+ addUserKnob {26 jh l " " T " "}
+ addUserKnob {41 to0 l "Shuffle to" T Copy_back.to0}
+ addUserKnob {20 Erode}
+ addUserKnob {6 useErode l "Use Erode" +STARTLINE}
+ addUserKnob {7 erodeOut l "Erode out" R -2 2}
+ addUserKnob {7 erodeIn l "Erode in" R -2 2}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 175
+  ypos 68
+ }
+ Dot {
+  name Dot3
+  xpos 209
+  ypos 139
+ }
+set N3c3c6d00 [stack 0]
+ Dot {
+  name Dot7
+  xpos -255
+  ypos 139
+ }
+set N3c3c7070 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shufflerer
+  xpos -542
+  ypos 136
+ }
+ Dot {
+  name Dot87
+  xpos -508
+  ypos 414
+ }
+set N3c3c7750 [stack 0]
+ Dot {
+  name Dot4
+  xpos -774
+  ypos 414
+ }
+set N403e2330 [stack 0]
+ Dot {
+  name Dot9
+  xpos -774
+  ypos 559
+ }
+set N3c3c7e30 [stack 0]
+ OFXuk.co.thefoundry.tinderbox3.t_mattetool_v201 {
+  Channels 1
+  process RGBA
+  processRed false
+  processGreen false
+  processBlue false
+  processAlpha true
+  radius {{parent.erodeIn}}
+  method Shrink/Grow
+  shape Circle
+  softness {0.02047999948 0.01151999971}
+  negate false
+  blurBeforeHaloCut false
+  despeckleBlack 0
+  despeckleWhite 0
+  clipRollback 0
+  clipMin 0
+  clipMax 1
+  Blending 0
+  blendMethod None
+  blendMix 0.5
+  blendSrcGain 1
+  blendEffectGain 1
+  blendClampValues false
+  Crops 0
+  SourceXMethod Colour
+  SourceYMethod Colour
+  SourceEdgeColour 0
+  SourceCropL 0
+  SourceCropR 1
+  SourceCropB 0
+  SourceCropT 1
+  cacheBreaker true
+  name T_MatteTool2
+  xpos -886
+  ypos 601
+ }
+push $N3c3c7e30
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos -808
+  ypos 641
+  disable {{!useErode x37 1}}
+ }
+ set C3069baa0 [stack 0]
+ Transform {
+  translate {{"(weighter * sin (Angler* pi/180))"} {"(weighter * cos (Angler * pi/180))"}}
+  center {1231 932}
+  shuttercustomoffset -0.89
+  name Trance
+  xpos -674
+  ypos 641
+  addUserKnob {20 User}
+  addUserKnob {7 Angler l Angle R 0 360}
+  addUserKnob {7 weighter l weight R 0 50}
+ }
+ Input {
+  inputs 0
+  name InputMatte_forPregrade
+  xpos -164
+  ypos 206
+  number 1
+ }
+ Invert {
+  name Invert1
+  xpos -164
+  ypos 235
+ }
+ Dot {
+  name Dot8
+  xpos -130
+  ypos 297
+ }
+push $N3c3c7070
+ Expression {
+  channel0 rgb
+  expr0 1
+  expr1 1
+  expr2 1
+  expr3 1
+  name Expression1
+  xpos -289
+  ypos 205
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge1
+  xpos -289
+  ypos 294
+ }
+push $N3c3c7750
+ Grade {
+  inputs 1+1
+  channels alpha
+  name Alpha_Pregrade
+  xpos -542
+  ypos 451
+ }
+set N3cabb6a0 [stack 0]
+ OFXuk.co.thefoundry.tinderbox3.t_mattetool_v201 {
+  Channels 1
+  process RGBA
+  processRed false
+  processGreen false
+  processBlue false
+  processAlpha true
+  radius {{parent.erodeOut}}
+  method Shrink/Grow
+  shape Circle
+  softness {0.02047999948 0.01151999971}
+  negate false
+  blurBeforeHaloCut false
+  despeckleBlack 0
+  despeckleWhite 0
+  clipRollback 0
+  clipMin 0
+  clipMax 1
+  Blending 0
+  blendMethod None
+  blendMix 0.5
+  blendSrcGain 1
+  blendEffectGain 1
+  blendClampValues false
+  Crops 0
+  SourceXMethod Colour
+  SourceYMethod Colour
+  SourceEdgeColour 0
+  SourceCropL 0
+  SourceCropR 1
+  SourceCropB 0
+  SourceCropT 1
+  cacheBreaker true
+  name T_MatteTool1
+  xpos -437
+  ypos 507
+ }
+push $N3cabb6a0
+clone $C3069baa0 {
+  inputs 2
+  xpos -542
+  ypos 558
+  selected true
+ }
+set N3069be30 [stack 0]
+ Merge2 {
+  inputs 2
+  operation stencil
+  Achannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  Bchannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name CUTChemist
+  xpos -542
+  ypos 635
+ }
+ Multiply {
+  channels alpha
+  value {{parent.Intensity}}
+  name Multiplay
+  xpos -542
+  ypos 780
+ }
+push $N403e2330
+ Dot {
+  name Dot2
+  xpos -975
+  ypos 414
+ }
+ Dot {
+  name Dot1
+  xpos -975
+  ypos 860
+ }
+ Merge2 {
+  inputs 2
+  operation in
+  Achannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  Bchannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name Inim
+  xpos -542
+  ypos 851
+ }
+set N3cabc460 [stack 0]
+ Dot {
+  name Dot5
+  xpos -508
+  ypos 968
+ }
+ Invert {
+  channels alpha
+  name Invert4
+  xpos -542
+  ypos 1041
+  disable {{"parent.size>=0 ? 1 : 0"}}
+ }
+set N3cabcb40 [stack 0]
+ Blur {
+  channels alpha
+  size {{parent.size.w} {parent.size.h}}
+  crop {{parent.crop}}
+  name Blur1
+  label "\[value size]"
+  xpos -750
+  ypos 1158
+ }
+push $N3cabcb40
+ Blur {
+  channels alpha
+  size {{parent.size.w*parent.Multiplier} {parent.size.h*parent.Multiplier}}
+  crop {{parent.crop}}
+  name Blur2
+  label "\[value size]"
+  xpos -615
+  ypos 1157
+ }
+ Merge2 {
+  inputs 2
+  name Merge7
+  xpos -672
+  ypos 1253
+ }
+push $N3cabcb40
+ Blur {
+  channels alpha
+  size {{parent.size.w*parent.Multiplier*2} {parent.size.h*parent.Multiplier*2}}
+  crop {{parent.crop}}
+  name Blur3
+  label "\[value size]"
+  xpos -492
+  ypos 1156
+ }
+ Merge2 {
+  inputs 2
+  name Merge8
+  xpos -609
+  ypos 1318
+ }
+push $N3cabcb40
+ Blur {
+  channels alpha
+  size {{parent.size.w*parent.Multiplier*4} {parent.size.h*parent.Multiplier*4}}
+  crop {{parent.crop}}
+  name Blur4
+  label "\[value size]"
+  xpos -361
+  ypos 1156
+ }
+ Merge2 {
+  inputs 2
+  name Merge9
+  xpos -537
+  ypos 1388
+ }
+ Invert {
+  name Invert5
+  xpos -537
+  ypos 1449
+  disable {{"parent.size>=0 ? 1 : 0"}}
+ }
+ Clamp {
+  name Clamppost
+  xpos -537
+  ypos 1716
+ }
+push $N3cabb6a0
+push $N3c3c6d00
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  from1 rgba.alpha
+  to1 rgba.red
+  from2 rgba.alpha
+  to2 rgba.green
+  from3 rgba.alpha
+  to3 rgba.blue
+  name Copy1
+  xpos 175
+  ypos 433
+  disable {{!parent.pregradeAlpha}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy_back
+  xpos 175
+  ypos 1716
+ }
+ Output {
+  name Output1
+  xpos 175
+  ypos 2089
+ }
+ Invert {
+  inputs 0
+  name Invert2
+  xpos -646
+  ypos 741
+ }
+push $N3cabc460
+push $N3cabb6a0
+push $N3069be30
+ Viewer {
+  inputs 3
+  input_process false
+  name Viewer1
+  xpos -1434
+  ypos 2306
+  hide_input true
+ }
+end_group

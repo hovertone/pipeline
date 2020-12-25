@@ -1,0 +1,34 @@
+set cut_paste_input [stack 0]
+version 6.3 v4
+Camera2 {
+ inputs 0
+ name Camera1
+ tile_color 0xff7a00ff
+ selected true
+ xpos 1143
+ ypos 843
+}
+set N2da70080 [stack 0]
+push $N2da70080
+Scene {
+ name Scene1
+ tile_color 0xff0aff
+ selected true
+ xpos 992
+ ypos 843
+}
+push $cut_paste_input
+Reformat {
+ name Reformat2
+ selected true
+ xpos 1134
+ ypos 983
+}
+ScanlineRender {
+ inputs 3
+ output_motion_vectors_type accurate
+ name ScanlineRender1
+ selected true
+ xpos 982
+ ypos 983
+}

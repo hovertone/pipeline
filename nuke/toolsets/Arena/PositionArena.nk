@@ -1,0 +1,39 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x1a7030ff
+ label "ARENA P"
+ note_font_size 42
+ selected true
+ xpos 1829
+ ypos -786
+ bdwidth 229
+ bdheight 207
+}
+Read {
+ inputs 0
+ file P:/Arena/sequences/SQA/sh000/render/pointPosition/arenaPointPosition.exr
+ format "1280 1280 0 0 1280 1280 1 "
+ origset true
+ raw true
+ auto_alpha true
+ name Read9
+ selected true
+ xpos 1895
+ ypos -690
+ postage_stamp false
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+add_layer {P P.red P.green P.blue}
+PositionToPoints2 {
+ display textured
+ render_mode off
+ P_channel P
+ name PositionToPoints1
+ selected true
+ xpos 1895
+ ypos -629
+}

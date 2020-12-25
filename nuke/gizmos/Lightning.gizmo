@@ -1,0 +1,391 @@
+#! /mnt/opt/nuke/linux/Nuke8.0v6/libnuke-8.0.v6.so -nx
+version 8.0 v6
+Gizmo {
+inputs 2
+tile_color 0xa3ffff
+addUserKnob {20 User}
+addUserKnob {41 translate l "Top Offset" T Axis_TOP1.translate}
+addUserKnob {41 defocus l Defocus T Defocus11.defocus}
+addUserKnob {20 reformat n 1}
+reformat 0
+addUserKnob {41 type T Reformat33.type}
+addUserKnob {41 format l "output format" T Reformat33.format}
+addUserKnob {41 box_width l width/height T Reformat33.box_width}
+addUserKnob {41 box_height l "" -STARTLINE T Reformat33.box_height}
+addUserKnob {41 box_fixed l "force this shape" T Reformat33.box_fixed}
+addUserKnob {41 box_pixel_aspect l "pixel aspect" T Reformat33.box_pixel_aspect}
+addUserKnob {41 scale T Reformat33.scale}
+addUserKnob {41 resize l "resize type" T Reformat33.resize}
+addUserKnob {41 center T Reformat33.center}
+addUserKnob {41 flip T Reformat33.flip}
+addUserKnob {41 flop T Reformat33.flop}
+addUserKnob {41 turn T Reformat33.turn}
+addUserKnob {41 filter T Reformat33.filter}
+addUserKnob {41 clamp T Reformat33.clamp}
+addUserKnob {41 black_outside l "black outside" T Reformat33.black_outside}
+addUserKnob {41 pbb l "preserve bounding box" T Reformat33.pbb}
+addUserKnob {20 endGroup n -1}
+addUserKnob {20 bbox n 1}
+addUserKnob {41 wo l "width offset" T Crop1.wo}
+addUserKnob {41 ho l "heigh offset" T Crop1.ho}
+addUserKnob {20 endGroup_2 l endGroup n -1}
+addUserKnob {26 Strike}
+addUserKnob {41 percentComplete l Completeness T T_Lightning2.percentComplete}
+addUserKnob {41 growthUniformity l Uniformity T T_Lightning2.growthUniformity}
+addUserKnob {20 shape_controls l T_lightning n 1}
+addUserKnob {41 maxWidth l "Max Width" T T_Lightning2.maxWidth}
+addUserKnob {41 seed l Seed T T_Lightning2.seed}
+addUserKnob {41 unpredictability l "Fork Chaos" T T_Lightning2.unpredictability}
+addUserKnob {41 lightningJaggedness l "Fork Jaggedness" T T_Lightning2.lightningJaggedness}
+addUserKnob {41 plasmaNoise l Amplitude T T_Lightning2.plasmaNoise}
+addUserKnob {41 plasmaNoiseFrequency l Frequency T T_Lightning2.plasmaNoiseFrequency}
+addUserKnob {41 plasmaFrac l Detail T T_Lightning2.plasmaFrac}
+addUserKnob {41 plasmaNoiseBias l Bias T T_Lightning2.plasmaNoiseBias}
+addUserKnob {20 Motion n 2}
+Motion 1
+addUserKnob {41 movementSpeed l Speed T T_Lightning2.movementSpeed}
+addUserKnob {41 plasmaRange l Range T T_Lightning2.plasmaRange}
+addUserKnob {41 plasmaWindiness l Twist T T_Lightning2.plasmaWindiness}
+addUserKnob {20 endGroup_1 l endGroup n -1}
+addUserKnob {20 Taper n 2}
+addUserKnob {41 taper l Taper T T_Lightning2.taper}
+addUserKnob {41 taperedLength l "Tapered Length" T T_Lightning2.taperedLength}
+addUserKnob {20 "Variation Along Length" n 2}
+addUserKnob {41 widthVariance l Amount T T_Lightning2.widthVariance}
+addUserKnob {41 variationLength l Length T T_Lightning2.variationLength}
+addUserKnob {41 variationSpeed l Speed T T_Lightning2.variationSpeed}
+addUserKnob {20 "" n -1}
+addUserKnob {20 "" n -1}
+addUserKnob {20 Forks n 2}
+addUserKnob {41 forkLevels l "Levels of Forking" T T_Lightning2.forkLevels}
+addUserKnob {41 order1Forking l "Number of Main Forks" T T_Lightning2.order1Forking}
+addUserKnob {41 order2Forking l "Number of Smaller Forks" T T_Lightning2.order2Forking}
+addUserKnob {41 minForkSize l "Min Fork Size" T T_Lightning2.minForkSize}
+addUserKnob {41 maxForkSize l "Max Fork Size" T T_Lightning2.maxForkSize}
+addUserKnob {41 chooseForkDirection l "Fork In Single Direction" T T_Lightning2.chooseForkDirection}
+addUserKnob {41 forkDirection l "Fork Direction" T T_Lightning2.forkDirection}
+addUserKnob {41 directionRange l "Direction Range" T T_Lightning2.directionRange}
+addUserKnob {41 minForkAngle l "Min Fork Angle" T T_Lightning2.minForkAngle}
+addUserKnob {41 maxForkAngle l "Max Fork Angle" T T_Lightning2.maxForkAngle}
+addUserKnob {41 order1StartRange l "Fork After" T T_Lightning2.order1StartRange}
+addUserKnob {41 order1EndRange l "Fork Before" T T_Lightning2.order1EndRange}
+addUserKnob {41 order1WidthFalloff l "Main Fork Fineness" T T_Lightning2.order1WidthFalloff}
+addUserKnob {41 order2WidthFalloff l "Smaller Fork Fineness" T T_Lightning2.order2WidthFalloff}
+addUserKnob {41 forkEndWander l "Fork End Wander Speed" T T_Lightning2.forkEndWander}
+addUserKnob {20 "" n -1}
+addUserKnob {20 Colour n 2}
+Colour 1
+addUserKnob {41 intensity l Intensity T T_Lightning2.intensity}
+addUserKnob {41 innerColour l "Bolt Colour" T T_Lightning2.innerColour}
+addUserKnob {41 innerColour_panelDropped l "panel dropped state" T T_Lightning2.innerColour_panelDropped}
+addUserKnob {20 "" n -1}
+addUserKnob {20 Glow n 2}
+Glow 1
+addUserKnob {41 blurRadius l "Glow Radius" T T_Lightning2.blurRadius}
+addUserKnob {41 blurIntensity l "Glow Intensity" T T_Lightning2.blurIntensity}
+addUserKnob {41 outerColour l "Glow Colour" T T_Lightning2.outerColour}
+addUserKnob {41 outerColour_panelDropped l "panel dropped state" T T_Lightning2.outerColour_panelDropped}
+addUserKnob {41 haloWidth l "Halo Width" T T_Lightning2.haloWidth}
+addUserKnob {41 haloIntensity l "Halo Intensity" T T_Lightning2.haloIntensity}
+addUserKnob {41 haloColour l "Halo Colour" T T_Lightning2.haloColour}
+addUserKnob {41 haloColour_panelDropped l "panel dropped state" T T_Lightning2.haloColour_panelDropped}
+addUserKnob {20 "" n -1}
+}
+Reformat {
+inputs 0
+filter Rifman
+name Reformat33
+xpos 734
+ypos 444
+}
+set Cc36e600 [stack 0]
+OFXuk.co.thefoundry.tinderbox3.t_lightning_v201 {
+process RGBA
+presets ...
+numGenerators 1
+start {{parent.Reconcile3D4.output x1097 1283.521484} {parent.Reconcile3D4.output x1097 1108.498836}}
+startRadius 0
+end {{parent.Reconcile3D5.output} {parent.Reconcile3D5.output}}
+endRadius 0
+maxWidth 6
+seed 100
+unpredictability 0.925
+lightningJaggedness 0.505
+plasmaNoise 20
+plasmaNoiseFrequency 1.4
+plasmaFrac 8
+plasmaNoiseBias -0.21
+Strike 1
+lightningStrike false
+strikeDuration {{curve}}
+growMode "By Length"
+percentComplete {{curve x1044 0 x1047 1 x1099 1 x1102 0 x1172 0 x1175 1 x1182 1 x1185 0 x1231 0 x1234 1 x1243 1 x1246 0 x1370 0 x1373 1 1 0 x1478 0 x1481 1 x1488 1 x1491 0 x1499 0 x1502 1 x1507 1 x1510 0 x1531 0 x1534 1 x1650 1 x1653 0 x1670 0 x1673 1 x1677 1 x1680 0 x1705 0 x1708 1 x1715 1 x1718 0}}
+growthUniformity 0.015
+Motion 1
+movementSpeed 0.02
+plasmaRange 2.5
+plasmaWindiness 0
+Taper 1
+taper 0.5
+taperedLength 0.75
+"Variation Along Length" 1
+widthVariance 0
+variationLength 28.44444467
+variationSpeed 0.02
+Forks 1
+forkLevels 2
+order1Forking 3
+order2Forking 5
+minForkSize 0.3
+maxForkSize 0.6
+chooseForkDirection false
+forkDirection 90
+directionRange 15
+minForkAngle 30
+maxForkAngle 60
+order1StartRange 0.25
+order1EndRange 0.75
+order1WidthFalloff 0.5
+order2WidthFalloff 0
+forkEndWander 0.1
+Colour 1
+intensity 0.565
+innerColour 1
+Glow 0
+blurRadius 335
+blurIntensity 0.84
+outerColour {0.285833329 0.1333333254 0.5808333158 1}
+haloWidth 0.44
+haloIntensity 2.8
+haloColour {0.25 0.6299999952 0.9700000286 0}
+"Avoid Mask" 0
+useAvoidanceMask None
+avoidClipMin 0
+avoidClipMax 1
+"Start Mask" 0
+useStartMask None
+startPointSeed 2
+startClipMin 0
+startClipMax 1
+haloStart false
+startHaloWidth 28.44444467
+"End Mask" 0
+useEndMask None
+endPointSeed 2
+endClipMin 0
+endClipMax 1
+haloEnd false
+endHaloWidth 28.44444467
+showMask None
+Blending 0
+blendMethod None
+blendMix 0.5
+blendSrcGain 1
+blendEffectGain 1
+blendClampValues false
+"Source Crops" 0
+SourceXMethod Repeat
+SourceYMethod Repeat
+SourceEdgeColour 0
+SourceCropL 0
+SourceCropR 1
+SourceCropB 0
+SourceCropT 1
+"Start Crops" 0
+StartPointMaskXMethod Repeat
+StartPointMaskYMethod Repeat
+StartPointMaskEdgeColour 0
+StartPointMaskCropL 0
+StartPointMaskCropR 1
+StartPointMaskCropB 0
+StartPointMaskCropT 1
+"End Crops" 0
+EndPointMaskXMethod Repeat
+EndPointMaskYMethod Repeat
+EndPointMaskEdgeColour 0
+EndPointMaskCropL 0
+EndPointMaskCropR 1
+EndPointMaskCropB 0
+EndPointMaskCropT 1
+"Avoidance Crops" 0
+AvoidanceMaskXMethod Colour
+AvoidanceMaskYMethod Colour
+AvoidanceMaskEdgeColour 0
+AvoidanceMaskCropL 0
+AvoidanceMaskCropR 1
+AvoidanceMaskCropB 0
+AvoidanceMaskCropT 1
+cacheBreaker true
+name T_Lightning2
+xpos 618
+ypos 444
+disable {{!percentComplete x528 0 x1360 0}}
+}
+Crop {
+box {{"0 > mid_x - wo ? 0 : mid_x - wo > parent.format.w ? parent.format.w : mid_x - wo"} {"0 > point1.h - ho ? 0 : point1.h - ho > parent.format.w ? parent.format.w : point1.h - ho"} {"0 > mid_x + wo ? 0 : mid_x + wo > parent.format.w ? parent.format.w : mid_x + wo"} {"0 > point2.h + ho ? 0 : point2.h + ho > parent.format.h ? parent.format.h : point2.h + ho"}}
+name Crop1
+selected true
+xpos 618
+ypos 482
+disable {{parent.T_Lightning2.disable}}
+addUserKnob {20 User}
+addUserKnob {14 cp1 l "clamped p1" R 0 100}
+cp1 {{"(0 < parent.Reconcile3D5.output.x) && (parent.Reconcile3D5.output.x < parent.format.w) ? parent.Reconcile3D5.output.x : parent.format.w"} {"(0 < parent.Reconcile3D5.output.y) && (parent.Reconcile3D5.output.y < parent.format.h) ? parent.Reconcile3D5.output.y : parent.format.h"}}
+addUserKnob {14 c_p2 l "clamped p2" R 0 100}
+c_p2 {{"(0 < parent.Reconcile3D4.output.x) && (parent.Reconcile3D4.output.x < parent.format.w) ? parent.Reconcile3D4.output.x : parent.format.w"} {"(0 < parent.Reconcile3D4.output.y) && (parent.Reconcile3D4.output.y < parent.format.h) ? parent.Reconcile3D4.output.y : parent.format.h"}}
+addUserKnob {14 point1 l "bottom point " R 0 100}
+point1 {{parent.Reconcile3D5.output} {parent.Reconcile3D5.output}}
+addUserKnob {14 point2 l "top point" R 0 100}
+point2 {{parent.Reconcile3D4.output} {parent.Reconcile3D4.output}}
+addUserKnob {26 ""}
+addUserKnob {7 wo l "width offset" R 0 500}
+wo 246
+addUserKnob {7 ho l "heigh offset" R 0 300}
+ho 134
+addUserKnob {26 ""}
+addUserKnob {7 mid_x}
+mid_x {{"(point1.w + point2.w)/2"}}
+addUserKnob {20 points n 1}
+addUserKnob {12 c1}
+c1 {{"0 > mid_x - wo ? 0 : mid_x - wo > parent.format.w ? parent.format.w : mid_x - wo"} {"0 > point1.h - ho ? 0 : point1.h - ho > parent.format.w ? parent.format.w : point1.h - ho"}}
+addUserKnob {12 c2}
+c2 {{"0 > mid_x + wo ? 0 : mid_x + wo > parent.format.w ? parent.format.w : mid_x + wo"} {"0 > point2.h + ho ? 0 : point2.h + ho > parent.format.h ? parent.format.h : point2.h + ho"}}
+addUserKnob {20 endGroup n -1}
+}
+Defocus {
+defocus {{curve x1064 2 x1097 8.4 x1536 8.4 x1641 4}}
+name Defocus11
+xpos 618
+ypos 560
+}
+Output {
+name Output1
+xpos 618
+ypos 695
+}
+Input {
+inputs 0
+name InputAxis
+xpos 545
+ypos 88
+}
+Axis2 {
+translate {-4.099999905 -1.100000024 -206}
+name Axis_CORE1
+tile_color 0x69ca00ff
+xpos 555
+ypos 142
+}
+set Nce8eaf0 [stack 0]
+Input {
+inputs 0
+name InputCam
+xpos 620
+ypos 141
+number 1
+}
+Dot {
+name Dot112
+tile_color 0xffffffff
+xpos 654
+ypos 211
+}
+set Nceb12c0 [stack 0]
+clone $Cc36e600 {
+inputs 0
+xpos 624
+ypos 263
+selected false
+}
+set Nceb5610 [stack 0]
+Reconcile3D {
+inputs 3
+calc_output true
+name Reconcile3D5
+xpos 545
+ypos 296
+}
+push $Nce8eaf0
+Axis2 {
+translate {{curve x1097 0} {curve x1097 135} {curve x1097 0}}
+name Axis_TOP1
+tile_color 0xffffffff
+xpos 717
+ypos 142
+}
+push $Nceb12c0
+push $Nceb5610
+Reconcile3D {
+inputs 3
+calc_output true
+name Reconcile3D4
+xpos 707
+ypos 298
+}
+Crop {
+inputs 0
+box {936 326 1702 602}
+name Crop3
+xpos 174
+ypos 467
+disable true
+}
+set Nddddb870 [stack 0]
+push $Nddddb870
+Crop {
+inputs 0
+box {{"0 > mid_x - wo ? 0 : mid_x - wo > parent.format.w ? parent.format.w : mid_x - wo"} {"0 > point1.h - ho ? 0 : point1.h - ho > parent.format.w ? parent.format.w : point1.h - ho"} {"0 > mid_x + wo ? 0 : mid_x + wo > parent.format.w ? parent.format.w : mid_x + wo"} {"0 > point2.h + ho ? 0 : point2.h + ho > parent.format.h ? parent.format.h : point2.h + ho"}}
+name Crop2
+xpos 289
+ypos 388
+disable true
+addUserKnob {20 User}
+addUserKnob {14 cp1 l "clamped p1" R 0 100}
+cp1 {{"(0 < parent.Reconcile3D5.output.x) && (parent.Reconcile3D5.output.x < parent.format.w) ? parent.Reconcile3D5.output.x : parent.format.w"} {"(0 < parent.Reconcile3D5.output.y) && (parent.Reconcile3D5.output.y < parent.format.h) ? parent.Reconcile3D5.output.y : parent.format.h"}}
+addUserKnob {14 c_p2 l "clamped p2" R 0 100}
+c_p2 {{"(0 < parent.Reconcile3D4.output.x) && (parent.Reconcile3D4.output.x < parent.format.w) ? parent.Reconcile3D4.output.x : parent.format.w"} {"(0 < parent.Reconcile3D4.output.y) && (parent.Reconcile3D4.output.y < parent.format.h) ? parent.Reconcile3D4.output.y : parent.format.h"}}
+addUserKnob {14 point1 l "bottom point " R 0 100}
+point1 {{parent.Reconcile3D5.output} {parent.Reconcile3D5.output}}
+addUserKnob {14 point2 l "top point" R 0 100}
+point2 {{parent.Reconcile3D4.output} {parent.Reconcile3D4.output}}
+addUserKnob {26 ""}
+addUserKnob {7 wo l "width offset" R 0 500}
+wo 246
+addUserKnob {7 ho l "heigh offset" R 0 300}
+ho 134
+addUserKnob {26 ""}
+addUserKnob {7 mid_x}
+mid_x {{"(point1.w + point2.w)/2"}}
+addUserKnob {20 points n 1}
+addUserKnob {12 c1}
+c1 {{"0 > mid_x - wo ? 0 : mid_x - wo > parent.format.w ? parent.format.w : mid_x - wo"} {"0 > point1.h - ho ? 0 : point1.h - ho > parent.format.w ? parent.format.w : point1.h - ho"}}
+addUserKnob {12 c2}
+c2 {{"0 > mid_x + wo ? 0 : mid_x + wo > parent.format.w ? parent.format.w : mid_x + wo"} {"0 > point2.h + ho ? 0 : point2.h + ho > parent.format.h ? parent.format.h : point2.h + ho"}}
+addUserKnob {20 endGroup n -1}
+}
+Merge2 {
+inputs 2
+operation mask
+bbox intersection
+name Merge42
+tile_color 0x7000ffff
+xpos 289
+ypos 469
+disable true
+}
+Viewer {
+inputs 2
+frame 1482
+input_process false
+name Viewer1
+xpos 739
+ypos 571
+}
+StickyNote {
+inputs 0
+name StickyNote1
+label "да, тут конечно же можно было обойтись обычной мердж маской для \n\"не выхода\" ббокса за рамки формата, но написать экспрешн - бесценно!)"
+xpos 177
+ypos 522
+}
+end_group

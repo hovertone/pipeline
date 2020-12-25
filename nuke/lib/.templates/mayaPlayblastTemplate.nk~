@@ -1,0 +1,220 @@
+#! C:/Program Files/Nuke9.0v5/nuke-9.0.5.dll -nx
+#write_info Write1 file:"" format:"1280 720 1" chans:":rgba.red:rgba.green:rgba.blue:" framerange:"300 845" fps:"0" colorspace:"default (sRGB)" datatype:"8 bit" transfer:"unknown" views:"main"
+version 9.0 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1920" h="1040" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1241" stretch="1"/>
+            <splitter orientation="2">
+                <split size="572"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="403"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name R:/_app_/nuke/lib/templates/mayaPlayblastTemplate.nk
+ frame 426
+ first_frame 300
+ last_frame 845
+ lock_range true
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Read {
+ inputs 0
+ format "1280 720 0 0 1280 720 1 HD_720"
+ first 300
+ last 845
+ origfirst 300
+ origlast 845
+ origset true
+ name Read1
+ xpos -40
+ ypos -317
+}
+Text2 {
+ font_size_toolbar 50
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message kitchen
+ old_message {{107 105 116 99 104 101 110}
+   }
+ box {9 658.5 170 709.5}
+ transforms {{0 2}
+   }
+ font_size_values {{0 50 1 50 2 50 3 50 4 50 5 50 6 50}
+   }
+ font_width_values {{0 100 1 100 2 100 3 100 4 100 5 100 6 100}
+   }
+ font_height_values {{0 100 1 100 2 100 3 100 4 100 5 100 6 100}
+   }
+ cursor_position 7
+ font {{ Arial : Regular : arial.ttf : 0 }}
+ font_size 50
+ scale {1 1}
+ cursor_initialised true
+ initial_cursor_position {{9 709.5}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+   }
+ enable_shadows true
+ shadow_angle 320
+ name project
+ xpos -40
+ ypos -155
+}
+Text2 {
+ font_size_toolbar 50
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message Artist
+ old_message {{65 114 116 105 115 116}
+   }
+ box {9 6.5 125 57.5}
+ transforms {{0 2}
+   }
+ font_size_values {{0 50 1 50 2 50 3 50 4 50 5 50}
+   }
+ cursor_position 6
+ font {{ Arial : Regular : arial.ttf : 0 }}
+ font_size 50
+ scale {1 1}
+ cursor_initialised true
+ initial_cursor_position {{9 57.5}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+   }
+ enable_shadows true
+ shadow_angle 320
+ name artist
+ xpos -40
+ ypos -105
+}
+Text2 {
+ font_size_toolbar 50
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message "Frame: \[python nuke.frame()]"
+ old_message {{70 114 97 109 101 58 32 52 50 54}
+   }
+ old_expression_markers {{7 9}
+   }
+ box {514.5 10.5 771.5 61.5}
+ xjustify center
+ transforms {{0 2}
+   }
+ font_size_values {{0 50 1 50 2 50 3 50 4 50 5 50 6 50 7 50 8 50 9 50 0 90 1 90 2 90 3 90 4 90 5 90 6 90 7 90 8 90 9 90}
+   }
+ cursor_position 28
+ font {{ Arial : Regular : arial.ttf : 0 }}
+ font_size 50
+ scale {1 1}
+ cursor_initialised true
+ initial_cursor_position {{643 61.5}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+   }
+ enable_shadows true
+ shadow_angle 320
+ name frame
+ xpos -40
+ ypos -56
+}
+Text2 {
+ font_size_toolbar 50
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message "2015-12-29 12:51"
+ old_message {{50 48 49 53 45 49 50 45 50 57 32 49 50 58 53 49}
+   }
+ box {872.5 9.5 1271.5 60.5}
+ xjustify right
+ transforms {{0 2}
+   }
+ font_size_values {{0 50 1 50 2 50 3 50 4 50 5 50 6 50 7 50 8 50 9 50 10 50 11 50 12 50 13 50 14 50 15 50}
+   }
+ cursor_position 11
+ font {{ Arial : Regular : arial.ttf : 0 }}
+ font_size 50
+ scale {1 1}
+ cursor_initialised true
+ initial_cursor_position {{1271.5 60.5}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+   }
+ enable_shadows true
+ shadow_angle 320
+ name date
+ xpos -40
+ ypos -7
+}
+Text2 {
+ font_size_toolbar 50
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message 01_130_KT
+ old_message {{48 49 95 49 51 48 95 75 84}
+   }
+ box {1008 657.5 1269 708.5}
+ xjustify right
+ transforms {{0 2}
+   }
+ font_size_values {{0 50 1 50 2 50 3 50 4 50 5 50 6 50 7 50 8 50}
+   }
+ cursor_position 9
+ font {{ Arial : Regular : arial.ttf : 0 }}
+ font_size 50
+ scale {1 1}
+ cursor_initialised true
+ initial_cursor_position {{1269 708.5}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+   }
+ enable_shadows true
+ shadow_angle 320
+ name episode
+ xpos -40
+ ypos 44
+}
+set N3bcec00 [stack 0]
+Viewer {
+ frame_range 300-845
+ name Viewer1
+ xpos -142
+ ypos 129
+}
+push $N3bcec00
+Write {
+ file_type jpeg
+ checkHashOnRead false
+ name Write1
+ xpos 73
+ ypos 130
+ postage_stamp true
+}

@@ -1,0 +1,46 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+push $cut_paste_input
+Dot {
+name Dot42
+selected true
+xpos 934
+ypos 41
+}
+set N8db53400 [stack 0]
+add_layer {diffuse_albedo diffuse_albedo.red diffuse_albedo.green diffuse_albedo.blue}
+Shuffle {
+in diffuse_albedo
+name Shuffle23
+label "\[knob in]"
+selected true
+xpos 900
+ypos 71
+}
+HueKeyer {
+lut {amount {curve 0 x1.116260409 0 x1.196451545 1 x1.276640058 1 x1.356831193 0 x6 0}
+  sat_thrsh {curve 0.4699004889 x6 0.4699004889 s0}}
+invert false
+name HueKeyer1
+selected true
+xpos 900
+ypos 109
+}
+push $N8db53400
+Shuffle {
+in diffuse_albedo
+name Shuffle24
+label "\[knob in]"
+selected true
+xpos 1017
+ypos 69
+}
+HueKeyer {
+lut {amount {curve 0 x4.493986607 6.747618318e-005 x4.513645172 0.9927092914 x4.5333004 0.9927092914 x4.552958965 6.747618318e-005 x6 0}
+  sat_thrsh {curve 0.5738806129}}
+invert false
+name HueKeyer2
+selected true
+xpos 1017
+ypos 107
+}

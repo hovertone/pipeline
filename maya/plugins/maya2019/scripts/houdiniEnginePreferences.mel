@@ -1,0 +1,428 @@
+ global proc
+houdiniEnginePreferences_refresh()
+{
+    setParent houdiniEnginePreferences;
+
+    checkBoxGrp -e
+        -value1 `optionVar -query "houdiniEngineAsynchronousMode"`
+        asynchronousModeCheck;
+
+    checkBoxGrp -e
+        -value1 `optionVar -query "houdiniEngineDeleteAfterBake"`
+        delAfterBakeCheck;
+
+    checkBoxGrp -e
+        -value1 `optionVar -query "houdiniEngineUnsetLLP"`
+        unsetLLPCheck;
+
+    int $sessionType = int(`optionVar -query "houdiniEngineSessionType"`);
+
+    // if the optionvars still refer to an in-process session,
+    // (because the prefs window haven't been edited since houdini was updated
+    // we set the prefs UI the new defaults (auto-start named pipe). so that if the
+    // prefs are saved they will be consisten
+    // with the way we overrode the in-process settings internally
+
+    int $originalSessionType = $sessionType;
+    if($sessionType == 0) {
+        $sessionType = 2;
+    }
+
+    switch ( $sessionType )
+    {
+    case 0:
+        radioCollection -edit -select sessionTypePipe
+            sessionTypeList;
+        break;
+
+    case 1:
+        radioCollection -edit -select sessionTypeSocket
+            sessionTypeList;
+        break;
+
+    case 2:
+        radioCollection -edit -select sessionTypePipe
+            sessionTypeList;
+        break;
+    }
+
+    textField -edit
+        -text `optionVar -query "houdiniEngineThriftServer"`
+        sessionSocketHost;
+
+    textField -edit
+        -text `optionVar -query "houdiniEngineThriftPort"`
+        sessionSocketPort;
+
+    if((`optionVar -query "houdiniEngineSessionPipeCustom"` == 0) || $originalSessionType == 0)
+        radioButton -edit
+            -select
+            sessionPipeAuto;
+    else
+        radioButton -edit
+            -select
+            sessionPipeCustom;
+
+    textField -edit
+        -text `optionVar -query "houdiniEngineThriftPipe"`
+        sessionPipeName;
+
+    houdiniEnginePreferences_toggleSessionTypeSocket($sessionType == 1);
+    houdiniEnginePreferences_toggleSessionTypePipe($sessionType == 2);
+}
+
+global proc
+houdiniEnginePreferences_save()
+{
+    setParent houdiniEnginePreferences;
+
+    optionVar
+        -intValue "houdiniEngineAsynchronousMode"
+        `checkBoxGrp -q -value1 asynchronousModeCheck`;
+    optionVar
+        -intValue "houdiniEngineDeleteAfterBake"
+        `checkBoxGrp -q -value1 delAfterBakeCheck`;
+    optionVar
+        -intValue "houdiniEngineUnsetLLP"
+        `checkBoxGrp -q -value1 unsetLLPCheck`;
+
+    if (`radioButton -query -select sessionTypeSocket`)
+    {
+        optionVar -intValue "houdiniEngineSessionType" 1;
+    }
+    else if (`radioButton -query -select sessionTypePipe`)
+    {
+        optionVar -intValue "houdiniEngineSessionType" 2;
+    }
+
+    optionVar
+        -stringValue "houdiniEngineThriftServer"
+        `textField -query -text sessionSocketHost`;
+
+    int $portVal = `textField -query -text sessionSocketPort`;
+    optionVar
+        -intValue "houdiniEngineThriftPort"
+        $portVal;
+
+    optionVar
+        -intValue "houdiniEngineSessionPipeCustom"
+        `radioButton -query -select sessionPipeCustom`;
+
+    optionVar
+        -stringValue "houdiniEngineThriftPipe"
+        `textField -query -text sessionPipeName`;
+
+    houdiniEnginePreferences_close;
+}
+
+global proc
+houdiniEnginePreferences_close()
+{
+    evalDeferred "deleteUI -window houdiniEnginePreferences";
+}
+
+global proc
+houdiniEnginePreferences_toggleAsynchronousMode(int $state)
+{
+    global int $houdiniEngineAsynchronousMode;
+
+    $houdiniEngineAsynchronousMode = $state;
+}
+
+global proc
+houdiniEnginePreferences_toggleUnsetLLP(int $state)
+{
+    global int $houdiniEngineUnsetLLP;
+
+    $houdiniEngineUnsetLLP = $state;
+}
+
+global proc
+houdiniEnginePreferences_toggleDelAfterBake(int $state)
+{
+    global int $houdiniEngineDeleteAfterBake;
+
+    $houdiniEngineDeleteAfterBake = $state;
+}
+
+global proc
+houdiniEnginePreferences_toggleSessionTypeSocket(int $state)
+{
+    setParent houdiniEnginePreferences;
+
+    houdiniEnginePreferences_toggleSessionTypeSocketCustom($state);
+}
+
+global proc
+houdiniEnginePreferences_toggleSessionTypeSocketCustom(int $state)
+{
+    setParent houdiniEnginePreferences;
+
+    textField -edit -enable $state sessionSocketHost;
+    textField -edit -enable $state sessionSocketPort;
+}
+
+global proc
+houdiniEnginePreferences_toggleSessionTypePipe(int $state)
+{
+    setParent houdiniEnginePreferences;
+
+    radioButton -edit -enable $state sessionPipeAuto;
+    radioButton -edit -enable $state sessionPipeCustom;
+
+    int $custom = `radioButton -query -select sessionPipeCustom`;
+
+    textField -edit -enable ($state && $custom) sessionPipeName;
+    checkBoxGrp -edit -enable  ($state && !$custom) unsetLLPCheck;
+}
+
+global proc
+houdiniEnginePreferences_toggleSessionTypePipeCustom(int $state)
+{
+    setParent houdiniEnginePreferences;
+
+    textField -edit -enable $state sessionPipeName;
+    checkBoxGrp -edit -enable  (!$state) unsetLLPCheck;
+}
+
+global proc
+houdiniEnginePreferences()
+{
+    if(`window -exists houdiniEnginePreferences`)
+    {
+        showWindow houdiniEnginePreferences;
+        return;
+    }
+
+    window
+        -title "Houdini Engine Preferences"
+        -menuBar true
+        houdiniEnginePreferences;
+
+    string $mainLayout = `formLayout`;
+
+    // Versions
+    string $houdiniVersion  = `houdiniEngine -houdiniVersion`;
+    string $houdiniEngineVersion  = `houdiniEngine -houdiniEngineVersion`;
+    string $versionText = `text -align "left"
+        -label ("Houdini Version: " + $houdiniVersion + "\n"
+                + "Houdini Engine Version: " + $houdiniEngineVersion + "\n")`;
+
+    // Global
+    string $globalLayout = `frameLayout
+        -label "Global"`;
+        formLayout
+            globalPreferences;
+
+            checkBoxGrp
+                -numberOfCheckBoxes 1
+                -label "Asynchronous Mode:"
+                -label1 "(requires restart)"
+                -changeCommand "houdiniEnginePreferences_toggleAsynchronousMode #1"
+                asynchronousModeCheck;
+
+            button
+                -label "?"
+                -command ("confirmDialog -title \"Houdini Engine Preferences\"" +
+                "-button \"OK\" -message \"\\\"Asynchronous Mode\\\" controls " +
+                "whether Houdini Engine runs asynchronously. Running asynchronously " +
+                "enables some nice features, such as progress bars and interrupts. " +
+                "However, if an asset tries to interact with Maya, it may lead to " +
+                "some unexpected behaviors. Disabling this option may fix these " +
+                "issues. If unsure, leave it on. (Default: on)\"")
+                asynchronousModeHelp;
+
+            checkBoxGrp
+                -numberOfCheckBoxes 1
+                -label "Delete Asset After Baking:"
+                -changeCommand "houdiniEnginePreferences_toggleDelAfterBake #1"
+                delAfterBakeCheck;
+
+        setParent ..;
+    setParent ..;
+
+    formLayout -e
+        -attachForm asynchronousModeCheck "top" 5
+        -attachForm asynchronousModeCheck "left" 5
+        -attachControl asynchronousModeCheck "right" 5 asynchronousModeHelp
+
+        -attachForm asynchronousModeHelp "top" 5
+        -attachForm asynchronousModeHelp "right" 5
+        -attachControl delAfterBakeCheck "top" 5 asynchronousModeCheck
+        -attachForm delAfterBakeCheck "left" 5
+        globalPreferences;
+
+    // Sessions
+    int $isLinux = `about -linux`;
+
+    string $sessionLayout = `frameLayout -label "Back End (requires restart)"`;
+        radioCollection sessionTypeList;
+
+        formLayout sessionLayout;
+            radioButton
+                -collection sessionTypeList
+                -label "TCP Socket"
+                -changeCommand "houdiniEnginePreferences_toggleSessionTypeSocket #1"
+                sessionTypeSocket;
+
+            radioCollection sessionTypeSocketList;
+
+            text -label "Host:" sessionSocketHostLabel;
+            textField -width 200 sessionSocketHost;
+
+            text -label "Port:" sessionSocketPortLabel;
+            textField -width 50 sessionSocketPort;
+
+            radioButton
+                -collection sessionTypeList
+                -label "Named Pipe"
+                -changeCommand "houdiniEnginePreferences_toggleSessionTypePipe #1"
+                sessionTypePipe;
+
+            radioCollection sessionTypePipeList;
+
+            radioButton
+                -collection sessionTypePipeList
+                -label "Auto-start server"
+                -changeCommand "houdiniEnginePreferences_toggleSessionTypePipeCustom 0"
+                sessionPipeAuto;
+
+            radioButton
+                -collection sessionTypePipeList
+                -label "Manual server"
+                -changeCommand "houdiniEnginePreferences_toggleSessionTypePipeCustom 1"
+                sessionPipeCustom;
+
+
+            textField -width 200 sessionPipeName;
+            checkBoxGrp
+                -numberOfCheckBoxes 1
+                -label "Unset LD_LIBRARY_PATH:"
+                -label1 "(for Linux auto-start)"
+                -changeCommand "houdiniEnginePreferences_toggleUnsetLLP #1"
+                unsetLLPCheck;
+            if(!$isLinux)
+                checkBoxGrp -edit -visible 0  unsetLLPCheck;
+
+        setParent ..;
+        if($isLinux)
+        {
+            formLayout -e
+                -attachForm sessionTypeSocket "top" 5
+                -attachForm sessionTypeSocket "left" 5
+    
+                -attachControl sessionSocketHostLabel "top" 5 sessionTypeSocket
+                -attachControl sessionSocketHostLabel "left" 5 sessionTypeSocket
+    
+                -attachControl sessionSocketHost "top" 5 sessionTypeSocket
+                -attachControl sessionSocketHost "left" 5 sessionSocketHostLabel
+    
+                -attachControl sessionSocketPortLabel "top" 5 sessionTypeSocket
+                -attachControl sessionSocketPortLabel "left" 5 sessionSocketHost
+    
+                -attachControl sessionSocketPort "top" 5 sessionTypeSocket
+                -attachControl sessionSocketPort "left" 5 sessionSocketPortLabel
+    
+                -attachControl sessionTypePipe "top" 5 sessionSocketPort
+                -attachForm sessionTypePipe "left" 5
+    
+                -attachControl sessionPipeAuto "top" 5 sessionTypePipe
+                -attachForm sessionPipeAuto "left" 20
+    
+                -attachControl unsetLLPCheck "top" 5 sessionPipeAuto
+                -attachForm unsetLLPCheck "left" 20
+    
+                -attachControl sessionPipeCustom "top" 5 unsetLLPCheck
+                -attachForm sessionPipeCustom "left" 20
+    
+                -attachControl sessionPipeName "top" 5 unsetLLPCheck
+                -attachControl sessionPipeName "left" 5 sessionPipeCustom
+    
+                sessionLayout;
+        } else {
+            formLayout -e
+                -attachForm sessionTypeSocket "top" 5
+                -attachForm sessionTypeSocket "left" 5
+
+                -attachControl sessionSocketHostLabel "top" 5 sessionTypeSocket
+                -attachControl sessionSocketHostLabel "left" 5 sessionTypeSocket
+
+                -attachControl sessionSocketHost "top" 5 sessionTypeSocket
+                -attachControl sessionSocketHost "left" 5 sessionSocketHostLabel
+
+                -attachControl sessionSocketPortLabel "top" 5 sessionTypeSocket
+                -attachControl sessionSocketPortLabel "left" 5 sessionSocketHost
+
+                -attachControl sessionSocketPort "top" 5 sessionTypeSocket
+                -attachControl sessionSocketPort "left" 5 sessionSocketPortLabel
+
+                -attachControl sessionTypePipe "top" 5 sessionSocketPort
+                -attachForm sessionTypePipe "left" 5
+
+                -attachControl sessionPipeAuto "top" 5 sessionTypePipe
+                -attachForm sessionPipeAuto "left" 20
+
+                -attachControl sessionPipeCustom "top" 5 sessionPipeAuto
+                -attachForm sessionPipeCustom "left" 20
+
+                -attachControl sessionPipeName "top" 5 sessionPipeAuto
+                -attachControl sessionPipeName "left" 5 sessionPipeCustom
+
+                sessionLayout;
+        }
+    setParent ..;
+
+    // Buttons
+    string $buttonLayout = `formLayout`;
+
+        button
+            -label "Save"
+            -command "houdiniEnginePreferences_save"
+            saveButton;
+
+        button
+            -label "Cancel"
+            -command "houdiniEnginePreferences_close"
+            cancelButton;
+
+    setParent ..;
+    setParent ..;
+
+    formLayout -e
+        -attachNone saveButton "top"
+        -attachForm saveButton "left" 5
+        -attachForm saveButton "bottom" 5
+        -attachPosition saveButton "right" 1 50
+
+        -attachNone cancelButton "top"
+        -attachPosition cancelButton "left" 1 50
+        -attachForm cancelButton "bottom" 5
+        -attachForm cancelButton "right" 5
+
+        $buttonLayout;
+
+    setParent ..;
+
+    formLayout -e
+        -attachForm $versionText "top" 5
+        -attachForm $versionText "left" 5
+        -attachForm $versionText "right" 5
+
+        -attachControl $globalLayout "top" 5 $versionText
+        -attachForm $globalLayout "left" 5
+        -attachForm $globalLayout "right" 5
+
+        -attachControl $sessionLayout "top" 5 $globalLayout
+        -attachForm $sessionLayout "left" 5
+        -attachControl $sessionLayout "bottom" 5 $buttonLayout
+        -attachForm $sessionLayout "right" 5
+
+        -attachForm $buttonLayout "left" 5
+        -attachForm $buttonLayout "bottom" 5
+        -attachForm $buttonLayout "right" 5
+        $mainLayout;
+
+    houdiniEnginePreferences_refresh;
+
+    showWindow;
+}

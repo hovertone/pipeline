@@ -1,0 +1,47 @@
+set cut_paste_input [stack 0]
+version 9.0 v7
+push $cut_paste_input
+Dot {
+ name Dot56
+ selected true
+ xpos -6796
+ ypos 118
+}
+set N545dcf0 [stack 0]
+add_layer {light_group_4 light_group_4.red light_group_4.green light_group_4.blue}
+Shuffle {
+ in light_group_4
+ name Shuffle19
+ label "\[knob in] -> \[knob out]"
+ selected true
+ xpos -7030
+ ypos 108
+}
+set N3a1dea50 [stack 0]
+Grade {
+ white 2.1
+ name Grade28
+ selected true
+ xpos -7030
+ ypos 294
+}
+push $N3a1dea50
+push $N545dcf0
+Merge2 {
+ inputs 2
+ operation difference
+ Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+ name Merge30
+ selected true
+ xpos -6830
+ ypos 194
+}
+Merge2 {
+ inputs 2
+ operation plus
+ Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+ name Merge31
+ selected true
+ xpos -6830
+ ypos 294
+}

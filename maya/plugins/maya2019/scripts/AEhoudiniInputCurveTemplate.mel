@@ -1,0 +1,20 @@
+global proc AEhoudiniInputCurveTemplate(string $nodeName)
+{
+    editorTemplate -beginScrollLayout;
+    editorTemplate -beginLayout "Outputs" -collapse false;
+
+        editorTemplate
+            -label "Output Node Id"
+            -addControl "outputNodeId";
+        editorTemplate
+            -label "Preserve Houdini Scale"
+            -addControl "preserveScale";
+
+        editorTemplate -suppress "inputCurve";
+        editorTemplate -endLayout;
+
+    editorTemplate -addExtraControls;
+
+    editorTemplate -endScrollLayout;
+}
+

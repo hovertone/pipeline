@@ -1,0 +1,21 @@
+set cut_paste_input [stack 0]
+version 6.3 v4
+push $cut_paste_input
+Axis2 {
+ translate {0 0 -3}
+ name Target
+ selected true
+ xpos -205
+ ypos -162
+}
+Camera2 {
+ inputs 0
+ translate {0 0 3}
+ rotate {{degrees(atan((Target.translate.y-translate.y)/sqrt(pow2(sqrt(pow2(Target.translate.x-translate.x)+pow2(Target.translate.z-translate.z)))))) i} {"Target.translate.x-translate.x >= 0 ? 270-degrees(atan((Target.translate.z-translate.z)/(Target.translate.x-translate.x))): -degrees(atan((Target.translate.z-translate.z)/(Target.translate.x-translate.x)))-270" i} 0}
+ focal_point {{sqrt(pow2(sqrt(pow2(sqrt(pow2(Target.translate.x-translate.x)+pow2(Target.translate.z-translate.z)))))+pow2(Target.translate.y-translate.y)) i}}
+ name TargetCamera
+ tile_color 0xff0000ff
+ selected true
+ xpos -112
+ ypos -162
+}

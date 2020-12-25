@@ -1,0 +1,310 @@
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {41 colored l Colored T Switch1.disable}
+ addUserKnob {41 color T Grade3.color}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 480
+  ypos 806
+ }
+ Dot {
+  name Dot3
+  xpos 508
+  ypos 846
+ }
+set Nd955dd30 [stack 0]
+ RotoPaint {
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44a00000 x44042000}
+    {a}
+    {cubiccurve Brush6 512 catmullrom
+     {cc
+      {f 2080}
+      {p
+       {{=0 x4338db6a}
+     {=height x43998000}  1}
+       {{=width x43b70cce}
+        {=0 x43cf4ccc}  1}}}
+     {t x43826000 x43bce000}
+     {a ro 0 go 0 bo 0 ao 0 bs x40a00000 bu 1 str 1 spx x44a00000 spy x44042000 sb 1 tt x41800000}}
+    {cubiccurve Brush5 512 catmullrom
+     {cc
+      {f 2080}
+      {p
+       {{=0 x4338db6a}
+     {=0 x43998000}  1}
+       {{=width x43b70cce}
+     {=height x43cf4ccc}  1}}}
+     {t x43826000 x43bce000}
+     {a ro 0 go 0 bo 0 ao 0 bs x40a00000 bu 1 str 1 spx x44a00000 spy x44042000 sb 1 tt x41800000}}
+    {cubiccurve Brush4 512 catmullrom
+     {cc
+      {f 2080}
+      {p
+       {{=width-height x4338db6a}
+     {=0 x43998000}  1}
+       {{=width x43b70cce}
+        {=height x43cf4ccc}  1}}}
+     {t x43826000 x43bce000}
+     {a ro 0 go 0 bo 0 ao 0 bs x40a00000 bu 1 str 1 spx x44a00000 spy x44042000 sb 1 tt x41800000}}
+    {cubiccurve Brush3 512 catmullrom
+     {cc
+      {f 2080}
+      {p
+       {{=width-height x4338db6a}
+     {=height x43998000}  1}
+       {{=width x43b70cce}
+     {=0 x43cf4ccc}  1}}}
+     {t x43826000 x43bce000}
+     {a ro 0 go 0 bo 0 ao 0 bs x40a00000 bu 1 str 1 spx x44a00000 spy x44042000 sb 1 tt x41800000}}
+    {cubiccurve Brush2 512 catmullrom
+     {cc
+      {f 2080}
+      {p
+       {{=0 x4338db6a}
+     {=height x43998000}  1}
+       {{=height x43b70cce}
+        {=0 x43cf4ccc}  1}}}
+     {t x43826000 x43bce000}
+     {a ro 0 go 0 bo 0 ao 0 bs x40a00000 bu 1 str 1 spx x44a00000 spy x44042000 sb 1 tt x41800000}}
+    {cubiccurve Brush1 512 catmullrom
+     {cc
+      {f 2080}
+      {p
+       {{=0 x4338db6a}
+     {=0 x43998000}  1}
+       {{=height x43b70cce}
+        {=height x43cf4ccc}  1}}}
+     {t x43826000 x43bce000}
+     {a ro 0 go 0 bo 0 ao 0 bs x40a00000 bu 1 str 1 spx x44a00000 spy x44042000 sb 1 tt x41800000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 tt 16 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_show_paint_selection true
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type single
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {1280 528.5}
+  colorOverlay {0 0 0 0}
+  lifetime_type "all frames"
+  view {}
+  motionblur_on true
+  brush_size 5
+  brush_spacing 0.05000000075
+  brush_hardness 0.200000003
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name RotoPaint2
+  xpos 656
+  ypos 956
+ }
+ RotoPaint {
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44a00000 x44042000}
+    {a}
+    {cubiccurve Brush4 512 catmullrom
+     {cc
+      {f 2080}
+      {p
+       {{=width-height/(1+height/width) x4338db6a}
+     {=height-height/(1+height/width) x43998000}    1}
+       {{=height/(1+height/width) x443b53f4}
+     {=height-height/(1+height/width) x443b0726}    1}}}
+     {t x43826000 x43bce000}
+     {a ro 0 go 0 bo 0 ao 0 bs x41200000 bu 1 str 1 spx x44a00000 spy x44042000 sb 1 tt x41800000 bsp 1}}
+    {cubiccurve Brush3 512 catmullrom
+     {cc
+      {f 2080}
+      {p
+       {{=width-height/(1+height/width) x4338db6a}
+        {=height/(1+height/width) x43998000}       1}
+       {{=height/(1+height/width) x43b70cce}
+        {=height/(1+height/width) x43cf4ccc}       1}}}
+     {t x43826000 x43bce000}
+     {a ro 0 go 0 bo 0 ao 0 bs x41200000 bu 1 str 1 spx x44a00000 spy x44042000 sb 1 tt x41800000 bsp 1}}
+    {cubiccurve Brush2 512 catmullrom
+     {cc
+      {f 2080}
+      {p
+       {{=width-height/(1+height/width) x4338db6a}
+        {=height/(1+height/width) x43998000}       1}
+       {{=width-height/(1+height/width) x43b70cce}
+        {=height-height/(1+height/width) x43cf4ccc}       1}}}
+     {t x43826000 x43bce000}
+     {a ro 0 go 0 bo 0 ao 0 bs x41200000 bu 1 str 1 spx x44a00000 spy x44042000 sb 1 tt x41800000 bsp 1}}
+    {cubiccurve Brush1 576 catmullrom
+     {cc
+      {f 2080}
+      {p
+       {{=height/(1+height/width) x4338db6a}
+     {=height/(1+height/width) x43998000}    1}
+       {{=height/(1+height/width) x43b70cce}
+     {=height-height/(1+height/width) x43cf4ccc}    1}}}
+     {t x43826000 x43bce000}
+     {a ro 0 go 0 bo 0 ao 0 bs x41200000 bu 1 str 1 spx x44a00000 spy x44042000 sb 1 tt x41800000 bsp 1}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 tt 16 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_show_paint_selection true
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type single
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {1280 528.5}
+  colorOverlay {0 0 0 0}
+  lifetime_type "all frames"
+  motionblur_on true
+  brush_size 10
+  brush_spacing 1
+  brush_hardness 0.200000003
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name RotoPaint3
+  xpos 656
+  ypos 996
+ }
+ Radial {
+  area {{height/(1+height/width)-radius} {height/(1+height/width)-radius} {height/(1+height/width)+radius} {height/(1+height/width)+radius}}
+  softness 0
+  name Radial1
+  xpos 656
+  ypos 1020
+  addUserKnob {20 User}
+  addUserKnob {7 radius}
+  radius 10
+ }
+ Radial {
+  area {{height/(1+height/width)-radius} {height-height/(1+height/width)-radius} {height/(1+height/width)+radius} {height-height/(1+height/width)+radius}}
+  softness 0
+  name Radial2
+  xpos 656
+  ypos 1044
+  addUserKnob {20 User}
+  addUserKnob {7 radius}
+  radius 10
+ }
+ Radial {
+  area {{width-height/(1+height/width)-radius} {height-height/(1+height/width)-radius} {width-height/(1+height/width)+radius} {height-height/(1+height/width)+radius}}
+  softness 0
+  name Radial3
+  xpos 656
+  ypos 1068
+  addUserKnob {20 User}
+  addUserKnob {7 radius}
+  radius 10
+ }
+ Radial {
+  area {{width-height/(1+height/width)-radius} {height/(1+height/width)-radius} {width-height/(1+height/width)+radius} {height/(1+height/width)+radius}}
+  softness 0
+  name Radial4
+  selected true
+  xpos 656
+  ypos 1092
+  addUserKnob {20 User}
+  addUserKnob {7 radius}
+  radius 10
+ }
+push $Nd955dd30
+ Invert {
+  name Invert1
+  xpos 326
+  ypos 848
+ }
+ Saturation {
+  saturation 0
+  mode Average
+  name Saturation1
+  xpos 326
+  ypos 884
+ }
+set Nd955eaf0 [stack 0]
+push $Nd955eaf0
+ Grade {
+  add {0.2099999934 -0.07859998941 -0.3449999988 0}
+  name Grade2
+  xpos 241
+  ypos 998
+ }
+ Colorspace {
+  colorspace_out HSV
+  name Colorspace1
+  xpos 241
+  ypos 1022
+ }
+ Grade {
+  channels {rgba.red -rgba.green -rgba.blue}
+  add {{color}}
+  black_clamp false
+  name Grade3
+  xpos 241
+  ypos 1046
+  addUserKnob {20 User}
+  addUserKnob {7 color}
+ }
+ Colorspace {
+  colorspace_in HSV
+  name Colorspace2
+  xpos 241
+  ypos 1087
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos 326
+  ypos 1100
+ }
+push $Nd955dd30
+ Keymix {
+  inputs 3
+  mix 0.5
+  name Keymix1
+  xpos 483
+  ypos 1152
+ }
+ Output {
+  name Output1
+  xpos 494
+  ypos 1344
+ }
+end_group

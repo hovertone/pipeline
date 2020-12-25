@@ -1,0 +1,83 @@
+#! C:/Program Files/Nuke9.0v5/nuke-9.0.5.dll -nx
+#write_info Write1 file:"" format:"1280 720 1" chans:":rgba.red:rgba.green:rgba.blue:" framerange:"300 845" fps:"0" colorspace:"default (Gamma2.2)" datatype:"unknown" transfer:"unknown" views:"main"
+version 9.0 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1920" h="1040" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1241" stretch="1"/>
+            <splitter orientation="2">
+                <split size="572"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="403"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name R:/_app_/nuke/lib/templates/compress.nk
+ frame 300
+ first_frame 300
+ last_frame 845
+ lock_range true
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Read {
+ inputs 0
+ format "1280 720 0 0 1280 720 1 HD_720"
+ first 300
+ last 845
+ origfirst 300
+ origlast 845
+ origset true
+ name Read1
+ xpos -334
+ ypos -128
+}
+set N3af8000 [stack 0]
+Write {
+ file_type mov
+ meta_codec avc1
+ meta_encoder mov32
+ mov32_codec avc1
+ mov32_fps 25
+ mov32_pixel_format {{0} "default (YCbCr  8-bit 422 (2vuy))" "RGBA  8-bit" "YCbCr  8-bit 422 (2vuy)"}
+ mov64_codec ap4h
+ mov64_fps 25
+ mov64_bitrate 20000
+ mov64_bitrate_tolerance 40000000
+ mov64_quality_min 2
+ mov64_quality_max 31
+ mov64_gop_size 12
+ mov64_b_frames 0
+ checkHashOnRead false
+ name Write1
+ xpos -334
+ ypos -5
+}
+push $N3af8000
+Viewer {
+ frame_range 300-845
+ name Viewer1
+ xpos -40
+ ypos -10
+}

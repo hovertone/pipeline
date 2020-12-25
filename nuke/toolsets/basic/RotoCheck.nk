@@ -1,0 +1,21 @@
+set cut_paste_input [stack 0]
+version 6.3 v4
+push $cut_paste_input
+Expression {
+ expr0 0
+ expr1 a
+ expr2 0
+ name Expression1
+ selected true
+ xpos 68
+ ypos 287
+}
+push 0
+Merge2 {
+ inputs 2
+ mix 0.25
+ name Merge1
+ selected true
+ xpos 68
+ ypos 311
+}

@@ -1,0 +1,494 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+tile_color 0x772fbfff
+addUserKnob {20 User}
+addUserKnob {41 format l Format T Reformat1.format}
+addUserKnob {41 timecode l Timecode T TIMECODE.message}
+addUserKnob {41 total_frame l "Total Frame" T TOTAL_FRAME_N.message}
+addUserKnob {41 project l Project T PROJECT.message}
+addUserKnob {41 agency l Agency T AGENCY.message}
+addUserKnob {41 translate -STARTLINE T AGENCY.translate}
+addUserKnob {41 divider_offset l "Divider Offset" T DIVIDER.translate}
+addUserKnob {41 production l Production T PRODUCTION.message}
+}
+Roto {
+ inputs 0
+ output alpha
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44700000 x44070000}
+    {a}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px x43a48000
+        {x40a00000 xbfc00000}
+        {xc2740000 x42b60000}
+        {xc0a00000 x3fc00000}
+        {0 0}
+        {x434a8000 x429e0000}
+        {0 0}
+        {0 0}
+        {x43380000 xc1d40000}
+        {0 0}
+        {xc1480000 xc0d00000}
+        {xc2870000 xc1100000}
+        {x41480000 x40d00000}}}     idem}
+     {tx x43a48000 x42810000 x42068000}
+     {a str 1 spx x44700000 spy x44070000 sb 1 ltn x43a48000 ltm x43a48000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier ro 0 go 0 bo 0 ao 0 str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {960 540}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 329
+ lifetime_end 329
+ view {}
+ motionblur_on true
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+ name Roto3
+ xpos 476
+ ypos -134
+ addUserKnob {20 User}
+ addUserKnob {22 autolife l autolife! -STARTLINE T autolife.autoLife()}
+ addUserKnob {22 autolife l autolife! -STARTLINE T autolife.autoLife()}
+}
+Roto {
+ inputs 0
+ cliptype bbox
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44700000 x44070000}
+    {a}
+    {curvegroup Rectangle1 576 bezier
+     {{cc
+       {f 8192}
+       {px x43a90000
+        {0 xc09eeeec}
+        {x44ccdccd x42026666}
+        {x3f3bb800 0}
+        {xbf3bb800 0}
+        {x44cd2333 x42026666}
+        {0 xc09eeeec}
+        {0 x409eeeec}
+        {x44cd2333 x4187ffff}
+        {xbf3bb800 0}
+        {x3f3bb800 0}
+        {x44ccdccd x4187ffff}
+        {0 x409eeeec}}}     idem}
+     {t
+   {{x43a90000 x44cd0000}}
+   {{x43a90000 x41c93332}}
+   {{x43a90000 0}}  0 0
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 1}}
+   {{x43a90000 1}}
+   {{x43a90000 1}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 1}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 1}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 1}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 0}}
+   {{x43a90000 1}}}
+     {a opc x3ecccccd str 1 spx x44700000 spy x44070000 sb 1 ltn x43a90000 ltm x43a90000 tt x41000000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier ro 0 go 0 bo 0 ao 0 str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped ro 0 go 0 bo 0 ao 0 str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createBSpline ro 0 go 0 bo 0 ao 0 str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createEllipse ro 0 go 0 bo 0 ao 0 str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle ro 0 go 0 bo 0 ao 0 str 1 ssx 1 ssy 1 sf 1 sb 1 tt 8 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {960 540}
+ colorOverlay {0 0 0 0}
+ opacity 0.400000006
+ lifetime_type "all frames"
+ lifetime_start 338
+ lifetime_end 338
+ view {}
+ motionblur_on true
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+ name DIVIDER
+ selected true
+ xpos 677
+ ypos -252
+ addUserKnob {20 User}
+ addUserKnob {22 autolife l autolife! -STARTLINE T autolife.autoLife()}
+ addUserKnob {22 autolife l autolife! -STARTLINE T autolife.autoLife()}
+}
+Read {
+ inputs 0
+ file C:/Users/tfx/ns/other/tfx_logo.png
+ format "710 442 0 0 710 442 1 "
+ origset true
+ auto_alpha true
+ name Read2
+ xpos 676
+ ypos -732
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Premult {
+ name Premult1
+ xpos 676
+ ypos -648
+}
+Roto {
+ cliptype bbox
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x43b18000 x435d0000}
+    {a}
+    {curvegroup Bezier1 576 bezier
+     {{cc
+       {f 8192}
+       {px x43a90000
+        {xc2580000 xc1900000}
+        {x4384c000 x43ad4000}
+        {x42580000 x41900000}
+        {xc25a0000 x41280000}
+        {x43f34000 x43aa0000}
+        {x425a0000 xc1280000}
+        {xbfc00000 x41e00000}
+        {x442c2000 x430f0000}
+        {x3fc00000 xc1e00000}
+        {x42000000 x40c00000}
+        {x4419c000 x42480000}
+        {xc2000000 xc0c00000}
+        {x41e80000 xc1880000}
+        {x42e20000 x423a0000}
+        {xc1e80000 x41880000}
+        {xc1c00000 xc1dc0000}
+        {x42c60000 x431b8000}
+        {x41c00000 x41dc0000}}}     idem}
+     {tx x43a90000 x43bcf555 x43344000}
+     {a r 0 g 0 b 0 a 0 inv 1 str 1 spx x43b18000 spy x435d0000 sb 1 ltn x43a90000 ltm x43a90000 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier ro 0 go 0 bo 0 ao 0 str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {355 221}
+ color 0
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ lifetime_start 338
+ lifetime_end 338
+ view {}
+ motionblur_on true
+ motionblur_shutter_offset_type centred
+ inverted true
+ source_black_outside true
+ createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+ name Roto2
+ xpos 676
+ ypos -624
+ addUserKnob {20 User}
+ addUserKnob {22 autolife l autolife! -STARTLINE T autolife.autoLife()}
+ addUserKnob {22 autolife l autolife! -STARTLINE T autolife.autoLife()}
+}
+Transform {
+ translate {-245.6000061 -175.6000061}
+ scale 0.16
+ center {355 221}
+ name Transform2
+ xpos 676
+ ypos -588
+}
+Reformat {
+ inputs 0
+ filter Rifman
+ name Reformat4
+ xpos 555
+ ypos -660
+}
+Merge2 {
+ inputs 2
+ name Merge2
+ xpos 555
+ ypos -588
+}
+set N89990ab0 [stack 0]
+Text {
+ opacity 0.25
+ message "TOTAL FRAME\nSHOT"
+ font C:/Windows/Fonts/DINPro-Regular.otf
+ size 31.7
+ leading -0.1
+ yjustify center
+ Transform 1
+ box {378 499 1336 593}
+ translate {39.5 -506}
+ scale 0.736
+ center {386 541.5}
+ name FRAMES_TITLES
+ xpos 555
+ ypos -544
+}
+Text {
+ opacity 0.25
+ message FRAME
+ font C:/Windows/Fonts/DINPro-Regular.otf
+ size 31.7
+ leading -0.1
+ yjustify center
+ Transform 1
+ box {378 499 1336 593}
+ translate {113.4000015 -516.4000244}
+ scale 0.736
+ center {386 541.5}
+ name FRAMES_TITLES1
+ xpos 555
+ ypos -520
+}
+Text {
+ opacity 0.4
+ message Project
+ font C:/Windows/Fonts/DINPro-Regular.otf
+ size 48
+ leading -0.1
+ xjustify right
+ yjustify center
+ Transform 1
+ box {378 499 1336 593}
+ translate {549.5 -487}
+ scale 0.736
+ center {1330 544}
+ name PROJECT
+ xpos 555
+ ypos -454
+}
+Text {
+ opacity 0.2
+ message Agency
+ font C:/Windows/Fonts/DINPro-Regular.otf
+ size 26.4
+ leading -0.1
+ xjustify right
+ yjustify center
+ Transform 1
+ box {378 499 1336 593}
+ translate {286.7999878 -520.7999878}
+ scale 0.736
+ center {1330 544}
+ name AGENCY
+ xpos 555
+ ypos -392
+}
+Text {
+ opacity 0.2
+ message "YA EBU PRODUCTION"
+ font C:/Windows/Fonts/DINPro-Regular.otf
+ size 26.4
+ leading -0.1
+ xjustify right
+ yjustify center
+ Transform 1
+ box {378 499 1336 593}
+ translate {546.2000122 -521.2000122}
+ scale 0.736
+ center {1335.199951 545.5999756}
+ name PRODUCTION
+ xpos 555
+ ypos -368
+}
+Text {
+ opacity 0.2
+ message "\[timecode]"
+ font C:/Windows/Fonts/DINPro-Regular.otf
+ size 33.54
+ leading -0.1
+ xjustify right
+ yjustify center
+ Transform 1
+ box {378 499 1336 593}
+ translate {-977.4000244 -516.5999756}
+ scale 0.736
+ center {1335.199951 545.5999756}
+ name TIMECODE
+ xpos 556
+ ypos -310
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ xpos 555
+ ypos -252
+}
+Text {
+ opacity 0.75
+ message "\[format %06d \[frame]]"
+ font C:/Windows/Fonts/DINPro-Regular.otf
+ size 40
+ yjustify center
+ Transform 1
+ box {378 499 1342 593}
+ translate {201.1999969 -497.8999939}
+ scale 0.646
+ center {392 548.5}
+ name TOTAL_FRAME_N
+ xpos 555
+ ypos -197
+}
+set Nf38695f0 [stack 0]
+Dilate {
+ size 2.2
+ name Dilate4
+ xpos 668
+ ypos -203
+}
+Grade {
+ white 0
+ name Grade4
+ xpos 668
+ ypos -157
+}
+Blur {
+ size 3.8
+ name Blur4
+ xpos 668
+ ypos -133
+}
+Transform {
+ translate {1 -1}
+ center {960 540}
+ name Transform4
+ xpos 668
+ ypos -79
+}
+push $Nf38695f0
+Merge2 {
+ inputs 2+1
+ operation under
+ invert_mask true
+ mix 0.64
+ name Merge7
+ xpos 555
+ ypos -79
+}
+Reformat {
+ format "1920 1080 0 0 1920 1080 1 HD"
+ filter Rifman
+ name Reformat1
+ xpos 555
+ ypos -22
+}
+Input {
+ inputs 0
+ name InputSource
+ xpos 406
+ ypos -338
+}
+Reformat {
+ format "1920 1080 0 0 1920 1080 1 HD"
+ filter Rifman
+ name Reformat3
+ xpos 406
+ ypos -258
+}
+Merge2 {
+ inputs 2
+ name Merge8
+ xpos 406
+ ypos -22
+}
+Output {
+ name Output1
+ xpos 406
+ ypos 78
+}
+Reformat {
+ inputs 0
+ filter Rifman
+ name Reformat2
+ xpos 907
+ ypos -256
+}
+push $N89990ab0
+Viewer {
+ input_process false
+ name Viewer1
+ xpos 810
+ ypos 371
+ hide_input true
+}
+end_group

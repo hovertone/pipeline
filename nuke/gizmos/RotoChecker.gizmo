@@ -1,0 +1,213 @@
+#! C:/Program Files/Nuke6.3v1/Nuke6.3.exe -nx
+version 6.3 v1
+Gizmo {
+ inputs 2
+ name RotoChecker
+ help "Tool to check your roto or mattes.\nHarrison Ly\ncontactme@harrisonly.co.uk"
+ knobChanged "\n\nn = nuke.thisNode()\n\ngizmoName = n\['name'].value()\nswitchName = \"%s.Switch2\" % (gizmoName)\nswitch = nuke.toNode(switchName)\nswitchbackgroundName = \"%s.Switch1\" % (gizmoName) \nswitchbackground = nuke.toNode(switchbackgroundName)\n\ndef knobsReset():\n    nochangeKnobs = \[\"mode\", \"divider\", \"end_divider\", \"author\", \"label\", \"note_font\", \"note_font_size\", \"note_font_color\", \"hide_input\", \"cached\", \"disable\", \"dope_sheet\"]\n    for k in n.allKnobs():\n        if k.name() in nochangeKnobs:\n            k.setVisible(True)\n        else:\n            k.setVisible(False)\n\n#if mode is Overlay\nif n\['mode'].value() == \"Overlay\":\n    knobsReset()\n    switch\['which'].setValue(1)\n    n.knobs()\['overlay_color'].setVisible(True)\n\n#if mode is Premult\nelif n\['mode'].value() == \"Premult\":\n    knobsReset()\n    n\['background'].setVisible(True)\n    switch\['which'].setValue(0)\n\n    #Changes Background\n    if n\['background'].value() == \"CheckerBoard\":\n        switchbackground\['which'].setValue(0)\n        n.knobs()\['checkerboard_boxsize'].setVisible(True)\n    elif n\['background'].value() == \"Constant\":\n        switchbackground\['which'].setValue(1)\n        n.knobs()\['constant_color'].setVisible(True)\n    elif n\['background'].value() == \"ColorBars\":\n        switchbackground\['which'].setValue(2)\n        n.knobs()\['colorbars_barintensity'].setVisible(True)\n    elif n\['background'].value() == \"ColorWheel\":\n        switchbackground\['which'].setValue(3)\n        n.knobs()\['colorWheel_rotate'].setVisible(True)\n\n#if mode is Spline\nelif n\['mode'].value() == \"Spline\":\n    knobsReset()\n    switch\['which'].setValue(2)\n    n.knobs()\['spline_color'].setVisible(True)\n    n.knobs()\['spline_thickness'].setVisible(True)\n"
+ selected true
+ addUserKnob {20 Rotochecker l RotoChecker +HIDDEN}
+ addUserKnob {4 mode M {Overlay Premult Spline "" "" "" ""}}
+ addUserKnob {26 divider l "" +STARTLINE}
+ addUserKnob {4 background +HIDDEN M {CheckerBoard Constant ColorBars ColorWheel ""}}
+ addUserKnob {41 checkerboard_boxsize l size +HIDDEN T CheckerBoard1.boxsize}
+ addUserKnob {41 colorbars_barintensity l "bar intensity" +HIDDEN T ColorBars1.barintensity}
+ addUserKnob {41 constant_color l color +HIDDEN T Constant1.color}
+ addUserKnob {41 overlay_color l "overlay color" T Grade1.white}
+ addUserKnob {41 spline_color l "spline color" +HIDDEN T Grade2.add}
+ addUserKnob {41 spline_thickness l "spline thickness" +HIDDEN T FilterErode1.size}
+ addUserKnob {41 colorWheel_rotate l rotate +HIDDEN T ColorWheel1.rotate}
+ addUserKnob {26 end_divider l "" +STARTLINE}
+ addUserKnob {26 author l "" +STARTLINE T "RotoChecker 1.0 (2012) - Harrison Ly - contactme@harrisonly.co.uk"}
+}
+ Input {
+  inputs 0
+  name roto
+  xpos -835
+  ypos -128
+ }
+ Dot {
+  name Dot13
+  xpos -801
+  ypos -23
+ }
+set N3b847d90 [stack 0]
+ Dot {
+  name Dot2
+  xpos -801
+  ypos 120
+ }
+set N3b8480c0 [stack 0]
+ Dot {
+  name Dot5
+  xpos -554
+  ypos 120
+ }
+set N3b8483f0 [stack 0]
+ Dot {
+  name Dot11
+  xpos -554
+  ypos 353
+ }
+push $N3b8480c0
+ Dot {
+  name Dot9
+  xpos -930
+  ypos 120
+ }
+ FilterErode {
+  name FilterErode1
+  xpos -964
+  ypos 161
+ }
+ Dot {
+  name Dot10
+  xpos -930
+  ypos 210
+ }
+push $N3b8480c0
+ Merge2 {
+  inputs 2
+  operation xor
+  name Merge2
+  xpos -834
+  ypos 206
+ }
+ Dot {
+  name Dot12
+  xpos -800
+  ypos 243
+ }
+ Input {
+  inputs 0
+  name img
+  xpos -643
+  ypos -225
+  number 1
+ }
+ Dot {
+  name Dot1
+  xpos -609
+  ypos -145
+ }
+set N89c9220 [stack 0]
+ Grade {
+  inputs 1+1
+  add {1 0 0 0}
+  name Grade2
+  xpos -643
+  ypos 239
+ }
+ Dot {
+  name Dot8
+  xpos -609
+  ypos 310
+ }
+push $N3b8483f0
+push $N89c9220
+ Dot {
+  name Dot3
+  xpos -437
+  ypos -145
+ }
+set N89c9bb0 [stack 0]
+ Grade {
+  inputs 1+1
+  white {1 0 0 0}
+  name Grade1
+  xpos -471
+  ypos 116
+ }
+ Dot {
+  name Dot6
+  xpos -437
+  ypos 170
+ }
+push $N3b847d90
+push $N89c9bb0
+ Dot {
+  name Dot4
+  xpos -355
+  ypos -145
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -389
+  ypos -33
+ }
+ Premult {
+  name Premult1
+  xpos -389
+  ypos 3
+ }
+ Dot {
+  name Dot7
+  xpos -355
+  ypos 67
+ }
+ ColorWheel {
+  inputs 0
+  gamma 0.45
+  name ColorWheel1
+  xpos 70
+  ypos -491
+ }
+ ColorBars {
+  inputs 0
+  PAL true
+  name ColorBars1
+  xpos -74
+  ypos -490
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 0.5
+  name Constant1
+  xpos -193
+  ypos -484
+ }
+ CheckerBoard2 {
+  inputs 0
+  color0 {0.1000000015 0.1000000015 0.1000000015 1}
+  color2 {0.1000000015 0.1000000015 0.1000000015 1}
+  name CheckerBoard1
+  xpos -335
+  ypos -487
+ }
+ Switch {
+  inputs 4
+  name Switch1
+  xpos -138
+  ypos -287
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -138
+  ypos 63
+ }
+ Switch {
+  inputs 3
+  which 1
+  name Switch2
+  xpos -138
+  ypos 306
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos -135
+  ypos 343
+ }
+ Output {
+  name Output1
+  xpos -135
+  ypos 423
+ }
+end_group

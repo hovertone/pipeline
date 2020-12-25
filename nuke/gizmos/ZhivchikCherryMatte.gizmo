@@ -1,0 +1,247 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Gizmo {
+ inputs 0
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 User}
+ addUserKnob {41 bottle T Ctrlr.bottle}
+ addUserKnob {41 lid -STARTLINE T Ctrlr.lid}
+ addUserKnob {41 coverc -STARTLINE T Ctrlr.coverc}
+ addUserKnob {41 cover -STARTLINE T Ctrlr.cover}
+ addUserKnob {41 liquid -STARTLINE T Ctrlr.liquid}
+ addUserKnob {41 plastic -STARTLINE T Ctrlr.plastic}
+}
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/6_Bottle_Cherry/ID_liquid/Cherry_ID_liquid_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read8
+  label "\[ID_liquid]"
+  xpos -337
+  ypos -398
+ }
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/6_Bottle_Cherry/ID_base/Cherry_ID_base_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read7
+  label "\[ID_base]"
+  selected true
+  xpos -461
+  ypos -485
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name Merge3
+  xpos -461
+  ypos -356
+ }
+ Roto {
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 512 S 0 384 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "Bezier1" {
+    Flag: 576
+    NodeType: 3
+    CurveGroup: "" {
+     Transform: 0 0 S 1 1 0 S 1 1 0 S 1 1 0 S 1 1 1 S 1 1 1 S 1 1 0 S 1 1 369.136 S 1 1 434.708 
+     Flag: 0
+     NumOfCubicCurves: 2
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 75
+      0 S 1 1 -1.5 S 1 1 0.5 0 0 S 1 1 53.75 S 1 1 478 0 0 S 1 1 1.5 S 1 1 -0.5 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 66.75 S 1 1 465 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 151.5 S 1 1 470.607 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -3 S 1 1 -3.25 0 0 S 1 1 158.3 S 1 1 473.507 0 0 S 1 1 0.199997 S 1 1 -1 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 165.5 S 1 1 469.307 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -0.199997 S 1 1 -0.199982 0 0 S 1 1 222.6 S 1 1 470.95 0 0 S 1 1 0.199997 S 1 1 0.199982 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 228 S 1 1 474.55 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0.200012 0 0 S 1 1 244.2 S 1 1 467.95 0 0 S 1 1 0 S 1 1 -0.200012 0 0 S 1 1 -0.799988 S 1 1 -0.199982 0 0 S 1 1 329.25 S 1 1 471.35 0 0 S 1 1 0.799988 S 1 1 0.199982 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 339.45 S 1 1 480.15 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 368.4 S 1 1 476.4 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 373.6 S 1 1 473.4 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 470.15 S 1 1 468.5 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 475.15 S 1 1 474.5 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 481.15 S 1 1 471.7 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 489.15 S 1 1 466.9 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 558.5 S 1 1 470.3 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 563.5 S 1 1 476.5 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 568.3 S 1 1 467.7 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -0.399963 S 1 1 0 0 0 S 1 1 657.9 S 1 1 469.5 0 0 S 1 1 0.399963 S 1 1 0 0 0 S 1 1 -0.200012 S 1 1 0 0 0 S 1 1 665.3 S 1 1 477.5 0 0 S 1 1 0.200012 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 784 S 1 1 364 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -2 S 1 1 -4 0 0 S 1 1 771 S 1 1 74 0 0 S 1 1 2 S 1 1 4 0 0 S 1 1 -11 S 1 1 -3 0 0 S 1 1 -50 S 1 1 73 0 0 S 1 1 11 S 1 1 3 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -28 S 1 1 430 0 0 S 1 1 0 S 1 1 0 0 
+     }
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 75
+      0 S 1 1 -1.5 S 1 1 0.5 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 1.5 S 1 1 -0.5 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -3 S 1 1 -3.25 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0.199997 S 1 1 -1 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -0.199997 S 1 1 -0.199982 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0.199997 S 1 1 0.199982 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0.200012 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 -0.200012 0 0 S 1 1 -0.799988 S 1 1 -0.199982 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0.799988 S 1 1 0.199982 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -0.399963 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0.399963 S 1 1 0 0 0 S 1 1 -0.200012 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0.200012 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -2 S 1 1 -4 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 2 S 1 1 4 0 0 S 1 1 -11 S 1 1 -3 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 11 S 1 1 3 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 
+     }
+     NumOfAttributes: 44
+     "vis" S 0 1 "r" S 0 0 "g" S 0 0 "b" S 0 0 "a" S 0 0 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 512 "spy" S 0 384 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 1 "ltm" S 0 1 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+    }
+   }
+   NumOfChildren: 0
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  color 0
+  colorOverlay 0
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name Roto1
+  xpos -461
+  ypos -332
+ }
+ Multiply {
+  value {{parent.Ctrlr.plastic i}}
+  name Multiply12
+  xpos -461
+  ypos -276
+ }
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/6_Bottle_Cherry/ID_liquid/Cherry_ID_liquid_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read3
+  label "\[ID_liquid]"
+  xpos -621
+  ypos -400
+ }
+ Multiply {
+  value {{parent.Ctrlr.liquid i}}
+  name Multiply5
+  xpos -623
+  ypos -276.6
+ }
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/6_Bottle_Cherry/ID_Lable_2/Cherry_ID_Lable_2_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read4
+  label "\[ID_Lable_2]"
+  xpos -731
+  ypos -400
+ }
+ Multiply {
+  value {{parent.Ctrlr.cover i}}
+  name Multiply4
+  xpos -733
+  ypos -276.6
+ }
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/6_Bottle_Cherry/ID_Lable/Cherry_ID_Lable_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read5
+  label "\[ID_Lable]"
+  xpos -843
+  ypos -400
+ }
+ Multiply {
+  value {{parent.Ctrlr.coverc i}}
+  name Multiply3
+  xpos -843
+  ypos -276.6
+ }
+push 0
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/6_Bottle_Cherry/ID_base/Cherry_ID_base_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read2
+  label "\[ID_base]"
+  xpos -1061
+  ypos -400
+ }
+ Multiply {
+  value {{parent.Ctrlr.bottle i}}
+  name Multiply1
+  xpos -1063
+  ypos -276.6
+ }
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/6_Bottle_Cherry/ID_Cover/Cherry_ID_Cover_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read6
+  label "\[ID_Cover]"
+  xpos -951
+  ypos -400
+ }
+ Multiply {
+  value {{parent.Ctrlr.lid i}}
+  name Multiply2
+  xpos -953
+  ypos -276.6
+ }
+ Merge2 {
+  inputs 6+1
+  also_merge all
+  name Merge1
+  xpos -843
+  ypos -134
+ }
+ NoOp {
+  name Ctrlr
+  xpos -841
+  ypos 228
+  addUserKnob {20 User}
+  addUserKnob {6 bottle +STARTLINE}
+  addUserKnob {6 lid -STARTLINE}
+  addUserKnob {6 coverc -STARTLINE}
+  addUserKnob {6 cover -STARTLINE}
+  addUserKnob {6 liquid -STARTLINE}
+  addUserKnob {6 plastic -STARTLINE}
+ }
+ Expression {
+  expr3 r
+  name Expression1
+  xpos -841
+  ypos 257
+ }
+set N45a4ec40 [stack 0]
+ Output {
+  name Output1
+  xpos -841
+  ypos 337
+ }
+push $N45a4ec40
+ Viewer {
+  viewerProcess None
+  input_process false
+  name Viewer1
+  xpos -1680
+  ypos 335
+ }
+end_group

@@ -1,0 +1,575 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+BackdropNode {
+ inputs 0
+ name BackdropNode69
+ tile_color 0x8e388e00
+ label "RAIN VIDEOHIVE"
+ note_font_size 42
+ selected true
+ xpos -4054
+ ypos 16385
+ bdwidth 1636
+ bdheight 682
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Rain foam.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 240
+ origlast 240
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1503
+ selected true
+ xpos -4038
+ ypos 16465
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/07 Hail.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 480
+ origlast 480
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1499
+ selected true
+ xpos -3928
+ ypos 16465
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Rain ripple.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 240
+ origlast 240
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1505
+ selected true
+ xpos -3818
+ ypos 16465
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Rain splash.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 240
+ origlast 240
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1506
+ selected true
+ xpos -3708
+ ypos 16465
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Rain splashes.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 240
+ origlast 240
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1507
+ selected true
+ xpos -3598
+ ypos 16465
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Rain spray.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 240
+ origlast 240
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1508
+ selected true
+ xpos -3488
+ ypos 16465
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Heavy rain mist.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 240
+ origlast 240
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1501
+ selected true
+ xpos -3934
+ ypos 16977
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Rain mist.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 240
+ origlast 240
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1504
+ selected true
+ xpos -4044
+ ypos 16977
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Heavy rain.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 240
+ origlast 240
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1502
+ selected true
+ xpos -4036
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Rain.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 240
+ origlast 240
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1510
+ selected true
+ xpos -3926
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/01 Rain flow.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1512
+ selected true
+ xpos -3816
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/02 Rain flow.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1513
+ selected true
+ xpos -3706
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/03 Rain flow.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1514
+ selected true
+ xpos -3596
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/04 Rain flow.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1515
+ selected true
+ xpos -3486
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/05 Rain flow.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1516
+ selected true
+ xpos -3376
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/06 Hail.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 480
+ origlast 480
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1517
+ selected true
+ xpos -3266
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Bokeh lights.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 240
+ origlast 240
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1500
+ selected true
+ xpos -4041
+ ypos 16797
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/FOG/FOG-Compo.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1518
+ selected true
+ xpos -3693
+ ypos 16971
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/FOG/FOG-v1.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1519
+ selected true
+ xpos -3583
+ ypos 16971
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/FOG/FOG-v2.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1520
+ selected true
+ xpos -3473
+ ypos 16971
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/FOG/FOG-v3.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1521
+ selected true
+ xpos -3363
+ ypos 16971
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/FOG/FOG-v4.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1522
+ selected true
+ xpos -3253
+ ypos 16971
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/RAIN/rain-v1.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1523
+ selected true
+ xpos -2995
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/RAIN/rain-v2.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1524
+ selected true
+ xpos -2885
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/RAIN/rain-v3.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1525
+ selected true
+ xpos -2618
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/RAIN/rain-v4.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1526
+ selected true
+ xpos -2508
+ ypos 16612
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/SPLASH/SPLASH-Compo.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1527
+ selected true
+ xpos -3132
+ ypos 16467
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/SPLASH/SPLASH-v1.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1528
+ selected true
+ xpos -3022
+ ypos 16469
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/SPLASH/SPLASH-v2.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1529
+ selected true
+ xpos -2912
+ ypos 16467
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/SPLASH/SPLASH-v3.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1530
+ selected true
+ xpos -2802
+ ypos 16467
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file D:/Footages/rain/videohive-20016026-rain/SPLASH/SPLASH-v4.mov
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1531
+ selected true
+ xpos -2692
+ ypos 16467
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Rain water layer.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 240
+ origlast 240
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1509
+ selected true
+ xpos -3379
+ ypos 16465
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file "D:/Footages/rain/videohive-19558912-rain/Rain templates/Raindrops on glass.mov"
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ last 120
+ origlast 120
+ origset true
+ auto_alpha true
+ mov32_codec {{0} "Apple PNG (appl - png )"}
+ mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+ name Read1511
+ selected true
+ xpos -3931
+ ypos 16797
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}

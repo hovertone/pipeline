@@ -1,0 +1,306 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+ help "<b>Distort Tracks Gizmo</b>\n\n<b>About</b>:\nThis gizmo reformats and/or distorts tracking data based on a uv distortion map input. When you are working with CG elements in your comp that are undistorted and padded resolution, sometimes it is useful to reconcile tracking data from a 3d position through a camera into screen space. This data can then be used to do stuff in 2d: track in lens flares, matchmove roto or splinewarps, etc. The problem is that when this tracking data comes back from our padded undistorted 3d scene into distorted, unpadded resolution comp land, it doesn't line up. \n\n<b>Instructions</b>:\n1. Connect the UV input to a uv distortion map and set the channel that holds it, (for example, a LensDistortion node set to output type Displacement, outputting a UV distortion map into the forward.u and forward.v channels)\n2. Set the padded resolution format and the destination format: Padded resolution is the overscan resolution that you are distorting from, Destination format is the comp resolution you end up in. If they are the same, set them both to be the same.\n3. Add as many tracking points as you want and copy or link the data in. You can show or hide the input and output tracks for convenience. (It is easier to copy the data of many tracks in if you don't see the output track knobs.)\n4. Hit Execute, and all tracks will be distorted. The output tracking data will be copied into each tracks respective trk_out_# knob.\n\n<b>Notes</b>: \nNote that right now this only works with reformat types set to center, no resize, such as you would use when cropping a padded resolution cg plate back to comp resolution before distorting it. Theoretically this gizmo should work to 'reformat' tracking data as well. If you plug in an 'identity' uvmap, the tracking data should be undistorted, but reformatted from the source format to the destination format.\nAlso note that the distorted track output will switch to the reformatted track at the bounds of frame, so that the distorted track does not suddenly pop to 0,0 where the distortion map turns black.\n\nHuge thanks to Ivan Busquets for the ninja-comp technique used to invert the UV Map using a DisplaceGeo.\n\nCreated by Jed Smith. Comments and suggestions welcome: jedypod@gmail.com"
+ knobChanged "\n# Sets the value of the uv_layer enumeration_knob to the list of input layers, \n# every time the input is changed\nfrom __future__ import with_statement \nn = nuke.thisNode()\nk = nuke.thisKnob()\ninput_node = n.input(0)\nif k.name() in ('inputChange'):\n    try:\n        layers = list( set(\[c.split('.')\[0] for c in input_node.channels()]) )\n        layers.sort()\n    except AttributeError:\n        # If input not connected, set layers to empty list\n        layers = \[]\n    # To re-initialize the values of an enumeration_knob, you need to call setValues() with a list\n    # http://docs.thefoundry.co.uk/nuke/70/pythonreference/nuke.Enumeration_Knob-class.html#setValues\n    n\[\"uv_layer\"].setValues(layers)\n    # Change SelectUV node's in knob if input changes\n    with n:\n        nuke.toNode('SelectUV').knob('in').setValue(n\['uv_layer'].value())\n# Whenever uv_layer knob is changed, set uv_layer shuffle node inside group to match it's in 1 knob to this knob\nif k.name() == 'uv_layer':\n    with n:\n        nuke.toNode('SelectUV').knob('in').setValue(n\['uv_layer'].value())\nif k.name() == 'ToggleOutput':\n    for knob in n.knobs():\n        if 'trk_out_' in knob or 'delete_trk_' in knob:\n            if k.value() == True:\n                n\[knob].setVisible(True)\n            else:\n                n\[knob].setVisible(False)\nif k.name() == 'ShowTracks':\n    for knob in n.knobs():\n        if 'track_' in knob or 'delete_trk_' in knob:\n            if k.value() == True:\n                n\[knob].setVisible(True)\n            else:\n                n\[knob].setVisible(False)\n"
+ tile_color 0x9fffff
+ addUserKnob {20 DistortTracks}
+ addUserKnob {3 tnum l INVISIBLE +INVISIBLE}
+ addUserKnob {4 uv_layer l "UV Layer" t "Select the layer that contains the UV Map to use for distorting the tracking data." M {}}
+ addUserKnob {41 padded_format l "Padded Format" t "This will be the format that the tracking data was created in. It will be transformed/distorted into the 'Root Format'." T PadFormat.format}
+ addUserKnob {41 destination_format l "Destination Format" t "If using a padded format as a source resolution, this will be the destination resolution for the 'distorted' tracking data." T DestinationFormat.format}
+ addUserKnob {26 spacer l " " T " "}
+ addUserKnob {6 idistort_map l "Use IDistort Map" t "Distorts tracking data with an iDistort map instead of an STMap compatible UV Map." +STARTLINE}
+ addUserKnob {6 animated_uvmap l "Animated Distortion Map" t "Check this if the input UVMap is animated. This will slow down analysis." -STARTLINE}
+ addUserKnob {7 precision l INVISIBLE t "Adjust the subdivide level of the uvmap invert - higher numbers result in increased accuracy at the expense of speed." +INVISIBLE R 2 16}
+ precision 10.2
+ addUserKnob {26 ""}
+ addUserKnob {22 execute l Execute t "Analyze UV Map pixel values at locations specified by tracking data in 'Track', then copy calculated offset track into 'Track Output'." T "from __future__ import with_statement \n\ndef distort_track_data():\n    \"\"\" Code to go in the \"Execute\" button inside the DistortTrack node\n    \"\"\"\n    #n = nuke.selectedNode()\n    n = nuke.thisNode()\n    padded_format = n\['padded_format'].value()\n    destination_format = n\['destination_format'].value()\n    # Set Padded and Destination Format Resolutions. You sample a 'format' knob's value() with .width() and .height()\n    pad_res = \[int(padded_format.width()), int(padded_format.height())]\n    dest_res = \[int(destination_format.width()), int(destination_format.height())]\n    # Assume uvmap does not animate, for faster sampling of uvmap colors.\n    uvmap_animation = False\n\n\n    track_list = \[]\n    for knob in n.knobs():\n        if 'track_' in knob:\n            track_list.append(n\[knob])\n    for track in track_list:\n        track_number = track.name().split('_')\[-1]\n        output = n.knob('trk_out_\{0\}'.format(track_number))\n        output.setAnimated()\n        channels = \['rgba.red', 'rgba.green']\n\n        with n:\n            curveTool = nuke.toNode('CurveTool')\n            crop_to1px = nuke.toNode('CropToReformatTrack')\n            framehold = nuke.toNode('MasterFramehold')\n\n            # destination_format = nuke.toNode('DestinationFormat').knob('format').value()\n            # padded_format = nuke.toNode('PadFormat1').knob('format').value()\n        crop_to1px\['pos'].clearAnimated()\n        crop_to1px\['pos'].setAnimated()\n        reformatted_track_position = crop_to1px\['pos'].animations()\n\n        # Handle case if Track knob has expression instead of keyframes\n        # Remove expression and copy each keyframe from source knob to this knob\n        if track.hasExpression(0) and track.hasExpression(1):\n            orig_exp = track.animation(0).expression().split('.')\n            print \"to - \", orig_exp\[1]\n            trk_srcnode = nuke.toNode(orig_exp\[1])\n            trk_srcknob = trk_srcnode\[orig_exp\[2]]\n            track.clearAnimated()\n            track.setAnimated()\n            if trk_srcnode.Class() == 'Tracker4':\n                # Deal with expression links to Tracker4 nodes\n                # http://forums.thefoundry.co.uk/phpBB2/viewtopic.php?t=8130\n                # http://forums.thefoundry.co.uk/phpBB2/viewtopic.php?t=8245\n                track_index = int(orig_exp\[3])-1\n                ch_x = 31*track_index + 2\n                ch_y = 31*track_index + 3\n                # Use the root framerange for tracker range - not possible to determine animation range\n                fr = nuke.root().frameRange()\n                for f in xrange(fr.first(), fr.last()):\n                    track.animation(0).setKey(f, trk_srcknob.getValueAt(f, ch_x))\n                    track.animation(1).setKey(f, trk_srcknob.getValueAt(f, ch_y))\n            else:\n                for index in \[0, 1]:\n                    track_knob_animcurve = track.animation(index)\n                    track_knob_animcurve.addKey(trk_srcknob.animation(index).keys())\n\n        # Get first and last keyframes on \"track\" animation curve\n        track_data = track.animations()\n\n        first_keyframe_x = track_data\[0].keys()\[0].x \n        last_keyframe_x = track_data\[0].keys()\[-1].x\n        first_keyframe_y = track_data\[1].keys()\[0].x\n        last_keyframe_y = track_data\[1].keys()\[-1].x\n\n        print \"Animation range x is\", first_keyframe_x, last_keyframe_x\n        print \"Animation range y is\", first_keyframe_y, last_keyframe_y\n\n        # Reformat Track Position Data\n        # Get difference in source and destination formats. This assumes 'resize type: none, center' reformat, \n        # for example, for removing padded pixels before applying lens distortion to cg\n        pad_diff = \[(pad_res\[0] - dest_res\[0]) / 2, (pad_res\[1] - dest_res\[1]) / 2]\n        print \"Pad Difference is (\{0\}x\{1\} - \{2\}x\{3\})/2 = \{4\}x\{5\}\".format(padded_format.width(), padded_format.height(), destination_format.width(), destination_format.height(), pad_diff\[0], pad_diff\[1])\n\n        # Find smallest first_keyframe and biggest last_keyframe - in case there are keys in one dimension that are not in the other\n        if first_keyframe_x < first_keyframe_y:\n            first_keyframe = first_keyframe_x\n        else:\n            first_keyframe = first_keyframe_y\n        if last_keyframe_x > last_keyframe_y:\n            last_keyframe = last_keyframe_x\n        else:\n            last_keyframe = last_keyframe_y\n        if uvmap_animation == False:\n            framehold.knob('first_frame').setValue(first_keyframe)\n        \n        \"\"\"\n        ################################\n        # How STMapping Works\n        ################################\n        http://forums.thefoundry.co.uk/phpBB2/viewtopic.php?t=2398&sid=a2e5572da996cc31235f4b5d606b8ec5\n        http://forums.thefoundry.co.uk/phpBB2/viewtopic.php?p=3015&sid=7705835d3af32b8371ab7f4af5815bc9\n        Every pixel of the uvmap represents the source pixel location. For example, a uvmap pixel says \"use the pixel from this location as me!\"\n        That location is encoded as floating point values, which represent fractions of width and height. For example, x position 512 in a 1080p frame would be encoded as 1920/512 = .26666667\n        On a MergeExpression node, an stmap operation basically is this: for every pixel in B, use the pixel from the coordinates specified by the pixel in A (the UVMAP).\n        Br(Ar*width, Ag*height) <- that is an stmap with impulse filtering on the red channel\n\n        To invert the stmap, for every pixel you would have to find the SourcePixel, and in that pixel's location, put the current pixelCoordinates.\n            Or: in each pixel's location, put the pixelCoordinates of the pixel that references this pixel's location\n        To map from Undistorted to Distorted position, you need to lookup the pixel value at the undistorted position in the undistort uvmap, OR lookup the pixel value at the distorted position in the re-distort map. \n            The second is not possible without trial and error, because we are trying to find the distorted position.\n\n        You can't do this to the distortion map using an expression node, but you are not limited to this. \n        \"\"\"\n\n        # Create reformatted track data, so we can sample the uv map in the correct place post-reformat\n        for i in \[0, 1]:\n            for frame in xrange(first_keyframe, last_keyframe):\n                reformatted_track_position\[i].setKey(frame, track_data\[i].evaluate(frame) - pad_diff\[i])\n        # Execute the curvetool with the correct framerange and a frame increment of 1,\n        # To get UV pixel values at each point of the reformatted tracking data\n        nuke.executeMultiple(\[curveTool,], (\[first_keyframe, last_keyframe, 1],))\n        uv_data = curveTool.knob('intensitydata').animations()\n        \n\n        # Loop through all keyframes, get distorted 2d position values using reformatted track positions\n        # and UV distortion data from curveTool analysis. Apply this data to track_output knob\n        for i in \[0,1]:\n            for frame in xrange(first_keyframe, last_keyframe):\n                reformatted_pos = reformatted_track_position\[i].evaluate(frame)\n                original_pos = track_data\[i].evaluate(frame)\n                #if original_pos <= 0 or original_pos >= dest_res\[i]:\n                if uv_data\[i].evaluate(frame) == 0:\n                     # Use the original reformat track data if the position is outside of the inverted uvmap bounds makes the distorted track at least slight resemble the original outside of the frame bounds instead of being zero\n                     #print 'uv data is zero, using reformatted track!'\n                     output.setValueAt( reformatted_pos, frame, i )\n                else:\n                    # Use the pixel coordinates that the uvmap points to at the 'reformatted track' pixel location.\n                    output.setValueAt( uv_data\[i].evaluate(frame) * dest_res\[i], frame, i )  \n                print \"Frame \{0:04d\} - \{1\} -> \{2\} --> \{3\} -- uv vals \{4\}\".format(frame, round(track_data\[i].evaluate(frame), 2), round(reformatted_pos, 2), uv_data\[i].evaluate(frame) * dest_res\[i], uv_data\[i].evaluate(frame))\n\nif __name__==\"__main__\":\n    distort_track_data()" +STARTLINE}
+ addUserKnob {22 add_track l "Add Track" t "Add another user track to process" -STARTLINE T "# Add Track Data Button\ndef add_track():\n    # Note! A triple single-quoted comment breaks the python knob in nuke, causing to output tons of syntax error messages!\n    # Adds another track_data knob, and associated track_output knob, along with a button to remove both\n    n = nuke.thisNode()\n    #n = nuke.selectedNode()\n    # If range knob for this range num already exist, increment range number\n    tnum_knob = n\[\"tnum\"]\n    tnum = int(tnum_knob.getValue())\n    if n.knob(\"track_\{0\}\".format(tnum)) != None:\n        tnum += 1\n        tnum_knob.setValue(tnum)\n    delete_track_knob = nuke.PyScript_Knob(\"delete_trk_\{0\}\".format(tnum), \"Delete track_\{0\}\".format(tnum))\n    delete_track_knob.setFlag(nuke.STARTLINE)\n    n.addKnob(delete_track_knob)\n    delete_track_knob.setCommand('n = nuke.thisNode(); n.removeKnob(n\[\"track_\{0\}\"]); n.removeKnob(n\[\"trk_out_\{0\}\"]); n.removeKnob(n\[\"delete_trk_\{0\}\"])'.format(tnum))\n    n.addKnob(nuke.XY_Knob(\"track_\{0\}\".format(tnum)))\n    n.addKnob(nuke.XY_Knob(\"trk_out_\{0\}\".format(tnum)))\n    \nif __name__==\"__main__\":\n    add_track()"}
+ addUserKnob {6 ShowTracks l "Show Tracks" t "Toggle visibility of undistorted Tracking data" +STARTLINE}
+ ShowTracks true
+ addUserKnob {6 ToggleOutput l "Show Output" t "Show or Hide Track Output Knobs. This cleans up the UI when trying to copy tracking data into the track knobs." -STARTLINE}
+ ToggleOutput true
+ addUserKnob {26 ""}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x4c4c4c01
+  label " Invert UV Map"
+  note_font_size 100
+  note_font_color 0x1e1e1eff
+  xpos 155
+  ypos 422
+  bdwidth 791
+  bdheight 644
+ }
+ Input {
+  inputs 0
+  name UV
+  xpos 180
+  ypos -441
+ }
+ Dot {
+  name Dot6
+  label " Input"
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos 214
+  ypos -390
+ }
+ Shuffle {
+  in none
+  blue black
+  alpha black
+  name SelectUV
+  xpos 180
+  ypos -297
+ }
+ Remove {
+  operation keep
+  channels {rgba.red rgba.green -rgba.blue}
+  name Remove1
+  xpos 180
+  ypos -254
+ }
+ Dot {
+  name Dot16
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos 214
+  ypos -126
+ }
+set N12f08e00 [stack 0]
+ Dot {
+  name Dot14
+  label " IDistort Style Map Input"
+  note_font_size 24
+  note_font_color 0x7f7f7f01
+  xpos 324
+  ypos -126
+ }
+ Expression {
+  expr0 (r+x)/width
+  expr1 (g+y)/height
+  expr2 0
+  name IDistort_To_UVMap
+  xpos 290
+  ypos -81
+ }
+set N12f094e0 [stack 0]
+push $N12f08e00
+ Switch {
+  inputs 2
+  which {{parent.idistort_map}}
+  name Switch1
+  xpos 180
+  ypos -81
+  addUserKnob {20 Timing}
+  addUserKnob {3 range_num +HIDDEN}
+  range_num 1
+  addUserKnob {22 add_range l "Add Range" -STARTLINE T "def add_range():\n    n = nuke.thisNode()\n    #n = nuke.selectedNode()\n    whichknob = n.knob('which')\n    rnum = n.knob('range_num').value()\n    # If range knob for this range num already exist, increment range number\n    if n.knob('range_\{0\}'.format(rnum)) != None:\n        rnum += 1\n        n.knob('range_num').setValue(rnum)\n    sfname = 'startframe_\{0\}'.format(rnum)\n    efname = 'endframe_\{0\}'.format(rnum)\n    n.addKnob(nuke.Text_Knob('range_\{0\}'.format(rnum), 'range_\{0\}'.format(rnum)))\n    n.addKnob(nuke.Int_Knob(sfname, 'Start Frame'))\n    n.addKnob(nuke.Int_Knob(efname, 'End Frame'))\n    n.knob(sfname).setValue(int(nuke.root()\['first_frame'].getValue()))\n    n.knob(efname).setValue(int(nuke.root()\['last_frame'].getValue()))\n    \n    if whichknob.hasExpression():\n        whichknob.setExpression(whichknob.animation(0).expression() + \" || (frame >= \{0\} && frame <= \{1\})\".format(sfname, efname))\n    else:\n        whichknob.setExpression('(frame >= \{0\} && frame <= \{1\})'.format(sfname, efname))\n    n.knob('label').setValue('Range \[value \{0\}]-\[value \{1\}]'.format(sfname, efname))\nif __name__==\"__main__\":\n    add_range()"}
+ }
+ Dot {
+  name Dot15
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos 214
+  ypos 66
+ }
+set N12f09850 [stack 0]
+ Dot {
+  name Dot8
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos 104
+  ypos 66
+ }
+ Dot {
+  name Dot1
+  label " Output UV Map for Preview"
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos 104
+  ypos 1362
+ }
+ Output {
+  name Output1
+  xpos 70
+  ypos 1455
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format {{{parent.DestinationFormat.format}}}
+  name Constant1
+  xpos 400
+  ypos 793
+ }
+ Reformat {
+  resize none
+  pbb true
+  name DestinationFormat
+  xpos 400
+  ypos 879
+ }
+set N1ce5eee0 [stack 0]
+ Reformat {
+  resize none
+  name PadFormat
+  xpos 400
+  ypos 922
+ }
+push $N12f094e0
+ Expression {
+  expr0 (r*width-x)*inv
+  expr1 (g*height-y)*inv
+  expr2 0
+  name UVMapToIDistort
+  xpos 290
+  ypos -33
+  addUserKnob {20 Invert}
+  addUserKnob {3 inv l invert}
+  inv 1
+ }
+ Camera2 {
+  inputs 0
+  translate {0 0 1}
+  focal 24.576
+  name Camera1
+  xpos 740
+  ypos 858
+ }
+push $N12f09850
+ Dot {
+  name Dot9
+  label " Input Distortion Map"
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos 434
+  ypos 66
+ }
+ Grade {
+  add -0.5
+  black_clamp false
+  name Grade4
+  xpos 400
+  ypos 663
+ }
+ Grade {
+  multiply {1 {height/width} 1 1}
+  black_clamp false
+  name Grade5
+  xpos 400
+  ypos 687
+ }
+push $N12f09850
+ Dot {
+  name Dot12
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos 214
+  ypos 258
+ }
+ Dot {
+  name Dot11
+  label " Identity UV Map"
+  note_font_size 42
+  note_font_color 0x7f7f7f01
+  xpos 654
+  ypos 258
+ }
+ Remove {
+  operation keep
+  channels {rgba.red rgba.green -rgba.blue}
+  name Remove2
+  xpos 620
+  ypos 322
+ }
+ Expression {
+  expr0 (x+0.5)/(width)
+  expr1 (y+0.5)/(height)
+  name Expression6
+  label "UV map"
+  xpos 620
+  ypos 370
+ }
+ Card2 {
+  rows {{input.width/divisions}}
+  columns {{input.height/divisions}}
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card2
+  xpos 620
+  ypos 567
+  addUserKnob {20 User}
+  addUserKnob {3 divisions}
+  divisions {{rint(parent.precision)}}
+ }
+ DisplaceGeo {
+  inputs 2
+  source "rgb absolute"
+  scale 1
+  name DisplaceGeo2
+  xpos 620
+  ypos 687
+ }
+ FrameHold {
+  first_frame {{parent.MasterFramehold.knob.first_frame}}
+  name SlaveFramehold1
+  xpos 620
+  ypos 730
+  disable {{parent.MasterFramehold.disable}}
+  addUserKnob {20 Set}
+  addUserKnob {22 Set_BTN l "Set To Current Frame" -STARTLINE T "fh = nuke.thisNode()\nfh.knob('first_frame').setValue(nuke.frame())"}
+ }
+push $N1ce5eee0
+ ScanlineRender {
+  inputs 3
+  overscan {{(PadFormat.format.width/DestinationFormat.format.width-1)*PadFormat.format.width} {(PadFormat.format.height/DestinationFormat.format.height-1)*PadFormat.format.height}}
+  motion_vectors_type distance
+  name ScanlineRender1
+  xpos 620
+  ypos 879
+ }
+ FrameHold {
+  first_frame 501
+  name MasterFramehold
+  label "assume non-animated distortion map"
+  xpos 620
+  ypos 940
+  disable {{parent.animated_uvmap}}
+  addUserKnob {20 Set}
+  addUserKnob {22 Set_BTN l "Set To Current Frame" -STARTLINE T "fh = nuke.thisNode()\nfh.knob('first_frame').setValue(nuke.frame())"}
+ }
+ Crop {
+  box {{"pos.x - boxsize/2"} {"pos.y - boxsize/2"} {box.x+boxsize} {box.y+boxsize}}
+  reformat true
+  crop false
+  name CropToReformatTrack
+  xpos 620
+  ypos 1167
+  addUserKnob {20 CTRL l Controls}
+  addUserKnob {7 boxsize R 1 10}
+  boxsize 1
+  addUserKnob {12 pos}
+ }
+ CurveTool {
+  avgframes 1
+  ROI {480 270 1440 810}
+  autocropdata {480 270 1440 810}
+  intensitydata {0 0 0 0}
+  name CurveTool
+  xpos 620
+  ypos 1239
+ }
+end_group

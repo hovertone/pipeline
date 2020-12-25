@@ -1,0 +1,199 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+ tile_color 0xb7744aff
+ addUserKnob {20 User}
+ addUserKnob {7 FractalBlur_UserDilate l Spread R 0 200}
+ addUserKnob {41 size T FilterErode_my.size}
+ addUserKnob {41 filter -STARTLINE T FilterErode_my.filter}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {7 FractalBlur_UserGrainSize l "Grain Size" R 0 100}
+ FractalBlur_UserGrainSize {20}
+ addUserKnob {7 FractalBlur_UserContrast l Contrast}
+ FractalBlur_UserContrast {0}
+ addUserKnob {7 FractalBlur_UserGamma l Gamma R 0 5}
+ FractalBlur_UserGamma 1
+ addUserKnob {6 FractalBlur_UserBlackWhite l "Make black and white" +STARTLINE}
+ addUserKnob {7 FractalBlur_UserThreshold l Threshold}
+ FractalBlur_UserThreshold {0}
+ addUserKnob {6 FractalBlur_UserBW l "Clamp output" +STARTLINE}
+ addUserKnob {7 FractalBlur_UserGrainEvolve l "Grain Evolution" t "Keyframe this value to animate the grain" R 0 10}
+ FractalBlur_UserGrainEvolve {1}
+ addUserKnob {26 ""}
+ addUserKnob {26 FractalBlur_Credit l "" +STARTLINE T "Fractal Blur v1.3 by Richard Frazer - www.richardfrazer.com"}
+ addUserKnob {20 curves l Curves}
+ addUserKnob {41 channels T ColorLookup1.channels}
+ addUserKnob {41 lut l "" +STARTLINE T ColorLookup1.lut}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 1516
+  ypos -418
+ }
+ Dot {
+  name Dot3
+  xpos 1550
+  ypos -370
+ }
+set N1eb66bd0 [stack 0]
+ Dot {
+  name Dot1
+  xpos 1748
+  ypos -370
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle10
+  xpos 1714
+  ypos -205
+ }
+ Noise {
+  size {{"\[value FractalBlur_UserGrainSize]"}}
+  zoffset {{"\[value FractalBlur_UserGrainEvolve]"}}
+  center {1024 778}
+  name Noise1
+  xpos 1714
+  ypos -141
+ }
+ Invert {
+  name Invert4
+  xpos 1714
+  ypos -67
+ }
+push $N1eb66bd0
+ Blur {
+  size {{"\[value FractalBlur_UserDilate]" x101 0}}
+  name Blur1
+  xpos 1516
+  ypos -313
+ }
+add_layer {rgb rgb.UV}
+add_layer {rgba redguard1.glow rgba.beta rgba.edgeblur rgba.noise}
+ FilterErode {
+  channels {rgba.red rgba.green rgba.blue rgba.alpha}
+  size {{"(-\[value FractalBlur_UserDilate])/2"}}
+  name FilterErode7
+  xpos 1516
+  ypos -253
+ }
+ FilterErode {
+  channels all
+  size 0
+  name FilterErode_my
+  xpos 1516
+  ypos -204
+ }
+ Dot {
+  name Dot10
+  xpos 1550
+  ypos -133
+ }
+set N1ebc4e10 [stack 0]
+ ColorLookup {
+  name ColorLookup1
+  xpos 1586
+  ypos -56
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge2
+  xpos 1660
+  ypos -6
+ }
+ Clamp {
+  name Clamp3
+  xpos 1660
+  ypos 18
+  disable true
+ }
+ Invert {
+  name Invert3
+  xpos 1660
+  ypos 64
+ }
+push $N1ebc4e10
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge13
+  xpos 1516
+  ypos 70
+ }
+set N1ebc5860 [stack 0]
+ Clamp {
+  name Clamp1
+  xpos 1408
+  ypos 116
+ }
+ Grade {
+  channels {rgba.red rgba.green rgba.blue rgba.alpha}
+  blackpoint {{FractalBlur_UserThreshold}}
+  whitepoint {{FractalBlur_UserThreshold}}
+  name Grade1
+  xpos 1408
+  ypos 195
+ }
+push $N1ebc5860
+ Switch {
+  inputs 2
+  which {{FractalBlur_UserBlackWhite x47 1}}
+  name Switch1
+  xpos 1516
+  ypos 249
+ }
+ Grade {
+  channels {rgba.red rgba.green rgba.blue rgba.alpha}
+  blackpoint {{FractalBlur_UserContrast}}
+  whitepoint {{1-FractalBlur_UserContrast}}
+  gamma {{FractalBlur_UserGamma x101 0.985}}
+  name Grade5
+  selected true
+  xpos 1516
+  ypos 330
+ }
+set N1ebc62b0 [stack 0]
+ Clamp {
+  name Clamp2
+  xpos 1413
+  ypos 372
+ }
+push $N1ebc62b0
+ Switch {
+  inputs 2
+  which {{FractalBlur_UserBW x47 0}}
+  name Switch2
+  xpos 1517
+  ypos 464
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle15
+  xpos 1517
+  ypos 532
+ }
+ Output {
+  name Output1
+  xpos 1517
+  ypos 611
+ }
+push $N1eb66bd0
+push 0
+push $N1ebc4e10
+push $N1ebc62b0
+ Viewer {
+  inputs 4
+  gl_buffer_depth half-float
+  viewerProcess None
+  input_process false
+  name Viewer1
+  xpos 1103
+  ypos 49
+ }
+end_group

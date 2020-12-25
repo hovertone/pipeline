@@ -1,0 +1,368 @@
+#! C:/Program Files/Nuke10.5v4/nuke-10.5.4.dll -nx
+version 10.5 v4
+Gizmo {
+ inputs 2
+ addUserKnob {20 User}
+ addUserKnob {41 face T Switch2.which}
+}
+ Input {
+  inputs 0
+  name InputMask
+  xpos 548
+  ypos 412
+  number 1
+ }
+ Dot {
+  name Dot45
+  xpos 582
+  ypos 526
+ }
+ Input {
+  inputs 0
+  name InputIn
+  xpos 823
+  ypos 200
+ }
+ Dot {
+  name Dot41
+  xpos 849
+  ypos 315
+ }
+set N63f68800 [stack 0]
+ Dot {
+  name Dot42
+  xpos 849
+  ypos 567
+ }
+set N63f68400 [stack 0]
+add_layer {icon icon.red icon.green icon.blue}
+ Shuffle {
+  in icon
+  red green
+  blue green
+  alpha green
+  name Shuffle24
+  label "\[knob in]"
+  xpos 687
+  ypos 557
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge24
+  tile_color 0x7000ffff
+  xpos 687
+  ypos 637
+ }
+push $N63f68800
+ Dot {
+  name Dot46
+  xpos 984
+  ypos 315
+ }
+set N63d71800 [stack 0]
+ Shuffle {
+  in icon
+  red green
+  blue green
+  alpha green
+  name Shuffle25
+  label "\[knob in]"
+  xpos 950
+  ypos 503
+ }
+ Erode {
+  size 2
+  name Erode3
+  xpos 950
+  ypos 553
+ }
+push $N63d71800
+ Dot {
+  name Dot43
+  xpos 1135
+  ypos 315
+ }
+add_layer {uv_extra uv_extra.red uv_extra.green uv_extra.blue}
+ Shuffle {
+  in uv_extra
+  alpha black
+  name Shuffle26
+  label "\[knob in]"
+  xpos 1101
+  ypos 351
+ }
+ Grade {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  add -1
+  name Grade20
+  xpos 1101
+  ypos 389
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_03/out/player04_02.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read7
+  xpos 3129
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_03/out/player03_02.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read2
+  xpos 3019
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_03/out/player01_02.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read3
+  xpos 2909
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_03/out/player01_01.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read4
+  xpos 2799
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_03/out/player04_01.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read5
+  xpos 2689
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_03/out/player03_01.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read6
+  xpos 2579
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_03/out/player02_01.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read8
+  xpos 2469
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_02/out/player03_04.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read9
+  xpos 2359
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_02/out/player03_03.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read10
+  xpos 2249
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_02/out/player03_02.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read11
+  xpos 2139
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_02/out/player03_01.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read12
+  xpos 2029
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_02/out/player02_03.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read13
+  xpos 1919
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_02/out/player02_02.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read14
+  xpos 1809
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_02/out/player02_01.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read15
+  xpos 1699
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_02/out/player01_03.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read16
+  xpos 1589
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_02/out/player01_02.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read19
+  xpos 1479
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+ Read {
+  inputs 0
+  file P:/vikings/assetBuilds/art/concept/ui_icons/photos_02/out/player01_01.png
+  format "512 512 0 0 512 512 1 square_512"
+  origset true
+  auto_alpha true
+  name Read34
+  xpos 1369
+  ypos 317
+  addUserKnob {20 User l Q(-_-Q)}
+  addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+ }
+set N63616000 [stack 0]
+ Switch {
+  inputs 17
+  name Switch2
+  xpos 1709
+  ypos 491
+ }
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap3
+  xpos 1101
+  ypos 465
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge25
+  tile_color 0x7000ffff
+  xpos 1101
+  ypos 559
+ }
+set N63875800 [stack 0]
+ EdgeExtend.gizmo {
+  name EdgeExtend3
+  xpos 1220
+  ypos 637
+ }
+push $N63875800
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge26
+  xpos 1102
+  ypos 637
+ }
+push $N63f68400
+ Merge2 {
+  inputs 2+1
+  maskChannelInput -icon.green
+  name Merge27
+  xpos 814
+  ypos 637
+ }
+ Output {
+  name Output1
+  xpos 814
+  ypos 744
+ }
+ Output {
+  name Output2
+  xpos 814
+  ypos 844
+ }
+push $N63616000
+ Viewer {
+  frame_range 1001-1065
+  fps 25
+  name Viewer1
+  xpos 634
+  ypos 264
+ }
+end_group

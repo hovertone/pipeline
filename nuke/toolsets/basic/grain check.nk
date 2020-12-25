@@ -1,0 +1,62 @@
+set cut_paste_input [stack 0]
+version 8.0 v6
+push $cut_paste_input
+Group {
+ name GRAIN_CHECK
+ selected true
+ xpos -55
+ ypos 2834
+}
+ Input {
+  inputs 0
+  name comp
+  xpos -28
+  ypos -465
+ }
+set N2e7f28a0 [stack 0]
+push $N2e7f28a0
+ Blur {
+  size 1
+  name Blur1
+  xpos 52
+  ypos -397
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos -28
+  ypos -315
+ }
+ Gamma {
+  value 4
+  name Gamma1
+  xpos -28
+  ypos -271
+ }
+ Multiply {
+  value 2
+  name Multiply1
+  xpos -28
+  ypos -211
+ }
+ Output {
+  name Output1
+  xpos -28
+  ypos -155
+ }
+set N2e7f39d0 [stack 0]
+ Output {
+  name Output2
+  xpos -28
+  ypos -55
+ }
+push $N2e7f39d0
+ Viewer {
+  input_process false
+  name Viewer1
+  selected true
+  xpos -28
+  ypos -441
+ }
+end_group

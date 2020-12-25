@@ -1,0 +1,204 @@
+#! /usr/local/Nuke6.2v2/Nuke6.2.real -nx
+version 6.2 v2
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {41 Color T CVRGBCMYBW_AZ.Color}
+ name ObjectID_CV_RGBCMYKW_AndorZ
+}
+ Input {
+  inputs 0
+  name img
+  label img
+  xpos -260
+  ypos -66
+ }
+ Dot {
+  name Dot1
+  xpos -226
+  ypos 18
+ }
+set N471bb00 [stack 0]
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 r*g*b
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 r*g*b
+  channel2 {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  expr2 r*g*b
+  name White_expression1
+  xpos 358
+  ypos 159
+ }
+ Clamp {
+  name Clamp15
+  xpos 358
+  ypos 266
+ }
+push $N471bb00
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 r+b+g
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 r+g+b
+  channel2 {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  expr2 r+g+b
+  name Black_expression1
+  xpos 236
+  ypos 159
+ }
+ Invert {
+  name Invert2
+  xpos 236
+  ypos 216
+ }
+ Clamp {
+  name Clamp2
+  xpos 236
+  ypos 264
+ }
+push $N471bb00
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 (r*g)-b
+  expr1 -1
+  expr2 -1
+  name Yellow_expression1
+  xpos 70
+  ypos 157
+ }
+ Shuffle {
+  green red
+  name Shuffle6
+  xpos 70
+  ypos 181
+ }
+ Clamp {
+  name Clamp12
+  xpos 70
+  ypos 222
+ }
+push $N471bb00
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 -1
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 (b*r)-g
+  expr2 -1
+  name Magenta_expression1
+  xpos -40
+  ypos 157
+ }
+ Shuffle {
+  red green
+  green red
+  blue green
+  alpha green
+  name Shuffle7
+  xpos -40
+  ypos 181
+ }
+ Clamp {
+  name Clamp13
+  xpos -40
+  ypos 222
+ }
+push $N471bb00
+ Expression {
+  expr0 -r
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 -g
+  expr2 (b*g)-r
+  name Cyan_expression1
+  xpos -150
+  ypos 157
+ }
+ Shuffle {
+  red green
+  green blue
+  alpha blue
+  name Shuffle8
+  xpos -150
+  ypos 181
+ }
+ Clamp {
+  name Clamp14
+  xpos -150
+  ypos 222
+ }
+push $N471bb00
+ Expression {
+  expr0 -1
+  expr1 -1
+  channel2 {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  expr2 b-(r+g)
+  name Blue_expression2
+  xpos -370
+  ypos 157
+ }
+ Clamp {
+  name Clamp6
+  xpos -370
+  ypos 222
+ }
+push $N471bb00
+ Expression {
+  expr0 -1
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 g-(r+b)
+  expr2 -1
+  name Green_expression2
+  xpos -480
+  ypos 157
+ }
+ Clamp {
+  name Clamp5
+  xpos -480
+  ypos 222
+ }
+push $N471bb00
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 r-(b+g)
+  expr1 -1
+  expr2 -1
+  name Red_expression2
+  xpos -590
+  ypos 157
+ }
+ Clamp {
+  name Clamp4
+  xpos -590
+  ypos 222
+ }
+push $N471bb00
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 r+b+g
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 r+g+b
+  channel2 {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  expr2 r+g+b
+  name ColorValue_expression
+  xpos -810
+  ypos 157
+ }
+ Clamp {
+  name Clamp1
+  xpos -810
+  ypos 225
+ }
+ Switch {
+  inputs 9
+  which {{parent.CVRGBCMYBW_AZ.Color i x1 0}}
+  name Switch1
+  xpos -260
+  ypos 397
+ }
+ Output {
+  name CVRGBCMYBW_AZ
+  xpos -260
+  ypos 554
+  addUserKnob {20 User}
+  addUserKnob {4 Color M {Color_Value Red Green Blue Cyan Magenta Yellow Black White "" "" "" "" "" "" ""}}
+ }
+end_group

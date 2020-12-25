@@ -1,0 +1,57 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+ addUserKnob {20 UserAN l User}
+ addUserKnob {41 scale T Transform11.scale}
+}
+ Input {
+  inputs 0
+  name IN
+  label input
+  xpos -153
+  ypos -56
+ }
+ Blur {
+  size 1.4
+  name Blur16
+  xpos -153
+  ypos -9
+ }
+ Blur {
+  channels {-rgba.red rgba.green -rgba.blue}
+  size 1.6
+  name Blur17
+  xpos -153
+  ypos 57
+ }
+ Sharpen {
+  channels {-rgba.red rgba.green -rgba.blue}
+  amount 2
+  size 2
+  name Sharpen1
+  xpos -153
+  ypos 119
+ }
+ Sharpen {
+  channels {-rgba.red -rgba.green rgba.blue}
+  size 1
+  name Sharpen2
+  xpos -153
+  ypos 182
+ }
+ TransformMasked {
+  channels {rgba.red -rgba.green -rgba.blue}
+  scale 0.9985
+  center {1024 576}
+  name Transform11
+  xpos -153
+  ypos 246
+ }
+ Output {
+  name OUT
+  label out
+  selected true
+  xpos -153
+  ypos 323
+ }
+end_group

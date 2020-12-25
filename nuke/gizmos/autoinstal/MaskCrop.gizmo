@@ -1,0 +1,221 @@
+#! C:/Program Files/Nuke6.2v1b21/Nuke6.2.exe -nx
+version 6.1 v1
+Gizmo {
+ help "Crop/Mask the image height to a given image aspect."
+ tile_color 0x81818100
+ label "\[value this.imageaspect]"
+ note_font Verdana
+ note_font_size 16
+ note_font_color 0xffffff00
+ mapsize {0.15 0.15}
+ addUserKnob {20 "" l Param}
+ addUserKnob {4 action l Action M {Disable Crop Mask "Mask Transparent"}}
+ action Mask
+ addUserKnob {7 transparency l Transparency}
+ transparency 0.26
+ addUserKnob {26 ""}
+ addUserKnob {35 presets l "" -STARTLINE M {"presets/1.33 = 4:3, Full Aperture, IMAX" "knobs this \{imageaspect 1.33\}" "presets/1.37 = 16mm, Academy Aperture" "knobs this \{imageaspect 1.37\}" "presets/1.50 = Vista Vision (8-perf)" "knobs this \{imageaspect 1.50\}" presets/1.66 "knobs this \{imageaspect 1.66\}" "presets/1.69 = Super16" "knobs this \{imageaspect 1.69\}" "presets/1.7778 = 16:9, HDTV" "knobs this \{imageaspect 1.7778\}" presets/1.85 "knobs this \{imageaspect 1.85\}" "presets/2.28 = 65mm (5-perf)" "knobs this \{imageaspect 2.28\}" "presets/2.35 = Cinemascope, Super 35" "knobs this \{imageaspect 2.35\}"}}
+ addUserKnob {7 imageaspect l "Image Aspect" R 1.33 2.35}
+ imageaspect 2.35
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x71c67100
+  label "Re-aply Correct Aspect"
+  xpos 0
+  ypos 108
+  bdwidth 251
+  bdheight 105
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -267
+  ypos -628
+ }
+ Dot {
+  name Dot10
+  xpos -233
+  ypos -513
+ }
+set N1ae24c90 [stack 0]
+ Dot {
+  name Dot1
+  xpos -90
+  ypos -444
+ }
+set N1ae24f40 [stack 0]
+ Blur {
+  name Blur1
+  label "break concatentaion"
+  xpos -124
+  ypos -302
+ }
+ Reformat {
+  type "to box"
+  box_width {{Input1.width}}
+  box_height {{"rint( Input1.width/imageaspect * Input1.actual_format.pixel_aspect )"}}
+  box_fixed true
+  resize none
+  filter Impulse
+  black_outside true
+  name Reformat1
+  xpos -124
+  ypos -210
+ }
+set N1ae254a0 [stack 0]
+ Dot {
+  name Dot8
+  xpos -90
+  ypos -79
+ }
+set N1ae25750 [stack 0]
+ Reformat {
+  type "to box"
+  box_width {{Input1.width}}
+  box_height {{Input1.height}}
+  box_fixed true
+  resize none
+  filter Impulse
+  black_outside true
+  name Reformat2
+  xpos -124
+  ypos -17
+ }
+set N1ae25a00 [stack 0]
+push $N1ae25750
+ Shuffle {
+  red white
+  green white
+  blue white
+  alpha white
+  name Shuffle2
+  label "Make Mask"
+  xpos 74
+  ypos -78
+ }
+ Reformat {
+  type "to box"
+  box_width {{Input1.width}}
+  box_height {{Input1.height}}
+  box_fixed true
+  resize none
+  filter Impulse
+  black_outside true
+  name Reformat4
+  xpos 74
+  ypos -7
+ }
+push $N1ae24c90
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos -267
+  ypos -30
+ }
+set N1b199240 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos 74
+  ypos 155
+ }
+ Dot {
+  name Dot9
+  xpos 108
+  ypos 230
+ }
+set N1b19ad20 [stack 0]
+ Merge2 {
+  inputs 2
+  operation in
+  name Merge1
+  xpos -124
+  ypos 298
+ }
+push $N1ae24f40
+ Dot {
+  name Dot2
+  xpos 307
+  ypos -295
+ }
+ Multiply {
+  value {{transparency}}
+  name Multiply1
+  label FADE
+  xpos 273
+  ypos -111
+ }
+push $N1b19ad20
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge2
+  xpos 273
+  ypos 301
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge3
+  xpos 53
+  ypos 345
+ }
+ Dot {
+  name Dot3
+  xpos 87
+  ypos 441
+ }
+push $N1ae25a00
+push $N1b199240
+ Merge2 {
+  inputs 2
+  name Merge4
+  xpos -267
+  ypos 215
+ }
+ Dot {
+  name Dot4
+  xpos -233
+  ypos 292
+ }
+push $N1ae254a0
+ Dot {
+  name Dot5
+  xpos -416
+  ypos -133
+ }
+ Dot {
+  name Dot6
+  xpos -416
+  ypos 296
+ }
+push $N1ae24f40
+ Dot {
+  name Dot7
+  xpos -528
+  ypos -210
+ }
+ Dot {
+  name Dot11
+  xpos -528
+  ypos 299
+ }
+ Switch {
+  inputs 4
+  which {{action}}
+  name Switch1
+  selected true
+  xpos -267
+  ypos 484
+ }
+ Output {
+  name Output1
+  xpos -267
+  ypos 774
+ }
+end_group

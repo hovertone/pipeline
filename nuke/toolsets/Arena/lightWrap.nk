@@ -1,0 +1,75 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+push $cut_paste_input
+Dot {
+ name Dot18
+ label FG
+ note_font_size 22
+ selected true
+ xpos 157
+ ypos 1699
+}
+set N5907cc00 [stack 0]
+Dot {
+ name Dot19
+ selected true
+ xpos 350
+ ypos 1699
+}
+Clamp {
+ channels alpha
+ maximum 0
+ MinClampTo_enable true
+ MaxClampTo_enable true
+ name Clamp4
+ selected true
+ xpos 316
+ ypos 1726
+}
+Dot {
+ inputs 0
+ name Dot20
+ label BG
+ note_font_size 22
+ selected true
+ xpos 575
+ ypos 1806
+}
+Multiply {
+ inputs 1+1
+ value 0
+ name Multiply4
+ selected true
+ xpos 316
+ ypos 1796
+}
+expoglow.gizmo {
+ name expoglow7
+ selected true
+ xpos 316
+ ypos 1834
+ PreGrade 1
+ gamma 0.265
+ GlowSettings 1
+ size 7.55
+ PostGrade 1
+ white_1 0.035
+ gamma_1 1.42
+ saturation 0.66
+ maskChannelMask -rgba.alpha
+ previewPost true
+ ShiftRed 1
+ ShiftGreen 1
+ ShiftBlue 1
+}
+push $N5907cc00
+Merge2 {
+ inputs 2
+ operation atop
+ Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+ name Merge11
+ label "light wrap"
+ selected true
+ xpos 123
+ ypos 1828
+}

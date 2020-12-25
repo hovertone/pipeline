@@ -1,0 +1,487 @@
+proc int
+stringArrayReverseAppend(string $to[], int $end, string $from[])
+{
+    int $newEnd = $end + size($from);
+    for($i = $newEnd, $j = 0; $i-- > $end; $j++)
+    {
+        $to[$i] = $from[$j];
+    }
+    return $newEnd;
+}
+
+proc int
+validateInputObjects(string $objects[],
+        string $validObjects[],
+        string $invalidObjects[])
+{
+    string $objectsToProcess[];
+    int $objectsToProcessEnd = stringArrayReverseAppend(
+            $objectsToProcess, 0, $objects);
+
+    int $validObjectsCount = 0;
+
+    string $curveObjects[];
+    string $transformObjects[];
+
+    while($objectsToProcessEnd)
+    {
+        string $object = $objectsToProcess[$objectsToProcessEnd - 1];
+        $objectsToProcessEnd--;
+
+        if(!`objExists $object`)
+        {
+            $invalidObjects[size($invalidObjects)] = $object;
+            continue;
+        }
+        // actually, by the time we get here, we probably only have shapes
+        // so the transform check can probably go
+        if(`objectType -isAType "mesh" $object`)
+        {
+            if(`getAttr ($object + ".intermediateObject")` == 1) {
+                // an itermediate object isn't really invalid
+                // but it's part of history already and should not be modified further
+                continue;
+            }
+
+            $validObjects[size($validObjects)] = $object;
+            $validObjectsCount++;
+        }
+        else
+        {
+            $invalidObjects[size($invalidObjects)] = $object;
+        }
+    }
+
+    $validObjects = stringArrayRemoveDuplicates($validObjects);
+
+    return $validObjectsCount;
+}
+
+proc string
+createInputGeometryNode(string $transformAttr, string $geometryAttr)
+{
+    // if a houdiniInputGeometry already exists, reuse it
+    {
+        string $connections[] =
+            `listConnections -type houdiniInputGeometry -destination true
+            $geometryAttr`;
+        if(size($connections))
+        {
+            return (plugNode($connections[0]) + ".outputNodeId");
+        }
+    }
+
+    string $inputNode = `createNode -skipSelect houdiniInputGeometry`;
+
+    // don't connect the input world transform for a history asset
+    // Since the output is still parented under that same hierarchy
+    // but if you really need the input transform, uncomment this code
+
+    //if($transformAttr != "")
+        //connectAttr $transformAttr ($inputNode + ".inputTransform");
+
+    connectAttr $geometryAttr ($inputNode + ".inputGeometry");
+
+    return ($inputNode + ".outputNodeId");
+}
+
+proc string
+getInputNodeForSingle(string $object)
+{
+    string $transformAttr;
+    {
+        string $parents[] = `listRelatives -fullPath -parent $object`;
+        $transformAttr = $parents[0] + ".worldMatrix";
+    }
+
+    if(`objectType -isAType "houdiniAsset" $object`)
+    {
+        // if we just got the houdiniAsset, just assume the first output
+        return ($object + ".output.outputObjects[0].outputObjectMetaData");
+    }
+    else if(`objectType -isAType "houdiniInputGeometry" $object`
+            || `objectType -isAType "houdiniInputCurve" $object`
+            || `objectType -isAType "houdiniInputTransform" $object`
+            || `objectType -isAType "houdiniInputMerge" $object`)
+    {
+        return ($object + ".outputNodeId");
+    }
+    else if(`objectType -isAType "mesh" $object`)
+    {
+        string $histPlug = `connectionInfo -sfd ($object + ".inMesh")`;
+        string $histNode = plugNode($histPlug);
+
+        if($histNode != ""
+                && `nodeType $histNode` == "houdiniAsset")
+        {
+            // TODO: Assume that assets with inputs are SOPs
+            // *** A bit of a hack, plugNode just takes a substring of
+            // everything before the first '.', even if the substring is
+            // not a node.
+            string $obj = plugNode(plugAttr($histPlug));
+
+            return ($histNode + "." + $obj + ".outputObjectMetaData");
+        }
+        else
+        {
+            string $geometryAttr = $object + ".outMesh";
+            return createInputGeometryNode($transformAttr, $geometryAttr);
+        }
+    }
+    else if(`objectType -isAType "nurbsCurve" $object`)
+    {
+        string $geometryAttr = $object + ".local";
+
+        return createInputGeometryNode($transformAttr, $geometryAttr);
+    }
+    else if(`objectType -isAType "particle" $object`)
+    {
+        string $geometryAttr = $object + ".position";
+
+        return createInputGeometryNode($transformAttr, $geometryAttr);
+    }
+    else if(`objectType -isAType "hairSystem" $object`)
+    {
+        string $path[];
+        int $pathLen = `tokenize $object "|" $path`;
+        string $inputNode = $path[$pathLen - 1] + "_HoudiniInput";
+        $inputNode = `createNode "houdiniInputCurve" -name $inputNode`;
+
+        string $outputHairs[] = `listAttr -multi ($object + ".outputHair")`;
+
+        int $iInput = 0;
+        for ($outputHair in $outputHairs)
+        {
+            string $follicleShapes[] =
+                `listConnections ($object + "." + $outputHair)`;
+
+            for ($follicleShape in $follicleShapes)
+            {
+                string $inputPlug =
+                    `format -s $inputNode -s $iInput "^1s.inputCurve[^2s]"`;
+
+                connectAttr ($follicleShape + ".outCurve") $inputPlug;
+            }
+
+            $iInput += 1;
+        }
+
+        return $inputNode + ".outputNodeId";
+    }
+
+    print("Error: Unable to use object as input:" + $object + "\n");
+    return "";
+}
+
+
+proc string getFirstNodeInput(string $nodeName, string $attr, string $fullAttr)
+{
+    string $fullAttrName = $nodeName + "." + $fullAttr;
+
+    string $children[] = `attributeQuery -node $nodeName -listChildren $attr`;
+    for($child in $children)
+    {
+        string $type = `getAttr -type ($fullAttrName + "." + $child)`;
+        int $isCompound = ($type == "TdataCompound");
+        int $isMulti = `attributeQuery -node $nodeName -multi $child`;
+
+        if(endsWith($child, "__node"))
+        {
+            return $child;
+        }
+        else if($isCompound && !$isMulti)
+        {
+            string $nodeInput = getFirstNodeInput($nodeName, $child, $fullAttr + "." + $child);
+            if($nodeInput != "")
+                return $nodeInput;
+        }
+    }
+    return "";
+}
+proc string getHistoryInputAttr(string $assetNode)
+{
+    string $firstNodeInput = "";
+    if(`getAttr -size ($assetNode + ".input")` > 0) {
+        $firstNodeInput = "input[0].inputNodeId";
+    }
+
+    if($firstNodeInput == "") {
+        $firstNodeInput = getFirstNodeInput($assetNode, "houdiniAssetParm",  "houdiniAssetParm");
+    }
+    return $firstNodeInput;
+}
+
+global proc int
+houdiniEngine_addHistory(string $assetNode)
+{
+    // if we get here from the menu, we will have already unselected the asset and passed it as an argument
+    // selection should just be the mesh (or some componenets of the mesh) that is to have the asset applied to it
+
+    string $assets[] = `ls -sl -exactType "houdiniAsset"`;
+    if(size ($assets) > 0) {
+        print("Error: cannot add an asset as history to another asset\n ");
+        return 1;
+    }
+
+    // NEED TO CHECK: if the mesh is a non-history asset output, adding history might just make a real mess
+
+    string $firstNodeInput = getHistoryInputAttr($assetNode);
+
+    if($firstNodeInput == "")
+    {
+        // if there is no object input attr, inserting this into history would be meaningless
+        // NEED TO CHECK: do we want to be able to add it to a mesh that has no history?
+        print("Error: this asset has no inputs, adding it as history would invalidate previous history\n");
+        return 1;
+    }
+
+    string $components[];
+    string $objects[] = `ls -selection -long -dag -shapes`;
+    if(size($objects) > 0) {
+        // object selection
+        // determine if we can insert into history or if we need a copy of the mesh
+    } else {
+        // component selection
+        // the list relatives check seems to eliminate random stuff like attrs or non-dag objects
+        $objects = `listRelatives -parent`;
+        if(size($objects) == 0) {
+            return 1;
+        }
+        // this will separate vtx, face and edge components from non-shape dag objects
+        $components = `ls -sl -type float3`;
+    }
+
+    string $inputAttr =  $assetNode + "." + $firstNodeInput;
+
+    // need to previous input from this asset if it's not the same as the current one
+
+    houdiniEngine_connectHistory($inputAttr, $objects, $components);
+
+    // if we can insert into history
+    //     remove output geo, connect input geo's mesh input to inputGeometry
+    //     disconnect xform and set to identity? or not?
+    // if we cannot
+    //      disconnect input xform, ungroup output, parent with input geo
+    //      set input geo intermediate
+
+    return 0;
+
+}
+
+global proc int
+houdiniEngine_connectHistory(string $inputAttr, string $objects[], string $components[])
+{
+    // Make Sure we have exactly one valid input object
+    string $validObjects[];
+    string $invalidObjects[];
+    int $validObjectsCount = validateInputObjects($objects,
+            $validObjects,  $invalidObjects);
+
+    if(!`exists houdiniEngine_clearAssetInput`)
+        source houdiniEngineAssetInput;
+
+    if(size($invalidObjects))
+    {
+        print("Error: Some selected objects are not even remotely close to meshes: "
+                + stringArrayToString($invalidObjects, " ") + "\n");
+        return 0;
+    }
+
+    if($validObjectsCount == 0 || $validObjectsCount > 1)
+    {
+        houdiniEngine_clearAssetInput($inputAttr);
+        print("Error: Expecting one mesh input, got: "
+              + stringArrayToString($validObjects, " ") + "\n");
+        return 0;
+    }
+
+    string $assetNode = plugNode($inputAttr);
+
+    // get rid of the children from any previous syncs, and turn off any syncing options
+    setAttr ($assetNode + ".syncWhenInputConnects") 0;
+    setAttr ($assetNode + ".autoSyncOutputs") 0;
+    setAttr ($assetNode + ".outputGeometryGroups") 0;
+    string $children[] = `listRelatives -c -f $assetNode`;
+    for($child in $children) {
+        delete $child;
+    }
+
+
+    string $targetMesh = $validObjects[0];
+    string $upstreamAttr = `connectionInfo -sfd ($targetMesh + ".inMesh")`;
+    string $finalUpstreamAttr = getInputNodeForSingle($targetMesh);
+    string $finalUpstreamNode = plugNode($finalUpstreamAttr);
+
+    // Note: if we are selecting components, we need an inputGeometry node upstream, not another asset
+    // need to enforce that somewhere
+
+    int $numComps = size($components);
+
+    string $upstreamNode = plugNode($upstreamAttr);
+    if($upstreamNode == $assetNode) {
+        print "This asset is already connected as history\n";
+        return 0;
+    }
+    // if there is no upstream mesh history, copy the mesh, insert as upstream history
+    // and make it intermediate so it doesn't mess up selection and other mesh UI
+    // yeah, keeping the name on the downstream node rather than the upstream node is bad for file referencing
+    // but it is consistent with the way that native maya construction history works
+
+    if($upstreamNode == "") {
+        string $copyForUpstream[] = `duplicate -n "polySurface#" $targetMesh`;
+        string $newUpstreamShape[] = `listRelatives -fullPath -shapes  $copyForUpstream[0]`;
+        string $targetXform[] = `listRelatives -fullPath -parent $targetMesh`;
+        string $upstreamNodes[] = `parent -add -shape $newUpstreamShape[0] $targetXform[0]`;
+        // reparenting can change name and/or partial path, so we re-get node name here
+        $upstreamNode = $upstreamNodes[0];
+        setAttr ($upstreamNode + ".intermediateObject") 1;
+        delete $copyForUpstream[0];
+        $upstreamAttr = ($upstreamNode + ".outMesh");
+        connectAttr -f $upstreamAttr  ($targetMesh + ".inMesh");
+    }
+
+    if($upstreamNode == "") {
+        print "Could not add history to this mesh\n";
+        return 0;
+    }
+    int $upstreamIsAsset = 0;
+    if($upstreamNode != "") {
+        if(`nodeType $upstreamNode` == "houdiniAsset") {
+            $upstreamIsAsset = 1;
+            int $numUpstreamComps = 0;
+
+            string $upstreamInputGeo = "";
+            string $upstreamInputAttr = "";
+            string $upstreamInputNode = $upstreamNode;
+            while ($upstreamInputGeo == "") {
+                $upstreamInputAttr = getHistoryInputAttr($upstreamInputNode);
+                if( $upstreamInputAttr == "") {
+                    break;
+                }
+                string $nextAttr = `connectionInfo -sfd ($upstreamInputNode + "." + $upstreamInputAttr)`;
+                string $nextNode =  plugNode($nextAttr);
+                if($nextNode == "") {
+                    // upstreammost node was asset, so no component selection applies
+                    break;
+                }
+                if(`nodeType $nextNode` == "houdiniInputGeometry") {
+                    $upstreamInputGeo = $nextNode;
+                    $numUpstreamComps = size(`getAttr ($upstreamInputGeo + ".inputComponents")`);
+                    break;
+                }
+                if(`nodeType $nextNode` != "houdiniAsset") {
+                    print "Unexpected input,  this does not look like a real history connection\n";
+                    break;
+                }
+                $upstreamInputNode = $nextNode;
+            }
+
+            // if there is no component selection here or upstream, connect the objects directly
+            // ideally, if both had the same component selection they could be connected directly too
+            // but if there is topo change in the history, just comparing component ids may not be sufficient
+            if($numComps > 0 || $numUpstreamComps > 0) {
+                $finalUpstreamAttr = createInputGeometryNode("", ($upstreamNode + ".outputObjects[0].outputGeos[0].outputParts[0].outputPartMeshData"));
+                $finalUpstreamNode = plugNode($finalUpstreamAttr);
+            }
+        }
+    }
+
+    //
+    if($numComps > 0) {
+        string $cmd = "setAttr " + $finalUpstreamNode + ".inputComponents -type componentList ";
+        $cmd += $numComps;
+        for($comp in $components) {
+            string $buffer[];
+            int $numTokens = `tokenize $comp "." $buffer`;
+            if($numTokens > 1)
+                $cmd += " " + $buffer[1];
+        }
+        eval $cmd;
+    }
+
+    // connect the history rather than the shape
+    if(! $upstreamIsAsset) {
+        connectAttr -f $upstreamAttr ($finalUpstreamNode + ".inputGeometry");
+    }
+
+    if(`isConnected $finalUpstreamAttr $inputAttr`)
+    {
+        // if it was already connected as history, we never got here
+        // if the output is connected to something else, maybe that's OK too?
+    } else {
+        houdiniEngine_clearAssetInput($inputAttr);
+        connectAttr $finalUpstreamAttr $inputAttr;
+    }
+
+    // connect the asset output back to the shape
+    connectAttr -f ($assetNode + ".outputObjects[0].outputGeos[0].outputParts[0].outputPartMeshData") ($targetMesh + ".inMesh");
+
+    // flag this as a history asset so we know what to do with it later
+    setAttr ($assetNode + ".assetConnectType") 1;
+
+    return 1;
+}
+
+global proc string
+houdiniEngine_loadAndAddHistory(string $assetFile, string $assetName)
+{
+
+    // assume that geo to get history is selected
+    // but load asset selects the newly created asset node instead
+    string $old_selection[] = `ls -selection -long`;
+    string $assetLocation = `houdiniEngine_findAsset $assetFile`;
+
+    if(!`exists houdiniEngine_loadAsset`)
+        source houdiniEngineCreateUI;
+    if(!`exists AEhoudiniAssetTemplate`)
+        source AEhoudiniAssetTemplate;
+    string $assetNode = `houdiniEngine_loadAsset $assetLocation $assetName`;
+
+    catchQuiet(`select -replace $old_selection`);
+    houdiniEngine_addHistory( $assetNode);
+    if(!`about -batch`) {
+        showEditor $assetNode;
+        copyAEWindow;
+    }
+    return $assetNode;
+}
+
+global proc string
+houdiniEngine_loadAndAddAsset(string $assetFile, string $assetName, string $assignMode)
+{
+
+    // assume that geo to get history is selected
+    // but load asset selects the newly created asset node instead
+    string $old_selection[] = `ls -selection -long`;
+
+    if(!`exists houdiniEngine_loadAsset`)
+        source houdiniEngineCreateUI;
+    if(!`exists AEhoudiniAssetTemplate`)
+        source AEhoudiniAssetTemplate;
+    string $assetNode = `houdiniEngine_loadAsset $assetFile $assetName`;
+
+    catchQuiet(`select -replace $old_selection`);
+    if($assignMode == "OPERATOR_MULTI") {
+        int $numInputs = `getAttr -size ($assetNode + ".input")`;
+        int $numSelected = size($old_selection);
+        int $input;
+        string $nodeInput;
+        for($input = 0; $input<$numInputs &&  $input<$numSelected; $input++){
+            $nodeInput = ("input[" +$input + "].inputNodeId");
+            select -r $old_selection[$input];
+             AEhoudiniAssetSetInputToSelection(($assetNode + "." + $nodeInput));
+        }
+        catchQuiet(`select -replace $old_selection`);
+    } else if($assignMode == "OPERATOR_SINGLE") {
+        string $firstNodeInput = getHistoryInputAttr($assetNode);
+        AEhoudiniAssetSetInputToSelection(($assetNode + "." + $firstNodeInput));
+    } else if($assignMode == "HISTORY") {
+        houdiniEngine_addHistory($assetNode);
+    }
+
+    if(!`about -batch`) {
+        showEditor $assetNode;
+        copyAEWindow;
+    }
+    return $assetNode;
+}

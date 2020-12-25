@@ -1,0 +1,20 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+push $cut_paste_input
+OCIOColorSpace {
+ in_colorspace "ACES - ACEScg"
+ out_colorspace "Output - Rec.2020"
+ name Rec2020_BURN_IN
+ selected true
+ xpos -490
+ ypos 1461
+}
+Grade {
+ gamma 0.4545
+ name Grade_for_2D
+ label "gamma 1/2.2"
+ selected true
+ xpos -490
+ ypos 1487
+ disable true
+}

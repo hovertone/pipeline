@@ -1,0 +1,4 @@
++ houdiniEngine 1.0 C:\Program Files\Side Effects Software\Houdini 18.0.391/engine/maya/maya2019
+PATH += C:\Program Files\Side Effects Software\Houdini 18.0.391/engine/maya/maya2019/../../../bin
+HOUDINI_DSO_EXCLUDE_PATTERN={CHOP_Mouse3D,COP2_GPULighting,COP2_GPUFog,COP2_GPUEnvironment,COP2_GPUZComposite,COP2_EnableGPU,SHOP_OGL,SOP_VDBUI,VEX_OpRender,USD_Ops}*
+

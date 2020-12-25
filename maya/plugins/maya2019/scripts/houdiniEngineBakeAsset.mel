@@ -1,0 +1,77 @@
+source houdiniEngineAssetSync;
+
+global proc int
+houdiniEngine_bakeAsset(string $assetNode)
+{
+    // sync the asset to make sure all the outputs exist
+    houdiniEngine_syncAssetOutput $assetNode;
+
+    // disconnect output objects
+    string $children[] = `listRelatives -c -f $assetNode`;
+
+    // if an output was completely empty (only has transforms) delete it
+    // delete construction history on mesh shapes: which doesn't delete plugin history
+    // but will deal with sets and groups (i.e. complex material assignement)
+    for($child in $children) {
+        string $allDescendents[] = `listRelatives -ad -f $child`;
+        int $hasShape = 0;
+        for($desc in $allDescendents) {
+            if(`objectType -isAType "shape" $desc`) {
+                delete -ch $desc;
+                $hasShape = 1;
+                break;
+            }
+            if(`objectType -isAType "instancer" $desc`) {
+                $hasShape = 1;
+                break;
+            }
+        }
+        if($hasShape) {
+            if( `getAttr ($assetNode + ".ungroupOnBake")`)
+                ungroup -a -w $child;
+            else
+                parent -a -w  $child;
+        }
+        else
+            delete $child;
+    }
+    string $outputObjCon[] = `listConnections -p on ($assetNode + ".outputObjects")`;
+    for($con in $outputObjCon) {
+        string $src = `connectionInfo -sfd $con`;
+        disconnectAttr $src $con;
+    }
+
+    // disconnect output materials
+    string $outputMatCon[] = `listConnections -p on ($assetNode + ".outputMaterials")`;
+
+    for($con in $outputMatCon) {
+        string $src = `connectionInfo -sfd $con`;
+        disconnectAttr $src $con;
+    }
+
+    // disconnect output instancers
+    string $outputInstCon[] = `listConnections -p on ($assetNode + ".outputInstancers")`;
+
+    for($con in $outputInstCon) {
+        string $src = `connectionInfo -sfd $con`;
+        disconnectAttr $src $con;
+    }
+
+    // don't disconnect output transforms, since they connect back to the asset
+    // connection is determinded by the asset options
+    // and not a particular output
+
+    int $deleteAfterBake = 0;
+    if(`optionVar -exists houdiniEngineDeleteAfterBake`)
+        $deleteAfterBake =  `optionVar -q houdiniEngineDeleteAfterBake`;
+
+    // either delete the asset after baking,
+    // or sync it again - so there is a new output to provide feedback
+    if($deleteAfterBake)
+        delete $assetNode;
+    else
+        houdiniEngine_syncAssetOutput $assetNode;
+
+    return 1;
+}
+

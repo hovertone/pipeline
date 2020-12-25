@@ -1,0 +1,217 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Gizmo {
+ inputs 0
+ label "\[knob in]"
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 User}
+ addUserKnob {41 in l "in 1" T Shuffle4.in}
+ addUserKnob {41 local l local? T NoOp1.local}
+}
+ Read {
+  inputs 0
+  file D:/LocalProjects/05_BUD/03_3D_Renders/2012.06.13/uv_pass/uv_pass.%04d.tif
+  format "1024 768 0 0 1024 768 1 "
+  last 325
+  origlast 325
+  origset true
+  name Read7
+  xpos 264
+  ypos -414
+ }
+ Read {
+  inputs 0
+  file Z:/05_BUD/03_3D_Renders/2012.06.13/uv_pass/uv_pass.%04d.tif
+  format "1024 768 0 0 1024 768 1 "
+  last 325
+  origlast 325
+  origset true
+  name Read9
+  xpos 74
+  ypos -414
+ }
+ Dissolve {
+  inputs 2
+  which {{parent.NoOp1.local i}}
+  name Dissolve1
+  xpos 169
+  ypos -390
+ }
+ set C25bad2c0 [stack 0]
+ Dot {
+  name Dot2
+  xpos 203
+  ypos -208
+ }
+ Read {
+  inputs 0
+  file D:/LocalProjects/05_BUD/03_3D_Renders/2012.06.13/Incidence/Incidence_MasterBeauty.%04d.tif
+  format "1024 768 0 0 1024 768 1 "
+  last 325
+  origlast 325
+  origset true
+  name Read1
+  xpos -109
+  ypos -416
+ }
+ Read {
+  inputs 0
+  file Z:/05_BUD/03_3D_Renders/2012.06.13/Incidence/Incidence_MasterBeauty.%04d.tif
+  format "1024 768 0 0 1024 768 1 "
+  last 325
+  origlast 325
+  origset true
+  name Read3
+  xpos -290
+  ypos -416
+ }
+clone $C25bad2c0 {
+  inputs 2
+  xpos -200
+  ypos -392
+  selected false
+ }
+ Dot {
+  name Dot1
+  xpos -167
+  ypos -285
+ }
+ Read {
+  inputs 0
+  file D:/LocalProjects/05_BUD/03_3D_Renders/Lid_Only/bud_lid_%04d.exr
+  format "1024 768 0 0 1024 768 1 "
+  last 250
+  origlast 250
+  origset true
+  colorspace sRGB
+  name Read4
+  xpos -500
+  ypos -602
+ }
+ Read {
+  inputs 0
+  file Z:/05_BUD/03_3D_Renders/2012.06.14/Lid_Only/bud_lid_%04d.exr
+  format "1024 768 0 0 1024 768 1 "
+  last 250
+  origlast 250
+  origset true
+  colorspace sRGB
+  name Read5
+  xpos -697
+  ypos -602
+ }
+clone $C25bad2c0 {
+  inputs 2
+  xpos -600
+  ypos -572
+  selected false
+ }
+ Unpremult {
+  channels all
+  name Unpremult1
+  xpos -600
+  ypos -510
+ }
+ Dot {
+  name Dot3
+  xpos -566
+  ypos -449
+ }
+set N25bb0290 [stack 0]
+add_layer {multimatte1 multimatte1.red multimatte1.green multimatte1.blue}
+ Shuffle {
+  in multimatte1
+  blue black
+  alpha black
+  name Shuffle1
+  xpos -480
+  ypos -452
+ }
+ Dilate {
+  channels {-rgba.red rgba.green -rgba.blue}
+  size 0.5
+  name Dilate1
+  xpos -480
+  ypos -419
+ }
+ Expression {
+  expr0 r+g
+  expr1 r+g
+  expr2 r+g
+  expr3 r+g
+  name Expression1
+  xpos -480
+  ypos -364
+ }
+push $N25bb0290
+ Multiply {
+  inputs 1+1
+  channels alpha
+  value 0
+  invert_mask true
+  name Multiply1
+  xpos -600
+  ypos -370
+ }
+ Premult {
+  channels all
+  name Premult1
+  selected true
+  xpos -600
+  ypos -334
+ }
+set N25bb3590 [stack 0]
+add_layer {Incidence Incidence.red Incidence.green Incidence.blue Incidence.alpha}
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  out2 Incidence
+  name ShuffleCopy2
+  xpos -600
+  ypos -288
+ }
+add_layer {UV UV.red UV.green UV.blue UV.alpha}
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  out2 UV
+  name ShuffleCopy1
+  xpos -600
+  ypos -211
+ }
+ Shuffle {
+  name Shuffle4
+  xpos -600
+  ypos -128
+ }
+ NoOp {
+  name NoOp1
+  xpos -600
+  ypos -63
+  addUserKnob {20 User}
+  addUserKnob {6 local l local? +STARTLINE}
+  local true
+ }
+ Output {
+  name Output1
+  xpos -600
+  ypos 13
+ }
+push $N25bb3590
+ Viewer {
+  frame 91
+  input_process false
+  name Viewer1
+  xpos -843
+  ypos -190
+ }
+end_group

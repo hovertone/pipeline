@@ -1,0 +1,112 @@
+set cut_paste_input [stack 0]
+version 9.0 v7
+StickyNote {
+ inputs 0
+ name StickyNote55
+ tile_color 0x4b4b4b01
+ label ✔
+ note_font_size 50
+ note_font_color 0x1fff00ff
+ selected true
+ xpos 2147.25
+ ypos 381
+}
+StickyNote {
+ inputs 0
+ name StickyNote56
+ tile_color 0x4b4b4b01
+ label ✘
+ note_font_size 50
+ note_font_color 0xff0000ff
+ selected true
+ xpos 2257
+ ypos 381
+}
+StickyNote {
+ inputs 0
+ name StickyNote25
+ tile_color 0xff5f00ff
+ label ⬅
+ note_font_size 25
+ note_font_color 0xfefefeff
+ selected true
+ xpos 2147.25
+ ypos 658
+}
+StickyNote {
+ inputs 0
+ name StickyNote6
+ tile_color 0xbf5f00ff
+ label ☍
+ note_font Verdana
+ note_font_size 50
+ selected true
+ xpos 2257
+ ypos 483
+}
+StickyNote {
+ inputs 0
+ name StickyNote23
+ tile_color 0xbf5f00ff
+ label ✂
+ note_font Verdana
+ note_font_size 50
+ selected true
+ xpos 2147.25
+ ypos 483
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x4b4b4b01
+ label ⚠
+ note_font_size 50
+ note_font_color 0xff5f00ff
+ selected true
+ xpos 2367
+ ypos 381
+}
+StickyNote {
+ inputs 0
+ name StickyNote26
+ tile_color 0xff5f00ff
+ label ⬆
+ note_font_size 25
+ note_font_color 0xfefefeff
+ selected true
+ xpos 2257
+ ypos 658
+}
+StickyNote {
+ inputs 0
+ name StickyNote4
+ tile_color 0x4b4b4bff
+ label ☛
+ note_font_size 33
+ note_font_color 0xfefefeff
+ selected true
+ xpos 2257
+ ypos 586
+}
+StickyNote {
+ inputs 0
+ name StickyNote47
+ tile_color 0x4b4b4bff
+ label "☚ "
+ note_font_size 33
+ note_font_color 0xfefefeff
+ selected true
+ xpos 2147.25
+ ypos 586
+}
+StickyNote {
+ inputs 0
+ name StickyNote19
+ tile_color 0x4b4b4bff
+ label "☝ "
+ note_font_size 33
+ note_font_color 0xfefefeff
+ selected true
+ xpos 2367
+ ypos 586
+}

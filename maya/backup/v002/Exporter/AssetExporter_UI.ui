@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AssetExportDialog</class>
+ <widget class="QDialog" name="AssetExportDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>349</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>AssetExporter</string>
+  </property>
+  <layout class="QVBoxLayout" name="vLayout_main">
+   <item>
+    <layout class="QHBoxLayout" name="hLayout_top">
+     <item>
+      <layout class="QGridLayout" name="gridLayout_top">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lb_source">
+         <property name="text">
+          <string>SOURCE PATH</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="comboSource">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>ASSETBUILDS</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>SHOT</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>LIBRARY</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="lb_type">
+         <property name="text">
+          <string>TYPE</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="comboBoxType">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>GEO</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>ANIMATION</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="lb_geoType">
+         <property name="text">
+          <string>GEO Type</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="comboBoxGeoType">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="lb_ext">
+         <property name="text">
+          <string>File Extension</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QComboBox" name="comboBoxExt">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>ABC</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>OBJ</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="topHSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hLayout_version">
+     <item>
+      <widget class="QLabel" name="lb_version">
+       <property name="text">
+        <string>Version</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_version">
+       <property name="maximumSize">
+        <size>
+         <width>70</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="horizontalSlider">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pb_setLastVer">
+       <property name="text">
+        <string>Set Last Version</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hLayout_objectName">
+     <item>
+      <widget class="QPushButton" name="pb_selectObjectName">
+       <property name="text">
+        <string>Select ObjectName</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lb_objectName">
+       <property name="text">
+        <string>Object Name</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_objectName"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hLayout_component">
+     <item>
+      <widget class="QPushButton" name="pb_componet">
+       <property name="text">
+        <string>Component Name</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lb_component">
+       <property name="text">
+        <string>Component Name</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_component"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hLayout_filePath">
+     <item>
+      <widget class="QLabel" name="lb_filePath">
+       <property name="text">
+        <string>FILE PATH</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_filePath">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hLayout_Export">
+     <item>
+      <spacer name="hSpacerBtmL">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>50</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pb_export">
+       <property name="maximumSize">
+        <size>
+         <width>300</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Expot</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="hSpacerBtmR">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>50</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

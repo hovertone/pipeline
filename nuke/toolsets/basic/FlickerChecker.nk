@@ -1,0 +1,19 @@
+set cut_paste_input [stack 0]
+version 6.3 v4
+push $cut_paste_input
+TimeOffset {
+ time_offset 3
+ name TimeOffset1
+ selected true
+ xpos -439
+ ypos 215
+}
+push $cut_paste_input
+Merge2 {
+ inputs 2
+ operation difference
+ name Merge1
+ selected true
+ xpos -549
+ ypos 215
+}

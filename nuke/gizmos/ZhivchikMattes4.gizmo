@@ -1,0 +1,504 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Gizmo {
+ inputs 0
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 User}
+ addUserKnob {41 one l 1 -STARTLINE T Ctrlr.one}
+ addUserKnob {41 two l 2 -STARTLINE T Ctrlr.two}
+ addUserKnob {41 three l 3 -STARTLINE T Ctrlr.three}
+ addUserKnob {41 four l 4 -STARTLINE T Ctrlr.four}
+ addUserKnob {41 bottle T Ctrlr.bottle}
+ addUserKnob {41 lid -STARTLINE T Ctrlr.lid}
+ addUserKnob {41 coverc -STARTLINE T Ctrlr.coverc}
+ addUserKnob {41 cover -STARTLINE T Ctrlr.cover}
+ addUserKnob {41 liquid -STARTLINE T Ctrlr.liquid}
+}
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/4_Bottle/ID_liquid/Zivchick_botlle_Light2_Ren_coposition_1_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read95
+  label "\[ID_liquid]"
+  xpos 171
+  ypos -383
+ }
+ Multiply {
+  value {{parent.Ctrlr.liquid i}}
+  name Multiply6
+  xpos 153
+  ypos -259
+ }
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/4_Bottle/ID_Lable_2/Zivchick_botlle_Light2_Ren_coposition_1_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read93
+  label "\[ID_Lable_2]"
+  xpos 61
+  ypos -383
+ }
+ Multiply {
+  value {{parent.Ctrlr.cover i}}
+  name Multiply7
+  xpos 43
+  ypos -259
+ }
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/4_Bottle/ID_Lable/Zivchick_botlle_Light2_Ren_coposition_1_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read91
+  label "\[ID_Lable]"
+  xpos -59
+  ypos -383
+ }
+ Multiply {
+  value {{parent.Ctrlr.coverc i}}
+  name Multiply8
+  xpos -67
+  ypos -259
+ }
+push 0
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/4_Bottle/ID_base/Zivchick_botlle_Light2_Ren_coposition_1_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read87
+  label "\[ID_base]"
+  xpos -287
+  ypos -384
+ }
+ Multiply {
+  value {{parent.Ctrlr.bottle i}}
+  name Multiply9
+  xpos -287
+  ypos -259
+ }
+ Read {
+  inputs 0
+  file Z:/37_Jivchik/06_RENDERS/4_Bottle/ID_Cover/Zivchick_botlle_Light2_Ren_coposition_1_0001.tif
+  format "1024 768 0 0 1024 768 1 "
+  origset true
+  raw true
+  name Read89
+  label "\[ID_Cover]"
+  xpos -181
+  ypos -383
+ }
+ Multiply {
+  value {{parent.Ctrlr.lid i}}
+  name Multiply10
+  xpos -177
+  ypos -259
+ }
+ Merge2 {
+  inputs 5+1
+  also_merge all
+  name Merge2
+  xpos -67
+  ypos -117
+ }
+set N2cb93ef0 [stack 0]
+ Expression {
+  expr3 r
+  name Expression8
+  xpos 101
+  ypos -4
+ }
+ Roto {
+  format "1024 768 0 0 1024 768 1 "
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 960 S 0 540 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "Bezier1" {
+    Flag: 512
+    NodeType: 3
+    CurveGroup: "" {
+     Transform: 0 0 S 1 1 0 S 1 1 0 S 1 1 0 S 1 1 1 S 1 1 1 S 1 1 0 S 1 1 139.714 S 1 1 385.714 
+     Flag: 0
+     NumOfCubicCurves: 2
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 21
+      0 S 1 1 -6 S 1 1 -10 0 0 S 1 1 452 S 1 1 540 0 0 S 1 1 6 S 1 1 10 0 0 S 1 1 -6 S 1 1 2 0 0 S 1 1 504 S 1 1 640 0 0 S 1 1 6 S 1 1 -2 0 0 S 1 1 -2 S 1 1 0 0 0 S 1 1 656.2 S 1 1 640.6 0 0 S 1 1 2 S 1 1 0 0 0 S 1 1 0 S 1 1 2 0 0 S 1 1 690.2 S 1 1 500.6 0 0 S 1 1 0 S 1 1 -2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 698.2 S 1 1 110.6 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 474 S 1 1 110 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -2 S 1 1 -6 0 0 S 1 1 434 S 1 1 258 0 0 S 1 1 2 S 1 1 6 0 
+     }
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 21
+      0 S 1 1 -6 S 1 1 -10 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 6 S 1 1 10 0 0 S 1 1 -6 S 1 1 2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 6 S 1 1 -2 0 0 S 1 1 -2 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 2 S 1 1 0 0 0 S 1 1 0 S 1 1 2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 -2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -2 S 1 1 -6 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 2 S 1 1 6 0 
+     }
+     NumOfAttributes: 44
+     "vis" S 0 1 "r" S 0 0 "g" S 0 0 "b" S 0 0 "a" S 0 0 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 1 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 960 "spy" S 0 540 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 1 "ltm" S 0 1 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+    }
+   }
+   NumOfChildren: 0
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  color 0
+  colorOverlay 0
+  lifetime_type "all frames"
+  view {}
+  motionblur_on true
+  motionblur_shutter_offset_type centred
+  inverted true
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name Roto10
+  xpos 101
+  ypos 51.75
+ }
+ Multiply {
+  value {{parent.Ctrlr.four i}}
+  name Multiply14
+  xpos 101
+  ypos 79
+ }
+push $N2cb93ef0
+ Expression {
+  expr3 b
+  name Expression7
+  xpos -9
+  ypos -4
+ }
+ Roto {
+  format "1024 768 0 0 1024 768 1 "
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 960 S 0 540 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "Bezier1" {
+    Flag: 576
+    NodeType: 3
+    CurveGroup: "" {
+     Transform: 0 0 S 1 1 0 S 1 1 0 S 1 1 0 S 1 1 1 S 1 1 1 S 1 1 0 S 1 1 139.714 S 1 1 385.714 
+     Flag: 0
+     NumOfCubicCurves: 2
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 21
+      0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -6 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -10 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 326 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 508 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 6 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 10 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -6 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 2 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 374 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 690 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 6 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -2 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -2 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 490 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 666 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 2 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 2 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 520 0 1 0.956522 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 472 0 1 0.130435 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -2 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 528 0 1 1.04348 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 82 0 1 0.217391 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 348 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 78 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -2 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -6 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 308 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 226 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 2 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 6 0 1 0 1 256 0 0 
+     }
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 21
+      0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -6 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -10 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 6 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 10 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -6 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 2 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 6 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -2 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -2 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 2 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 2 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -2 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -2 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 -6 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 0 0 1 0 1 256 0 0 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 2 0 1 0 1 256 0 L 0 4096 0.5 2 0 0 "" 0 1 "" 1 6 0 1 0 1 256 0 0 
+     }
+     NumOfAttributes: 44
+     "vis" S 0 1 "r" S 0 0 "g" S 0 0 "b" S 0 0 "a" S 0 0 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 1 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 960 "spy" S 0 540 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 1 "ltm" S 0 1 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+    }
+   }
+   NumOfChildren: 0
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  color 0
+  colorOverlay 0
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  inverted true
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name Roto3
+  xpos -9
+  ypos 51.75
+ }
+ Multiply {
+  value {{parent.Ctrlr.three i}}
+  name Multiply13
+  xpos -9
+  ypos 79
+ }
+push 0
+push $N2cb93ef0
+ Expression {
+  expr3 g
+  name Expression3
+  xpos -119
+  ypos -4
+ }
+ Roto {
+  format "1024 768 0 0 1024 768 1 "
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 960 S 0 540 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "Bezier1" {
+    Flag: 576
+    NodeType: 3
+    CurveGroup: "" {
+     Transform: 0 0 S 1 1 0 S 1 1 0 S 1 1 0 S 1 1 1 S 1 1 1 S 1 1 0 S 1 1 139.714 S 1 1 385.714 
+     Flag: 0
+     NumOfCubicCurves: 2
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 21
+      0 S 1 1 -6 S 1 1 -10 0 0 S 1 1 200 S 1 1 532 0 0 S 1 1 6 S 1 1 10 0 0 S 1 1 -6 S 1 1 2 0 0 S 1 1 238 S 1 1 672 0 0 S 1 1 6 S 1 1 -2 0 0 S 1 1 -2 S 1 1 0 0 0 S 1 1 350 S 1 1 668 0 0 S 1 1 2 S 1 1 0 0 0 S 1 1 0 S 1 1 2 0 0 S 1 1 394 S 1 1 496 0 0 S 1 1 0 S 1 1 -2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 402 S 1 1 106 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 222 S 1 1 102 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -2 S 1 1 -6 0 0 S 1 1 182 S 1 1 250 0 0 S 1 1 2 S 1 1 6 0 
+     }
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 21
+      0 S 1 1 -6 S 1 1 -10 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 6 S 1 1 10 0 0 S 1 1 -6 S 1 1 2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 6 S 1 1 -2 0 0 S 1 1 -2 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 2 S 1 1 0 0 0 S 1 1 0 S 1 1 2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 -2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -2 S 1 1 -6 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 2 S 1 1 6 0 
+     }
+     NumOfAttributes: 44
+     "vis" S 0 1 "r" S 0 0 "g" S 0 0 "b" S 0 0 "a" S 0 0 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 1 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 960 "spy" S 0 540 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 1 "ltm" S 0 1 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+    }
+   }
+   NumOfChildren: 0
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  color 0
+  colorOverlay 0
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  inverted true
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name Roto2
+  xpos -119
+  ypos 51.75
+ }
+ Multiply {
+  value {{parent.Ctrlr.two i}}
+  name Multiply12
+  xpos -119
+  ypos 79
+ }
+push $N2cb93ef0
+ Expression {
+  expr3 r
+  name Expression2
+  xpos -229
+  ypos -4
+ }
+ Roto {
+  format "1024 768 0 0 1024 768 1 "
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 960 S 0 540 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "Bezier1" {
+    Flag: 576
+    NodeType: 3
+    CurveGroup: "" {
+     Transform: 0 0 S 1 1 0 S 1 1 0 S 1 1 0 S 1 1 1 S 1 1 1 S 1 1 0 S 1 1 139.714 S 1 1 385.714 
+     Flag: 0
+     NumOfCubicCurves: 2
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 21
+      0 S 1 1 -6 S 1 1 -10 0 0 S 1 1 54 S 1 1 532 0 0 S 1 1 6 S 1 1 10 0 0 S 1 1 -6 S 1 1 2 0 0 S 1 1 102 S 1 1 650 0 0 S 1 1 6 S 1 1 -2 0 0 S 1 1 -2 S 1 1 0 0 0 S 1 1 206 S 1 1 658 0 0 S 1 1 2 S 1 1 0 0 0 S 1 1 0 S 1 1 2 0 0 S 1 1 248 S 1 1 496 0 0 S 1 1 0 S 1 1 -2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 256 S 1 1 106 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 76 S 1 1 102 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -2 S 1 1 -6 0 0 S 1 1 36 S 1 1 250 0 0 S 1 1 2 S 1 1 6 0 
+     }
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 21
+      0 S 1 1 -6 S 1 1 -10 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 6 S 1 1 10 0 0 S 1 1 -6 S 1 1 2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 6 S 1 1 -2 0 0 S 1 1 -2 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 2 S 1 1 0 0 0 S 1 1 0 S 1 1 2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 -2 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -2 S 1 1 -6 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 2 S 1 1 6 0 
+     }
+     NumOfAttributes: 44
+     "vis" S 0 1 "r" S 0 0 "g" S 0 0 "b" S 0 0 "a" S 0 0 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 1 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 960 "spy" S 0 540 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 1 "ltm" S 0 1 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+    }
+   }
+   NumOfChildren: 0
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  color 0
+  colorOverlay 0
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  inverted true
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name Roto1
+  xpos -229
+  ypos 51.75
+ }
+ Multiply {
+  value {{parent.Ctrlr.one i}}
+  name Multiply11
+  xpos -229
+  ypos 79
+ }
+ Merge2 {
+  inputs 4+1
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  also_merge all
+  name Merge3
+  xpos -62
+  ypos 152
+ }
+ NoOp {
+  name Ctrlr
+  xpos -62
+  ypos 191
+  addUserKnob {20 User}
+  addUserKnob {6 one l 1 +STARTLINE}
+  addUserKnob {6 two l 2 -STARTLINE}
+  addUserKnob {6 three l 3 -STARTLINE}
+  addUserKnob {6 four l 4 -STARTLINE}
+  addUserKnob {6 bottle +STARTLINE}
+  addUserKnob {6 lid -STARTLINE}
+  addUserKnob {6 coverc -STARTLINE}
+  addUserKnob {6 cover -STARTLINE}
+  addUserKnob {6 liquid -STARTLINE}
+ }
+ Expression {
+  expr0 a
+  expr1 a
+  expr2 a
+  name Expression1
+  xpos -62
+  ypos 229
+ }
+ Output {
+  name Output1
+  xpos -62
+  ypos 268
+ }
+ Viewer {
+  viewerProcess None
+  input_process false
+  name Viewer1
+  selected true
+  xpos 211
+  ypos 75
+ }
+end_group

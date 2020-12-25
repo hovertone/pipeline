@@ -1,0 +1,75 @@
+#! C:/Program Files/Nuke6.3v1/Nuke6.3.exe -nx
+version 6.3 v1
+Gizmo {
+ help "STMapGenerator creates the initial x- and y-gradients in the red and green channel you need for using the STMap node"
+ addUserKnob {20 STMapGenerator}
+ addUserKnob {41 disable_1 l "Use input format" t "If checked, the incoming format will be used instead of the chosen format below." T Reformat1.disable}
+ addUserKnob {41 format l Format T Reformat1.format}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 76
+  ypos -177
+ }
+ Reformat {
+  name Reformat1
+  xpos 76
+  ypos -95
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos 76
+  ypos -71
+ }
+ Dot {
+  name Dot1
+  xpos 110
+  ypos -37
+ }
+set N40a0050 [stack 0]
+ Ramp {
+  p0 {-0.5 0}
+  p1 {{"width - 0.5" i} 0}
+  name Ramp1
+  selected true
+  xpos 76
+  ypos -6
+ }
+ Dot {
+  name Dot3
+  xpos 110
+  ypos 39
+ }
+push $N40a0050
+ Dot {
+  name Dot2
+  xpos 229
+  ypos -37
+ }
+ Ramp {
+  p0 {0 -0.5}
+  p1 {0 {"height - 0.5" i}}
+  name Ramp2
+  xpos 195
+  ypos -5
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  blue black
+  alpha black
+  name ShuffleCopy1
+  xpos 195
+  ypos 36
+ }
+ Output {
+  name Output1
+  xpos 195
+  ypos 136
+ }
+end_group

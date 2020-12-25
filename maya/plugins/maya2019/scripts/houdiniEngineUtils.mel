@@ -1,0 +1,114 @@
+global proc string[]
+houdiniEngine_getSelectedAssetNodes()
+{
+    string $selections[] = `ls -selection -long`;
+
+    string $assetNodes[];
+    for($selection in $selections)
+    {
+        string $current = $selection;
+        while(true)
+        {
+            if(`objectType -isAType "houdiniAsset" $current`)
+            {
+                $assetNodes[size($assetNodes)] = $current;
+                break;
+            }
+
+            // Search the parents
+            string $parents[] = `listRelatives -parent -fullPath $current`;
+            if(!size($parents))
+            {
+                break;
+            }
+
+            $current = $parents[0];
+        }
+    }
+
+    return $assetNodes;
+}
+
+global proc
+houdiniEngine_run(string $cmds[])
+{
+    int $isLinux = `about -linux`;
+    int $isWindows = `about -win`;
+    int $isMac = `about -mac`;
+
+    string $final_cmd;
+
+    if($isLinux || $isMac)
+    {
+        $final_cmd += "( ";
+
+        if($isLinux)
+        {
+            $final_cmd += "unset LD_LIBRARY_PATH; ";
+        }
+
+        $final_cmd += "PATH=\"$HFS/bin:$PATH\"; ";
+
+        $final_cmd += stringArrayToString($cmds, " ; ");
+
+        $final_cmd += " ) &";
+    }
+    else if($isWindows)
+    {
+        $final_cmd += "start cmd /c \"";
+
+        // PATH should already be set on Windows.
+
+        string $temp = stringArrayToString($cmds, " & ");
+
+        $final_cmd += $temp;
+
+        $final_cmd += "\"";
+    }
+
+    system($final_cmd);
+}
+global proc string
+houdiniEngine_findAsset(string $assetFileName)
+{
+    int $isLinux = `about -linux`;
+    int $isWindows = `about -win`;
+    int $isMac = `about -mac`;
+    string $assetPath = "";
+
+    string $pathenv = `getenv "HOUDINI_MAYA_ASSET_PATH"`;
+    if($isLinux || $isMac)
+    {
+        string $path[];
+        if($pathenv != "") {
+            int $pathLen = `tokenize $pathenv ":" $path`;
+            for ($dir in $path) {
+                $assetPath = $dir;
+                if(!endsWith($dir, "/"))
+                    $assetPath += "/";
+                $assetPath += $assetFileName;
+                if(`filetest -e $assetPath`) {
+                    break;
+                }
+            }
+        }
+    }
+    else if($isWindows)
+    {
+        string $path[];
+        if($pathenv != "") {
+            int $pathLen = `tokenize $pathenv ";" $path`;
+            for ($dir in $path) {
+                $assetPath = $dir;
+                if(!endsWith($dir, "\\"))
+                    $assetPath += "\\";
+                $assetPath +=  $assetFileName;
+                if(`filetest -e $assetPath`) {
+                    break;
+                }
+            }
+        }
+    }
+    return $assetPath;
+}
+

@@ -1,0 +1,110 @@
+#! /software/nuke/7.0v8/linux.centos5.x86_64/Nuke7.0 -nx
+version 7.0 v8
+Gizmo {
+ label "\[value frameFix]"
+ note_font "Bitstream Vera Sans"
+ mapsize {0.15 0.15}
+ addUserKnob {20 User l "Frame fix"}
+ addUserKnob {41 frameFix l frame T control.frameFix}
+ addUserKnob {41 inputAmount l "No of frames" T control.inputAmount}
+ addUserKnob {22 stfrm l "Set To Current Frame" T "nuke.thisNode()\['frameFix'].setValue(nuke.frame())" +STARTLINE}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 text l "" +STARTLINE T "Alex Harding"}
+ addUserKnob {20 Oflow}
+ addUserKnob {41 method l Method T OFlow3.method}
+ addUserKnob {41 filtering l Filtering T OFlow3.filtering}
+ addUserKnob {41 warpMode l "Warp Mode" T OFlow3.warpMode}
+ addUserKnob {41 correctLuminance l "Correct Luminance" T OFlow3.correctLuminance}
+ addUserKnob {41 automaticShutterTime l "Automatic Shutter Time" T OFlow3.automaticShutterTime}
+ addUserKnob {41 vectorDetail l "Vector Detail" T OFlow3.vectorDetail}
+ addUserKnob {41 smoothness l Smoothness T OFlow3.smoothness}
+ addUserKnob {41 blockSize l "Block Size" T OFlow3.blockSize}
+ addUserKnob {20 Tolerances n 2}
+ addUserKnob {41 weightRed l "Weight Red" T OFlow3.weightRed}
+ addUserKnob {41 weightGreen l "Weight Green" T OFlow3.weightGreen}
+ addUserKnob {41 weightBlue l "Weight Blue" T OFlow3.weightBlue}
+ addUserKnob {20 "" n -1}
+ addUserKnob {41 showVectors l "Show Vectors" T OFlow3.showVectors}
+ addUserKnob {41 about l About T OFlow3.about}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -480
+  ypos -32
+ }
+ Dot {
+  name Dot1
+  xpos -446
+  ypos 26
+ }
+set N5adf190 [stack 0]
+ NoOp {
+  name control
+  xpos -735
+  ypos 150
+  addUserKnob {20 User}
+  addUserKnob {3 inputAmount}
+  inputAmount 1
+  addUserKnob {3 frameFix}
+  frameFix 50
+  addUserKnob {3 amount}
+  amount {{inputAmount+1 i}}
+ }
+push $N5adf190
+push $N5adf190
+ TimeWarp {
+  lookup {{(frame*(mult)+(offset-mult))-1 i C x1 90 93}}
+  name TimeWarp2
+  xpos -537
+  ypos 105
+  addUserKnob {20 User}
+  addUserKnob {7 mult}
+  mult {{parent.control.amount i}}
+  addUserKnob {7 offset}
+  offset {{parent.control.frameFix i}}
+ }
+ OFXuk.co.thefoundry.time.oflow_v100 {
+  method Motion
+  timing "Source Frame"
+  timingFrame {{frame/parent.control.amount+(1-1/control.amount) i x1 0.2 1.33 1.66 2}}
+  timingSpeed {{1/control.amount i x1 11}}
+  filtering Normal
+  warpMode Normal
+  correctLuminance false
+  automaticShutterTime false
+  shutterTime 0
+  shutterSamples 1
+  vectorDetail 0.2
+  smoothness 0.5
+  blockSize 6
+  Tolerances 0
+  weightRed 0.3
+  weightGreen 0.6
+  weightBlue 0.1
+  showVectors false
+  cacheBreaker false
+  name OFlow3
+  xpos -537
+  ypos 150
+ }
+ TimeOffset {
+  time_offset {{control.frameFix-2 i}}
+  name TimeOffset1
+  xpos -537
+  ypos 200
+ }
+ Switch {
+  inputs 2
+  which {{frame<control.frameFix||frame>control.frameFix+control.inputAmount?1:0 i}}
+  name Switch1
+  xpos -480
+  ypos 286
+ }
+ Output {
+  name Output1
+  selected true
+  xpos -487
+  ypos 344
+ }
+end_group

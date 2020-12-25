@@ -1,0 +1,69 @@
+set cut_paste_input [stack 0]
+version 6.3 v4
+Camera2 {
+ inputs 0
+ focal 45
+ haperture 45
+ vaperture 24
+ focal_point 1
+ name UndistortCam
+ selected true
+ xpos 598
+ ypos 4
+}
+push $cut_paste_input
+Card2 {
+ display textured+lines
+ rows {{1+9*Reformat6.accuracy i}}
+ columns {{1+16*Reformat6.accuracy i}}
+ z 1
+ scaling {{1+Reformat6.horiz i} {1+Reformat6.vert i} 1}
+ lens_in_distort_b {{Reformat6.vert i}}
+ lens_in_distortion {{"(-1 + ((Reformat6.switch)*2)) * (Reformat6.distort*30.7481752)" i}}
+ lens_in_power 2
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card3
+ selected true
+ xpos 465
+ ypos -45
+}
+Reformat {
+ inputs 0
+ format "2032 1144 0 0 2032 1144 1.00087 "
+ name Reformat6
+ selected true
+ xpos 576
+ ypos -51
+ addUserKnob {20 User}
+ addUserKnob {7 distort}
+ distort 0.0132908
+ addUserKnob {7 accuracy}
+ accuracy 3
+ addUserKnob {7 vert}
+ vert -0.0005
+ addUserKnob {7 horiz}
+ addUserKnob {6 switch +STARTLINE}
+}
+ScanlineRender {
+ inputs 3
+ filter Mitchell
+ max_tessellation 10
+ shutter 0
+ output_motion_vectors_type off
+ MB_channel {-forward.u -forward.v -backward.u}
+ output_shader_vectors true
+ name ScanlineRender1
+ selected true
+ xpos 465
+ ypos 25
+}

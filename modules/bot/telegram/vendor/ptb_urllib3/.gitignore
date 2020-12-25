@@ -1,0 +1,8 @@
+.hgtags
+*.py[co]
+*.egg
+*.egg-info
+*.log
+/dist
+/build
+/docs/_build

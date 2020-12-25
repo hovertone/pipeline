@@ -1,0 +1,149 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Gizmo {
+ inputs 10
+ addUserKnob {20 User}
+ addUserKnob {41 switcher l Slider T Output1.switcher}
+}
+ Input {
+  inputs 0
+  name Input10
+  xpos 647
+  ypos 516
+  number 9
+ }
+ Input {
+  inputs 0
+  name Input9
+  xpos 646
+  ypos 480
+  number 8
+ }
+ Input {
+  inputs 0
+  name Input8
+  xpos 647
+  ypos 443
+  number 7
+ }
+ Input {
+  inputs 0
+  name Input7
+  xpos 646
+  ypos 408
+  number 6
+ }
+ Input {
+  inputs 0
+  name Input6
+  xpos 646
+  ypos 371
+  number 5
+ }
+ Input {
+  inputs 0
+  name Input5
+  xpos 645
+  ypos 336
+  number 4
+ }
+ Input {
+  inputs 0
+  name Input4
+  xpos 644
+  ypos 300
+  number 3
+ }
+ Input {
+  inputs 0
+  name Input3
+  xpos 642
+  ypos 264
+  number 2
+ }
+ Input {
+  inputs 0
+  name Input2
+  xpos 643
+  ypos 228
+  number 1
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 519
+  ypos 144
+ }
+ Dissolve {
+  inputs 2
+  which {{Output1.switcher-1 i}}
+  name Dissolve1
+  xpos 519
+  ypos 222
+ }
+ Dissolve {
+  inputs 2
+  which {{Output1.switcher-2 i}}
+  name Dissolve2
+  xpos 519
+  ypos 258
+ }
+ Dissolve {
+  inputs 2
+  which {{Output1.switcher-3 i}}
+  name Dissolve3
+  xpos 519
+  ypos 294
+ }
+ Dissolve {
+  inputs 2
+  which {{Output1.switcher-4 i}}
+  name Dissolve4
+  xpos 519
+  ypos 330
+ }
+ Dissolve {
+  inputs 2
+  which {{Output1.switcher-5 i}}
+  name Dissolve5
+  xpos 519
+  ypos 366
+ }
+ Dissolve {
+  inputs 2
+  which {{Output1.switcher-6 i}}
+  name Dissolve6
+  xpos 519
+  ypos 402
+ }
+ Dissolve {
+  inputs 2
+  which {{Output1.switcher-7 i}}
+  name Dissolve7
+  xpos 519
+  ypos 438
+ }
+ Dissolve {
+  inputs 2
+  which {{Output1.switcher-8 i}}
+  name Dissolve8
+  xpos 519
+  ypos 474
+ }
+ Dissolve {
+  inputs 2
+  which {{Output1.switcher-9}}
+  name Dissolve9
+  selected true
+  xpos 519
+  ypos 510
+ }
+ Output {
+  name Output1
+  xpos 519
+  ypos 591
+  addUserKnob {20 User}
+  addUserKnob {7 switcher l Slider t "Slide this to dissolve between input pipes" R 1 10}
+  switcher 1
+ }
+end_group

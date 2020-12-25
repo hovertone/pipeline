@@ -1,0 +1,20 @@
+# Created by 3DEqualizer4 using Export Nuke Distortion Nodes export script
+LD_3DE4_Radial_Fisheye_Degree_8 {
+ direction undistort
+ tde4_focal_length_cm 3.0000000 
+ tde4_custom_focus_distance_cm 91.4400000 
+ tde4_filmback_width_cm 4.9792000 
+ tde4_filmback_height_cm 1.8672000 
+ tde4_lens_center_offset_x_cm 0.0000000 
+ tde4_lens_center_offset_y_cm 0.0000000 
+ tde4_pixel_aspect 1.0000000 
+ field_of_view_xa_unit 0.0000000 
+ field_of_view_ya_unit 0.0000000 
+ field_of_view_xb_unit 1.0000000 
+ field_of_view_yb_unit 1.0000000 
+ Distortion_Degree_2 0.0000000 
+ Quartic_Distortion_Degree_4 0.0000000 
+ Degree_6 0.0000000 
+ Degree_8 0.0000000 
+ name LD_3DE4_CameraPlane_3de_v16
+}

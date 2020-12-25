@@ -1,0 +1,110 @@
+#! C:/Program Files/Nuke8.0v3/nuke-8.0.v3.dll -nx
+version 8.0 v3
+Gizmo {
+ inputs 2
+ help "Designed to analyze the focus values of a plate. \n-Tyler Lockard\n\nKnown Caveats:\n    •Results may be inaccurate if mask changes \n    in shape and size throughout shot.\n\n    •FG occluding objects will probably create \n    spikes in the analysis. Delete these \n    keyframes once you bake the curve and let\n    it interpolate this section.\n\n    •Strong motion blur will skew results, \n    requires manual finesse of resulting curve.\n\n\nFirst, run the analysis.\n(It's strongly recommended to mask out the defocusing area.)\n\nScrub through and find the sharpest frame you can, then hit USE CURRENT FRAME under FOCUSED FRAME. \n\nLikewise, find the most defocused frame you can and hit USE CURRENT FRAME under DEFOCUSED FRAME.\n\nMULTIPLY and LIFT are supplied for user control. LIFT should be increased if your plate is never fully in focus. MULTIPLY will scale the overall effect. \n\nHitting BAKE will take the resulting curve and bake it to keyframes. This animation is then applied to a newly created Defocus node. From here, the curve can be tweaked as desired.\n\n\n    (Note: After analysis, this node operates like a \n     normal defocus. Connect me to your element \n     to preview the effect before baking.)\n"
+ tile_color 0xd38353ff
+ addUserKnob {20 User}
+ addUserKnob {41 go l "Analyze Defocus" T CurveTool1.go}
+ addUserKnob {26 Controls}
+ addUserKnob {41 framelow l "Focused Frame" T Controller.framelow}
+ addUserKnob {41 useCurrent1 l "Use Current Frame" -STARTLINE T Controller.useCurrent1}
+ addUserKnob {41 frameHigh l "Defocused Frame" T Controller.frameHigh}
+ addUserKnob {41 useCurrent2 l "Use Current Frame" -STARTLINE T Controller.useCurrent2}
+ addUserKnob {41 Multiply l "Multiply Curve" T Controller.Multiply}
+ addUserKnob {41 Lift l "Lift Curve" T Controller.Lift}
+ addUserKnob {26 ""}
+ addUserKnob {41 defocus l Result T Defocus1.defocus}
+ addUserKnob {22 Bake -STARTLINE T "def bakeCurve( curve, first, last, inc ):\n    '''bake an expresison curve into a keyframes curve'''\n    for f in xrange( first, last, inc ):\n        curve.setKey( f, curve.evaluate( f ) )\n    curve.setExpression( 'curve' )\n\n####################################################\ndef getCurves( knob, views ):\n    '''return a list of all animation curves found in the given knob'''\n    curves = \[]\n    for v in views:\n        curves.extend( knob.animations( v ) )\n    return curves\n\n####################################################\ndef bakeExpressionKnobs( node, first, last, inc, views ):  \n    '''bake all knobs in node that carry expressions'''\n    # GET ALL KNOBS WITH EXPRESSIONS IN THEM\n    expKnobs = \[ k for k in node.knobs().values() if k.hasExpression() ]\n\n    # GET ALL CURVES INSIDE THAT KNOB INCLUDING SPLIT FIELDS AND VIEWS\n    allCurves = \[]\n    for k in expKnobs:\n        allCurves += getCurves( k, views )\n\n    # BAKE ALL CURVES\n    for c in allCurves:\n        bakeCurve( c, first, last, inc )\n\n####################################################\ndef bakeDependentNodes():\n    '''Add this to onUserDestroy callback - not yet implemented'''\n    parentNode = nuke.thisNode() # THIS IS GIVEN TO US BY THE CALLBACK, i.e. WHEN A NODE IS DELETED - WELL, NOT YET\n    depNodes  = parentNode.dependent( nuke.EXPRESSIONS )\n    \n    ret = nuke.getFramesAndViews( 'bake curves in dependent nodes?', '%s-%s' % (parentNode.firstFrame(), parentNode.lastFrame()) )\n    if not ret:\n        return\n    fRange = nuke.FrameRange( ret\[0] )\n    views = ret\[1]\n\n    for n in depNodes:\n        bakeExpressionKnobs( n, fRange.first(), fRange.last(), fRange.increment(), views )\n        \n\n####################################################\ndef bakeSelectedNodes():\n    '''bake selected nodes' knobs that carry expressions'''\n    ret = nuke.getFramesAndViews( 'bake curves in selected nodes?', '%s-%s' % (nuke.root().firstFrame(), nuke.root().lastFrame()) )\n    if not ret:\n        return\n    fRange = nuke.FrameRange( ret\[0] )\n    views = ret\[1]\n\n    for n in nuke.selectedNodes():\n        bakeExpressionKnobs( n, fRange.first(), fRange.last(), fRange.increment(), views )\n\n\n# Bake Animation\nthisnode = nuke.thisGroup()\nwith thisnode:\n    nuke.toNode('Defocus1')\['selected'].setValue(True)\n    bakeSelectedNodes()\n\n# Create Defocus Node and Copy Animation\nwith nuke.Root():\n    defocus = nuke.createNode('Defocus')\n    defocus\['defocus'].copyAnimation(0, thisnode\['defocus'].animation(0))\n    nuke.delete(thisnode)"}
+ addUserKnob {26 div l "" +STARTLINE T "    "}
+ addUserKnob {26 footer l "" +STARTLINE T "<span style=\"color:#555\">//    Tyler Lockard  -  2014  -  lockardvfx@gmail.com"}
+}
+ Input {
+  inputs 0
+  name Mask
+  xpos 880
+  ypos -707
+  number 1
+ }
+ Invert {
+  name Invert1
+  xpos 880
+  ypos -594
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 717
+  ypos -707
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge1
+  xpos 717
+  ypos -588
+ }
+ Dot {
+  name Dot2
+  xpos 751
+  ypos -397
+ }
+set N2c914550 [stack 0]
+ Dot {
+  name Dot1
+  xpos 488
+  ypos -397
+ }
+ EdgeDetectWrapper {
+  name EdgeDetect1
+  xpos 454
+  ypos -344
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos 454
+  ypos -308
+ }
+ CurveTool {
+  ROI {0 0 1920 1072}
+  autocropdata {0 0 1920 1072}
+  name CurveTool1
+  xpos 454
+  ypos -264
+ }
+ NoOp {
+  inputs 0
+  name Controller
+  xpos 586
+  ypos -300
+  addUserKnob {20 User}
+  addUserKnob {3 framelow l "Focused Frame" t "Select the frame where the plate is the most IN FOCUS\n\nIf it's never fully in focus, you may need to use the LIFT CURVE knob to adjust this base."}
+  framelow 1
+  addUserKnob {22 useCurrent1 l "Use Current Frame" -STARTLINE T "current = nuke.Root()\['frame'].value()\nnuke.thisNode()\['framelow'].setValue(current)"}
+  addUserKnob {3 low -STARTLINE}
+  low {{CurveTool1.intensitydata(framelow)}}
+  addUserKnob {3 frameHigh l "Defocused Frame" t "Select the frame where the plate is the most DEFOCUSED"}
+  frameHigh 100
+  addUserKnob {22 useCurrent2 l "Use Current Frame" -STARTLINE T "current = nuke.Root()\['frame'].value()\nnuke.thisNode()\['frameHigh'].setValue(current)"}
+  addUserKnob {3 high -STARTLINE}
+  high {{CurveTool1.intensitydata(frameHigh)}}
+  addUserKnob {7 Multiply l "Multiply Curve" t "Multiply the defocus curve by a value." R 1 50}
+  Multiply 5
+  addUserKnob {7 Lift l "Lift Curve" t "Globally increases the defocused curve by a value." R 0 10}
+ }
+push $N2c914550
+ Defocus {
+  defocus {{"((CurveTool1.intensitydata.integrate(frame-2, frame+2)/4-Controller.low)/(Controller.high-Controller.low))*Controller.Multiply+Controller.Lift"}}
+  name Defocus1
+  xpos 717
+  ypos -269
+ }
+ Output {
+  name Output1
+  xpos 717
+  ypos -68
+ }
+end_group

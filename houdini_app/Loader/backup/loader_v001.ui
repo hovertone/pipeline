@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FileManager</class>
+ <widget class="QDialog" name="FileManager">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>831</width>
+    <height>789</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>File Manager</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog{
+background:rgb(58,58,58);
+}
+
+QLabel{
+color:rgb(196,196,196);
+}
+
+QListWidget{
+background:rgb(48,48,48);
+}
+
+QPushButton{
+background:qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60,60, 60, 255), stop:1 rgba(85, 85, 85, 255));
+border:1px solid black;
+color:rgb(196,196,196);
+}
+
+QPushButton:hover{
+background:qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(68,68, 68, 255), stop:1 rgba(93, 93, 93, 255));
+border:1px solid black;
+color:rgb(196,196,196);
+}
+
+QPushButton:pressed{
+background:rgb(185,134,32);
+border:1px solid black;
+color:rgb(196,196,196);
+}
+
+
+
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="vLayoutMain">
+   <property name="spacing">
+    <number>6</number>
+   </property>
+   <item>
+    <layout class="QGridLayout" name="gridLayoutTop">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_project">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Project:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_source">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Source:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_sequence">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Sequence:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLabel" name="label_shot">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Shot:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="label_type">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Type:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QComboBox" name="cbox_project"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="cbox_source">
+       <item>
+        <property name="text">
+         <string>ASSETBUILDS</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SHOTS</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QComboBox" name="cbox_sequence">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QComboBox" name="cbox_shot">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QComboBox" name="cbox_type">
+       <item>
+        <property name="text">
+         <string>FX</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>LIGHTING</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ANIMATION</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>MODELING</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QListWidget" name="listWidget_files"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hLayoutButtons">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>618</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pb_close">
+       <property name="minimumSize">
+        <size>
+         <width>70</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>CLOSE</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pb_open">
+       <property name="minimumSize">
+        <size>
+         <width>70</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>OPEN</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,401 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0xc6581aff
+ label FIRE
+ note_font Verdana
+ note_font_size 42
+ selected true
+ xpos 11613
+ ypos 3074
+ bdwidth 186
+ bdheight 225
+}
+Read {
+ inputs 0
+ file P:/Arena/sequences/SQA/sh183/render/stadiumSpots/v009/sh183_stadiumSpots_v009.%04d.exr
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ first 1060
+ last 1084
+ origfirst 1060
+ origlast 1084
+ origset true
+ auto_alpha true
+ name Read8
+ tile_color 0xff
+ label "SH sh183\nSTADIUMSPOTS\nv009\n1060 - 1084"
+ selected true
+ xpos 11801
+ ypos 3297
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Grade {
+ white {0.7610999942 0.9885269403 1.289999962 1.019999981}
+ gamma {0.7799999714 0.8999999166 1.019999981 0.8999999762}
+ name Grade10
+ selected true
+ xpos 11801
+ ypos 3465
+}
+Read {
+ inputs 0
+ file P:/Arena/sequences/SQA/sh183/render/back/v009/sh183_back_v009.%04d.exr
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ first 1060
+ last 1084
+ origfirst 1060
+ origlast 1084
+ origset true
+ auto_alpha true
+ name Read5
+ tile_color 0xff
+ label "SH sh183\nBACK\nv009\n1060 - 1084"
+ selected true
+ xpos 11623
+ ypos 2869
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Unpremult {
+ name Unpremult4
+ selected true
+ xpos 11623
+ ypos 3007
+}
+Dot {
+ name Dot21
+ selected true
+ xpos 11657
+ ypos 3164
+}
+set N1739c00 [stack 0]
+add_layer {RGBA_fire RGBA_fire.red RGBA_fire.green RGBA_fire.blue}
+Shuffle {
+ in RGBA_fire
+ name Shuffle6
+ label "\[knob in]"
+ selected true
+ xpos 11709
+ ypos 3154
+}
+set N1769400 [stack 0]
+Grade {
+ white {1.7299999 1.399999976 1.069999933 1}
+ name Grade11
+ selected true
+ xpos 11709
+ ypos 3243
+}
+push $N1769400
+push $N1739c00
+Merge2 {
+ inputs 2
+ operation difference
+ Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+ name Merge17
+ selected true
+ xpos 11623
+ ypos 3212
+}
+Merge2 {
+ inputs 2
+ operation plus
+ Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+ output rgb
+ name Merge18
+ selected true
+ xpos 11623
+ ypos 3269
+}
+Premult {
+ name Premult4
+ selected true
+ xpos 11623
+ ypos 3332
+}
+Dot {
+ name Dot23
+ selected true
+ xpos 11657
+ ypos 3380
+}
+set N1739000 [stack 0]
+push $N1739000
+add_layer {glow glow.red glow.green glow.blue}
+expoglow.gizmo {
+ inputs 2
+ name expoglow5
+ label "lights glow"
+ selected true
+ xpos 11623
+ ypos 3425
+ PreGrade 1
+ gamma 0.3
+ GlowSettings 1
+ PostGrade 1
+ white_1 {0.9326663613 0.9286662936 0.9226663709 1}
+ multiply_1 0.33
+ maskChannelMask glow.red
+ ShiftRed 1
+ ShiftGreen 1
+ ShiftBlue 1
+}
+Merge2 {
+ inputs 2
+ name Merge19
+ selected true
+ xpos 11623
+ ypos 3465
+}
+Camera2 {
+ inputs 0
+ translate {{curve i l x1060 -40.25090576 k -40.24659424 -40.23261719 -40.20742188 -40.16944824 -40.117146 -40.04895508 -39.96331787 -39.85868164 -39.73393799 -39.59291748 -39.44147217 -39.2854541 -39.13071533 -38.98311035 -38.84849121 -38.73308838 -38.63713379 -38.55748047 -38.49098633 -38.43450684 -38.38932129 -38.35753174 -38.33720703 -38.32642578 l -38.32325928} {curve i l x1060 1.477190247 k 1.477190247 1.462598419 1.424971466 1.35884079 1.292910004 1.256181488 1.242288437 1.243628922 1.24894783 1.260191422 1.279305954 1.30823761 1.362446747 1.440321655 1.518200378 1.591412506 1.664628448 1.728196869 1.772474518 1.795838928 1.807547302 1.815653534 1.820732117 1.823357697 l 1.824105225} {curve i l x1060 -6.851055908 k -7.460170898 -8.06862854 -8.677025757 -9.285880127 -9.896153564 -10.51057007 -11.12439819 -11.73308472 -12.31303345 -12.86135864 -13.40966919 -13.9105835 -14.41398071 -14.92649536 -15.44258423 -15.95670166 -16.46330444 -16.95684937 -17.43179199 -17.88258789 -18.31654419 -18.74323975 -19.16053955 -19.56631104 l -19.95842163}}
+ rotate {{curve l x1060 6.518439571 k 6.980457255 8.051510414 9.404925768 10.71097931 11.64075609 12.08609853 12.25173215 12.27541098 12.12630237 11.72481687 11.13980841 10.44010237 9.694340167 8.970890073 8.337810714 7.811436703 7.3573242 6.967211792 6.633148978 6.347542696 6.110166881 5.925811432 5.794315269 5.715525147 l 5.689293661} {curve i l x1060 33.02697735 k 33.14944113 33.25630407 33.44387382 33.79403108 34.3947642 35.26473617 36.36520767 37.68955067 39.45734859 41.75590587 44.40324016 47.21712758 50.01430143 52.61001138 54.81793532 56.72593656 58.35480642 59.4168839 60.03257497 60.52387212 60.9014725 61.17414303 61.35392856 61.45292014 l 61.48321976} {curve i l x1060 -16.5874787 k -15.0901871 -13.78220524 -12.81079868 -12.14780307 -11.65595363 -11.32868183 -11.17365775 -11.15124382 -11.18430559 -11.27336819 -11.40338276 -11.55929254 -11.72583383 -11.88737182 -12.0278185 -12.14184047 -12.23929272 -12.32656236 -12.40019738 -12.44245184 -12.46140071 -12.4753697 -12.48477771 -12.49006974 l -12.49172409}}
+ scaling {{curve i l x1060 1 k 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 l 1} {curve i l x1060 1 k 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 l 1} {curve i l x1060 1 k 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 l 1}}
+ uniform_scale {{curve i l x1060 1 k 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 l 1}}
+ skew {{curve i l x1060 0 k 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 l 0} {curve i l x1060 0 k 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 l 0} {curve i l x1060 0 k 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 l 0}}
+ pivot {{curve i l x1060 0 k 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 l 0} {curve i l x1060 0 k 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 l 0} {curve i l x1060 0 k 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 l 0}}
+ focal {{curve i l x1060 18.09410477 k 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 18.09410477 l 18.09410477}}
+ haperture {{curve i l x1060 35.99992752 k 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 35.99992752 l 35.99992752}}
+ vaperture {{curve i l x1060 20.24995995 k 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 20.24995995 l 20.24995995}}
+ near {{curve i l x1060 0.1000000015 k 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 0.1000000015 l 0.1000000015}}
+ far {{curve i l x1060 5000 k 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 l 5000}}
+ win_translate {{curve i l x1060 0 k 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 l 0} {curve i l x1060 0 k 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 l 0}}
+ focal_point {{curve i l x1060 5 k 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 l 5}}
+ fstop {{curve i l x1060 5.599999905 k 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 5.599999905 l 5.599999905}}
+ file P:/Arena/sequences/SQA/sh183/cache/cam/sh183_cam_v001.abc
+ name Camera1
+ tile_color 0x6a55ffff
+ label "SH183 v001"
+ selected true
+ xpos 11572
+ ypos 2549
+}
+set N84dc1800 [stack 0]
+push $N84dc1800
+Dot {
+ name Dot1
+ tile_color 0xff0400ff
+ label CAM
+ note_font_size 33
+ selected true
+ xpos 11103
+ ypos 2160
+ hide_input true
+}
+set N84dc1400 [stack 0]
+FrameHold {
+ first_frame 1087
+ name FrameHold2
+ selected true
+ xpos 10975
+ ypos 2201
+ addUserKnob {20 Set_This_Frame l SetThisFrame}
+ addUserKnob {22 SetThisFrame -STARTLINE T "node = nuke.thisNode()\nnode\['first_frame'].setValue(nuke.frame()) "}
+}
+Read {
+ inputs 0
+ file P:/Arena/sequences/SQA/sh183/art/out/SH183_matte_f1087_v001.exr
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ origset true
+ auto_alpha true
+ in_colorspace "ACES - ACEScg"
+ out_colorspace "ACES - ACEScg"
+ name Read11
+ tile_color 0x557fffff
+ selected true
+ xpos 10865
+ ypos 2052
+ postage_stamp false
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Project3D2 {
+ inputs 2
+ name Project3D2
+ selected true
+ xpos 10865
+ ypos 2207
+}
+Sphere {
+ radius 600
+ rotate {0 -111 0}
+ name Sphere2
+ selected true
+ xpos 10865
+ ypos 2267
+}
+push $N84dc1400
+FrameHold {
+ first_frame 1066
+ name FrameHold1
+ selected true
+ xpos 11164
+ ypos 2201
+ addUserKnob {20 Set_This_Frame l SetThisFrame}
+ addUserKnob {22 SetThisFrame -STARTLINE T "node = nuke.thisNode()\nnode\['first_frame'].setValue(nuke.frame()) "}
+}
+Read {
+ inputs 0
+ file P:/Arena/sequences/SQA/sh183/art/out/SH183_matte_f1066_v001.exr
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ origset true
+ auto_alpha true
+ in_colorspace "ACES - ACEScg"
+ out_colorspace "ACES - ACEScg"
+ name Read10
+ tile_color 0x557fffff
+ selected true
+ xpos 11262
+ ypos 2052
+ postage_stamp false
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Project3D2 {
+ inputs 2
+ name Project3D1
+ selected true
+ xpos 11262
+ ypos 2207
+}
+Sphere {
+ radius 400
+ rotate {0 -111 0}
+ name Sphere3
+ selected true
+ xpos 11262
+ ypos 2270
+}
+Read {
+ inputs 0
+ file P:/Arena/assetBuilds/hdri/green_point_park_16k.hdr
+ format "16384 8192 0 0 16384 8192 1 "
+ origset true
+ colorspace "Utility - Linear - sRGB"
+ auto_alpha true
+ in_colorspace "ACES - ACEScg"
+ out_colorspace "ACES - ACEScg"
+ name Read17
+ label 16K
+ selected true
+ xpos 11582
+ ypos 2034
+ postage_stamp false
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file P:/Arena/assetBuilds/hdri/green_point_park_2k.hdr
+ format "8192 4096 0 0 8192 4096 1 "
+ origset true
+ colorspace "Utility - Linear - sRGB"
+ auto_alpha true
+ in_colorspace "ACES - ACEScg"
+ out_colorspace "ACES - ACEScg"
+ name Read18
+ label 2K
+ selected true
+ xpos 11422
+ ypos 2041
+ postage_stamp false
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Switch {
+ inputs 2
+ which 1
+ name Switch2
+ selected true
+ xpos 11422
+ ypos 2135
+ disable true
+}
+Grade {
+ white {2.997826338 4 2.993826389 4}
+ multiply 1.04
+ name Grade12
+ selected true
+ xpos 11422
+ ypos 2161
+}
+ColorCorrect {
+ highlights.gain {1.086054325 0.8716885448 0.906054318 1}
+ lookup {shadow {curve 1 s0 x0.08419521898 0 s0}
+   midtone {1-shadow-highlight}
+   highlight {curve x0.5667538643 0 s0 x1 1 s0}}
+ name ColorCorrect3
+ selected true
+ xpos 11422
+ ypos 2201
+}
+set N627ecc00 [stack 0]
+Sphere {
+ radius 1000
+ rotate {0 -101 0}
+ name Sphere1
+ selected true
+ xpos 11562
+ ypos 2277
+}
+push $N627ecc00
+Sphere {
+ radius 1000
+ rotate {0 -54 0}
+ name Sphere4
+ selected true
+ xpos 11422
+ ypos 2278
+}
+Switch {
+ inputs 2
+ which 1
+ name Switch4
+ selected true
+ xpos 11422
+ ypos 2331
+}
+push $N84dc1800
+Scene {
+ inputs 4
+ name Scene2
+ tile_color 0xff0aff
+ selected true
+ xpos 11432
+ ypos 2549
+}
+push $cut_paste_input
+Reformat {
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ name Reformat3
+ selected true
+ xpos 11574
+ ypos 2689
+}
+ScanlineRender {
+ inputs 3
+ motion_vectors_type velocity
+ name ScanlineRender2
+ selected true
+ xpos 11422
+ ypos 2689
+}
+VectorBlur2 {
+ uv forward
+ scale 1
+ name VectorBlur2_2
+ selected true
+ xpos 11422
+ ypos 2755
+}
+Merge2 {
+ inputs 2
+ name Merge20
+ selected true
+ xpos 11422
+ ypos 3465
+}

@@ -1,0 +1,139 @@
+#! C:/Program Files/Nuke6.3v1/Nuke6.3.exe -nx
+version 6.3 v1
+Gizmo {
+ postage_stamp true
+ addUserKnob {20 Mode l User}
+ addUserKnob {41 format l "output format" T Reformat1.format}
+ addUserKnob {41 resize l "resize type" T Reformat1.resize}
+ addUserKnob {41 softness T Radial1.softness}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x7171c600
+  label Seamless
+  note_font_size 42
+  xpos -287
+  ypos -521
+  bdwidth 454
+  bdheight 546
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -91
+  ypos -571
+ }
+ Reformat {
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  resize distort
+  name Reformat1
+  xpos -91
+  ypos -441
+ }
+set N5e50da50 [stack 0]
+ Crop {
+  box {{width/2 i} 0 {width i} {height/2 i}}
+  name Crop4
+  xpos -35
+  ypos -341
+ }
+ Transform {
+  translate {{width/2 i} {-height/2 i}}
+  scale -1
+  center {{width/2 i} {height/2 i}}
+  name Transform4
+  xpos -35
+  ypos -269
+ }
+push $N5e50da50
+ Crop {
+  box {0 0 {width/2 i} {height/2 i}}
+  name Crop3
+  xpos -145
+  ypos -341
+ }
+ Transform {
+  translate {{-width/2 i} {-height/2 i}}
+  scale -1
+  center {{width/2 i} {height/2 i}}
+  name Transform3
+  xpos -145
+  ypos -269
+ }
+push 0
+push $N5e50da50
+ Crop {
+  box {{width/2 i} {height/2 i} {width i} {height i}}
+  name Crop1
+  xpos 75
+  ypos -341
+ }
+ Transform {
+  translate {{width/2 i} {height/2 i}}
+  scale -1
+  center {{width/2 i} {height/2 i}}
+  name Transform1
+  xpos 75
+  ypos -269
+ }
+push $N5e50da50
+ Crop {
+  box {0 {height/2 i} {width/2 i} {height i}}
+  name Crop2
+  xpos -255
+  ypos -341
+ }
+ Transform {
+  translate {{-width/2 i} {height/2 i}}
+  scale -1
+  center {{width/2 i} {height/2 i}}
+  name Transform2
+  xpos -255
+  ypos -269
+ }
+ Merge2 {
+  inputs 4+1
+  name Merge1
+  xpos -91
+  ypos -180
+ }
+ Radial {
+  output alpha
+  premult rgba
+  invert true
+  area {{width} {height} 0 0}
+  softness 0.035
+  name Radial1
+  xpos -91
+  ypos -119
+ }
+push $N5e50da50
+ Dot {
+  name Dot1
+  xpos -277
+  ypos -432
+ }
+ Dot {
+  name Dot2
+  xpos -277
+  ypos -48
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos -91
+  ypos -51
+ }
+ Shuffle {
+  alpha black
+  name Shuffle1
+  xpos -91
+  ypos -3
+ }
+ Output {
+  name Output1
+  xpos -91
+  ypos 97
+ }
+end_group

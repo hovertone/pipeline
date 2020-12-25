@@ -1,0 +1,414 @@
+Group {
+ name PxF_IDefocus2
+ help "Variable blur/defocus/convolve based on a control channel."
+ knobChanged "m = nuke.thisNode()\nkc = nuke.thisKnob()\n\nif kc.name() in \[\"filter\", \"slices\"]:\n    i = nuke.toNode('img')\n    i2 = nuke.toNode('Shuffle1')\n    i3 = nuke.toNode('Switch1')\n    o = nuke.toNode('Switch2')\n    \n    for n in nuke.allNodes():\n      if \"static\" not in n\['label'].getValue():\n        nuke.delete(n)\n    \n    \n    slices = m\['slices'].value()\n    step = 1\n    ii = i\n    for x in range(1,slices+step,step):\n      \n    \n      k = nuke.nodes.Keyer()\n      k.setInput(0, i2)\n      k\['operation'].setValue(\"red keyer\")\n      k\['range'].setExpression(\"(1/parent.slices*\" + str(x) +\")-1/parent.slices\", 0)\n      k\['range'].setExpression(\"(1/parent.slices*\" + str(x-1) + \") + (1/parent.slices*parent.overlap)\", 1)\n      k\['range'].setValue(1.0, 2)\n      k\['range'].setValue(1.0, 3)\n    \n     \n      f = m\['filter'].value()\n      if f == \"defocus\":\n        d = nuke.nodes.Defocus()\n        d.setInput(0, i)\n        d\['defocus'].setExpression('parent.size/parent.slices*' + str(x))\n        d\['ratio'].setExpression('parent.aspect')\n      if f in \[\"box\", \"triangle\", \"quadratic\", \"gaussian\"]:\n        d = nuke.nodes.Blur()\n        d.setInput(0, i)\n        d\['size'].setSingleValue(False)\n        d\['size'].setExpression('parent.size/parent.slices*' + str(x) + \"*parent.aspect\", 0 )\n        d\['size'].setExpression('parent.size/parent.slices*' + str(x), 1)\n    \n       \n        \n        \n        d\['filter'].setValue(m\['filter'].value())\n      if f == \"convolve\":\n        r1 = nuke.nodes.Reformat()\n        r1.setInput(0, i3)\n        r1\['type'].setValue(\"to box\")\n        r1\['box_width'].setExpression(\"parent.size/parent.slices*2*\" + str(x) + \" > 3 ? parent.size/parent.slices*2*\" + str(x) + \": 3\" )\n        r15 = nuke.nodes.Reformat()\n        r15.setInput(0, r1)\n        r15\['type'].setValue(\"scale\")\n        r15\['resize'].setValue(\"deform\")\n        r15\['scale'].setSingleValue(False)\n        r15\['scale'].setValue(1,1)\n        r15\['scale'].setExpression('parent.aspect',0)\n        \n        t1 = nuke.nodes.Transform()\n        t1.setInput(0, r15)\n        t1\['translate'].setExpression(\"fmod(width,2)?0:0.5\", 0)\n        t1\['translate'].setExpression(\"fmod(height,2)?0:0.5\", 1)\n        r2 = nuke.nodes.Reformat()\n        r2.setInput(0, t1)\n        r2\['type'].setValue(\"to box\")\n        r2\['box_width'].setExpression(\"fmod(width,2)?width:width+1\")\n        r2\['box_height'].setExpression(\"fmod(height,2)?height:height+1\")\n        r2\['resize'].setValue(\"none\")\n        d = nuke.nodes.Convolve()\n        d.setInput(0, i)\n        d.setInput(1, r2)\n        #d\['channel'].setValue(\"red\")\n        d\['mix'].setExpression(\"parent.size/parent.slices*2*\" + str(x) + \" > 3 ? 1 : parent.size/parent.slices*2*\" + str(x) + \"/3\")\n    \n        \n    \n    \n      km = nuke.nodes.Keymix()\n      km.setInput(0, ii)\n      km.setInput(1, d)\n      km.setInput(2, k)\n      km\['bbox'].setValue(\"A side\")\n    \n      ii = km\n    \n    o.setInput(0, ii)"
+ tile_color 0x733520ff
+ addUserKnob {20 IDefocus}
+ addUserKnob {4 filter t "box, triangle, quadratic, gaussian = Blur node\ndefocus = Defocus node\nconvolve = Convolve node. See 'kernel' tab to customize kernel or plug your own in the 'kernel' input." M {box triangle quadratic gaussian defocus convolve "" "" ""}}
+ filter convolve
+ addUserKnob {7 size t "Maximum amount of defocus (when the control channel is white)." R 0 100}
+ size 10
+ addUserKnob {7 aspect t "Aspect ratio of the kernel. Use this to simulate 'oval' bokeh from an anamorphic lens." R 0 4}
+ aspect 1
+ addUserKnob {4 controlChannel t "Which channel of the 'map' input used to drive the defocus." M {red green blue alpha "" ""}}
+ controlChannel alpha
+ addUserKnob {6 keyKernel l "use kernel RGB luminance for alpha convolve" t "Use the RGB luminance of the kernel to defocus the alpha channel of the image being defocused. If this is turned off, the kernel must have valid pixels in every channel of every layer you are expecting to defocus." +STARTLINE}
+ keyKernel true
+ addUserKnob {3 slices t "How many slices are generated from the 'map' image. More slices are more precise, but slower."}
+ slices 5
+ addUserKnob {7 overlap t "Normalized overlap between slices. An overlap of 0 means hard slices with no soft transition. "}
+ overlap 0.5
+ addUserKnob {7 min t "Minimum value of the control channel. Values lower than this will be clamped to 0." R 0 10}
+ addUserKnob {7 max t "Maximum value of the control channel. Values above this will be clamped to 1." R 0 10}
+ max 1
+ addUserKnob {26 ""}
+ addUserKnob {26 t l "" +STARTLINE T "PxF_IDefocus 1.0.2 - (c) 2012 - Xavier Bourque - www.pixelfudger.com"}
+ addUserKnob {20 Kernel}
+ addUserKnob {6 viewKernel t "View the image being used as the kernel when the filter mode is set to 'convolve'. Use this to see what you're doing when adjusting the kernel shape. Don't forget to turn it off when you're done!" +STARTLINE}
+ addUserKnob {26 "" l "@b;Colors"}
+ addUserKnob {7 ringWidth t "Thickness of the 'donut' around the edge of the kernel."}
+ ringWidth 0.25
+ addUserKnob {41 ring_color l "ring color" t "Color of the 'donut' around the edge of the kernel." T Flare1.ring_color}
+ addUserKnob {41 inner_color l "inner color" t "Color of the center of the kernel." T Flare1.inner_color}
+ addUserKnob {41 outer_falloff l "outer falloff" T Flare1.outer_falloff}
+ addUserKnob {41 inner_falloff l "inner falloff" T Flare1.inner_falloff}
+ addUserKnob {26 "" l "@b;Shape"}
+ addUserKnob {41 corners T Flare1.corners}
+ addUserKnob {41 flattening l "edge flattening" T Flare1.flattening}
+ addUserKnob {41 sharpness l "corner sharpness" T Flare1.sharpness}
+ addUserKnob {41 corners_angle l angle T Flare1.corners_angle}
+}
+ Input {
+  inputs 0
+  name kernel
+  label static
+  xpos 4026
+  ypos -1082
+  number 2
+ }
+ Keyer {
+  operation "luminance key"
+  name Keyer4
+  label static
+  selected true
+  xpos 4026
+  ypos -1018
+  disable {{"parent.keyKernel ? 0 : 1" i}}
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width 501
+  box_height 501
+  box_fixed true
+  name Reformat4
+  label static
+  xpos 4217
+  ypos -1157
+ }
+ Flare {
+  position {250 250}
+  radius {{0 i} {"249 - (parent.ringWidth*249)" i} {249 i}}
+  outer_falloff 0.1
+  inner_falloff 90
+  vis_in 0
+  vis_out 1
+  vis_mask_size 0
+  corners 6
+  flattening 0.99
+  sharpness 0.99
+  name Flare1
+  label static
+  xpos 4217
+  ypos -1098
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input2]" i}}
+  name Switch1
+  label static
+  xpos 4223
+  ypos -995
+ }
+set N23b768c0 [stack 0]
+ Input {
+  inputs 0
+  name map
+  label static
+  xpos 3093
+  ypos -899
+  number 1
+ }
+ Grade {
+  channels rgba
+  blackpoint {{parent.min i}}
+  whitepoint {{parent.max i}}
+  white_clamp true
+  name Grade1
+  label static
+  xpos 3093
+  ypos -802
+ }
+ Shuffle {
+  red {{parent.controlChannel+1 i}}
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  label static
+  xpos 3093
+  ypos -738
+ }
+set N23ae4f60 [stack 0]
+ Keyer {
+  operation "red keyer"
+  range {{(1/parent.slices*5)-1/parent.slices} {"(1/parent.slices*4) + (1/parent.slices*parent.overlap)"} 1 1}
+  name Keyer6
+  xpos 3318
+  ypos -641
+ }
+push $N23b768c0
+ Reformat {
+  type "to box"
+  box_width {{"parent.size/parent.slices*2*5 > 3 ? parent.size/parent.slices*2*5: 3"}}
+  name Reformat14
+  xpos 4523
+  ypos -898
+ }
+ Reformat {
+  type scale
+  scale {{parent.aspect} 1}
+  resize distort
+  name Reformat15
+  xpos 4523
+  ypos -817
+ }
+ Transform {
+  translate {{fmod(width,2)?0:0.5} {fmod(height,2)?0:0.5}}
+  name Transform5
+  xpos 4523
+  ypos -736
+ }
+ Reformat {
+  type "to box"
+  box_width {{fmod(width,2)?width:width+1}}
+  box_height {{fmod(height,2)?height:height+1}}
+  resize none
+  name Reformat16
+  xpos 4523
+  ypos -655
+ }
+ Input {
+  inputs 0
+  name img
+  label static
+  xpos 3607
+  ypos -981
+ }
+set N2384b460 [stack 0]
+ Convolve {
+  inputs 2
+  mix {{"parent.size/parent.slices*2*5 > 3 ? 1 : parent.size/parent.slices*2*5/3"}}
+  name Convolve5
+  xpos 4523
+  ypos -574
+ }
+push $N23ae4f60
+ Keyer {
+  operation "red keyer"
+  range {{(1/parent.slices*4)-1/parent.slices} {"(1/parent.slices*3) + (1/parent.slices*parent.overlap)"} 1 1}
+  name Keyer5
+  xpos 3243
+  ypos -641
+ }
+push $N23b768c0
+ Reformat {
+  type "to box"
+  box_width {{"parent.size/parent.slices*2*4 > 3 ? parent.size/parent.slices*2*4: 3"}}
+  name Reformat11
+  xpos 4448
+  ypos -898
+ }
+ Reformat {
+  type scale
+  scale {{parent.aspect} 1}
+  resize distort
+  name Reformat12
+  xpos 4448
+  ypos -817
+ }
+ Transform {
+  translate {{fmod(width,2)?0:0.5} {fmod(height,2)?0:0.5}}
+  name Transform4
+  xpos 4448
+  ypos -736
+ }
+ Reformat {
+  type "to box"
+  box_width {{fmod(width,2)?width:width+1}}
+  box_height {{fmod(height,2)?height:height+1}}
+  resize none
+  name Reformat13
+  xpos 4448
+  ypos -655
+ }
+push $N2384b460
+ Convolve {
+  inputs 2
+  mix {{"parent.size/parent.slices*2*4 > 3 ? 1 : parent.size/parent.slices*2*4/3"}}
+  name Convolve4
+  xpos 4448
+  ypos -574
+ }
+push $N23ae4f60
+ Keyer {
+  operation "red keyer"
+  range {{(1/parent.slices*3)-1/parent.slices} {"(1/parent.slices*2) + (1/parent.slices*parent.overlap)"} 1 1}
+  name Keyer3
+  xpos 3168
+  ypos -641
+ }
+push $N23b768c0
+ Reformat {
+  type "to box"
+  box_width {{"parent.size/parent.slices*2*3 > 3 ? parent.size/parent.slices*2*3: 3"}}
+  name Reformat8
+  xpos 4373
+  ypos -898
+ }
+ Reformat {
+  type scale
+  scale {{parent.aspect} 1}
+  resize distort
+  name Reformat9
+  xpos 4373
+  ypos -817
+ }
+ Transform {
+  translate {{fmod(width,2)?0:0.5} {fmod(height,2)?0:0.5}}
+  name Transform3
+  xpos 4373
+  ypos -736
+ }
+ Reformat {
+  type "to box"
+  box_width {{fmod(width,2)?width:width+1}}
+  box_height {{fmod(height,2)?height:height+1}}
+  resize none
+  name Reformat10
+  xpos 4373
+  ypos -655
+ }
+push $N2384b460
+ Convolve {
+  inputs 2
+  mix {{"parent.size/parent.slices*2*3 > 3 ? 1 : parent.size/parent.slices*2*3/3"}}
+  name Convolve3
+  xpos 4373
+  ypos -574
+ }
+push $N23ae4f60
+ Keyer {
+  operation "red keyer"
+  range {{(1/parent.slices*2)-1/parent.slices} {"(1/parent.slices*1) + (1/parent.slices*parent.overlap)"} 1 1}
+  name Keyer2
+  xpos 3093
+  ypos -641
+ }
+push $N23b768c0
+ Reformat {
+  type "to box"
+  box_width {{"parent.size/parent.slices*2*2 > 3 ? parent.size/parent.slices*2*2: 3"}}
+  name Reformat5
+  xpos 4298
+  ypos -898
+ }
+ Reformat {
+  type scale
+  scale {{parent.aspect} 1}
+  resize distort
+  name Reformat6
+  xpos 4298
+  ypos -817
+ }
+ Transform {
+  translate {{fmod(width,2)?0:0.5} {fmod(height,2)?0:0.5}}
+  name Transform2
+  xpos 4298
+  ypos -736
+ }
+ Reformat {
+  type "to box"
+  box_width {{fmod(width,2)?width:width+1}}
+  box_height {{fmod(height,2)?height:height+1}}
+  resize none
+  name Reformat7
+  xpos 4298
+  ypos -655
+ }
+push $N2384b460
+ Convolve {
+  inputs 2
+  mix {{"parent.size/parent.slices*2*2 > 3 ? 1 : parent.size/parent.slices*2*2/3"}}
+  name Convolve2
+  xpos 4298
+  ypos -574
+ }
+push $N23ae4f60
+ Keyer {
+  operation "red keyer"
+  range {{(1/parent.slices*1)-1/parent.slices} {"(1/parent.slices*0) + (1/parent.slices*parent.overlap)"} 1 1}
+  name Keyer1
+  xpos 3093
+  ypos -493
+ }
+push $N23b768c0
+ Reformat {
+  type "to box"
+  box_width {{"parent.size/parent.slices*2*1 > 3 ? parent.size/parent.slices*2*1: 3"}}
+  name Reformat1
+  xpos 4223
+  ypos -898
+ }
+ Reformat {
+  type scale
+  scale {{parent.aspect} 1}
+  resize distort
+  name Reformat2
+  xpos 4223
+  ypos -817
+ }
+ Transform {
+  translate {{fmod(width,2)?0:0.5} {fmod(height,2)?0:0.5}}
+  name Transform1
+  xpos 4223
+  ypos -736
+ }
+ Reformat {
+  type "to box"
+  box_width {{fmod(width,2)?width:width+1}}
+  box_height {{fmod(height,2)?height:height+1}}
+  resize none
+  name Reformat3
+  xpos 4223
+  ypos -655
+ }
+push $N2384b460
+ Convolve {
+  inputs 2
+  mix {{"parent.size/parent.slices*2*1 > 3 ? 1 : parent.size/parent.slices*2*1/3"}}
+  name Convolve1
+  xpos 4223
+  ypos -574
+ }
+push $N2384b460
+ Keymix {
+  inputs 3
+  bbox A
+  name Keymix1
+  xpos 4223
+  ypos -493
+ }
+ Keymix {
+  inputs 3
+  bbox A
+  name Keymix2
+  xpos 4298
+  ypos -493
+ }
+ Keymix {
+  inputs 3
+  bbox A
+  name Keymix3
+  xpos 4373
+  ypos -493
+ }
+ Keymix {
+  inputs 3
+  bbox A
+  name Keymix4
+  xpos 4448
+  ypos -493
+ }
+ Keymix {
+  inputs 3
+  bbox A
+  name Keymix5
+  xpos 4523
+  ypos -493
+ }
+ Switch {
+  inputs 2
+  which {{parent.viewKernel i}}
+  name Switch2
+  label static
+  xpos 3871
+  ypos -49
+ }
+ Output {
+  name Output1
+  label static
+  xpos 3871
+  ypos 87
+ }
+end_group

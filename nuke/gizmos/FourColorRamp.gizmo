@@ -1,0 +1,170 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Gizmo {
+ inputs 0
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 User}
+ addUserKnob {41 resx l Resolustion T ctrl.resx}
+ addUserKnob {41 resy l x -STARTLINE T ctrl.resy}
+ addUserKnob {26 one l 1}
+ addUserKnob {41 pos1 l Position T ctrl.pos1}
+ addUserKnob {41 color1 l Color T ctrl.color1}
+ addUserKnob {41 infl1 l Inluence T ctrl.infl1}
+ addUserKnob {41 soft1 l Softness T ctrl.soft1}
+ addUserKnob {26 two l 2}
+ addUserKnob {41 pos2 l Position T ctrl.pos2}
+ addUserKnob {41 color2 l Color T ctrl.color2}
+ addUserKnob {41 infl2 l Influence T ctrl.infl2}
+ addUserKnob {41 soft2 l Softness T ctrl.soft2}
+ addUserKnob {26 three l 3}
+ addUserKnob {41 pos3 l Position T ctrl.pos3}
+ addUserKnob {41 color3 l Color T ctrl.color3}
+ addUserKnob {41 infl3 l Influence T ctrl.infl3}
+ addUserKnob {41 soft3 l Softness T ctrl.soft3}
+ addUserKnob {26 four l 4}
+ addUserKnob {41 pos4 l Position T ctrl.pos4}
+ addUserKnob {41 color4 l Color T ctrl.color4}
+ addUserKnob {41 infl4 l Influence T ctrl.infl4}
+ addUserKnob {41 soft4 l Softness T ctrl.soft4}
+}
+ Radial {
+  inputs 0
+  area {{-ctrl.resx-ctrl.infl4*ctrl.resx i} {0-ctrl.infl4*ctrl.resy i} {ctrl.resx+ctrl.infl4*ctrl.resx i} {ctrl.resy*2+ctrl.infl4*ctrl.resy i}}
+  color {{parent.ctrl.color4 i} {parent.ctrl.color4 i} {parent.ctrl.color4 i} {1 i}}
+  name Radial6
+  xpos 55
+  ypos -157
+ }
+ Transform {
+  translate {{parent.ctrl.pos4 i} {parent.ctrl.pos4-ctrl.resy i}}
+  center {960 540}
+  black_outside false
+  name Transform4
+  selected true
+  xpos 55
+  ypos -133
+ }
+ Gamma {
+  value {{1+parent.ctrl.soft4*7 i}}
+  name Gamma4
+  xpos 55
+  ypos -110
+ }
+ Radial {
+  inputs 0
+  area {{0-ctrl.infl3*ctrl.resx i} {0-ctrl.infl3*ctrl.resy i} {ctrl.resx*2+ctrl.infl3*ctrl.resx i} {ctrl.resy*2+ctrl.infl3*ctrl.resy i}}
+  color {{parent.ctrl.color3 i} {parent.ctrl.color3 i} {parent.ctrl.color3 i} {1 i}}
+  name Radial7
+  xpos -55
+  ypos -157
+ }
+ Transform {
+  translate {{parent.ctrl.pos3-ctrl.resx i} {parent.ctrl.pos3-ctrl.resy i}}
+  center {960 540}
+  black_outside false
+  name Transform3
+  xpos -55
+  ypos -134
+ }
+ Gamma {
+  value {{1+parent.ctrl.soft3*7 i}}
+  name Gamma3
+  xpos -55
+  ypos -110
+ }
+push 0
+ Radial {
+  inputs 0
+  area {{0-ctrl.infl2*ctrl.resx i} {-ctrl.resy-ctrl.infl2*ctrl.resy i} {ctrl.resx*2+ctrl.infl2*ctrl.resx i} {ctrl.resy+ctrl.infl2*ctrl.resy i}}
+  color {{parent.ctrl.color2 i} {parent.ctrl.color2 i} {parent.ctrl.color2 i} {1 i}}
+  name Radial8
+  xpos -165
+  ypos -157
+ }
+ Transform {
+  translate {{parent.ctrl.pos2-ctrl.resx i} {parent.ctrl.pos2 i}}
+  center {960 540}
+  black_outside false
+  name Transform2
+  xpos -165
+  ypos -134
+ }
+ Gamma {
+  value {{1+parent.ctrl.soft2*7 i}}
+  name Gamma2
+  xpos -165
+  ypos -110
+ }
+ Radial {
+  inputs 0
+  area {{-ctrl.resx-ctrl.infl1*ctrl.resx+ctrl.pos1.x/2 i x169 -1835} {-ctrl.resy-ctrl.infl1*ctrl.resy+ctrl.pos1.y/2 i x169 -1010} {ctrl.resx+ctrl.infl1*ctrl.resx+ctrl.pos1.x/2 i x169 2005} {ctrl.resy+ctrl.infl1*ctrl.resy+ctrl.pos1.y/2 i x169 1150}}
+  color {{parent.ctrl.color1 i} {parent.ctrl.color1 i} {parent.ctrl.color1 i} {1 i}}
+  name Radial1
+  xpos -278
+  ypos -157
+ }
+ Transform {
+  translate {{parent.ctrl.pos1 i} {parent.ctrl.pos1 i}}
+  center {960 540}
+  black_outside false
+  name Transform1
+  xpos -278
+  ypos -134
+ }
+ Gamma {
+  value {{1+parent.ctrl.soft1*7 i}}
+  name Gamma1
+  xpos -278
+  ypos -110
+ }
+ Merge2 {
+  inputs 4+1
+  also_merge all
+  name Merge1
+  xpos -119
+  ypos -35
+ }
+ NoOp {
+  name ctrl
+  xpos -119
+  ypos 11
+  addUserKnob {20 User}
+  addUserKnob {3 resx l Resolustion}
+  resx 1920
+  addUserKnob {3 resy l x -STARTLINE}
+  resy 1080
+  addUserKnob {26 one l 1}
+  addUserKnob {12 pos1 l Position}
+  addUserKnob {18 color1 l Color}
+  color1 {1 0 0}
+  addUserKnob {7 infl1 l Inluence}
+  addUserKnob {7 soft1 l Softness -STARTLINE}
+  addUserKnob {26 two l 2}
+  addUserKnob {12 pos2 l Position}
+  pos2 {1920 0}
+  addUserKnob {18 color2 l Color}
+  color2 {0.5 0 1}
+  addUserKnob {7 infl2 l Influence}
+  addUserKnob {7 soft2 l Softness -STARTLINE}
+  addUserKnob {26 three l 3}
+  addUserKnob {12 pos3 l Position}
+  pos3 {1920 1080}
+  addUserKnob {18 color3 l Color}
+  color3 {0 1 1}
+  addUserKnob {7 infl3 l Influence}
+  addUserKnob {7 soft3 l Softness -STARTLINE}
+  addUserKnob {26 four l 4}
+  addUserKnob {12 pos4 l Position}
+  pos4 {0 1080}
+  addUserKnob {18 color4 l Color}
+  color4 {0.5 1 0}
+  addUserKnob {7 infl4 l Influence}
+  addUserKnob {7 soft4 l Softness -STARTLINE}
+ }
+ Output {
+  name Output1
+  xpos -119
+  ypos 66
+ }
+end_group

@@ -1,0 +1,199 @@
+#! C:/Program Files/Nuke6.1v1/Nuke6.1.exe -nx
+version 6.1 v1
+Gizmo {
+ tile_color 0xffb700ff
+ addUserKnob {20 FacingRatio}
+ addUserKnob {26 t1 l "" +STARTLINE T "Author: Lucien Fostier\nlucienfostier@gmail.com\n15/02/11\nv0.1"}
+ addUserKnob {26 d1 l "" +STARTLINE}
+ addUserKnob {41 in l "Normal Pass Layer" T Shuffle2.in}
+ addUserKnob {26 d2 l "" +STARTLINE}
+ addUserKnob {6 SineYourData l "Sine your data" t "Do you want the normal to be offseted to a -1 to 1 range?" +STARTLINE}
+ addUserKnob {6 NormalizeYourData l "Normalize Your Data" t "Normalize the lenght of the incoming vectors" +STARTLINE}
+ NormalizeYourData true
+ addUserKnob {26 d3 l "" +STARTLINE}
+ addUserKnob {41 value l FallOff T Gamma1.value}
+}
+ Camera2 {
+  inputs 0
+  file_menu Axis/File
+  snap_menu Axis/Snap
+  name Camera1
+  xpos -202
+  ypos 315
+ }
+set N7fca3c8 [stack 0]
+push $N7fca3c8
+ Input {
+  inputs 0
+  name NormalPass
+  selected true
+  xpos 438
+  ypos 159
+ }
+set N7fcb360 [stack 0]
+ Remove {
+  operation keep
+  channels rgb
+  name Remove1
+  xpos 66
+  ypos 159
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle1
+  xpos 66
+  ypos 185
+ }
+set N811cea0 [stack 0]
+ Card2 {
+  z 1
+  lens_in_focal {{parent.Camera1.focal i}}
+  lens_in_haperture {{parent.Camera1.haperture i}}
+  file_menu Axis/File
+  snap_menu Axis/Snap
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card1
+  xpos -103
+  ypos 185
+ }
+ Normals {
+  inputs 2
+  action lookat
+  name Normals1
+  xpos -103
+  ypos 250
+ }
+push $N811cea0
+ Dot {
+  name Dot1
+  xpos 94
+  ypos 333
+ }
+add_layer {N_cam N_cam.red N_cam.green N_cam.blue N_cam.alpha}
+ ScanlineRender {
+  inputs 3
+  output_motion_vectors_type accurate
+  MB_channel none
+  output_shader_vectors true
+  N_channel N_cam
+  name ScanlineRender1
+  xpos -103
+  ypos 335
+ }
+ Dot {
+  name Dot2
+  xpos -75
+  ypos 490
+ }
+ Expression {
+  temp_name0 lenght
+  temp_expr0 sqrt(pow2(N_cam.red)+pow2(N_cam.green)+pow2(N_cam.blue))
+  channel0 {N_cam.red -N_cam.green -N_cam.blue -N_cam.alpha}
+  expr0 N_cam.red/lenght
+  channel1 {-N_cam.red N_cam.green -N_cam.blue -N_cam.alpha}
+  expr1 N_cam.green/lenght
+  channel2 {-N_cam.red -N_cam.green N_cam.blue -N_cam.alpha}
+  expr2 N_cam.blue/lenght
+  channel3 none
+  name Expression2
+  label "normalize N"
+  xpos 210
+  ypos 486
+  disable {{1-parent.NormalizeYourData i}}
+ }
+push $N7fcb360
+ Shuffle {
+  in rgb
+  out N_cam
+  name Shuffle2
+  xpos 438
+  ypos 206
+ }
+ Add {
+  channels N_cam
+  value -0.5
+  name Add1
+  xpos 438
+  ypos 255
+  disable {{1-parent.SineYourData i}}
+ }
+ Multiply {
+  channels N_cam
+  value 2
+  name Multiply1
+  xpos 438
+  ypos 304
+  disable {{1-parent.SineYourData i}}
+ }
+ Expression {
+  temp_name0 lenght
+  temp_expr0 sqrt(pow2(N_cam.red)+pow2(N_cam.green)+pow2(N_cam.blue))
+  channel0 {N_cam.red -N_cam.green -N_cam.blue -N_cam.alpha}
+  expr0 N_cam.red/lenght
+  channel1 {-N_cam.red N_cam.green -N_cam.blue -N_cam.alpha}
+  expr1 N_cam.green/lenght
+  channel2 {-N_cam.red -N_cam.green N_cam.blue -N_cam.alpha}
+  expr2 N_cam.blue/lenght
+  channel3 none
+  name Expression3
+  label "normalize N"
+  xpos 438
+  ypos 402
+  disable {{1-parent.NormalizeYourData i}}
+ }
+ ShuffleCopy {
+  inputs 2
+  in N_cam
+  in2 N_cam
+  red red
+  green green
+  blue blue
+  out N_cam
+  out2 rgba
+  name ShuffleCopy1
+  xpos 438
+  ypos 492
+ }
+ Expression {
+  temp_name0 Nc.Im
+  temp_expr0 (N_cam.red*r)+(N_cam.green*g)+(N_cam.blue*b)
+  expr0 (Nc.Im)
+  expr1 (Nc.Im)
+  expr2 (Nc.Im)
+  name Expression1
+  xpos 438
+  ypos 564
+ }
+ Gamma {
+  channels rgb
+  name Gamma1
+  xpos 438
+  ypos 615
+ }
+set Nf193c78 [stack 0]
+ Output {
+  name Output1
+  xpos 438
+  ypos 688
+ }
+push $Nf193c78
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos 633
+  ypos 632
+ }
+end_group

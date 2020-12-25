@@ -1,0 +1,75 @@
+set cut_paste_input [stack 0]
+version 6.3 v4
+push $cut_paste_input
+Dot {
+ name Dot10
+ selected true
+ xpos 497
+ ypos -389
+}
+set N1cc45b60 [stack 0]
+Shuffle {
+ red black
+ green black
+ alpha black
+ name Shuffle3
+ label "\[knob in]"
+ selected true
+ xpos 550
+ ypos -355.3333333
+}
+Transform {
+ center {{parent.Transform2.center i} {parent.Transform2.center i}}
+ filter Rifman
+ name Transform3
+ selected true
+ xpos 550
+ ypos -319
+}
+push 0
+push $N1cc45b60
+Shuffle {
+ red black
+ blue black
+ alpha black
+ name Shuffle2
+ label "\[knob in]"
+ selected true
+ xpos 463
+ ypos -355.3333333
+}
+Transform {
+ center {{parent.Transform1.center i} {parent.Transform1.center i}}
+ filter Rifman
+ name Transform2
+ selected true
+ xpos 463
+ ypos -319
+}
+push $N1cc45b60
+Shuffle {
+ green black
+ blue black
+ alpha black
+ name Shuffle1
+ label "\[knob in]"
+ selected true
+ xpos 375
+ ypos -355.3333333
+}
+Transform {
+ center {{"\[python nuke.root().format().width()/2]"} {"\[python nuke.root().format().height()/2]"}}
+ filter Rifman
+ name Transform1
+ selected true
+ xpos 375
+ ypos -319
+}
+Merge2 {
+ inputs 3+1
+ operation plus
+ name Merge7
+ selected true
+ xpos 463
+ ypos -276
+}

@@ -1,0 +1,942 @@
+#! D:/Nuke6.0v5/Nuke6.0.exe -nx
+version 6.0 v5
+Gizmo {
+ help "Create visual guides from root format, like\nsafe areas, different frame crops and timecode or frame number.\nYou can use as VIEWER_INPUT."
+ label v0.4
+ addUserKnob {20 User}
+ addUserKnob {26 Guides}
+ addUserKnob {6 Border_X l Border +STARTLINE}
+ Border_X true
+ addUserKnob {6 Action_Safe_X l Action_Safe +STARTLINE}
+ Action_Safe_X true
+ addUserKnob {6 Text_Action l Text -STARTLINE}
+ Text_Action true
+ addUserKnob {6 Title_Safe_X l Title_Safe +STARTLINE}
+ Title_Safe_X true
+ addUserKnob {6 Text_Title l Text -STARTLINE}
+ Text_Title true
+ addUserKnob {6 Center_X l Center +STARTLINE}
+ Center_X true
+ addUserKnob {6 Third_X l Third +STARTLINE}
+ addUserKnob {6 Grid_X l Grid +STARTLINE}
+ addUserKnob {3 Number_X l Number -STARTLINE}
+ Number_X 10
+ addUserKnob {4 Fonts l "Select Font Path" M {C:/Windows/Fonts/arial.ttf /Library/Fonts/Arial.ttf /usr/share/fonts/local/Arial.ttf}}
+ addUserKnob {26 ""}
+ addUserKnob {26 Frames l Crops -STARTLINE T ""}
+ addUserKnob {6 F16_9_X l "1.77 (16/9)" +STARTLINE}
+ addUserKnob {6 F1_85_X l 1.85 +STARTLINE}
+ addUserKnob {6 F2_35_X l 2.35 +STARTLINE}
+ addUserKnob {6 Letter_Box_X l Letter_Box +STARTLINE}
+ Letter_Box_X true
+ addUserKnob {7 Letter_Box_Mix l Mix -STARTLINE}
+ Letter_Box_Mix 1
+ addUserKnob {26 ""}
+ addUserKnob {6 Frame_Number_X l Frame_Number +STARTLINE}
+ addUserKnob {6 Time_Code_X l Time_Code +STARTLINE}
+ addUserKnob {41 startcode T AddTimeCode1.startcode}
+ addUserKnob {41 fps -STARTLINE T AddTimeCode1.fps}
+ addUserKnob {26 ""}
+ addUserKnob {7 Horizontal_Offset_X l Input_H_Offset R -250 250}
+ addUserKnob {7 Thickness_X l "Line Thickness" R 1 10}
+ Thickness_X 1
+ addUserKnob {7 Mix_X l "Overall Mix"}
+ Mix_X 1
+ addUserKnob {6 Enhance_X l Enhance +STARTLINE}
+ Enhance_X true
+ addUserKnob {26 ""}
+ addUserKnob {26 _ l . T "Gizmo by CS"}
+}
+ Input {
+  inputs 0
+  name Input1
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 20
+  xpos -502
+  ypos 568
+ }
+ Transform {
+  translate {0 {Horizontal_Offset_X}}
+  center {{root.format.w/2} {root.format.t/2}}
+  name Offset
+  xpos -350
+  ypos 573
+ }
+set N6af9f10 [stack 0]
+ Viewer {
+  input_process false
+  name Viewer2
+  xpos -521
+  ypos 716
+ }
+push $N6af9f10
+ AddTimeCode {
+  inputs 0
+  startcode 00:00:00:00
+  fps 25
+  metafps false
+  name AddTimeCode1
+  xpos 320
+  ypos 926
+ }
+ Text {
+  message "\[timecode]"
+  font "\[value Fonts]"
+  size {{floor(root.format.h/15) i}}
+  xjustify center
+  yjustify bottom
+  Transform 1
+  box {{root.format.x i} {root.format.y i} {root.format.w i} {root.format.t i}}
+  translate {0 {(root.format.t*0.1)+15 i}}
+  center {360 288}
+  name TimeCode
+  xpos 320
+  ypos 854
+ }
+set N6af9550 [stack 0]
+ Dot {
+  name Dot30
+  xpos 481
+  ypos 858
+ }
+set N261a1f90 [stack 0]
+push $N261a1f90
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle4
+  xpos 557
+  ypos 854
+ }
+ Blur {
+  size 10
+  name Blur2
+  xpos 557
+  ypos 800
+ }
+ Merge2 {
+  inputs 2
+  name Merge18
+  xpos 447
+  ypos 806
+ }
+push $N6af9550
+ Switch {
+  inputs 2
+  which {{Enhance_X i}}
+  name Switch14
+  xpos 320
+  ypos 806
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  xpos -266
+  ypos 135
+ }
+set N6afab40 [stack 0]
+ Dot {
+  name Dot15
+  xpos -232
+  ypos 514
+ }
+ Dot {
+  name Dot29
+  xpos 195
+  ypos 516
+ }
+set N6afa660 [stack 0]
+ Switch {
+  inputs 2
+  which {{Time_Code_X i}}
+  name Switch12
+  xpos 320
+  ypos 734
+ }
+push 0
+ Text {
+  inputs 0
+  message "\[frame]"
+  font "\[value Fonts]"
+  size {{floor(root.format.h/15) i}}
+  xjustify right
+  yjustify bottom
+  Transform 1
+  box {{root.format.x i} {root.format.y i} {root.format.w i} {root.format.t i}}
+  translate {{-(root.format.r*0.1)-10 i} {(root.format.t*0.1)+15 i}}
+  center {360 288}
+  name Frame
+  xpos 70
+  ypos 1046
+ }
+set N6afb020 [stack 0]
+ Dot {
+  name Dot31
+  xpos 231
+  ypos 1050
+ }
+set N261a15d0 [stack 0]
+push $N261a15d0
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle5
+  xpos 307
+  ypos 1046
+ }
+ Blur {
+  size 10
+  name Blur3
+  xpos 307
+  ypos 992
+ }
+ Merge2 {
+  inputs 2
+  name Merge19
+  xpos 197
+  ypos 998
+ }
+push $N6afb020
+ Switch {
+  inputs 2
+  which {{Enhance_X i}}
+  name Switch15
+  xpos 70
+  ypos 998
+ }
+push $N6afa660
+ Switch {
+  inputs 2
+  which {{Frame_Number_X i}}
+  name Switch11
+  xpos 70
+  ypos 782
+ }
+ Constant {
+  inputs 0
+  channels {rgba.red rgba.green rgba.blue rgba.alpha}
+  color 1
+  name F_2_35
+  xpos 1006
+  ypos 109
+ }
+ Crop {
+  box {0 0 {root.format.w i} {root.format.w*(1/2.35)*root.format.pixel_aspect i}}
+  reformat true
+  name Crop3
+  xpos 1006
+  ypos 197
+ }
+ Reformat {
+  black_outside true
+  name Reformat3
+  xpos 1005
+  ypos 237
+ }
+set N6af9070 [stack 0]
+ Transform {
+  center {{root.format.w/2} {root.format.t/2}}
+  name Transform8
+  xpos 1124
+  ypos 237
+ }
+set N6afbc50 [stack 0]
+ Dot {
+  name Dot22
+  xpos 1271
+  ypos 241
+ }
+ Dot {
+  name Dot23
+  xpos 1271
+  ypos 551
+ }
+push $N6afa660
+ Dot {
+  name Dot16
+  xpos 363
+  ypos 519
+ }
+set N25b71300 [stack 0]
+ Dot {
+  name Dot25
+  xpos 504
+  ypos 519
+ }
+set N25b71570 [stack 0]
+ Dot {
+  name Dot17
+  xpos 694
+  ypos 519
+ }
+set N25b717e0 [stack 0]
+ Dot {
+  name Dot24
+  xpos 831
+  ypos 519
+ }
+set N25b71a50 [stack 0]
+ Dot {
+  name Dot21
+  xpos 1039
+  ypos 519
+ }
+set N25b71cc0 [stack 0]
+ Merge2 {
+  inputs 2
+  operation out
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge13
+  xpos 1005
+  ypos 547
+ }
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos 1005
+  ypos 590
+ }
+push $N25b71a50
+ Switch {
+  inputs 2
+  which {{F2_35_X}}
+  name Switch10
+  xpos 1005
+  ypos 643
+ }
+ set C5dca020 [stack 0]
+ Dot {
+  name Dot26
+  xpos 1039
+  ypos 695
+ }
+ Constant {
+  inputs 0
+  channels {rgba.red rgba.green rgba.blue rgba.alpha}
+  color 1
+  name F_1_85
+  xpos 662
+  ypos 109
+ }
+ Crop {
+  box {0 0 {root.format.w} {root.format.w*(1/1.85)*root.format.pixel_aspect}}
+  reformat true
+  name Crop2
+  xpos 662
+  ypos 194
+ }
+ Reformat {
+  black_outside true
+  name Reformat2
+  xpos 661
+  ypos 234
+ }
+set N25bcc620 [stack 0]
+ Transform {
+  center {{root.format.w/2 i} {root.format.t/2 i}}
+  name Transform6
+  xpos 780
+  ypos 234
+ }
+set N25bccd70 [stack 0]
+push $N25b717e0
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge12
+  xpos 660
+  ypos 551
+ }
+ Shuffle {
+  alpha white
+  name Shuffle2
+  xpos 660
+  ypos 590
+ }
+push $N25b71570
+ Switch {
+  inputs 2
+  which {{F1_85_X}}
+  name Switch8
+  xpos 660
+  ypos 627
+ }
+ set C5dca580 [stack 0]
+push 0
+ Constant {
+  inputs 0
+  channels {rgba.red rgba.green rgba.blue rgba.alpha}
+  color 1
+  name F_1_77
+  xpos 329
+  ypos 116
+ }
+ Crop {
+  box {0 0 {root.format.w i} {root.format.w*(1/1.777777777777777)*root.format.pixel_aspect i}}
+  reformat true
+  name Crop1
+  xpos 329
+  ypos 200
+ }
+ Reformat {
+  black_outside true
+  name Reformat1
+  xpos 329
+  ypos 244
+ }
+set N25bcbed0 [stack 0]
+ Transform {
+  center {{root.format.w/2} {root.format.t/2}}
+  name Transform7
+  xpos 448
+  ypos 244
+ }
+set N69ef730 [stack 0]
+push $N25b71300
+ Merge2 {
+  inputs 2
+  name Merge16
+  xpos 329
+  ypos 553
+ }
+ Shuffle {
+  alpha white
+  name Shuffle3
+  xpos 329
+  ypos 590
+ }
+push $N6afa660
+ Switch {
+  inputs 2
+  which {{F16_9_X i}}
+  name Switch7
+  xpos 329
+  ypos 632
+ }
+ set C5dcaae0 [stack 0]
+ Constant {
+  inputs 0
+  channels {rgba.red rgba.green rgba.blue rgba.alpha}
+  color 1
+  name Constant3
+  xpos 109
+  ypos 560
+ }
+ Merge2 {
+  inputs 4+1
+  name Merge15
+  xpos 109
+  ypos 695
+ }
+push $N6af9070
+push $N6afbc50
+ FilterErode {
+  channels all
+  size {{Thickness_X i}}
+  name FilterErode6
+  xpos 1124
+  ypos 316
+ }
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge11
+  xpos 1005
+  ypos 322
+ }
+push $N25b71cc0
+clone $C5dca020 {
+  inputs 2
+  xpos 1005
+  ypos 410
+  selected false
+ }
+push 0
+ Switch {
+  inputs 2
+  which {{Border_X i}}
+  name Border_Switch
+  xpos 876
+  ypos 410
+ }
+ set C5dcb5a0 [stack 0]
+push $N25bcc620
+push $N25bccd70
+ FilterErode {
+  channels all
+  size {{Thickness_X i}}
+  name FilterErode5
+  xpos 780
+  ypos 313
+ }
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge10
+  xpos 661
+  ypos 319
+ }
+push $N25b717e0
+clone $C5dca580 {
+  inputs 2
+  xpos 660
+  ypos 382
+  selected false
+ }
+push 0
+clone $C5dcb5a0 {
+  inputs 2
+  xpos 550
+  ypos 382
+  selected false
+ }
+push 0
+push $N25bcbed0
+push $N69ef730
+ FilterErode {
+  channels all
+  size {{Thickness_X i}}
+  name FilterErode4
+  xpos 448
+  ypos 332
+ }
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge8
+  xpos 329
+  ypos 338
+ }
+push $N25b71300
+clone $C5dcaae0 {
+  inputs 2
+  xpos 329
+  ypos 387
+  selected false
+ }
+push 0
+clone $C5dcb5a0 {
+  inputs 2
+  xpos 219
+  ypos 387
+  selected false
+ }
+push $N6afab40
+ Dot {
+  name Dot1
+  xpos -232
+  ypos 85
+ }
+set N25989c10 [stack 0]
+ Dot {
+  name Dot9
+  xpos 104
+  ypos 84
+ }
+set N25989e80 [stack 0]
+ Dot {
+  name Dot11
+  xpos 169
+  ypos 84
+ }
+set N2598a0f0 [stack 0]
+ Dot {
+  name Dot2
+  xpos 262
+  ypos 84
+ }
+set N2598a360 [stack 0]
+ Dot {
+  name Dot10
+  xpos 485
+  ypos 83
+ }
+set N2598a5d0 [stack 0]
+ Dot {
+  name Dot13
+  xpos 572
+  ypos 83
+ }
+set N2598a840 [stack 0]
+ Dot {
+  name Dot5
+  xpos 629
+  ypos 83
+ }
+set N2598aab0 [stack 0]
+ Dot {
+  name Dot3
+  xpos 719
+  ypos 83
+ }
+set N2598ad20 [stack 0]
+ Dot {
+  name Dot7
+  xpos 792
+  ypos 83
+ }
+set N2598af90 [stack 0]
+ Dot {
+  name Dot4
+  xpos 874
+  ypos 83
+ }
+set N2598b200 [stack 0]
+ Dot {
+  name Dot19
+  xpos 1090
+  ypos 83
+ }
+set N25a610e0 [stack 0]
+ Dot {
+  name Dot20
+  xpos 1090
+  ypos -277
+ }
+ Grid {
+  number {{Number_X i}}
+  size {{Thickness_X i}}
+  name Grid1
+  xpos 1145
+  ypos -281
+ }
+push $N25a610e0
+ Dot {
+  name Dot18
+  xpos 1179
+  ypos 83
+ }
+ Switch {
+  inputs 2
+  which {{Grid_X i}}
+  name Switch9
+  xpos 1145
+  ypos -15
+ }
+push $N2598a840
+ Dot {
+  name Dot14
+  xpos 572
+  ypos -276
+ }
+ Text {
+  message "Title Safe"
+  font "\[value Fonts]"
+  size 15
+  kerning 0.2
+  yjustify bottom
+  Transform 1
+  box {0 0 {root.format.w} {root.format.t x1 576}}
+  translate {{root.format.w/10+Thickness_X+10} {root.format.t/10+Thickness_X+5}}
+  center {360 288}
+  name Text2
+  xpos 451
+  ypos -280
+ }
+push $N2598a5d0
+ Switch {
+  inputs 2
+  which {{Text_Title i}}
+  name Switch6
+  xpos 451
+  ypos -82
+ }
+push $N2598a0f0
+ Dot {
+  name Dot12
+  xpos 169
+  ypos -270
+ }
+ Text {
+  message "Action Safe"
+  font "\[value Fonts]"
+  size 15
+  kerning 0.2
+  yjustify bottom
+  Transform 1
+  box {0 0 {root.format.w} {root.format.t x1 576}}
+  translate {{root.format.w/20+Thickness_X+10} {root.format.t/20+Thickness_X+5}}
+  center {360 288}
+  name Text1
+  xpos 70
+  ypos -274
+ }
+push $N25989e80
+ Switch {
+  inputs 2
+  which {{Text_Action i}}
+  name Switch5
+  xpos 70
+  ypos -87
+ }
+ Constant {
+  inputs 0
+  channels {rgba.red rgba.green rgba.blue rgba.alpha}
+  color 1
+  name Constant2
+  xpos 948
+  ypos -307
+ }
+ Transform {
+  scale 0.1
+  center {{root.format.w/2 i} {root.format.t/2 i}}
+  name Transform5
+  xpos 948
+  ypos -205
+ }
+push $N2598af90
+ Dot {
+  name Dot8
+  xpos 792
+  ypos -277
+ }
+ Grid {
+  number 2
+  size {{Thickness_X i}}
+  name Center
+  xpos 840
+  ypos -281
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge7
+  xpos 840
+  ypos -205
+ }
+push $N2598b200
+ Switch {
+  inputs 2
+  which {{Center_X i}}
+  name Switch4
+  xpos 840
+  ypos -45
+ }
+push $N2598aab0
+ Dot {
+  name Dot6
+  xpos 629
+  ypos -279
+ }
+ Grid {
+  number 3
+  size {{Thickness_X i}}
+  name Third
+  xpos 685
+  ypos -283
+ }
+push $N2598ad20
+ Switch {
+  inputs 2
+  which {{Third_X i}}
+  name Switch3
+  xpos 685
+  ypos -78
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  name Title_Safe
+  xpos 228
+  ypos -297
+ }
+set N25a95f60 [stack 0]
+ Transform {
+  scale 0.8
+  center {{root.format.w/2 i} {root.format.t/2 i}}
+  name Transform3
+  xpos 228
+  ypos -211
+ }
+push $N25a95f60
+ Dot {
+  name Dot28
+  xpos 377
+  ypos -270
+ }
+ Transform {
+  scale 0.8
+  center {{root.format.w/2 i} {root.format.t/2 i}}
+  name Transform1
+  xpos 343
+  ypos -214
+ }
+ FilterErode {
+  channels all
+  size {{Thickness_X i}}
+  name FilterErode1
+  xpos 343
+  ypos -139
+ }
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge2
+  xpos 228
+  ypos -133
+ }
+push $N2598a360
+ Switch {
+  inputs 2
+  which {{Title_Safe_X i}}
+  name Switch2
+  xpos 228
+  ypos -89
+ }
+push 0
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  name Action_Safe
+  xpos -266
+  ypos -297
+ }
+set N25a96e00 [stack 0]
+ Transform {
+  scale 0.9
+  center {{root.format.w/2} {root.format.t/2}}
+  name Transform2
+  xpos -266
+  ypos -208
+ }
+push $N25a96e00
+ Dot {
+  name Dot27
+  xpos -47
+  ypos -270
+ }
+ Transform {
+  scale 0.9
+  center {{root.format.w/2} {root.format.t/2}}
+  name Transform4
+  xpos -81
+  ypos -208
+ }
+ FilterErode {
+  channels all
+  size {{Thickness_X i}}
+  name FilterErode2
+  xpos -81
+  ypos -135
+ }
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge1
+  xpos -266
+  ypos -129
+ }
+push $N25989c10
+ Switch {
+  inputs 2
+  which {{Action_Safe_X i}}
+  name Switch1
+  xpos -266
+  ypos -81
+ }
+push $N2598a360
+ Merge2 {
+  inputs 8+1
+  name Merge4
+  xpos -84
+  ypos -13
+ }
+ Merge2 {
+  inputs 4+1
+  name Merge9
+  xpos -84
+  ypos 412
+ }
+set N25ab71b0 [stack 0]
+push $N25ab71b0
+ Constant {
+  inputs 0
+  channels {rgba.red rgba.green rgba.blue rgba.alpha}
+  color {0 0 0 1}
+  name Shadow
+  xpos -505
+  ypos 389
+  disable {{1-Enhance_X i}}
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  Achannels {rgba.red rgba.green rgba.blue rgba.red}
+  name Merge5
+  xpos -350
+  ypos 412
+ }
+ FilterErode {
+  size -1
+  name FilterErode3
+  xpos -350
+  ypos 438
+ }
+ Blur {
+  size 10
+  name Blur1
+  xpos -350
+  ypos 473
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos -84
+  ypos 479
+ }
+push $N6af9f10
+ Merge2 {
+  inputs 2
+  mix {{Mix_X i}}
+  name Merge6
+  xpos -84
+  ypos 573
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  Achannels {rgba.red rgba.green rgba.blue rgba.red}
+  mix {{Letter_Box_Mix i}}
+  name Merge14
+  xpos -84
+  ypos 695
+  disable {{1-Letter_Box_X i x1 1}}
+ }
+ Merge2 {
+  inputs 3+1
+  name Merge17
+  xpos -84
+  ypos 782
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy1
+  xpos -84
+  ypos 839
+ }
+ Output {
+  name Output1
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 20
+  xpos -84
+  ypos 897
+ }
+ Switch {
+  inputs 0
+  name Switch13
+  xpos 224
+  ypos 297
+ }
+push $N6af9550
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos -521
+  ypos 782
+ }
+end_group

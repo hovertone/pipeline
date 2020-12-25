@@ -1,0 +1,91 @@
+#! /usr/local/Nuke9.0v7/libnuke-9.0.7.so -nx
+version 9.0 v7
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1920" h="1138" maximized="1" screen="1">
+        <splitter orientation="1">
+            <split size="612"/>
+            <splitter orientation="1">
+                <split size="43"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="565"/>
+                <splitter orientation="2">
+                    <split size="750"/>
+                    <dock id="" activePageId="Properties.1">
+                        <page id="Properties.1"/>
+                    </dock>
+                    <split size="322"/>
+                    <dock id="" activePageId="uk.co.thefoundry.scripteditor.1">
+                        <page id="uk.co.thefoundry.scripteditor.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="1304"/>
+            <dock id="" activePageId="DAG.1" focus="true">
+                <page id="Curve Editor.1"/>
+                <page id="DopeSheet.1"/>
+                <page id="DAG.1"/>
+            </dock>
+        </splitter>
+    </window>
+    <window x="0" y="0" w="2560" h="1440" fullscreen="1" screen="1">
+        <splitter orientation="2">
+            <split size="1440"/>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "/mnt/projects/temp/gamaiunov_superpipeline/Toolsets/Reduce toolset.nk"
+ format "2048 858 0 0 2048 858 1 2K_Scope"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Grade {
+ inputs 0
+ name Grade9
+ selected true
+ xpos -141
+ ypos -171
+}
+Crop {
+ box {0 0 2048 858}
+ name Crop2
+ selected true
+ xpos -141
+ ypos -145
+}
+Remove {
+ operation keep
+ channels rgb
+ name Remove2
+ selected true
+ xpos -141
+ ypos -119
+}
+OFXcom.absoft.neatvideo4_v4 {
+ DNP ""
+ NFP ""
+ ParamsHash1 0
+ ParamsHash2 0
+ ParamsHash3 0
+ name "Reduce Noise v4_1"
+ selected true
+ xpos -141
+ ypos -93
+}
+Grade {
+ white {{parent.Grade9.white}}
+ gamma {{parent.Grade9.gamma}}
+ reverse true
+ name Grade24
+ selected true
+ xpos -141
+ ypos -67
+}

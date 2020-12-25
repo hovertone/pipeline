@@ -1,0 +1,330 @@
+#! C:/Program Files/Nuke9.0v6/nuke-9.0.6.dll -nx
+version 9.0 v6
+Gizmo {
+ inputs 2
+ addUserKnob {20 User l "convert normal"}
+ addUserKnob {41 wc l "Normal input" T ctrl.wc}
+ addUserKnob {41 no l "Normal output" -STARTLINE T ctrl.no}
+ addUserKnob {26 ""}
+ addUserKnob {41 compAV l "Compute angle of view" T ctrl.compAV}
+ addUserKnob {41 fr l "Facing Ratio" -STARTLINE T ctrl.fr}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 text l "" +STARTLINE T "by Simon Moreau | visualprocess.blogspot.com"}
+}
+ NoOp {
+  inputs 0
+  name ctrl
+  xpos -1108
+  ypos 95
+  addUserKnob {20 User}
+  addUserKnob {68 wc l "Normal input" M {World Camera ""}}
+  addUserKnob {68 no l "Normal output" M {World Camera}}
+  no Camera
+  addUserKnob {6 compAV l "Compute angle of view" +STARTLINE}
+  addUserKnob {6 fr l "Facing Ratio" -STARTLINE}
+ }
+ Input {
+  inputs 0
+  name Normal
+  xpos -537
+  ypos -276
+ }
+ Dot {
+  name Dot1
+  xpos -503
+  ypos -178
+ }
+set Nc796000 [stack 0]
+push $Nc796000
+push $Nc796000
+ ColorMatrix {
+  matrix {
+      {{Camera1.world_matrix.0} {Camera1.world_matrix.1} {Camera1.world_matrix.2}}
+      {{Camera1.world_matrix.4} {Camera1.world_matrix.5} {Camera1.world_matrix.6}}
+      {{Camera1.world_matrix.8} {Camera1.world_matrix.9} {Camera1.world_matrix.10}}
+    }
+  invert {{1-ctrl.wc x126 0}}
+  name ColorMatrix1
+  xpos -385
+  ypos 154
+ }
+set Nc7c3c00 [stack 0]
+ Switch {
+  inputs 2
+  which {{"ctrl.wc == 0"}}
+  name Switch6
+  xpos -1083
+  ypos 1091
+ }
+ Input {
+  inputs 0
+  name Camera
+  xpos -1301
+  ypos -406
+  number 1
+ }
+ Camera2 {
+  focal {{input1.focal}}
+  haperture {{input1.haperture}}
+  vaperture {{input1.vaperture}}
+  name Camera1
+  selected true
+  xpos -1291
+  ypos -300
+ }
+set Nc7c3000 [stack 0]
+ Sphere {
+  inputs 0
+  display off
+  rows 180
+  columns 180
+  translate {{parent.Camera1.world_matrix.3} {parent.Camera1.world_matrix.7} {parent.Camera1.world_matrix.11}}
+  uniform_scale 100
+  name Sphere2
+  xpos -1795
+  ypos -417
+ }
+set Nc7c2c00 [stack 0]
+push $Nc796000
+ Dot {
+  name Dot10
+  xpos -1722
+  ypos -178
+ }
+set Nc7c2800 [stack 0]
+add_layer {N N.red N.green N.blue N.alpha}
+ ScanlineRender {
+  inputs 3
+  projection_mode perspective
+  motion_vectors_type distance
+  output_shader_vectors true
+  N_channel N
+  name ScanlineRender2
+  xpos -1679
+  ypos 53
+ }
+ Shuffle {
+  in N
+  name Shuffle1
+  xpos -1679
+  ypos 121
+ }
+ ColorCorrect {
+  gain -1
+  name ColorCorrect4
+  xpos -1679
+  ypos 190
+ }
+push $Nc7c3c00
+push $Nc796000
+ Switch {
+  inputs 2
+  which {{"ctrl.wc == 0 ? 0 : 1"}}
+  name Switch1
+  xpos -537
+  ypos 154
+ }
+ Dot {
+  name Dot5
+  xpos -1477
+  ypos 506
+ }
+set Nc813400 [stack 0]
+ MergeExpression {
+  inputs 2
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 0
+  channel1 {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  expr1 0
+  channel2 {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  expr2 Ar*Br+Ag*Bg+Ab*Bb
+  name MergeExpression6
+  xpos -1679
+  ypos 625
+ }
+set Nc813000 [stack 0]
+push $Nc7c3000
+ Camera2 {
+  rotate {90 0 0}
+  useMatrix true
+  matrix {
+      {1 0 0 0}
+      {0 0 -1 0}
+      {0 1 0 0}
+      {0 0 0 1}
+    }
+  name Camera3
+  xpos -1923
+  ypos -357
+ }
+push $Nc7c2c00
+push $Nc7c2800
+ ScanlineRender {
+  inputs 3
+  projection_mode perspective
+  shutter 0
+  motion_vectors_type distance
+  output_shader_vectors true
+  N_channel N
+  name ScanlineRender4
+  xpos -1933
+  ypos 54
+ }
+ Shuffle {
+  in N
+  name Shuffle4
+  xpos -1933
+  ypos 110
+ }
+ Expression {
+  expr0 r(540,y)
+  expr1 g(540,y)
+  expr2 b(540,y)
+  name Expression1
+  xpos -1933
+  ypos 176
+  disable true
+ }
+ Dot {
+  name Dot6
+  xpos -1899
+  ypos 759
+ }
+push $Nc813400
+ MergeExpression {
+  inputs 2
+  expr0 0
+  expr1 Ar*Br+Ag*Bg+Ab*Bb
+  expr2 0
+  name MergeExpression4
+  xpos -1678
+  ypos 756
+ }
+push $Nc7c3000
+ Camera2 {
+  rotate {0 -90 0}
+  useMatrix true
+  matrix {
+      {0 0 -1 0}
+      {0 1 0 0}
+      {1 0 0 0}
+      {0 0 0 1}
+    }
+  name Camera2
+  xpos -1645
+  ypos -300
+ }
+push $Nc7c2c00
+push $Nc7c2800
+ ScanlineRender {
+  inputs 3
+  projection_mode perspective
+  motion_vectors_type distance
+  output_shader_vectors true
+  N_channel N
+  name ScanlineRender3
+  xpos -1819
+  ypos 54
+ }
+ Shuffle {
+  in N
+  name Shuffle3
+  xpos -1819
+  ypos 129
+ }
+ Expression {
+  expr0 r(x,960)
+  expr1 g(x,960)
+  expr2 b(x,960)
+  name Expression2
+  xpos -1819
+  ypos 182
+  disable true
+ }
+ Dot {
+  name Dot7
+  xpos -1785
+  ypos 682
+ }
+push $Nc813400
+ MergeExpression {
+  inputs 2
+  expr0 Ar*Br+Ag*Bg+Ab*Bb
+  expr1 0
+  expr2 0
+  name MergeExpression5
+  xpos -1675
+  ypos 679
+ }
+ Dot {
+  name Dot4
+  xpos -1457
+  ypos 682
+ }
+push 0
+push $Nc813000
+ Dot {
+  name Dot3
+  xpos -1453
+  ypos 628
+ }
+push $Nc796000
+ Expression {
+  expr0 0
+  expr1 0
+  expr2 0
+  name setTo0
+  xpos -1390
+  ypos 595
+ }
+ Merge2 {
+  inputs 4+1
+  operation plus
+  name Merge1
+  xpos -1390
+  ypos 756
+ }
+ Switch {
+  inputs 2
+  which {{ctrl.fr}}
+  name Switch3
+  xpos -1390
+  ypos 829
+ }
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle2
+  xpos -1390
+  ypos 913
+  disable {{1-ctrl.fr}}
+ }
+push $Nc7c3c00
+ Switch {
+  inputs 2
+  which {{"ctrl.compAV == 1 || ctrl.fr == 1  ? 1 : 0"}}
+  name Switch2
+  xpos -1390
+  ypos 993
+ }
+ Switch {
+  inputs 2
+  which {{"ctrl.no == 0 && ctrl.fr == 0 ? 1 : 0"}}
+  name Switch5
+  xpos -1390
+  ypos 1091
+ }
+ Switch {
+  inputs 2
+  which {{"ctrl.wc == ctrl.no && ctrl.compAV == 0 && ctrl.fr == 0 ? 1 : 0"}}
+  name Switch4
+  xpos -1390
+  ypos 1224
+ }
+ Output {
+  name Output1
+  xpos -1390
+  ypos 1324
+ }
+end_group

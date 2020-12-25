@@ -1,0 +1,188 @@
+#! C:/Program Files/Nuke7.0v6/Nuke7.0.exe -nx
+version 7.0 v6
+Gizmo {
+ help "Blends the proceeding and the following frames motion-deformed into the actual frame to wipe out grain and GI light-flicker.\nPull the black/white point to wipe out areas with too much difference, leading to visible artifacts.\n\nby Valentin Klein 2013"
+ addUserKnob {20 User}
+ addUserKnob {4 Show t "Show effect or\nshow areas of too much forward differences (red) and backwards differences (blue)\nAlpha then contains both together." M {Effect "Difference Mask" "" "" ""}}
+ addUserKnob {41 blackpoint l "Mask blackpoint" T Grade1.blackpoint}
+ addUserKnob {41 whitepoint l "Mask whitepoint" T Grade1.whitepoint}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 vd l "Vector Detail" t "Vector Detail of the used VectorGenerator-Nodes" T VectorGenerator2.vectorDetail}
+ addUserKnob {41 vs l "Vector Smoothness" t "Vector Smoothness of the used VectorGenerator-Nodes" T VectorGenerator2.smoothness}
+ addUserKnob {26 description l "" +STARTLINE T "\nby Valentin Klein\nvangel@gmx.de"}
+}
+ Input {
+  inputs 0
+  name Img
+  xpos -567
+  ypos -210
+ }
+ Dot {
+  name IN
+  xpos -533
+  ypos -67
+ }
+set Ned82b1a0 [stack 0]
+ Dot {
+  name Dot2
+  xpos -533
+  ypos 133
+ }
+set Nb16f8ec0 [stack 0]
+push $Ned82b1a0
+ TimeOffset {
+  time_offset 1
+  name TimeOffset_Back
+  xpos -334
+  ypos -70
+ }
+ VectorGenerator {
+  serializeKnob ""
+  vectorDetail {{parent.VectorGenerator2.vectorDetail}}
+  smoothness {{parent.VectorGenerator2.smoothness}}
+  computedVectorFlag 5
+  output Background
+  Advanced 1
+  flickerCompensation true
+  Tolerances 1
+  name VectorGenerator1
+  xpos -334
+  ypos -38
+ }
+ IDistort {
+  uv backward
+  name IDistort2
+  xpos -334
+  ypos 5
+ }
+set Ned8274e0 [stack 0]
+push $Ned82b1a0
+ Difference {
+  inputs 2
+  name Difference2
+  xpos -444
+  ypos 5
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.018
+  whitepoint 0.095
+  white_clamp true
+  name Grade1
+  xpos -451
+  ypos 60
+ }
+ set Ced8285c0 [stack 0]
+set Ned820220 [stack 0]
+ MergeExpression {
+  inputs 2
+  expr0 min(Ar,1-Ba)/5
+  expr1 min(Ag,1-Ba)/5
+  expr2 max(Ab/5,Ba)
+  channel3 alpha
+  expr3 Ba
+  name MergeExpression3
+  xpos -405
+  ypos 278
+ }
+push $Nb16f8ec0
+push $Ned82b1a0
+ TimeOffset {
+  time_offset -1
+  name TimeOffset_Future
+  xpos -834
+  ypos -67
+ }
+ VectorGenerator {
+  serializeKnob ""
+  vectorDetail 0.33
+  computedVectorFlag 17
+  Advanced 1
+  Tolerances 1
+  name VectorGenerator2
+  xpos -834
+  ypos -35
+ }
+ IDistort {
+  uv forward
+  name IDistort1
+  xpos -834
+  ypos 8
+ }
+set Ned8219c0 [stack 0]
+push $Ned82b1a0
+ Difference {
+  inputs 2
+  name Difference1
+  xpos -724
+  ypos 8
+ }
+clone $Ced8285c0 {
+  xpos -724
+  ypos 62
+  selected false
+ }
+set Ned8285c0 [stack 0]
+ MergeExpression {
+  inputs 2
+  expr0 max(Ar/5,Ba)
+  expr1 min(Ag,1-Ba)/5
+  expr2 min(Ab,1-Ba)/5
+  channel3 alpha
+  expr3 Ba
+  name MergeExpression2
+  xpos -724
+  ypos 312
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge3
+  xpos -405
+  ypos 417
+ }
+push $Ned820220
+push $Ned8274e0
+ Dot {
+  name Dot1
+  xpos -300
+  ypos 298
+ }
+push $Ned8285c0
+push $Ned8219c0
+ Dot {
+  name Dot3
+  xpos -800
+  ypos 212
+ }
+push $Nb16f8ec0
+ Merge2 {
+  inputs 2+1
+  invert_mask true
+  mix 0.5
+  name Merge1
+  xpos -567
+  ypos 209
+ }
+ Merge2 {
+  inputs 2+1
+  invert_mask true
+  mix 0.33
+  name Merge2
+  xpos -567
+  ypos 295
+ }
+ Switch {
+  inputs 2
+  which {{parent.Show}}
+  name ViewChoice
+  selected true
+  xpos -567
+  ypos 506
+ }
+ Output {
+  name Output1
+  xpos -567
+  ypos 557
+ }
+end_group

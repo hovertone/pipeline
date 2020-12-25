@@ -1,0 +1,11 @@
+set cut_paste_input [stack 0]
+version 6.3 v4
+push $cut_paste_input
+Merge2 {
+ operation mask
+ name Merge42
+ tile_color 0x7000ffff
+ selected true
+ xpos 377
+ ypos 9252
+}

@@ -1,0 +1,70 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+ inputs 2
+ addUserKnob {20 User}
+ addUserKnob {41 bg_format T Reformat1.format}
+ addUserKnob {41 bg_color T Constant1.color}
+}
+ Input {
+  inputs 0
+  name mask
+  label mask
+  xpos -585
+  ypos -268
+  number 1
+ }
+ Invert {
+  name Invert1
+  xpos -585
+  ypos -193
+ }
+ Constant {
+  inputs 0
+  color 1
+  name Constant1
+  xpos -908
+  ypos -132
+ }
+ Reformat {
+  filter Rifman
+  name Reformat1
+  xpos -749
+  ypos -108
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge9
+  tile_color 0xff007dff
+  xpos -585
+  ypos -108
+ }
+set N26cbdac0 [stack 0]
+ Input {
+  inputs 0
+  name source
+  label source
+  xpos -445
+  ypos -269
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge1
+  xpos -445
+  ypos -108
+ }
+ Output {
+  name Output1
+  xpos -445
+  ypos -8
+ }
+push $N26cbdac0
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos -585
+  ypos -9
+ }
+end_group

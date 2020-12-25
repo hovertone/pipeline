@@ -1,0 +1,11 @@
+#----------------------------------------------------------------------------------------------------------
+#
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
+#
+# NAME: HIRES open
+# COLOR: #009fff
+# TEXTCOLOR: #111111
+#
+#----------------------------------------------------------------------------------------------------------
+
+nuke.scriptOpen('P:/alliance/assetBuilds/Comp/Hireses.nk')

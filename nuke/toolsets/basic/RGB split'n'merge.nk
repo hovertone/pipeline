@@ -1,0 +1,51 @@
+set cut_paste_input [stack 0]
+version 7.0 v8
+push $cut_paste_input
+Dot {
+ name Dot1
+ selected true
+ xpos -864
+ ypos -13
+}
+set N24d8a040 [stack 0]
+Shuffle {
+ red black
+ green black
+ alpha black
+ name BLUE
+ label "\[knob in]"
+ selected true
+ xpos -798
+ ypos 30
+}
+push 0
+push $N24d8a040
+Shuffle {
+ red black
+ blue black
+ alpha black
+ name GREEN
+ label "\[knob in]"
+ selected true
+ xpos -898
+ ypos 28
+}
+push $N24d8a040
+Shuffle {
+ green black
+ blue black
+ alpha black
+ name RED
+ label "\[knob in]"
+ selected true
+ xpos -1015
+ ypos 26
+}
+Merge2 {
+ inputs 3+1
+ operation plus
+ name Merge1
+ selected true
+ xpos -898
+ ypos 97
+}

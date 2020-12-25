@@ -1,0 +1,224 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+ inputs 2
+ tile_color 0x3abeffff
+ addUserKnob {20 Refraction}
+ addUserKnob {7 scale l Scale R -100 100}
+ scale 1
+ addUserKnob {7 gain l Gain R -100 100}
+ gain 50
+ addUserKnob {7 blur l Blur R 0 100}
+ addUserKnob {6 useAlpha l "Use Alpha" +STARTLINE}
+ useAlpha true
+ addUserKnob {26 ""}
+ addUserKnob {6 useRGB l "Chroma Shift" +STARTLINE}
+ addUserKnob {7 chromaShift l ChromaShift R -10 10}
+ addUserKnob {7 glasabs l "Light Absorption" R 0 5}
+ glasabs 1
+ addUserKnob {26 ""}
+ addUserKnob {7 fresnel l Fresnel R -1 1}
+ addUserKnob {7 fnwidth l Width}
+ fnwidth 1
+ addUserKnob {7 falloff l Falloff}
+ falloff 0.5
+ addUserKnob {7 fnsize l Multiplier R 0 4}
+ fnsize 1
+ addUserKnob {26 ""}
+}
+ Input {
+  inputs 0
+  name InputUVs
+  xpos -190
+  ypos -255
+  number 1
+ }
+set N34861870 [stack 0]
+ AddChannels {
+  channels rgb
+  name AddChannels2
+  xpos -190
+  ypos -53
+ }
+ Blur {
+  channels rgb
+  size {{parent.blur}}
+  name Blur1
+  xpos -190
+  ypos -13
+ }
+ Grade {
+  channels {rgba.red rgba.green -rgba.blue}
+  white {{parent.gain}}
+  black_clamp false
+  maskChannelInput rgba.blue
+  name Grade_Gain
+  selected true
+  xpos -190
+  ypos 39
+ }
+ Input {
+  inputs 0
+  name InputPlate
+  xpos -412
+  ypos -326
+ }
+ Dot {
+  name Dot2
+  xpos -378
+  ypos -140
+ }
+set N34670f90 [stack 0]
+ AddChannels {
+  channels rgb
+  name AddChannels1
+  xpos -412
+  ypos -108
+ }
+add_layer {REFRACTION REFRACTION.red REFRACTION.green REFRACTION.blue REFRACTION.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out REFRACTION
+  name ShuffleCopy1
+  xpos -412
+  ypos 45
+ }
+set N251e4160 [stack 0]
+ Dot {
+  name Dot4
+  xpos -678
+  ypos 48
+ }
+ IDistort {
+  channels rgb
+  uv REFRACTION
+  uv_scale {{parent.scale}}
+  blur REFRACTION.blue
+  blur_scale {{parent.blur}}
+  name IDistort2
+  xpos -712
+  ypos 153
+ }
+ Dot {
+  name Dot3
+  xpos -678
+  ypos 374
+ }
+push $N251e4160
+ IDistort {
+  channels {-rgba.red -rgba.green rgba.blue}
+  uv REFRACTION
+  uv_scale {{parent.scale-parent.chromaShift/10}}
+  blur REFRACTION.blue
+  blur_scale {{parent.blur}}
+  name IDistort5
+  xpos -271
+  ypos 144
+ }
+push $N251e4160
+ IDistort {
+  channels {rgba.red -rgba.green -rgba.blue}
+  uv REFRACTION
+  uv_scale {{parent.scale+parent.chromaShift/10}}
+  blur REFRACTION.blue
+  blur_scale {{parent.blur}}
+  name IDistort4
+  xpos -564
+  ypos 139
+ }
+push $N251e4160
+ IDistort {
+  channels {-rgba.red rgba.green -rgba.blue}
+  uv REFRACTION
+  uv_scale {{parent.scale}}
+  blur REFRACTION.blue
+  blur_scale {{parent.blur}}
+  name IDistort1
+  xpos -412
+  ypos 140
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  name ShuffleCopy2
+  xpos -412
+  ypos 203
+ }
+ ShuffleCopy {
+  inputs 2
+  blue blue
+  name ShuffleCopy3
+  xpos -412
+  ypos 265
+ }
+ Switch {
+  inputs 2
+  which {{!parent.useRGB}}
+  name Switch1
+  label "RGB nonRGB switch\n"
+  xpos -412
+  ypos 365
+ }
+ Grade {
+  gamma {{parent.glasabs}}
+  maskChannelInput REFRACTION.alpha
+  name Grade2
+  xpos -412
+  ypos 471
+ }
+ Grade {
+  channels {-REFRACTION.red -REFRACTION.green REFRACTION.blue -REFRACTION.alpha}
+  multiply {{parent.fnsize}}
+  add {{"3 * (parent.fnwidth-1)"}}
+  gamma {{parent.falloff}}
+  name Grade4
+  xpos -412
+  ypos 528
+ }
+ Grade {
+  add {{parent.fresnel}}
+  maskChannelInput REFRACTION.blue
+  name Grade3
+  xpos -412
+  ypos 575
+ }
+set N24a88270 [stack 0]
+push $N34861870
+ Dot {
+  name Dot5
+  tile_color 0xff0400ff
+  label Alpha
+  xpos -800
+  ypos 540
+  hide_input true
+ }
+push $N24a88270
+push $N34670f90
+ Dot {
+  name Dot1
+  xpos -853
+  ypos -140
+ }
+ Merge2 {
+  inputs 2+1
+  name Merge1
+  xpos -887
+  ypos 581
+ }
+ Switch {
+  inputs 2
+  which {1}
+  name Switch2
+  xpos -412
+  ypos 654
+  disable {{parent.useAlpha}}
+ }
+ Output {
+  name Output1
+  xpos -412
+  ypos 722
+ }
+end_group

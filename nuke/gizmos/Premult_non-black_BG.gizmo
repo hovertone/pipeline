@@ -1,0 +1,105 @@
+#! C:/Program Files/Nuke6.3v1/Nuke6.3.exe -nx
+version 6.3 v1
+Gizmo {
+ inputs 2
+ help "Premultiplies images that contain a non-black background."
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 PremultNonBlackBG}
+ addUserKnob {41 colorspace_out l Colorspace t "Pick the colorspace of the input video to get proper results." T Colorspace1.colorspace_out}
+ addUserKnob {26 ""}
+ addUserKnob {6 use_bg_color l "Use constant background color" t "Check this to use a constant color instead of the background input." +STARTLINE}
+ use_bg_color true
+ addUserKnob {41 bg_color l "Background color" t "Only used if \"Use constant background color\" is checked." T Constant1.color}
+}
+ Input {
+  inputs 0
+  name src
+  xpos -6
+  ypos 15
+ }
+ Colorspace {
+  name Colorspace1
+  xpos -6
+  ypos 81
+ }
+set N930eea0 [stack 0]
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  name Constant1
+  xpos -339
+  ypos 14
+ }
+ Dot {
+  name Dot2
+  xpos -305
+  ypos 121
+ }
+ Input {
+  inputs 0
+  name bg
+  xpos -241
+  ypos 14
+  number 1
+ }
+ Switch {
+  inputs 2
+  which {{use_bg_color.main i}}
+  name Switch1
+  xpos -241
+  ypos 117
+ }
+ Dot {
+  name Dot1
+  xpos -207
+  ypos 169
+ }
+push $N930eea0
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos -124
+  ypos 81
+ }
+ Invert {
+  channels rgb
+  name Invert1
+  xpos -124
+  ypos 119
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  bbox B
+  name Merge2
+  xpos -124
+  ypos 165
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  also_merge alpha
+  name Merge1
+  selected true
+  xpos -6
+  ypos 165
+ }
+ Colorspace {
+  colorspace_in {{Colorspace1.colorspace_out i}}
+  name Colorspace2
+  xpos -6
+  ypos 210
+ }
+ Output {
+  name Output1
+  xpos -6
+  ypos 280
+ }
+end_group

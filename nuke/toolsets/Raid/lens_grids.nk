@@ -1,0 +1,85 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x999999ff
+ label "LENS GRIDS"
+ note_font_size 42
+ selected true
+ xpos -786
+ ypos -833
+ bdwidth 320
+ bdheight 228
+}
+Read {
+ inputs 0
+ file P:/Raid/assetBuilds/footages/lensGrids/exr/lensGrid_35mm.exr
+ format "3200 1800 0 0 3200 1800 1 PL 3k"
+ origset true
+ auto_alpha true
+ name Read7
+ selected true
+ xpos -666
+ ypos -753
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file P:/Raid/assetBuilds/footages/lensGrids/exr/lensGrid_50mm.exr
+ format "3200 1800 0 0 3200 1800 1 PL 3k"
+ origset true
+ auto_alpha true
+ name Read8
+ selected true
+ xpos -556
+ ypos -753
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+LD_3DE4_Radial_Standard_Degree_4 {
+ tde4_focal_length_cm 5
+ tde4_custom_focus_distance_cm 91.44
+ tde4_filmback_width_cm 2.64
+ tde4_filmback_height_cm 1.485
+ Distortion_Degree_2 0.0073423
+ U_Degree_2 -0.001409
+ V_Degree_2 -0.0012672
+ Quartic_Distortion_Degree_4 0.005528
+ U_Degree_4 8e-007
+ V_Degree_4 0.0005336
+ name lens_50_mm
+ selected true
+ xpos -556
+ ypos -649
+}
+Read {
+ inputs 0
+ file P:/Raid/assetBuilds/footages/lensGrids/exr/lensGrid_25mm.exr
+ format "3200 1800 0 0 3200 1800 1 PL 3k"
+ origset true
+ auto_alpha true
+ name Read9
+ selected true
+ xpos -776
+ ypos -753
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+LD_3DE4_Radial_Standard_Degree_4 {
+ tde4_focal_length_cm 2.5
+ tde4_custom_focus_distance_cm 91.44
+ tde4_filmback_width_cm 2.64
+ tde4_filmback_height_cm 1.485
+ Distortion_Degree_2 0.0274856
+ U_Degree_2 0.0004419
+ V_Degree_2 -0.0003545
+ Quartic_Distortion_Degree_4 -0.0121796
+ U_Degree_4 -0.000636
+ V_Degree_4 -8.79e-005
+ name lens_25_mm
+ selected true
+ xpos -776
+ ypos -647
+}

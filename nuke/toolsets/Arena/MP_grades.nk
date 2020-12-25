@@ -1,0 +1,260 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+BackdropNode {
+ inputs 0
+ name BackdropNode12
+ tile_color 0x8e388e00
+ label SKY
+ note_font_size 42
+ selected true
+ xpos 12650
+ ypos 2885
+ bdheight 162
+}
+push $cut_paste_input
+Dot {
+ name Dot40
+ selected true
+ xpos 12992
+ ypos 3337
+}
+set N7fc1c000 [stack 0]
+Dot {
+ name Dot41
+ selected true
+ xpos 12884
+ ypos 3337
+}
+set N5349bc00 [stack 0]
+add_layer {matte matte.red matte.green matte.blue}
+Shuffle {
+ in matte
+ red green
+ blue green
+ alpha green
+ name Shuffle18
+ label "\[knob in]"
+ selected true
+ xpos 12682
+ ypos 3327
+}
+push $N5349bc00
+Clamp {
+ channels {-matte.red matte.green -matte.blue}
+ maximum 0
+ MinClampTo_enable true
+ MaxClampTo_enable true
+ name Clamp6
+ selected true
+ xpos 12850
+ ypos 3371
+}
+Multiply {
+ channels rgb
+ value 0
+ maskChannelInput matte.green
+ name Multiply9
+ selected true
+ xpos 12850
+ ypos 3414
+}
+expoglow.gizmo {
+ name expoglow8
+ selected true
+ xpos 12850
+ ypos 3452
+ PreGrade 1
+ white 0.8
+ gamma 0.43
+ GlowSettings 1
+ PostGrade 1
+ white_1 0.025
+ gamma_1 1.44
+ maskChannelMask -rgba.alpha
+ ShiftRed 1
+ ShiftGreen 1
+ ShiftBlue 1
+}
+Merge2 {
+ inputs 2
+ operation mask
+ name Merge16
+ tile_color 0x7000ffff
+ selected true
+ xpos 12682
+ ypos 3452
+}
+Dot {
+ name Dot42
+ selected true
+ xpos 12716
+ ypos 3493
+}
+push $N7fc1c000
+Merge2 {
+ inputs 2
+ operation plus
+ name Merge21
+ label "light wrap"
+ selected true
+ xpos 12958
+ ypos 3483
+}
+Grade {
+ inputs 0
+ white {2.997826338 4 2.993826389 4}
+ multiply 1.04
+ name Grade16
+ selected true
+ xpos 12660
+ ypos 2965
+}
+ColorCorrect {
+ highlights.gain {1.086054325 0.8716885448 0.906054318 1}
+ lookup {shadow {curve 1 s0 x0.08419521898 0 s0}
+   midtone {1-shadow-highlight}
+   highlight {curve x0.5667538643 0 s0 x1 1 s0}}
+ name ColorCorrect5
+ selected true
+ xpos 12660
+ ypos 2991
+}
+Grade {
+ white 1.9
+ gamma 1.26
+ name Grade17
+ selected true
+ xpos 12660
+ ypos 3017
+}
+Grade {
+ inputs 0
+ gamma {1.744999886 2.220000029 2.694999933 1.75}
+ name Grade18
+ label "bottom ramp"
+ selected true
+ xpos 12655
+ ypos 3071
+}
+ColorCorrect {
+ inputs 0
+ highlights.gain {1.310000062 1.580000043 1.850000143 1}
+ lookup {shadow {}
+   midtone {}
+   highlight {curve x0.3316620588 0 s0 x1 1 s0}}
+ name ColorCorrect6
+ label "builds hilights cooling"
+ selected true
+ xpos 12540
+ ypos 2971
+}
+Grade {
+ inputs 0
+ white {1.399999976 1.649999976 1.899999976 1.649999976}
+ name Grade20
+ label "clouds "
+ selected true
+ xpos 12420
+ ypos 2974
+}
+Shuffle {
+ inputs 0
+ in2 rgba
+ red red2
+ green green2
+ blue blue2
+ alpha alpha2
+ black white
+ white black
+ red2 black
+ out2 matte
+ name Shuffle19
+ tile_color 0xff5555ff
+ label "\[knob in]\nSKY RED"
+ selected true
+ xpos 12958
+ ypos 3141
+}
+Shuffle {
+ inputs 0
+ in2 rgba
+ red red2
+ green green2
+ blue blue2
+ alpha alpha2
+ black black
+ white alpha2
+ red2 black
+ out2 matte
+ name Shuffle20
+ tile_color 0x55ff7fff
+ label "\[knob in]\nBuildings GREEN"
+ selected true
+ xpos 12955
+ ypos 3219
+}
+Dot {
+ inputs 0
+ name Dot43
+ selected true
+ xpos 13445
+ ypos 3851
+}
+Dot {
+ inputs 0
+ name Dot44
+ tile_color 0xff0400ff
+ selected true
+ xpos 13234
+ ypos 3799
+ hide_input true
+}
+Dot {
+ inputs 0
+ name Dot45
+ tile_color 0xff0400ff
+ label SRC
+ note_font_size 33
+ selected true
+ xpos 13138
+ ypos 3752
+ hide_input true
+}
+Merge2 {
+ inputs 2
+ operation stencil
+ name Merge22
+ tile_color 0xff007dff
+ selected true
+ xpos 13104
+ ypos 3795
+}
+Remove {
+ inputs 0
+ operation keep
+ channels rgba
+ name Remove2
+ selected true
+ xpos 12983
+ ypos 3727
+}
+add_layer {sky sky.matte}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 sky.matte
+ name Copy3
+ selected true
+ xpos 12983
+ ypos 3789
+}
+add_layer {tribune tribune.matte}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 tribune.matte
+ name Copy4
+ selected true
+ xpos 12983
+ ypos 3841
+}

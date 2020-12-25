@@ -1,0 +1,352 @@
+#! C:/Program Files/Nuke6.0v2/Nuke6.0.exe -nx
+version 6.0 v2
+Gizmo {
+ help "depthGrade is a gizmo by Daniel L Smith and is a better way to see your 3D.  Not only does it feature several more anaglyph modes than native Nuke, but you can use polarized 3D monitors that use line by line methods, and you can set your depth layers and place layers into 3D space using its simple and clean interface.\n\nYou MUST have your views set up for stereo using the \"set up for stereo\" button in your view project settings. The views must be named the same for the gizmo to function"
+ tile_color 0x7a0000ff
+ label "\n"
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xff
+ addUserKnob {20 DepthGrade l "DepthGrade Controls"}
+ addUserKnob {4 AnaglyphMethod l "3D Mode" t "This drop down will help you choose which method you want to see your 3D. depthGrade is intended to be used in PASSTHROUGH mode. This mode suspends the display modes but allows for the Depth and size transformations to be applied. Only use the anaglyph modes at the end of your comp to see the 3D." M {PassThrough Red/Cyan Magenta/Green Amber/Blue "Optimized Anaglyph" "Line Interlace" "" "" "" "" ""}}
+ addUserKnob {4 SatSelect l Color t "Choose the amount of color. Monochrome is best for seeing pure depth. This is the prefered way to work." M {Monochrome "Partial Color" "Half Color" "Full Color" "" "" "" ""}}
+ addUserKnob {6 diff l "Difference Mode" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 DepthSet l Depth t "This value will equally slide a layer in opposite directions the number of pixels setting that layers depth. The value here  adjusts where your zero parallax value is. The value of 0 represents the value of the original unmodified image. If your image has 20 pixels of parallax to begin, 0 will equal that value of 20. a setting of 10 pixels will offset each eye +/- 10 pixels for a total of 20 parallax in positive or negative space relative to the source."}
+ addUserKnob {41 scale l Size t "You may have to scale the element if there are empty pixels on the sides. If you have to scale more than 5-10% then you should re-render the element with smaller values." T SizeXF.scale}
+ addUserKnob {6 Swap l "Swap Eyes" t "Toggle this to revese your eyes. " +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 format l "Match Format" t "Select your resolution here. Important that this setting matches your input renders" T Reformat1.format}
+ addUserKnob {6 framecount l "Frame Count" t " Labels the image with the current frame number" +STARTLINE}
+ addUserKnob {6 eyetag l "Label Views" t "Labels the image with the view name" +STARTLINE}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -273
+  ypos -335
+ }
+ Reformat {
+  box_fixed true
+  resize fit
+  center {(default {1} right {0})}
+  flip {(default {0} right {0})}
+  flop {(default {0} right {0})}
+  turn {(default {0} right {0})}
+  clamp {(default {0} right {0})}
+  black_outside {(default {0} right {1})}
+  pbb {(default {0} right {0})}
+  name Reformat1
+  selected true
+  xpos -273
+  ypos -309
+ }
+ Position {
+  translate {(default {{DepthSet} 0} right {{(Reconverge.translate.left.x)*-1 i} 0})}
+  name Reconverge
+  xpos -273
+  ypos -271
+ }
+ Transform {
+  center {{Reformat1.format.width/2} {Reformat1.format.height/2}}
+  name SizeXF
+  xpos -273
+  ypos -231
+ }
+set N88dc6f0 [stack 0]
+ OneView {
+  name OneView5
+  label left
+  xpos -383
+  ypos -237
+ }
+push $N88dc6f0
+ OneView {
+  view right
+  name OneView6
+  label right
+  xpos -163
+  ypos -237
+ }
+ JoinViews {
+  inputs 2
+  name JoinViews1
+  xpos -383
+  ypos -178
+  viewassoc "left\nright"
+ }
+push $N88dc6f0
+ Switch {
+  inputs 2
+  which {{Swap i}}
+  name Swap
+  xpos -273
+  ypos -178
+ }
+ Dot {
+  name Dot2
+  xpos -239
+  ypos -119
+ }
+set N145c1360 [stack 0]
+ Dot {
+  name Dot5
+  xpos 146
+  ypos -119
+ }
+ Saturation {
+  saturation 0
+  name Saturation2
+  xpos 112
+  ypos -101
+ }
+set N145c1840 [stack 0]
+ OneView {
+  name OneView7
+  label left
+  xpos 68
+  ypos -51
+ }
+push $N145c1840
+ OneView {
+  view right
+  name OneView8
+  label right
+  xpos 162
+  ypos -51
+ }
+ Difference {
+  inputs 2
+  gain 2
+  name Difference1
+  xpos 117
+  ypos 8
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos 117
+  ypos 164
+ }
+push $N145c1360
+push $N145c1360
+ Dot {
+  name Dot1
+  xpos -500
+  ypos -119
+ }
+ Dot {
+  name Dot3
+  xpos -500
+  ypos 60
+ }
+set N145c26e0 [stack 0]
+ OneView {
+  name OneView1
+  label left
+  xpos -581
+  ypos 88
+ }
+push $N145c26e0
+ OneView {
+  view right
+  name OneView2
+  label right
+  xpos -487
+  ypos 88
+ }
+ MergeExpression {
+  inputs 2
+  expr0 "(y % (root.proxy ? (2/root.proxy_scale) : 2) ) ? Ar : Br"
+  expr1 "(y % (root.proxy ? (2/root.proxy_scale) : 2) ) ? Ag : Bg"
+  expr2 "(y % (root.proxy ? (2/root.proxy_scale) : 2) ) ? Ab : Bb"
+  channel3 alpha
+  expr3 "(y % (root.proxy ? (2/root.proxy_scale) : 2) ) ? Aa : Ba"
+  name InterLace
+  xpos -534
+  ypos 138
+ }
+push $N145c1360
+push $N145c1360
+ Saturation {
+  saturation 0.5
+  name Saturation5
+  xpos -167
+  ypos -89
+ }
+push $N145c1360
+ Saturation {
+  saturation 0.25
+  name Saturation_25
+  xpos -273
+  ypos -90
+ }
+push $N145c1360
+ Saturation {
+  saturation 0
+  name Saturation
+  xpos -371
+  ypos -90
+ }
+ Switch {
+  inputs 4
+  which {{SatSelect i}}
+  name Switch2
+  xpos -273
+  ypos -45
+ }
+set N3ce98f0 [stack 0]
+ OneView {
+  name OneView3
+  label left
+  xpos -364
+  ypos -50
+ }
+set N145c37f0 [stack 0]
+ ColorMatrix {
+  matrix {
+      {0 0.7 0.3}
+      {0 0 0}
+      {0 0 0}
+    }
+  name ColorMatrix_Left
+  xpos -71
+  ypos 46
+ }
+push $N3ce98f0
+ OneView {
+  view right
+  name OneView4
+  label right
+  xpos -174
+  ypos -51
+ }
+set N146c5fa0 [stack 0]
+ ColorMatrix {
+  matrix {
+      {0 0 0}
+      {0 1 0}
+      {0 0 1}
+    }
+  name ColorMatrix_Right
+  xpos 20
+  ypos 46
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Plus
+  xpos -28
+  ypos 93
+ }
+ Grade {
+  channels {rgba.red -rgba.green -rgba.blue}
+  gamma 1.5
+  name Grade1
+  xpos -28
+  ypos 132
+ }
+push $N145c37f0
+push $N146c5fa0
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue red2
+  name Make3D1
+  label Amber/Blue
+  xpos -273
+  ypos 47
+ }
+push $N145c37f0
+push $N146c5fa0
+ ShuffleCopy {
+  inputs 2
+  green green
+  name Make3D
+  label Magenta/Green
+  xpos -364
+  ypos 47
+ }
+push $N145c37f0
+push $N146c5fa0
+ ShuffleCopy {
+  inputs 2
+  red red
+  name Make3D2
+  label Red/Cyan
+  xpos -174
+  ypos 47
+ }
+push $N145c1360
+ Switch {
+  inputs 7
+  which {{AnaglyphMethod i}}
+  name Switch1
+  label "\n"
+  xpos -273
+  ypos 138
+ }
+ Switch {
+  inputs 2
+  which {{diff i}}
+  name Switch5
+  label "\n"
+  xpos -273
+  ypos 164
+ }
+set N3cea100 [stack 0]
+ Text {
+  message "\[frame]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(Reformat1.format.height/20) i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {Reformat1.format.width i} {Reformat1.format.height i}}
+  translate {{Reformat1.format.width/3 i} {Reformat1.format.width/-4 i}}
+  center {{(Reformat1.format.width)/2 i} {(Reformat1.format.height)/2 i}}
+  name ViewText1
+  xpos -372
+  ypos 164
+ }
+push $N3cea100
+ Switch {
+  inputs 2
+  which {{framecount i}}
+  name Switch3
+  label "\n"
+  xpos -273
+  ypos 190
+ }
+set N3cea3b0 [stack 0]
+ Text {
+  message "\[view]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(Reformat1.format.height/20) i}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {Reformat1.format.width i} {Reformat1.format.height i}}
+  translate {{Reformat1.format.width/-3 i} {Reformat1.format.width/-4 i}}
+  center {{(Reformat1.format.width)/2 i} {(Reformat1.format.height)/2 i}}
+  name ViewText
+  xpos -163
+  ypos 190
+ }
+push $N3cea3b0
+ Switch {
+  inputs 2
+  which {{eyetag i}}
+  name Switch4
+  label "\n"
+  xpos -273
+  ypos 216
+ }
+ Output {
+  name Output1
+  xpos -273
+  ypos 349
+ }
+end_group

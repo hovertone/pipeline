@@ -1,0 +1,178 @@
+#! C:/Program Files/Nuke6.3v2/Nuke6.3.exe -nx
+version 6.3 v2
+Gizmo {
+ help "Compute a normal based on the luma of incoming image.\nBased on derivative of luminance.\nThe less grainy the incoming image the better.\nA little slow to compute so better to precomp.\nFeel free to contribute.\nCheers\n\nLucien Fostier"
+ addUserKnob {20 LumaToNormal}
+ addUserKnob {26 LumaToNormal_1 l "Luma To Normal" T "lucienfostier@gmail.com\nlucienfostier.com\n1.0\n14/06/2012"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 462
+  ypos 18
+ }
+add_layer {P P.red P.green P.blue}
+ Expression {
+  channel0 {P.red -P.green -P.blue}
+  expr0 x/width
+  channel1 {-P.red P.green -P.blue}
+  expr1 y/height
+  channel2 {-P.red -P.green P.blue}
+  expr2 r*.3+g*.6+b*.1
+  name Expression36
+  xpos 462
+  ypos 58
+ }
+ Dot {
+  name Dot7
+  xpos 505
+  ypos 88
+ }
+set N56842e0 [stack 0]
+add_layer {gradient gradient.red gradient.green gradient.blue gradient.alpha}
+ Expression {
+  channel0 {gradient.red -gradient.green -gradient.blue gradient.alpha}
+  expr0 P.red(x+1,y)-P.red
+  channel1 {-gradient.red gradient.green -gradient.blue gradient.alpha}
+  expr1 P.green(x+1,y)-P.green
+  channel2 {-gradient.red -gradient.green gradient.blue gradient.alpha}
+  expr2 P.blue(x+1,y)-P.blue
+  name Expression37
+  label "Vector S\nRIGHT"
+  xpos 361
+  ypos 124
+ }
+ Shuffle {
+  in gradient
+  name Shuffle20
+  xpos 361
+  ypos 177
+ }
+set N5684940 [stack 0]
+push $N56842e0
+ Expression {
+  channel0 {gradient.red -gradient.green -gradient.blue gradient.alpha}
+  expr0 P.red(x,y+1)-P.red
+  channel1 {-gradient.red gradient.green -gradient.blue gradient.alpha}
+  expr1 P.green(x,y+1)-P.green
+  channel2 {-gradient.red -gradient.green gradient.blue gradient.alpha}
+  expr2 P.blue(x,y+1)-P.blue
+  name Expression38
+  label "Vector T\ntop"
+  xpos 575
+  ypos 140
+ }
+ Shuffle {
+  in gradient
+  name Shuffle21
+  xpos 575
+  ypos 198
+ }
+set N1799f690 [stack 0]
+ MergeExpression {
+  inputs 2
+  expr0 (Ag*Bb)-(Bg*Ab)
+  expr1 -((Ar*Bb)-(Br*Ab))
+  expr2 (Ar*Bg)-(Br*Ag)
+  name MergeExpression6
+  label "VECTOR PRODUCT"
+  xpos 562
+  ypos 261
+ }
+push $N5684940
+push $N56842e0
+ Expression {
+  channel0 {gradient.red -gradient.green -gradient.blue gradient.alpha}
+  expr0 P.red(x,y-1)-P.red
+  channel1 {-gradient.red gradient.green -gradient.blue gradient.alpha}
+  expr1 P.green(x,y-1)-P.green
+  channel2 {-gradient.red -gradient.green gradient.blue gradient.alpha}
+  expr2 P.blue(x,y-1)-P.blue
+  name Expression39
+  label "Vector T\nbottom"
+  xpos 482
+  ypos 139
+ }
+ Shuffle {
+  in gradient
+  name Shuffle22
+  xpos 482
+  ypos 185
+ }
+set N179a0020 [stack 0]
+ MergeExpression {
+  inputs 2
+  expr0 (Ag*Bb)-(Bg*Ab)
+  expr1 -((Ar*Bb)-(Br*Ab))
+  expr2 (Ar*Bg)-(Br*Ag)
+  name MergeExpression7
+  label "VECTOR PRODUCT"
+  xpos 465
+  ypos 267
+ }
+push 0
+push $N5684940
+push $N1799f690
+ MergeExpression {
+  inputs 2
+  expr0 (Ag*Bb)-(Bg*Ab)
+  expr1 -((Ar*Bb)-(Br*Ab))
+  expr2 (Ar*Bg)-(Br*Ag)
+  name MergeExpression8
+  label "VECTOR PRODUCT"
+  xpos 346
+  ypos 247
+ }
+push $N56842e0
+ Expression {
+  channel0 {gradient.red -gradient.green -gradient.blue gradient.alpha}
+  expr0 P.red(x-1,y)-P.red
+  channel1 {-gradient.red gradient.green -gradient.blue gradient.alpha}
+  expr1 P.green(x-1,y)-P.green
+  channel2 {-gradient.red -gradient.green gradient.blue gradient.alpha}
+  expr2 P.blue(x-1,y)-P.blue
+  name Expression40
+  label "Vector S\nLEFT"
+  xpos 221
+  ypos 115
+ }
+ Shuffle {
+  in gradient
+  name Shuffle23
+  xpos 221
+  ypos 171
+ }
+push $N179a0020
+ MergeExpression {
+  inputs 2
+  expr0 (Ag*Bb)-(Bg*Ab)
+  expr1 -((Ar*Bb)-(Br*Ab))
+  expr2 (Ar*Bg)-(Br*Ag)
+  name MergeExpression9
+  label "VECTOR PRODUCT"
+  xpos 235
+  ypos 241
+ }
+ Blend {
+  inputs 4+1
+  name Blend2
+  xpos 346
+  ypos 330
+ }
+ Expression {
+  temp_name0 lenght
+  temp_expr0 sqrt(pow2(r)+pow2(g)+pow2(b))
+  expr0 r/lenght
+  expr1 g/lenght
+  expr2 b/lenght
+  name Expression41
+  label "CALCULATE N\n"
+  xpos 346
+  ypos 376
+ }
+ Output {
+  name Output1
+  xpos 346
+  ypos 476
+ }
+end_group

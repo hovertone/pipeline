@@ -1,0 +1,362 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {41 offset l Offset T ctrl.offset}
+ addUserKnob {41 amount l Amount T ctrl.amount}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 520
+  ypos -344
+ }
+ NoOp {
+  name ctrl
+  selected true
+  xpos 520
+  ypos -290
+  addUserKnob {20 User}
+  addUserKnob {14 offset l Offset R 0 100}
+  offset {0 0}
+  addUserKnob {7 amount l Amount R 0 20}
+  amount 1
+ }
+ Dot {
+  name Dot1
+  xpos 554
+  ypos -236
+ }
+set N288845c0 [stack 0]
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform21
+  label 18
+  xpos 2320
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply19
+  label 18
+  xpos 2320
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform20
+  label 17
+  xpos 2220
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply18
+  label 17
+  xpos 2220
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform19
+  label 16
+  xpos 2120
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply17
+  label 16
+  xpos 2120
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform18
+  label 15
+  xpos 2020
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply16
+  label 15
+  xpos 2020
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform17
+  label 14
+  xpos 1920
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply15
+  label 14
+  xpos 1920
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform16
+  label 13
+  xpos 1820
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply14
+  label 13
+  xpos 1820
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform15
+  label 12
+  xpos 1720
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply13
+  label 12
+  xpos 1720
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform14
+  label 11
+  xpos 1620
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply12
+  label 11
+  xpos 1620
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform13
+  label 10
+  xpos 1520
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply11
+  label 10
+  xpos 1520
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform12
+  label 9
+  xpos 1420
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply10
+  label 9
+  xpos 1420
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform11
+  label 8
+  xpos 1320
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply9
+  label 8
+  xpos 1320
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform10
+  label 7
+  xpos 1220
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply8
+  label 7
+  xpos 1220
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform9
+  label 6
+  xpos 1120
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply7
+  label 6
+  xpos 1120
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform8
+  label 5
+  xpos 1020
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply6
+  label 5
+  xpos 1020
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform7
+  label 4
+  xpos 920
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply5
+  label 4
+  xpos 920
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform6
+  label 3
+  xpos 820
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply4
+  label 3
+  xpos 820
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform5
+  label 2
+  xpos 720
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply3
+  label 2
+  xpos 720
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform4
+  label 1
+  xpos 620
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply2
+  label 1
+  xpos 620
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push 0
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform22
+  label 19
+  xpos 2420
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply20
+  label 19
+  xpos 2420
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+push $N288845c0
+ Transform {
+  translate {{ctrl.offset*label} {ctrl.offset*label}}
+  name Transform3
+  label 0
+  xpos 520
+  ypos -176
+ }
+ Multiply {
+  value 0
+  name Multiply1
+  label 0
+  xpos 520
+  ypos -116
+  disable {{abs(label<ctrl.amount-1)}}
+ }
+ Merge2 {
+  inputs 20+1
+  name Merge2
+  xpos 520
+  ypos 10
+ }
+ Output {
+  name Output1
+  xpos 520
+  ypos 110
+ }
+end_group

@@ -1,0 +1,495 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+BackdropNode {
+ inputs 0
+ name BackdropNode7
+ tile_color 0x2a2a2aff
+ label STADIUM
+ note_font_size 42
+ selected true
+ xpos 8282
+ ypos 3191
+ bdwidth 553
+ bdheight 792
+ z_order -1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode10
+ tile_color 0x7171c600
+ label GLASS
+ note_font_size 42
+ selected true
+ xpos 8292
+ ypos 3550
+ bdwidth 312
+ bdheight 307
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode11
+ tile_color 0x7171c600
+ label ATMOSPHERE
+ note_font_size 42
+ selected true
+ xpos 8452
+ ypos 4696
+ bdwidth 370
+ bdheight 407
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode5
+ tile_color 0x26472eff
+ label "geot glows"
+ note_font_size 42
+ selected true
+ xpos 8614
+ ypos 4002
+ bdwidth 202
+ bdheight 292
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode6
+ tile_color 0xbc5a1cff
+ label "fire exagger"
+ note_font_size 42
+ selected true
+ xpos 8407
+ ypos 4330
+ bdwidth 410
+ bdheight 337
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode8
+ tile_color 0x8e388e00
+ note_font_size 42
+ selected true
+ xpos 8357
+ ypos 3271
+ bdwidth 236
+ bdheight 160
+}
+push $cut_paste_input
+Dot {
+ name Dot39
+ selected true
+ xpos 8548
+ ypos 3735
+}
+set Nffa54000 [stack 0]
+add_layer {stadium stadium.red stadium.green stadium.blue}
+Clamp {
+ channels stadium
+ maximum 0
+ MinClampTo_enable true
+ MaxClampTo_enable true
+ name Clamp5
+ selected true
+ xpos 8412
+ ypos 3725
+}
+Blur {
+ inputs 0
+ size 4.6
+ name Blur3
+ selected true
+ xpos 8302
+ ypos 3630
+}
+Grade {
+ white 1.1
+ gamma 0.365
+ white_clamp true
+ name Grade8
+ selected true
+ xpos 8302
+ ypos 3684
+}
+Multiply {
+ inputs 1+1
+ value 0
+ maskChannelMask stadium.blue
+ invert_mask true
+ name Multiply6
+ selected true
+ xpos 8302
+ ypos 3725
+}
+Dot {
+ name Dot40
+ selected true
+ xpos 8336
+ ypos 3825
+}
+push $Nffa54000
+Merge2 {
+ inputs 2
+ operation multiply
+ maskChannelInput stadium.blue
+ mix 0.655
+ name Merge16
+ selected true
+ xpos 8514
+ ypos 3815
+}
+Shuffle {
+ inputs 0
+ in stadium
+ green red
+ blue red
+ alpha red
+ name Shuffle17
+ label "\[knob in]"
+ selected true
+ xpos 8503
+ ypos 3351
+}
+set Nd559800 [stack 0]
+push $Nd559800
+Dot {
+ name Dot41
+ selected true
+ xpos 8401
+ ypos 3361
+}
+Grade {
+ inputs 1+1
+ white {0.7275286317 1.984490752 3.377528667 1}
+ multiply 1.75
+ gamma {0.1721407622 1.367162347 1.922140718 1}
+ name Grade29
+ selected true
+ xpos 8367
+ ypos 3401
+}
+Dot {
+ inputs 0
+ name Dot42
+ label FG
+ note_font_size 22
+ selected true
+ xpos 8462
+ ypos 4911
+}
+set N5ba26c00 [stack 0]
+Dot {
+ inputs 0
+ name Dot43
+ tile_color 0xff0400ff
+ label BG
+ note_font_size 22
+ selected true
+ xpos 8572
+ ypos 4776
+ hide_input true
+}
+set N5ba26800 [stack 0]
+add_layer {sky sky.matte}
+Shuffle {
+ in sky
+ name Shuffle18
+ label "\[knob in]"
+ selected true
+ xpos 8538
+ ypos 4838
+}
+Merge2 {
+ inputs 2
+ operation stencil
+ name Merge25
+ tile_color 0xff007dff
+ selected true
+ xpos 8538
+ ypos 4907
+}
+push $N5ba26c00
+push $N5ba26800
+add_layer {tribune tribune.matte}
+Shuffle {
+ in tribune
+ name Shuffle19
+ label "\[knob in]"
+ selected true
+ xpos 8630
+ ypos 4837
+}
+Multiply {
+ inputs 1+1
+ value 0
+ name Multiply7
+ selected true
+ xpos 8630
+ ypos 4945
+}
+Grade {
+ inputs 0
+ white 0.5
+ gamma 1.08
+ name Grade31
+ selected true
+ xpos 8732
+ ypos 4859
+}
+Grade {
+ inputs 1+1
+ white {1.600000024 1.850000024 2.099999905 1.850000024}
+ multiply 2.2
+ gamma 1.8
+ mix 0.545
+ name Grade32
+ label "tribune\n"
+ selected true
+ xpos 8732
+ ypos 4901
+}
+Grade {
+ gamma {0.9499999881 1 1.049999952 1}
+ name Grade33
+ label "atmosphere to blue"
+ selected true
+ xpos 8732
+ ypos 4967
+}
+Dot {
+ name Dot44
+ selected true
+ xpos 8766
+ ypos 5071
+}
+Multiply {
+ inputs 1+1
+ value 0
+ name Multiply8
+ selected true
+ xpos 8538
+ ypos 5061
+}
+Dot {
+ inputs 0
+ name Dot45
+ selected true
+ xpos 8760
+ ypos 4099
+}
+set N5ba80000 [stack 0]
+push $N5ba80000
+add_layer {glow glow.red glow.green glow.blue}
+add_layer {char2 char2.red char2.green char2.blue}
+ChannelMerge {
+ inputs 2
+ A glow.red
+ operation in
+ B char2.red
+ name ChannelMerge3
+ selected true
+ xpos 8624
+ ypos 4082
+}
+push $N5ba80000
+ColorCorrect {
+ inputs 1+1
+ saturation 0.52
+ gamma 0.84
+ gain 5.25
+ name ColorCorrect11
+ label "geot lights for glow\n"
+ selected true
+ xpos 8726
+ ypos 4147
+}
+Premult {
+ name Premult2
+ selected true
+ xpos 8726
+ ypos 4194
+}
+Dot {
+ name Dot46
+ selected true
+ xpos 8760
+ ypos 4241
+}
+set N5bac3000 [stack 0]
+push $N5bac3000
+expoglow.gizmo {
+ inputs 2
+ name expoglow11
+ selected true
+ xpos 8726
+ ypos 4264
+ PreGrade 1
+ white 1.6
+ GlowSettings 1
+ PostGrade 1
+ white_1 1.14
+ maskChannelMask glow.red
+ ShiftRed 1
+ ShiftGreen 1
+ ShiftBlue 1
+}
+Dot {
+ inputs 0
+ name Dot47
+ selected true
+ xpos 8451
+ ypos 4410
+}
+set N5cbc2c00 [stack 0]
+Dot {
+ name Dot48
+ selected true
+ xpos 8599
+ ypos 4410
+}
+set N5cbc2800 [stack 0]
+Dot {
+ name Dot49
+ selected true
+ xpos 8761
+ ypos 4410
+}
+add_layer {volume_indirect volume_indirect.red volume_indirect.green volume_indirect.blue}
+Shuffle {
+ in volume_indirect
+ name Shuffle20
+ label "\[value in]"
+ selected true
+ xpos 8727
+ ypos 4485
+}
+Dot {
+ name Dot50
+ selected true
+ xpos 8761
+ ypos 4641
+}
+push $N5cbc2800
+add_layer {volume_direct volume_direct.red volume_direct.green volume_direct.blue}
+Shuffle {
+ in volume_direct
+ name Shuffle21
+ label "\[value in]"
+ selected true
+ xpos 8565
+ ypos 4485
+}
+Dot {
+ name Dot51
+ selected true
+ xpos 8599
+ ypos 4594
+}
+push $N5cbc2c00
+add_layer {emission emission.red emission.green emission.blue}
+Shuffle {
+ in emission
+ in2 alpha
+ alpha red2
+ name Shuffle22
+ label "\[value in]"
+ selected true
+ xpos 8417
+ ypos 4485
+}
+Grade {
+ white 2.35
+ gamma 0.84
+ name Grade34
+ selected true
+ xpos 8417
+ ypos 4523
+}
+ColorCorrect {
+ midtones.gamma 0.96
+ highlights.saturation 0.9
+ highlights.gain 1.38
+ lookup {shadow {curve 1 s0 x0.2235092819 0 s0}
+   midtone {1-shadow-highlight}
+   highlight {curve x0.1488127708 0 s0 x1 1 s0}}
+ name ColorCorrect12
+ selected true
+ xpos 8417
+ ypos 4549
+}
+Merge2 {
+ inputs 2
+ operation plus
+ Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+ output rgb
+ name Merge26
+ selected true
+ xpos 8417
+ ypos 4590
+}
+Merge2 {
+ inputs 2
+ operation plus
+ Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+ output rgb
+ name Merge27
+ selected true
+ xpos 8417
+ ypos 4637
+}
+expoglow.gizmo {
+ inputs 0
+ name expoglow9
+ label "stadium lights"
+ selected true
+ xpos 8519
+ ypos 3887
+ PreGrade 0
+ GlowSettings 1
+ PostGrade 0
+ maskChannelMask stadium.red
+ ShiftRed 1
+ ShiftGreen 1
+ ShiftBlue 1
+}
+expoglow.gizmo {
+ inputs 0
+ name expoglow10
+ label "lights glow"
+ selected true
+ xpos 8520
+ ypos 3941
+ PreGrade 1
+ gamma 0.3
+ GlowSettings 1
+ PostGrade 1
+ white_1 {0.9326663613 0.9286662936 0.9226663709 1}
+ multiply_1 0.33
+ maskChannelMask glow.red
+ ShiftRed 1
+ ShiftGreen 1
+ ShiftBlue 1
+}
+add_layer {arena arena.red arena.green arena.blue}
+ColorCorrect {
+ inputs 0
+ shadows.gamma {0.2704750001 0.7896786332 0.8304749727 1}
+ shadows.offset {-0.01300000027 0 0.01300000027 0}
+ lookup {shadow {curve 1 s0 x0.3570185602 0 s0}
+   midtone {1-shadow-highlight}
+   highlight {}}
+ maskChannelInput arena.blue
+ invert_mask true
+ name ColorCorrect10
+ label "stadium black grades"
+ selected true
+ xpos 8506
+ ypos 3465
+}
+Grade {
+ inputs 0
+ white {0.7610999942 0.9885269403 1.289999962 1.019999981}
+ gamma {0.7799999714 0.8999999166 1.019999981 0.8999999762}
+ name Grade30
+ label "stadium spots grade"
+ selected true
+ xpos 8745
+ ypos 3609
+}

@@ -1,0 +1,18 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="lighGroupManager.PySide2" />
+          <option value="ui.lightGroupManager_UIs.PySide2" />
+          <option value="ui.lightGroupManager_UI.*" />
+          <option value="houdini_app.Loader.test_combobox.PySide2" />
+          <option value="houdini_app.Loader.filemanager.*" />
+          <option value="hou" />
+          <option value="houdini_app.lokyScripts.lokyLayoutS.standart_surface" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

@@ -1,0 +1,187 @@
+#! /usr/local/Nuke10.0v2/libnuke-10.0.2.so -nx
+version 10.0 v2
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1920" h="1138" maximized="1" screen="1">
+        <splitter orientation="1">
+            <split size="581"/>
+            <splitter orientation="1">
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="537"/>
+                <splitter orientation="2">
+                    <split size="782"/>
+                    <dock id="" activePageId="Properties.1">
+                        <page id="Properties.1"/>
+                    </dock>
+                    <split size="290"/>
+                    <dock id="" activePageId="uk.co.thefoundry.scripteditor.1">
+                        <page id="uk.co.thefoundry.scripteditor.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="1335"/>
+            <dock id="" activePageId="DAG.1" focus="true">
+                <page id="DAG.1"/>
+                <page id="Curve Editor.1"/>
+                <page id="DopeSheet.1"/>
+            </dock>
+        </splitter>
+    </window>
+    <window x="0" y="0" w="2560" h="1440" fullscreen="1" screen="1">
+        <splitter orientation="1">
+            <split size="2560"/>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /mnt/projects/temp/gamaiunov_superpipeline/Toolsets/KLVRT_aberration.nk
+ frame 101
+ first_frame 101
+ last_frame 187
+ lock_range true
+ format "2048 1080 0 0 2048 1080 1 2K_DCP"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement OCIO
+ OCIO_config aces_1.0.1
+ defaultViewerLUT "OCIO LUTs"
+ workingSpaceLUT "ACES - ACEScg"
+ monitorLut ACES/Rec.709
+ int8Lut "Output - Rec.709"
+ int16Lut "Output - Rec.709"
+ logLut "ACES - ACEScc"
+ floatLut "ACES - ACEScg"
+ luts {linear {}
+   sRGB {}
+   rec709 {}
+   Cineon {}
+   Gamma1.8 {}
+   Gamma2.2 {}
+   Gamma2.4 {}
+   Panalog {}
+   REDLog {}
+   ViperLog {}
+   AlexaV3LogC {}
+   PLogLin {}
+   SLog {}
+   SLog1 {}
+   SLog2 {}
+   SLog3 {}
+   CLog {}
+   Protune {}
+   REDSpace {}
+   DCI-P3 {"pow(t, 2.6)"}}
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0xaaaaaa00
+ label Finalization
+ note_font_size 42
+ xpos 19116
+ ypos -6320
+ bdwidth 277
+ bdheight 674
+}
+Dot {
+ inputs 0
+ name Dot1
+ xpos 19244
+ ypos -6203
+}
+OCIOColorSpace {
+ in_colorspace "ACES/ACES - ACEScg"
+ out_colorspace "ACES/ACES - ACES2065-1"
+ name OCIOColorSpace1
+ xpos 19210
+ ypos -6185
+}
+Reformat {
+ name Reformat21
+ xpos 19210
+ ypos -6154
+}
+Blur {
+ size 40
+ mix 0.035
+ name Blur5
+ xpos 19210
+ ypos -6128
+}
+Soften {
+ amount 0.335
+ name Soften2
+ xpos 19210
+ ypos -6090
+}
+GodRays {
+ channels {-rgba.red rgba.green -rgba.blue rgba.alpha}
+ scale 1.002
+ name GodRays5
+ xpos 19210
+ ypos -6052
+}
+GodRays {
+ channels {-rgba.red -rgba.green rgba.blue rgba.alpha}
+ scale 1.004
+ name GodRays6
+ xpos 19210
+ ypos -6014
+}
+OCIOColorSpace {
+ in_colorspace "ACES/ACES - ACEScg"
+ out_colorspace "ACES/ACES - ACEScg"
+ name OCIOColorSpace9
+ xpos 19210
+ ypos -5976
+}
+Sharpen {
+ amount 0.4
+ size 2.9
+ name Sharpen4
+ xpos 19210
+ ypos -5950
+}
+Sharpen {
+ amount 0.4
+ size 6
+ name Sharpen5
+ xpos 19210
+ ypos -5912
+}
+OCIOColorSpace {
+ in_colorspace "ACES/ACES - ACEScg"
+ out_colorspace "ACES/ACES - ACEScg"
+ name OCIOColorSpace11
+ xpos 19210
+ ypos -5874
+}
+Blur {
+ channels {-rgba.red -rgba.green rgba.blue none}
+ size 2
+ name Blur6
+ xpos 19210
+ ypos -5848
+}
+Crop {
+ box {0 0 2048 1080}
+ reformat true
+ crop false
+ name Crop2
+ xpos 19210
+ ypos -5822
+}
+Dot {
+ name Dot2
+ label "RAW TO WRITE NODE\nDON'T FORGET"
+ xpos 19244
+ ypos -5746
+}

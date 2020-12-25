@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AssetName</class>
+ <widget class="QWidget" name="AssetName">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>409</width>
+    <height>128</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>AssetName</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+background:rgb(58,58,58);
+}
+
+QLabel{
+color:rgb(196,196,196);
+}
+
+QListWidget{
+background:rgb(48,48,48);
+}
+
+QPushButton{
+background:qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60,60, 60, 255), stop:1 rgba(85, 85, 85, 255));
+border:1px solid black;
+color:rgb(196,196,196);
+}
+
+QPushButton:hover{
+background:qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(68,68, 68, 255), stop:1 rgba(93, 93, 93, 255));
+border:1px solid black;
+color:rgb(196,196,196);
+}
+
+QPushButton:pressed{
+background:rgb(185,134,32);
+border:1px solid black;
+color:rgb(196,196,196);
+}
+
+QLineEdit{
+background:rgb(48,48,48);
+color:rgb(196,196,196);
+border:1px solid gray;
+}
+
+
+
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="vLayoutMain">
+   <item>
+    <layout class="QHBoxLayout" name="hLayoutProjects">
+     <item>
+      <widget class="QLabel" name="lb_assetName">
+       <property name="minimumSize">
+        <size>
+         <width>90</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Asset name:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_assetName"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hLayoutBtns">
+     <item>
+      <spacer name="hSpacer_btm">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pb_cancel">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pb_save">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

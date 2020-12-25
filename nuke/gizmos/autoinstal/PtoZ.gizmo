@@ -1,0 +1,227 @@
+#! C:/Program Files/Nuke10.5v4/nuke-10.5.4.dll -nx
+version 10.5 v4
+Gizmo {
+ tile_color 0x203d99ff
+ addUserKnob {20 User}
+ addUserKnob {41 cam_pos T PworldToZDepth.cam_pos}
+ addUserKnob {41 blackpoint T Grade21.blackpoint}
+ addUserKnob {41 whitepoint T Grade21.whitepoint}
+ addUserKnob {41 disable_1 l Premult T Premult1.disable}
+ addUserKnob {20 depth_fix l "Depth Fix" n 1}
+ addUserKnob {6 enable l Enable +STARTLINE}
+ addUserKnob {7 eat_in l "Eat In" R 0 10}
+ addUserKnob {7 erode_outside l Erode_outside R 0 10}
+ addUserKnob {7 edge_blur l "Edge Blur" R 0 10}
+ addUserKnob {20 endGroup n -1}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x8e388e00
+  label "Depth Fix"
+  note_font_size 42
+  xpos -563
+  ypos -628
+  bdwidth 249
+  bdheight 322
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -879
+  ypos -978
+ }
+ Dot {
+  name Dot44
+  xpos -845
+  ypos -918
+ }
+set Ne9cb400 [stack 0]
+ Dot {
+  name Dot45
+  xpos -659
+  ypos -918
+ }
+set Ne9ca400 [stack 0]
+push $Ne9cb400
+add_layer {other other.ID other.P2}
+ Copy {
+  inputs 2
+  from0 other.P2
+  to0 rgba.alpha
+  name Copy1
+  xpos -802
+  ypos -798
+ }
+push $Ne9ca400
+ Dot {
+  name Dot46
+  xpos -545
+  ypos -918
+ }
+ Dot {
+  name Dot47
+  xpos -545
+  ypos -675
+ }
+push $Ne9ca400
+add_layer {P P.red P.green P.blue P.X P.Y P.Z P.x P.y P.z}
+ Shuffle {
+  in {P.red P.green P.blue P.X}
+  alpha black
+  name Shuffle25
+  label "\[knob in] -> \[knob out]"
+  xpos -693
+  ypos -822
+ }
+ Expression {
+  temp_name0 x
+  temp_expr0 "r - cam_pos.x"
+  temp_name1 y
+  temp_expr1 "g - cam_pos.y"
+  temp_name2 z
+  temp_expr2 "b - cam_pos.z"
+  channel0 {-rgba.red -rgba.green -rgba.blue none}
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  channel3 rgba
+  expr3 "sqrt(x*x + y*y + z*z)"
+  name PworldToZDepth
+  xpos -693
+  ypos -755
+  addUserKnob {20 User}
+  addUserKnob {13 cam_pos}
+ }
+ Grade {
+  channels rgba
+  black_clamp false
+  name Grade21
+  xpos -693
+  ypos -729
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos -693
+  ypos -685
+ }
+ Premult {
+  name Premult1
+  xpos -693
+  ypos -635
+ }
+ Dot {
+  name Dot1
+  xpos -659
+  ypos -576
+ }
+set Ne923400 [stack 0]
+ Unpremult {
+  name Unpremult1
+  xpos -549
+  ypos -580
+ }
+set Nd34c400 [stack 0]
+ Erode {
+  size {{parent.eat_in}}
+  name Erode_eatIn
+  xpos -549
+  ypos -554
+ }
+ Premult {
+  name Premult2
+  xpos -549
+  ypos -516
+ }
+ Clamp {
+  channels alpha
+  minimum {0.98}
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp2
+  xpos -549
+  ypos -486
+ }
+ Premult {
+  name Premult6
+  xpos -549
+  ypos -448
+ }
+set Nd292c00 [stack 0]
+ FilterErode {
+  channels rgba
+  size {{parent.erode_outside*-1}}
+  name FilterErode1
+  xpos -419
+  ypos -448
+ }
+push $Nd292c00
+ EdgeBlur {
+  size {{parent.edge_blur}}
+  name EdgeBlur1
+  xpos -549
+  ypos -413
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge30
+  xpos -549
+  ypos -354
+ }
+push $Ne923400
+ Switch {
+  inputs 2
+  which {{parent.enable}}
+  name Switch_depthFix
+  xpos -693
+  ypos -354
+ }
+push $Ne9cb400
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 depth.Z
+  name Copy5
+  xpos -879
+  ypos -360
+ }
+ Output {
+  name Output1
+  xpos -879
+  ypos -260
+ }
+push $Nd34c400
+ Erode {
+  size 2.5
+  name Erode1
+  xpos -443
+  ypos -548
+ }
+push $Nd34c400
+push $Ne9ca400
+ CheckerBoard2 {
+  inputs 0
+  name CheckerBoard1
+  xpos -392
+  ypos -368
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -448
+  ypos -277
+ }
+ Viewer {
+  inputs 2
+  frame_range 1001-1050
+  fps 25
+  colour_sample_bbox {0.1145833358 0.131249994 0.1156250015 0.1322916597}
+  name Viewer1
+  selected true
+  xpos -1251
+  ypos 145
+ }
+end_group

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddShot</class>
+ <widget class="QWidget" name="AddShot">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>222</width>
+    <height>90</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Add Shot</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_shot">
+     <property name="text">
+      <string>SHOT:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="lineEdit_shot"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_ff">
+     <property name="text">
+      <string>FIRST FRAME:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="lineEdit_ff"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_lf">
+     <property name="text">
+      <string>LAST FRAME:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="lineEdit_lf"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

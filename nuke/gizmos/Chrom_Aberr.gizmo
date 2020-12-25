@@ -1,0 +1,254 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Gizmo {
+ tile_color 0xa412fff
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 ChromaticAberration l Chromatic_Aberration}
+ addUserKnob {26 Chromatic_Aberration}
+ addUserKnob {41 Red T Red_Aberration.distortion1}
+ addUserKnob {41 Green T Green_Aberration.distortion1}
+ addUserKnob {41 Blue T Blue_Aberration.distortion1}
+ addUserKnob {41 invertDistortion l Remove T Red_Aberration.invertDistortion}
+ addUserKnob {26 Blur_Aberration}
+ addUserKnob {41 Blur T Aberration_Blur.defocus}
+ addUserKnob {41 Blur_Area T Blur_matte.defocus}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix T MIX.mix}
+ addUserKnob {20 About}
+ addUserKnob {26 ChromaticAberration_1 l "" +STARTLINE T "Created By:\nFabio Luongo\nfabioluongo.com"}
+ addUserKnob {26 ""}
+}
+ Input {
+  inputs 0
+  name Src
+  xpos -428
+  ypos -246
+ }
+ Remove {
+  channels alpha
+  name Remove2
+  xpos -428
+  ypos -171
+  disable true
+ }
+set N27c36e50 [stack 0]
+ Dot {
+  name Dot2
+  xpos -167
+  ypos -162
+ }
+set N27c37180 [stack 0]
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos -66
+  ypos -165
+ }
+ Dot {
+  name Dot3
+  xpos -32
+  ypos 474
+ }
+push $N27c37180
+push $N27c36e50
+ Remove {
+  channels {rgba.red rgba.green -rgba.blue}
+  name Blue
+  xpos -304
+  ypos -110
+ }
+ Shuffle {
+  black blue
+  out2 alpha
+  name Blue_Alpha
+  xpos -304
+  ypos -6
+  disable true
+ }
+ Transform {
+  scale {{1+parent.Red}}
+  center {{"\[python nuke.root().format().width()/2]"} {"\[python nuke.root().format().height()/2]"}}
+  filter Rifman
+  name Transform3
+  xpos -304
+  ypos 37.33333333
+ }
+ LensDistortion1_0 {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 4 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion2 {{parent.Red_Aberration.distortion2.main i}}
+  invertDistortion {{parent.Red_Aberration.invertDistortion.main i}}
+  cardScale {1.005102873 1.005102873 1}
+  a -0.01392426062
+  b 0.01001844276
+  c 8.660675121e-006
+  name Blue_Aberration
+  xpos -304
+  ypos 94.66666667
+  disable true
+ }
+ Expression {
+  expr3 a/3
+  name Expression3
+  xpos -304
+  ypos 141
+ }
+push $N27c36e50
+ Remove {
+  channels {rgba.red -rgba.green rgba.blue}
+  name Green
+  xpos -428
+  ypos -110
+ }
+ Shuffle {
+  black green
+  out2 alpha
+  name Green_Alpha
+  xpos -428
+  ypos -9
+  disable true
+ }
+ Transform {
+  scale {{1+parent.Green i}}
+  center {{"\[python nuke.root().format().width()/2]" i} {"\[python nuke.root().format().height()/2]" i}}
+  filter Mitchell
+  name Transform2
+  xpos -428
+  ypos 37.33333333
+ }
+ LensDistortion1_0 {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 4 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 -0.0023
+  distortion2 {{parent.Red_Aberration.distortion2.main i}}
+  invertDistortion {{parent.Red_Aberration.invertDistortion.main i}}
+  cardScale {0.9995005131 0.9995005131 1}
+  a 0.0001123303155
+  b 0.0002669705136
+  c 0.0001220515333
+  name Green_Aberration
+  xpos -428
+  ypos 94.66666667
+  disable true
+ }
+ Expression {
+  expr3 a/3
+  name Expression2
+  xpos -428
+  ypos 131
+ }
+push $N27c36e50
+ Remove {
+  channels {-rgba.red rgba.green rgba.blue}
+  name Red
+  xpos -563
+  ypos -110
+ }
+ Shuffle {
+  black alpha
+  out2 alpha
+  name Red_Alpha
+  xpos -563
+  ypos -9
+  disable true
+ }
+ Transform {
+  scale {{1+parent.Blue i}}
+  center {{"\[python nuke.root().format().width()/2]" i} {"\[python nuke.root().format().height()/2]" i}}
+  filter Rifman
+  name Transform1
+  xpos -563
+  ypos 37.33333333
+ }
+set N6975b540 [stack 0]
+ LensDistortion1_0 {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 4 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion2 {{(distortion1.main)/0.8 i}}
+  "Card Parameters" 1
+  name Red_Aberration
+  xpos -563
+  ypos 94.66666667
+  disable true
+ }
+ Expression {
+  expr3 a/3
+  name Expression1
+  xpos -563
+  ypos 137
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Red_and_Green
+  xpos -488
+  ypos 183
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Red_and_Green_and_Blue
+  xpos -378
+  ypos 183
+ }
+set N6975c200 [stack 0]
+ Difference {
+  inputs 2
+  name Matte_Aberration
+  xpos -201
+  ypos 177
+ }
+ Defocus {
+  channels alpha
+  defocus 10
+  name Blur_matte
+  xpos -201
+  ypos 274
+ }
+ ColorCorrect {
+  channels alpha
+  gamma {{parent.Blur_matte.defocus.main/4 i}}
+  gain {{parent.Blur_matte.defocus.main/4 i}}
+  name Gamma_matte
+  xpos -201
+  ypos 359
+ }
+push $N6975c200
+ Remove {
+  channels alpha
+  name Remove1
+  xpos -379
+  ypos 250
+  disable true
+ }
+ Defocus {
+  inputs 1+1
+  name Aberration_Blur
+  xpos -379
+  ypos 359
+  disable true
+ }
+ Merge2 {
+  inputs 2
+  operation matte
+  invert_mask true
+  mix 0
+  name MIX
+  xpos -379
+  ypos 471
+ }
+ Output {
+  name Out
+  xpos -379
+  ypos 543
+ }
+push $N6975b540
+ Viewer {
+  frame 5
+  input_process false
+  name Viewer1
+  xpos -719
+  ypos 507
+ }
+end_group

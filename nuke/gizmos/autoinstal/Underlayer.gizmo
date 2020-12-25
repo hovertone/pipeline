@@ -1,0 +1,128 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+ inputs 2
+ tile_color 0xf3cf79ff
+ addUserKnob {20 use_mask l "Use mask"}
+ addUserKnob {41 color T Constant2.color}
+ addUserKnob {41 use_mask_1 l "Use Mask" T NoOp1.use_mask}
+ addUserKnob {41 keep_b_input l "B input dataflow" t "This checkbox will keep the rgb input's dataflow (frameranges, format etc.)" -STARTLINE T Switch1.disable}
+}
+ Constant {
+  inputs 0
+  color {0.5 0.5 0.5 1}
+  name Constant2
+  xpos -436
+  ypos 285
+ }
+set N2b8889e0 [stack 0]
+ Input {
+  inputs 0
+  name rgb
+  label rgb
+  xpos -281
+  ypos 264
+ }
+ Dot {
+  name Dot3
+  xpos -247
+  ypos 335
+ }
+set N2b8890c0 [stack 0]
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge3
+  xpos -281
+  ypos 409
+  bookmark true
+ }
+set N2b889430 [stack 0]
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos -132
+  ypos 664
+ }
+ Input {
+  inputs 0
+  name Mask
+  xpos -81
+  ypos 304
+  number 1
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos -81
+  ypos 341
+ }
+ Dot {
+  name Dot1
+  xpos -47
+  ypos 468
+ }
+push $N2b8890c0
+ Dot {
+  name Dot4
+  xpos -137
+  ypos 335
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name MaskInjector
+  xpos -171
+  ypos 459
+ }
+ Premult {
+  name Premult1
+  xpos -171
+  ypos 508
+ }
+ Dot {
+  name Dot2
+  xpos -137
+  ypos 561
+ }
+push $N2b8890c0
+push $N2b8889e0
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge2
+  xpos -436
+  ypos 410
+  disable true
+  bookmark true
+ }
+push $N2b889430
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos -281
+  ypos 486
+  disable true
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -281
+  ypos 558
+  disable {{!NoOp1.use_mask}}
+ }
+ NoOp {
+  name NoOp1
+  xpos -281
+  ypos 611
+  addUserKnob {20 User}
+  addUserKnob {6 use_mask l "Use Mask" +STARTLINE}
+ }
+ Output {
+  name Output1
+  xpos -281
+  ypos 657
+ }
+end_group

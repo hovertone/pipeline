@@ -1,0 +1,80 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+BackdropNode {
+ inputs 0
+ name BackdropNode5
+ tile_color 0x408e30ff
+ label REF
+ note_font_size 42
+ selected true
+ xpos 4384
+ ypos 6139
+ bdwidth 362
+ bdheight 398
+}
+Read {
+ inputs 0
+ file P:/Arena/sequences/SQA/sh185/out/hires/SQA_sh185_hires.####.exr
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ first 1099
+ last 1150
+ origfirst 1099
+ origlast 1150
+ origset true
+ auto_alpha true
+ name Read29
+ tile_color 0xff
+ label "SH sh185\nHIRES\nhires\n1099 - 1150"
+ selected true
+ xpos 4412
+ ypos 6219
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+OCIOColorSpace {
+ in_colorspace "Output - Rec.2020"
+ out_colorspace "ACES - ACEScg"
+ name OCIOColorSpace4
+ label "Rec.2020 to ACEScg"
+ selected true
+ xpos 4412
+ ypos 6375
+}
+set Ne159f400 [stack 0]
+FrameHold {
+ first_frame 1147
+ name FrameHold9
+ selected true
+ xpos 4632
+ ypos 6428
+ addUserKnob {20 Set_This_Frame l SetThisFrame}
+ addUserKnob {22 SetThisFrame -STARTLINE T "node = nuke.thisNode()\nnode\['first_frame'].setValue(nuke.frame()) "}
+}
+push $Ne159f400
+FrameHold {
+ first_frame 1128
+ name FrameHold8
+ selected true
+ xpos 4522
+ ypos 6428
+ addUserKnob {20 Set_This_Frame l SetThisFrame}
+ addUserKnob {22 SetThisFrame -STARTLINE T "node = nuke.thisNode()\nnode\['first_frame'].setValue(nuke.frame()) "}
+}
+push $Ne159f400
+FrameHold {
+ first_frame 1106
+ name FrameHold7
+ selected true
+ xpos 4412
+ ypos 6428
+ addUserKnob {20 Set_This_Frame l SetThisFrame}
+ addUserKnob {22 SetThisFrame -STARTLINE T "node = nuke.thisNode()\nnode\['first_frame'].setValue(nuke.frame()) "}
+}
+Switch {
+ inputs 3
+ which 1
+ name Switch4
+ selected true
+ xpos 4412
+ ypos 6488
+}

@@ -1,0 +1,88 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x71c67100
+ label SKY
+ note_font_size 42
+ selected true
+ xpos 1590
+ ypos 3197
+ bdwidth 325
+ bdheight 494
+}
+Read {
+ inputs 0
+ file P:/Arena/assetBuilds/hdri/green_point_park_16k.hdr
+ format "16384 8192 0 0 16384 8192 1 "
+ origset true
+ colorspace "Utility - Linear - sRGB"
+ auto_alpha true
+ name Read35
+ tile_color 0xb4aaffff
+ selected true
+ xpos 1773
+ ypos 3414
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Read {
+ inputs 0
+ file P:/Arena/assetBuilds/hdri/green_point_park_2k.hdr
+ format "8192 4096 0 0 8192 4096 1 "
+ origset true
+ colorspace "Utility - Linear - sRGB"
+ auto_alpha true
+ name Read37
+ tile_color 0xb4aaffff
+ selected true
+ xpos 1624
+ ypos 3289
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+Switch {
+ inputs 2
+ which 1
+ name Switch5
+ selected true
+ xpos 1624
+ ypos 3450
+ disable true
+}
+Grade {
+ white {2.997826338 4 2.993826389 4}
+ multiply 1.65
+ name Grade13
+ selected true
+ xpos 1624
+ ypos 3526
+}
+ColorCorrect {
+ contrast 1.4
+ gain 0.58
+ highlights.gain {1.086054325 0.8716885448 0.906054318 1}
+ lookup {shadow {curve 1 s0 x0.08419521898 0 s0}
+   midtone {1-shadow-highlight}
+   highlight {curve x0.5667538643 0 s0 x1 1 s0}}
+ name ColorCorrect2
+ selected true
+ xpos 1624
+ ypos 3566
+}
+Grade {
+ gamma 0.55
+ name Grade14
+ selected true
+ xpos 1624
+ ypos 3592
+}
+Sphere {
+ radius 10000
+ rotate {0 -8 0}
+ name Sphere1
+ selected true
+ xpos 1624
+ ypos 3643
+}

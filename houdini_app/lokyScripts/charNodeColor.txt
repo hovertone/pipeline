@@ -1,0 +1,4 @@
+nodeName = kwargs["node"]
+type_color = hou.Color((0.89, 0.412, 0.761))
+nodeName.setColor(type_color)
+nodeName.setUserData("nodeshape", "bone")

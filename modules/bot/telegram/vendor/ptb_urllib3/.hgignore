@@ -1,0 +1,7 @@
+syntax: glob
+.hgtags
+*.pyc
+*.egg-info
+*.log
+dist
+build

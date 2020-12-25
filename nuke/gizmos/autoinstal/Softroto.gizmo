@@ -1,0 +1,245 @@
+#! C:/Program Files/Nuke7.0v8/Nuke7.0.exe -nx
+version 7.0 v8
+Gizmo {
+inputs 3
+tile_color 0xf9ff00ff
+label "Enabled: \[knob enable_glob]\nmasking \[knob masking_enable]"
+addUserKnob {20 tab1 l O_o}
+addUserKnob {41 enable_glob l Enable T SoftRoto_CTRL1.enable_glob}
+addUserKnob {41 erode l Erode T SoftRoto_CTRL1.erode}
+addUserKnob {41 blur l Blur T SoftRoto_CTRL1.blur}
+addUserKnob {41 edgeblur l "Edge blur" T SoftRoto_CTRL1.edgeblur}
+addUserKnob {26 maskingOptions l "Masking options"}
+addUserKnob {41 masking_enable l Enable T SoftRoto_CTRL1.masking_enable}
+addUserKnob {41 showMask l "Show Mask" -STARTLINE T SoftRoto_CTRL1.showMask}
+addUserKnob {41 overlayMask l "Overlay Mask" -STARTLINE T SoftRoto_CTRL1.overlayMask}
+addUserKnob {41 filter T FilterErode6.filter}
+addUserKnob {41 size l "Erode (size)" T SoftRoto_CTRL1.size}
+addUserKnob {26 mix}
+addUserKnob {41 mix_1 l mix T SoftRoto_CTRL1.mix_1}
+addUserKnob {20 options}
+addUserKnob {26 bbox_set_divider l "BBox settings"}
+addUserKnob {41 bbox_src l SRC-ROTO T Copy6.bbox}
+addUserKnob {41 bbox_roto_mask l ROTO-Mask T Merge20.bbox}
+addUserKnob {26 overlay_divider l Overlay}
+addUserKnob {41 overlay_color l color T Constant1.color}
+addUserKnob {41 mix_2 l mix T Merge1.mix}
+}
+Input {
+inputs 0
+name Patch_Mask
+xpos 568
+ypos 370
+number 2
+}
+Dot {
+name Dot25
+xpos 602
+ypos 410
+}
+FilterErode {
+channels alpha
+size {{parent.SoftRoto_CTRL1.size}}
+filter gaussian
+name FilterErode6
+xpos 568
+ypos 447
+}
+set C8e13eb0 [stack 0]
+Input {
+inputs 0
+name Roto
+label Roto
+xpos 456
+ypos 331
+}
+Dot {
+name Dot23
+xpos 490
+ypos 371
+}
+set N16aee170 [stack 0]
+clone $C8e13eb0 {
+xpos 456
+ypos 410
+selected false
+}
+Merge2 {
+inputs 2
+operation mask
+bbox B
+name Merge20
+tile_color 0x7000ffff
+xpos 458
+ypos 453
+disable {{!parent.SoftRoto_CTRL1.masking_enable}}
+}
+Dot {
+name Dot24
+xpos 492
+ypos 493
+}
+set N5f7987c0 [stack 0]
+Expression {
+expr0 a
+expr1 a
+expr2 a
+name Expression1
+xpos 458
+ypos 648
+}
+Dot {
+name Dot1
+xpos 492
+ypos 711
+}
+set N66caf710 [stack 0]
+Constant {
+inputs 0
+channels rgb
+color {1 0 0 0}
+name Constant1
+xpos 598
+ypos 734
+}
+Merge2 {
+inputs 2
+operation mask
+name Merge42
+tile_color 0x7000ffff
+xpos 458
+ypos 758
+}
+push $N5f7987c0
+push $N5f7987c0
+push $N16aee170
+Input {
+inputs 0
+name SRC
+label SRC
+xpos 238
+ypos 322
+number 1
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+bbox A
+name Copy6
+xpos 238
+ypos 362
+}
+Premult {
+name Premult7
+xpos 238
+ypos 460
+}
+set N662df5c0 [stack 0]
+Dilate {
+inputs 1+1
+size {{parent.SoftRoto_CTRL1.erode}}
+name Dilate7
+xpos 348
+ypos 454
+}
+Blur {
+inputs 1+1
+size {{parent.SoftRoto_CTRL1.blur}}
+name Blur8
+xpos 348
+ypos 514
+}
+push $N5f7987c0
+push $N662df5c0
+EdgeBlur {
+inputs 1+1
+size {{parent.SoftRoto_CTRL1.edgeblur}}
+name EdgeBlur7
+xpos 238
+ypos 484
+}
+Merge2 {
+inputs 2
+operation under
+name Merge21
+xpos 238
+ypos 520
+disable {{!parent.SoftRoto_CTRL1.enable_glob}}
+}
+push $N662df5c0
+Dot {
+name Dot27
+xpos 178
+ypos 463
+}
+Dot {
+name Dot26
+xpos 178
+ypos 597
+}
+Dissolve {
+inputs 2
+which {{parent.SoftRoto_CTRL1.mix_1}}
+name Dissolve1
+xpos 238
+ypos 588
+}
+push $N66caf710
+Switch {
+inputs 2
+which {{!parent.SoftRoto_CTRL1.showMask}}
+name Switch1
+xpos 238
+ypos 708
+}
+Merge2 {
+inputs 2
+mix 0.165
+name Merge1
+selected true
+xpos 238
+ypos 758
+disable {{!parent.SoftRoto_CTRL1.overlayMask}}
+}
+set N5d36f690 [stack 0]
+NoOp {
+name SoftRoto_CTRL1
+tile_color 0xff7200ff
+xpos 238
+ypos 807
+addUserKnob {20 User}
+addUserKnob {6 enable_glob l Enable +STARTLINE}
+enable_glob true
+addUserKnob {7 erode l Erode R 0 5}
+erode 0.5
+addUserKnob {7 blur l Blur R 0 10}
+blur 2
+addUserKnob {7 edgeblur l "Edge blur" R 0 5}
+edgeblur 1.8
+addUserKnob {26 maskingOptions l "Masking options"}
+addUserKnob {6 masking_enable l Enable +STARTLINE}
+masking_enable true
+addUserKnob {6 showMask l "Show Mask" -STARTLINE}
+addUserKnob {6 overlayMask l "Overlay Mask" -STARTLINE}
+addUserKnob {4 masking_filter l filter M {box triangle quadratic gaussian ""}}
+addUserKnob {7 size l "Erode (size)" R -20 20}
+size -6
+addUserKnob {26 mix}
+addUserKnob {7 mix_1 l mix}
+mix_1 1
+addUserKnob {20 Options}
+}
+Output {
+name Output1
+xpos 238
+ypos 842
+}
+push $N5d36f690
+Viewer {
+input_process false
+name Viewer1
+xpos 364
+ypos 956
+}
+end_group

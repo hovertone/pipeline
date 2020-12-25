@@ -1,0 +1,13 @@
+set cut_paste_input [stack 0]
+version 6.3 v4
+push $cut_paste_input
+push 0
+Merge2 {
+ inputs 2
+ operation difference
+ name Merge1
+ tile_color 0xe0ffff
+ selected true
+ xpos -292
+ ypos -509
+}

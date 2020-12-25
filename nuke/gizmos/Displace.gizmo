@@ -1,0 +1,132 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Gizmo {
+ inputs 2
+ addUserKnob {20 User}
+ addUserKnob {41 size l x/ysize T Noise3.size}
+ addUserKnob {41 zoffset l z T Noise3.zoffset}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 blackpoint T Grade1.blackpoint}
+ addUserKnob {41 whitepoint T Grade1.whitepoint}
+ addUserKnob {41 gamma T Grade1.gamma}
+ addUserKnob {41 noiseBlur l "Noise Blur" T Blur4.size}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 uv_offset l "UV offset" T IDistort1.uv_offset}
+ addUserKnob {41 uv_scale l "UV scale" T IDistort1.uv_scale}
+ addUserKnob {41 showNoise l "Show Noise" T Switch1.disable}
+}
+add_layer {rgba redguard1.glow rgba.beta rgba.edgeblur rgba.noise}
+ Noise {
+  inputs 0
+  size 190
+  zoffset {{frame/100}}
+  center {640 360}
+  name Noise3
+  xpos 745
+  ypos -473
+ }
+add_layer {rgb rgb.UV rgb.red rgb.green rgb.blue}
+ Grade {
+  add -0.5
+  black_clamp false
+  name OFFSET
+  xpos 745
+  ypos -449
+  disable {{parent.Switch1.disable i}}
+ }
+ Grade {
+  blackpoint 0.006
+  gamma 0.43
+  black_clamp false
+  name Grade1
+  xpos 745
+  ypos -413
+ }
+ Blur {
+  size 13.5
+  name Blur4
+  xpos 745
+  ypos -377
+ }
+set N710f4100 [stack 0]
+ Input {
+  inputs 0
+  name Input1
+  xpos 466
+  ypos -468
+  number 1
+ }
+ Dot {
+  name Dot2
+  xpos 500
+  ypos -368
+ }
+set N710f8d80 [stack 0]
+add_layer {REFRACTION REFRACTION.red REFRACTION.green REFRACTION.blue REFRACTION.alpha}
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  out2 REFRACTION
+  name ShuffleCopy2
+  xpos 595
+  ypos -371
+ }
+ IDistort {
+  uv REFRACTION
+  uv_scale 10.5
+  blur_scale 23.5
+  name IDistort1
+  xpos 595
+  ypos -280
+ }
+set N710f4760 [stack 0]
+push $N710f4100
+ Dot {
+  name Dot1
+  xpos 779
+  ypos -216
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos 595
+  ypos -219
+ }
+ NoOp {
+  name NoOp1
+  xpos 595
+  ypos -180
+  addUserKnob {20 User}
+  addUserKnob {7 size}
+  size 340
+  addUserKnob {7 amount}
+  addUserKnob {7 contrast}
+ }
+push $N710f8d80
+ Switch {
+  inputs 2
+  which 1
+  name Switch2
+  xpos 466
+  ypos -180
+  disable {{parent.disable i}}
+ }
+ Output {
+  name Output1
+  xpos 466
+  ypos -28
+ }
+push $N710f4760
+ Viewer {
+  frame -1
+  input_process false
+  name Viewer1
+  xpos 285
+  ypos -322
+ }
+end_group

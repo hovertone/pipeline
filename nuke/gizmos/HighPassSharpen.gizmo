@@ -1,0 +1,63 @@
+#! C:/Program Files/Nuke8.0v2/nuke-8.0.v2.dll -nx
+version 8.0 v2
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {6 HighPassMaP l "High Pass Map" +STARTLINE}
+ addUserKnob {41 size l Size T Blur1.size}
+ addUserKnob {41 filter T Blur1.filter}
+ addUserKnob {41 mix_1 l Mix T Merge2.mix}
+}
+ Input {
+  inputs 0
+  name Src
+  xpos 110
+  ypos -403
+ }
+ Dot {
+  name Dot1
+  xpos 144
+  ypos -318
+ }
+set N2afc6530 [stack 0]
+ Invert {
+  name Invert1
+  xpos -22
+  ypos -327
+ }
+ Blur {
+  name Blur1
+  xpos -22
+  ypos -272
+ }
+push $N2afc6530
+ Merge2 {
+  inputs 2
+  operation average
+  name Merge1
+  xpos -22
+  ypos -206
+ }
+set N2afc5770 [stack 0]
+push $N2afc5770
+push $N2afc6530
+ Merge2 {
+  inputs 2
+  operation overlay
+  name Merge2
+  xpos 110
+  ypos -206
+ }
+ Switch {
+  inputs 2
+  which {{HighPassMaP}}
+  name Switch1
+  xpos 48
+  ypos -115
+ }
+ Output {
+  name Output1
+  selected true
+  xpos 48
+  ypos -49
+ }
+end_group

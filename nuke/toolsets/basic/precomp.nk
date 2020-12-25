@@ -1,0 +1,58 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x399513ff
+ label PRECOMP
+ note_font_size 33
+ selected true
+ xpos -300
+ ypos -1170
+ bdwidth 247
+ bdheight 314
+}
+Read {
+ inputs 0
+ file P:/vikingsPoker/shots/sh_010/out/hires/sh_010_hires2.####.dpx
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ first 1000
+ last 1156
+ origfirst 1000
+ origlast 1156
+ origset true
+ auto_alpha true
+ name Read2
+ selected true
+ xpos -143
+ ypos -946
+ disable true
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 openE l "Open in Explorer" t "This button will open a node's filepath in Explorer" -STARTLINE T "from CUF import openE\nopenE()"}
+}
+push $cut_paste_input
+Dot {
+ name Dot1
+ selected true
+ xpos -256
+ ypos -1058
+}
+set Nc650000 [stack 0]
+Switch {
+ inputs 2
+ which 1
+ name Switch1
+ selected true
+ xpos -290
+ ypos -916
+}
+push $Nc650000
+Write {
+ beforeRender "if not os.path.exists(os.path.dirname(nuke.thisNode()\['file'].value())): os.makedirs(os.path.dirname(nuke.thisNode()\['file'].value()))"
+ name Write3
+ selected true
+ xpos -146
+ ypos -1062
+ addUserKnob {20 User l Q(-_-Q)}
+ addUserKnob {22 createRead l "Create Read" t "This button will create Read node from this node's file path" -STARTLINE T "from createReadFromWrite import createReadFromWrite\ncreateReadFromWrite()"}
+}

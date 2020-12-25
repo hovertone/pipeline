@@ -1,0 +1,629 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Gizmo {
+ inputs 0
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 User}
+ addUserKnob {41 rails T Ctrl.rails}
+ addUserKnob {41 backrails -STARTLINE T Ctrl.backrails}
+ addUserKnob {41 sticks T Ctrl.sticks}
+ addUserKnob {41 lid T Ctrl.lid}
+ addUserKnob {41 lidredmetal T Ctrl.lidredmetal}
+ addUserKnob {41 lidwhitemetal -STARTLINE T Ctrl.lidwhitemetal}
+ addUserKnob {41 lidinnermetal -STARTLINE T Ctrl.lidinnermetal}
+ addUserKnob {41 lidrubber T Ctrl.lidrubber}
+ addUserKnob {26 Ipod}
+ addUserKnob {41 screen T Ctrl.screen}
+ addUserKnob {41 body -STARTLINE T Ctrl.body}
+ addUserKnob {41 back -STARTLINE T Ctrl.back}
+ addUserKnob {26 Iphone}
+ addUserKnob {41 screen_1 l screen T Ctrl.screen_1}
+ addUserKnob {41 body_1 l body -STARTLINE T Ctrl.body_1}
+ addUserKnob {41 back_1 l back -STARTLINE T Ctrl.back_1}
+ addUserKnob {26 Ipad}
+ addUserKnob {41 screen_2 l screen T Ctrl.screen_2}
+ addUserKnob {41 body_2 l body -STARTLINE T Ctrl.body_2}
+ addUserKnob {41 back_2 l back -STARTLINE T Ctrl.back_2}
+ addUserKnob {41 local l local? T Ctrl.local}
+}
+ Read {
+  inputs 0
+  file D:/LocalProjects/05_BUD/03_3D_Renders/Lid_Only/bud_lid_%04d.exr
+  format "1024 768 0 0 1024 768 1 "
+  last 250
+  origlast 250
+  origset true
+  colorspace sRGB
+  name Read6
+  xpos 2160
+  ypos -607
+ }
+ Read {
+  inputs 0
+  file Z:/05_BUD/03_3D_Renders/2012.06.14/Lid_Only/bud_lid_%04d.exr
+  format "1024 768 0 0 1024 768 1 "
+  last 250
+  origlast 250
+  origset true
+  colorspace sRGB
+  name Read1
+  xpos 1940
+  ypos -607
+ }
+ Dissolve {
+  inputs 2
+  which {{parent.Ctrl.local i}}
+  name Dissolve1
+  xpos 2050
+  ypos -577
+ }
+ set C3d3c2230 [stack 0]
+ Unpremult {
+  channels all
+  name Unpremult1
+  xpos 2050
+  ypos -468
+ }
+ Dot {
+  name Dot6
+  xpos 2084
+  ypos -407
+ }
+set N44c36090 [stack 0]
+add_layer {multimatte1 multimatte1.red multimatte1.green multimatte1.blue}
+ Shuffle {
+  in multimatte1
+  blue black
+  alpha black
+  name Shuffle3
+  xpos 2170
+  ypos -410
+ }
+ Dilate {
+  channels {-rgba.red rgba.green -rgba.blue}
+  size 0.5
+  name Dilate1
+  xpos 2170
+  ypos -377
+ }
+ Expression {
+  expr0 r+g
+  expr1 r+g
+  expr2 r+g
+  expr3 r+g
+  name Expression18
+  xpos 2170
+  ypos -322
+ }
+push $N44c36090
+ Multiply {
+  inputs 1+1
+  channels alpha
+  value 0
+  invert_mask true
+  name Multiply18
+  xpos 2050
+  ypos -328
+ }
+ Premult {
+  channels all
+  name Premult1
+  xpos 2050
+  ypos -292
+ }
+ Dot {
+  name Dot5
+  xpos 2084
+  ypos -171
+ }
+set N3d3db0a0 [stack 0]
+ Shuffle {
+  in multimatte1
+  name Shuffle1
+  xpos 2166
+  ypos -154
+ }
+ Expression {
+  expr0 r+g
+  expr1 r+g
+  expr2 r+g
+  expr3 r+g
+  name Expression17
+  xpos 2166
+  ypos -130
+ }
+ Multiply {
+  value {{parent.Ctrl.lid i}}
+  name Multiply17
+  xpos 2166
+  ypos -69
+ }
+ Read {
+  inputs 0
+  file D:/LocalProjects/05_BUD/03_3D_Renders/Matte2/Matte2.%04d.tif
+  format "1024 768 0 0 1024 768 1 "
+  last 250
+  origlast 250
+  origset true
+  version 1
+  name Read5
+  selected true
+  xpos 1830
+  ypos -296
+ }
+set N3d3d0ae0 [stack 0]
+ Read {
+  inputs 0
+  file Z:/05_BUD/03_3D_Renders/2012.06.15/Matte2/Matte2.%04d.tif
+  format "1024 768 0 0 1024 768 1 "
+  last 250
+  origlast 250
+  origset true
+  version 1
+  name Read8
+  xpos 1610
+  ypos -296
+ }
+clone $C3d3c2230 {
+  inputs 2
+  xpos 1720
+  ypos -272
+  selected false
+ }
+set N3d3c18a0 [stack 0]
+ Expression {
+  expr0 r
+  channel1 rgb
+  expr1 r
+  expr2 r
+  expr3 r
+  name Expression16
+  xpos 1720
+  ypos -144
+ }
+ Multiply {
+  value {{parent.Ctrl.lidredmetal i}}
+  name Multiply16
+  xpos 1720
+  ypos -72
+ }
+push $N3d3db0a0
+ Shuffle {
+  in multimatte1
+  name Shuffle2
+  xpos 2050
+  ypos -153
+ }
+ Expression {
+  expr0 g
+  expr1 g
+  expr2 g
+  expr3 g
+  name Expression14
+  xpos 2050
+  ypos -129
+ }
+set N3d3d07b0 [stack 0]
+ Multiply {
+  value {{parent.Ctrl.lidrubber i}}
+  name Multiply15
+  xpos 2050
+  ypos -74
+ }
+push $N3d3c18a0
+ Expression {
+  expr0 g
+  channel1 rgb
+  expr1 g
+  expr2 g
+  expr3 g
+  name Expression13
+  xpos 1834
+  ypos -144
+ }
+ Multiply {
+  value {{parent.Ctrl.lidinnermetal i}}
+  name Multiply14
+  xpos 1834
+  ypos -72
+ }
+push $N3d3c18a0
+ Expression {
+  expr0 b
+  expr1 b
+  expr2 b
+  expr3 b
+  name Expression15
+  xpos 1599
+  ypos -146
+ }
+ Multiply {
+  value {{parent.Ctrl.lidwhitemetal}}
+  name Multiply13
+  xpos 1599
+  ypos -77
+ }
+ Read {
+  inputs 0
+  file D:/LocalProjects/05_BUD/03_3D_Renders/2012.06.13/Matte3/Matte3.%04d.tif
+  format "1024 768 0 0 1024 768 1 "
+  last 325
+  origlast 325
+  origset true
+  name Read14
+  xpos 1434
+  ypos -304
+ }
+ Read {
+  inputs 0
+  file Z:/05_BUD/03_3D_Renders/2012.06.13/Matte3/Matte3.%04d.tif
+  format "1024 768 0 0 1024 768 1 "
+  last 325
+  origlast 325
+  origset true
+  name Read9
+  xpos 1214
+  ypos -304
+ }
+clone $C3d3c2230 {
+  inputs 2
+  xpos 1324
+  ypos -280
+  selected false
+ }
+ Dot {
+  name Dot4
+  xpos 1358
+  ypos -187
+ }
+set N3d3c3550 [stack 0]
+ Expression {
+  expr0 g
+  expr1 g
+  expr2 g
+  expr3 g
+  name Expression10
+  xpos 1324
+  ypos -133
+ }
+ Multiply {
+  value {{parent.Ctrl.sticks i}}
+  name Multiply11
+  xpos 1324
+  ypos -78
+ }
+push $N3d3c3550
+ Expression {
+  expr0 b
+  expr1 b
+  expr2 b
+  expr3 b
+  name Expression11
+  xpos 1433
+  ypos -133
+ }
+ Multiply {
+  value {{parent.Ctrl.backrails i}}
+  name Multiply12
+  xpos 1433
+  ypos -78
+ }
+push $N3d3c3550
+ Expression {
+  expr0 r
+  expr1 r
+  expr2 r
+  expr3 r
+  name Expression12
+  xpos 1214
+  ypos -133
+ }
+ Multiply {
+  value {{parent.Ctrl.rails i}}
+  name Multiply10
+  xpos 1214
+  ypos -78
+ }
+ Read {
+  inputs 0
+  file D:/LocalProjects/05_BUD/03_3D_Renders/2012.06.13/mask_C/mask_C.%04d.tif
+  format "1024 768 0 0 1024 768 1 "
+  first 200
+  last 255
+  origfirst 200
+  origlast 255
+  origset true
+  name Read21
+  xpos 989
+  ypos -324
+ }
+ Read {
+  inputs 0
+  file Z:/05_BUD/03_3D_Renders/2012.06.13/mask_C/mask_C.####.tif
+  format "1024 768 0 0 1024 768 1 "
+  first 200
+  last 255
+  origfirst 200
+  origlast 255
+  origset true
+  name Read4
+  xpos 769
+  ypos -324
+ }
+clone $C3d3c2230 {
+  inputs 2
+  xpos 879
+  ypos -300
+  selected false
+ }
+ Dot {
+  name Dot3
+  xpos 913
+  ypos -178
+ }
+set N3d3d3120 [stack 0]
+ Expression {
+  expr0 r
+  expr1 r
+  expr2 r
+  expr3 r
+  name Expression9
+  xpos 769
+  ypos -126
+ }
+ Multiply {
+  value {{parent.Ctrl.screen_2 i}}
+  name Multiply7
+  xpos 769
+  ypos -78
+ }
+push $N3d3d3120
+ Expression {
+  expr0 g
+  expr1 g
+  expr2 g
+  expr3 g
+  name Expression8
+  xpos 879
+  ypos -126
+ }
+ Multiply {
+  value {{parent.Ctrl.back_2 i}}
+  name Multiply8
+  xpos 879
+  ypos -78
+ }
+push $N3d3d3120
+ Expression {
+  expr0 b
+  expr1 b
+  expr2 b
+  expr3 b
+  name Expression7
+  xpos 989
+  ypos -126
+ }
+ Multiply {
+  value {{parent.Ctrl.body_2 i}}
+  name Multiply9
+  xpos 989
+  ypos -78
+ }
+ Read {
+  inputs 0
+  file D:/LocalProjects/05_BUD/03_3D_Renders/2012.06.13/mask_B/mask_B.%04d.tif
+  format "1024 768 0 0 1024 768 1 "
+  first 140
+  last 200
+  origfirst 140
+  origlast 200
+  origset true
+  name Read19
+  xpos 581
+  ypos -326
+ }
+ Read {
+  inputs 0
+  file Z:/05_BUD/03_3D_Renders/2012.06.13/mask_B/mask_B.####.tif
+  format "1024 768 0 0 1024 768 1 "
+  first 140
+  last 200
+  origfirst 140
+  origlast 200
+  origset true
+  name Read3
+  xpos 376
+  ypos -326
+ }
+clone $C3d3c2230 {
+  inputs 2
+  xpos 471
+  ypos -302
+  selected false
+ }
+ Dot {
+  name Dot2
+  xpos 505
+  ypos -192
+ }
+set N3d3d5100 [stack 0]
+ Expression {
+  expr0 r
+  expr1 r
+  expr2 r
+  expr3 r
+  name Expression6
+  xpos 581
+  ypos -126
+ }
+ Multiply {
+  value {{parent.Ctrl.back_1 i}}
+  name Multiply5
+  xpos 581
+  ypos -78
+ }
+push $N3d3d5100
+ Expression {
+  expr0 b
+  expr1 b
+  expr2 b
+  expr3 b
+  name Expression4
+  xpos 361
+  ypos -126
+ }
+ Multiply {
+  value {{parent.Ctrl.body_1 i}}
+  name Multiply4
+  xpos 361
+  ypos -78
+ }
+push $N3d3d5100
+ Expression {
+  expr0 g
+  expr1 g
+  expr2 g
+  expr3 g
+  name Expression5
+  xpos 471
+  ypos -126
+ }
+ Multiply {
+  value {{parent.Ctrl.screen_1 i}}
+  name Multiply6
+  xpos 471
+  ypos -78
+ }
+ Read {
+  inputs 0
+  file D:/LocalProjects/05_BUD/03_3D_Renders/2012.06.13/mask_A/mask_A.%04d.tif
+  format "1024 768 0 0 1024 768 1 "
+  last 130
+  origlast 130
+  origset true
+  name Read17
+  xpos 235
+  ypos -332
+ }
+ Read {
+  inputs 0
+  file Z:/05_BUD/03_3D_Renders/2012.06.13/mask_A/mask_A.####.tif
+  format "1024 768 0 0 1024 768 1 "
+  last 130
+  origlast 130
+  origset true
+  name Read2
+  xpos 15
+  ypos -332
+ }
+clone $C3d3c2230 {
+  inputs 2
+  xpos 125
+  ypos -308
+  selected false
+ }
+ Dot {
+  name Dot1
+  xpos 159
+  ypos -192
+ }
+set N3d3d6db0 [stack 0]
+ Expression {
+  expr0 g
+  expr1 g
+  expr2 g
+  expr3 g
+  name Expression2
+  xpos 125
+  ypos -126
+ }
+ Multiply {
+  value {{parent.Ctrl.screen i}}
+  name Multiply2
+  xpos 125
+  ypos -78
+ }
+push 0
+push $N3d3d6db0
+ Expression {
+  expr0 b
+  expr1 b
+  expr2 b
+  expr3 b
+  name Expression3
+  xpos 15
+  ypos -126
+ }
+ Multiply {
+  value {{parent.Ctrl.back i}}
+  name Multiply1
+  xpos 15
+  ypos -78
+ }
+push $N3d3d6db0
+ Expression {
+  expr0 r
+  expr1 r
+  expr2 r
+  expr3 r
+  name Expression1
+  xpos 235
+  ypos -126
+ }
+ Multiply {
+  value {{parent.Ctrl.body i}}
+  name Multiply3
+  xpos 235
+  ypos -78
+ }
+ Merge2 {
+  inputs 17+1
+  name Merge1
+  xpos 879
+  ypos 544
+ }
+ NoOp {
+  name Ctrl
+  xpos 879
+  ypos 617
+  addUserKnob {20 User}
+  addUserKnob {6 rails +STARTLINE}
+  addUserKnob {6 backrails -STARTLINE}
+  addUserKnob {6 sticks +STARTLINE}
+  addUserKnob {6 lid +STARTLINE}
+  addUserKnob {6 lidredmetal +STARTLINE}
+  addUserKnob {6 lidwhitemetal -STARTLINE}
+  addUserKnob {6 lidinnermetal -STARTLINE}
+  addUserKnob {6 lidrubber +STARTLINE}
+  addUserKnob {26 Ipod}
+  addUserKnob {6 screen +STARTLINE}
+  addUserKnob {6 body -STARTLINE}
+  addUserKnob {6 back -STARTLINE}
+  addUserKnob {26 Iphone}
+  addUserKnob {6 screen_1 l screen +STARTLINE}
+  addUserKnob {6 body_1 l body -STARTLINE}
+  addUserKnob {6 back_1 l back -STARTLINE}
+  addUserKnob {26 Ipad}
+  addUserKnob {6 screen_2 l screen +STARTLINE}
+  addUserKnob {6 body_2 l body -STARTLINE}
+  addUserKnob {6 back_2 l back -STARTLINE}
+  addUserKnob {6 local l local? +STARTLINE}
+  local true
+ }
+ Output {
+  name Output1
+  xpos 879
+  ypos 690
+ }
+push $N3d3d07b0
+push $N3d3d0ae0
+ Viewer {
+  inputs 2
+  frame 152
+  input_process false
+  name Viewer1
+  xpos 1497
+  ypos 573
+ }
+end_group

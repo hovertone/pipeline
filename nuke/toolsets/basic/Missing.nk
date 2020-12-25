@@ -1,0 +1,164 @@
+set cut_paste_input [stack 0]
+version 10.5 v4
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x7171c600
+ label "Missing "
+ note_font_size 42
+ selected true
+ xpos 4068
+ ypos 3446
+ bdwidth 810
+ bdheight 341
+}
+push $cut_paste_input
+Dot {
+ name Dot23
+ selected true
+ xpos 4112
+ ypos 3526
+}
+set N4c4a5400 [stack 0]
+Dot {
+ name Dot24
+ selected true
+ xpos 4266
+ ypos 3526
+}
+set N4c4a4400 [stack 0]
+Dot {
+ name Dot25
+ selected true
+ xpos 4422
+ ypos 3526
+}
+set N4c4a4000 [stack 0]
+Dot {
+ name Dot26
+ selected true
+ xpos 4622
+ ypos 3526
+}
+set N4c4a5c00 [stack 0]
+Dot {
+ name Dot27
+ selected true
+ xpos 4822
+ ypos 3526
+}
+add_layer {emission emission.red emission.green emission.blue}
+Shuffle {
+ in emission
+ name Shuffle12
+ label "\[value in]"
+ selected true
+ xpos 4788
+ ypos 3601
+}
+Dot {
+ name Dot28
+ selected true
+ xpos 4822
+ ypos 3755
+}
+push $N4c4a5c00
+add_layer {RGBA_env RGBA_env.red RGBA_env.green RGBA_env.blue}
+Shuffle {
+ in RGBA_env
+ name Shuffle13
+ label "\[value in]"
+ selected true
+ xpos 4588
+ ypos 3601
+}
+Dot {
+ name Dot29
+ selected true
+ xpos 4622
+ ypos 3680
+}
+push $N4c4a4000
+add_layer {RGBA_dist RGBA_dist.red RGBA_dist.green RGBA_dist.blue}
+Shuffle {
+ in RGBA_dist
+ name Shuffle14
+ label "\[value in]"
+ selected true
+ xpos 4388
+ ypos 3601
+}
+Merge2 {
+ inputs 2
+ operation plus
+ output rgb
+ name Merge23
+ selected true
+ xpos 4388
+ ypos 3676
+}
+Merge2 {
+ inputs 2
+ operation plus
+ output rgb
+ name Merge24
+ selected true
+ xpos 4388
+ ypos 3751
+}
+push $N4c4a4400
+Merge2 {
+ inputs 2
+ operation difference
+ name Merge25
+ selected true
+ xpos 4232
+ ypos 3751
+}
+push $N4c4a5400
+add_layer {missing missing.red missing.green missing.blue}
+ShuffleCopy {
+ inputs 2
+ alpha alpha2
+ black red
+ white green
+ red2 blue
+ out2 missing
+ name ShuffleCopy2
+ label "\[knob in]"
+ selected true
+ xpos 4078
+ ypos 3745
+}
+Dot {
+ inputs 0
+ name Dot21
+ selected true
+ xpos 4438
+ ypos 3848
+}
+Shuffle {
+ in missing
+ alpha black
+ name Shuffle11
+ label "\[knob in]"
+ selected true
+ xpos 4404
+ ypos 3881
+}
+Dot {
+ name Dot22
+ selected true
+ xpos 4438
+ ypos 4075
+}
+push 0
+Merge2 {
+ inputs 2
+ operation plus
+ output rgb
+ name Merge22
+ selected true
+ xpos 4078
+ ypos 4071
+}

@@ -1,0 +1,675 @@
+#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
+version 7.0 v4
+Gizmo {
+ inputs 2
+ label Nuke7
+ addUserKnob {20 HealingBrushControl l "Healing Brush Control"}
+ addUserKnob {4 MethodControl l Method M {All Left-Right Top-Bottom}}
+ addUserKnob {6 CenterWeight l "Center Weighted" -STARTLINE}
+ CenterWeight true
+ addUserKnob {3 TransformController_Horizontal l Horizontal}
+ TransformController_Horizontal 10
+ addUserKnob {3 TransformController_Vertical l Vertical}
+ TransformController_Vertical 10
+ addUserKnob {19 MultiplyLeft_value l "Left Contribution"}
+ MultiplyLeft_value 1
+ addUserKnob {19 MultiplyRight_value l "Right Contribution"}
+ MultiplyRight_value 1
+ addUserKnob {19 MultiplyTop_value l "Top Contribution"}
+ MultiplyTop_value 1
+ addUserKnob {19 MultiplyBottom_value l "Bottom Contribution"}
+ MultiplyBottom_value 1
+}
+ NoOp {
+  inputs 0
+  name TransformController
+  xpos -98
+  ypos 546
+  addUserKnob {20 Controller}
+  addUserKnob {3 Vertical}
+  Vertical {{parent.TransformController_Vertical}}
+  addUserKnob {3 Horizontal}
+  Horizontal {{parent.TransformController_Horizontal}}
+ }
+ NoOp {
+  inputs 0
+  name TransformController1
+  xpos 1031
+  ypos 462
+  addUserKnob {20 Controller}
+  addUserKnob {3 Vertical}
+  Vertical {{parent.TransformController_Vertical}}
+  addUserKnob {3 Horizontal}
+  Horizontal {{parent.TransformController_Horizontal}}
+ }
+ Input {
+  inputs 0
+  name Mask
+  xpos 462
+  ypos 101
+  number 1
+ }
+ Dot {
+  name Dot33
+  xpos 496
+  ypos 152
+ }
+set N102aa6f0 [stack 0]
+ Dot {
+  name Dot34
+  xpos 1420
+  ypos 152
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle2
+  xpos 1386
+  ypos 498
+ }
+ Grade {
+  channels {rgba.red rgba.green rgba.blue rgba.alpha}
+  gamma 3.7
+  name Grade1
+  xpos 1386
+  ypos 681
+ }
+ Dot {
+  name Dot15
+  xpos 1420
+  ypos 727
+ }
+set N102ab4b0 [stack 0]
+ Dot {
+  name Dot17
+  xpos 1681
+  ypos 727
+ }
+set N102ab820 [stack 0]
+ Dot {
+  name Dot19
+  xpos 1856
+  ypos 727
+ }
+set N102abb90 [stack 0]
+ Dot {
+  name Dot20
+  xpos 1896
+  ypos 727
+ }
+ Dot {
+  name Dot23
+  xpos 1896
+  ypos 1171
+ }
+push $N102ab4b0
+ Dot {
+  name Dot21
+  xpos 1420
+  ypos 850
+ }
+ Input {
+  inputs 0
+  name Image
+  xpos -11
+  ypos 114
+ }
+ Dot {
+  name Dot32
+  xpos 23
+  ypos 323
+ }
+set N17f6a420 [stack 0]
+ Dot {
+  name Dot16
+  xpos 1152
+  ypos 323
+ }
+ Dot {
+  name Dot26
+  xpos 1152
+  ypos 803
+ }
+set N17f6ab00 [stack 0]
+ Dot {
+  name Dot28
+  xpos 1241
+  ypos 803
+ }
+set N17f6ae70 [stack 0]
+ Dot {
+  name Dot27
+  xpos 1351
+  ypos 803
+ }
+set N17f6b1e0 [stack 0]
+ Expression {
+  inputs 1+1
+  expr0 r(x,y-(parent.TransformTop1.translate.y))
+  expr1 g(x,y-(parent.TransformTop1.translate.y))
+  expr2 b(x,y-(parent.TransformTop1.translate.y))
+  name ExpressionMT
+  xpos 1317
+  ypos 846
+  cached true
+ }
+ Dot {
+  name Dot42
+  xpos 1351
+  ypos 889
+ }
+set N17f6b8c0 [stack 0]
+push $N102ab820
+ Dot {
+  name Dot18
+  xpos 1681
+  ypos 856
+ }
+push $N17f6b1e0
+ Dot {
+  name Dot29
+  xpos 1602
+  ypos 803
+ }
+set N17f6bfa0 [stack 0]
+ Expression {
+  inputs 1+1
+  expr0 r(x,y+(parent.TransformTop1.translate.y))
+  expr1 g(x,y+(parent.TransformTop1.translate.y))
+  expr2 b(x,y+(parent.TransformTop1.translate.y))
+  name ExpressionMB
+  xpos 1568
+  ypos 852
+  cached true
+ }
+ Dot {
+  name Dot41
+  xpos 1602
+  ypos 889
+ }
+set N17f6c680 [stack 0]
+ Merge2 {
+  inputs 2
+  operation average
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name TopAndBottom
+  xpos 1432
+  ypos 885
+ }
+ Dot {
+  name Dot37
+  label 2
+  xpos 1466
+  ypos 927
+ }
+push $N102ab4b0
+ Dot {
+  name Dot14
+  xpos 1174
+  ypos 727
+ }
+ Dot {
+  name Dot36
+  xpos 1174
+  ypos 902
+ }
+push $N17f6ae70
+ Expression {
+  inputs 1+1
+  expr0 r(x-(parent.TransformLeft1.translate.x),y)
+  expr1 g(x-(parent.TransformLeft1.translate.x),y)
+  expr2 b(x-(parent.TransformLeft1.translate.x),y)
+  name ExpressionML
+  xpos 1207
+  ypos 898
+  cached true
+ }
+ Dot {
+  name Dot38
+  xpos 1241
+  ypos 982
+ }
+set N17f6db20 [stack 0]
+push $N102abb90
+ Dot {
+  name Dot25
+  xpos 1856
+  ypos 868
+ }
+push $N17f6bfa0
+ Dot {
+  name Dot24
+  xpos 1776
+  ypos 803
+ }
+ Expression {
+  inputs 1+1
+  expr0 r(x+(parent.TransformLeft1.translate.x),y)
+  expr1 g(x+(parent.TransformLeft1.translate.x),y)
+  expr2 b(x+(parent.TransformLeft1.translate.x),y)
+  name ExpressionMR
+  xpos 1742
+  ypos 864
+  cached true
+ }
+ Dot {
+  name Dot30
+  xpos 1776
+  ypos 982
+ }
+set N17ff6b00 [stack 0]
+ Dot {
+  name Dot40
+  xpos 1776
+  ypos 1062
+ }
+ Merge2 {
+  inputs 2
+  operation average
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name LeftAndRight
+  xpos 1207
+  ypos 1058
+ }
+ Dot {
+  name Dot22
+  label 1
+  xpos 1241
+  ypos 1094
+ }
+set N17ff7550 [stack 0]
+push $N17ff6b00
+push $N17f6c680
+ Dot {
+  name Dot35
+  xpos 1602
+  ypos 942
+ }
+push 0
+push $N17f6db20
+push $N17f6b8c0
+ Dot {
+  name Dot43
+  xpos 1351
+  ypos 943
+ }
+ Merge2 {
+  inputs 4+1
+  operation average
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name All1
+  xpos 1431
+  ypos 978
+ }
+ Dot {
+  name Dot39
+  label "0\n"
+  xpos 1465
+  ypos 1028
+ }
+ Switch {
+  inputs 3
+  which {{parent.MethodControl}}
+  name Selector1
+  xpos 1414
+  ypos 1131
+  hide_input true
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy9
+  xpos 1405
+  ypos 1161
+ }
+ Premult {
+  name Premult9
+  xpos 1405
+  ypos 1207
+ }
+push $N17f6ab00
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 1112
+  ypos 1207
+ }
+ Dot {
+  name Dot31
+  xpos 1146
+  ypos 1244
+ }
+push $N102aa6f0
+ Dot {
+  name Dot2
+  xpos 496
+  ypos 236
+ }
+set N17ff9440 [stack 0]
+ Dot {
+  name Dot5
+  xpos 635
+  ypos 236
+ }
+set N17ff97b0 [stack 0]
+ Matrix {
+  matrix {
+      {1 2 1}
+      {0 1 0}
+      {-1 -2 -1}
+    }
+  maskChannelMask -rgba.alpha
+  name Bottom
+  xpos 605
+  ypos 376
+ }
+push $N17f6a420
+ Dot {
+  name Dot3
+  xpos 23
+  ypos 407
+ }
+set N180dc0b0 [stack 0]
+ Dot {
+  name Dot9
+  xpos 278
+  ypos 407
+ }
+set N180dc420 [stack 0]
+ Dot {
+  name Dot8
+  xpos 532
+  ypos 407
+ }
+set N180dc790 [stack 0]
+ Transform {
+  translate {0 {parent.TransformController.Vertical i}}
+  center {960 540}
+  name TransformBottom
+  xpos 498
+  ypos 440
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos 605
+  ypos 605
+ }
+ Premult {
+  name Premult4
+  xpos 605
+  ypos 659
+ }
+ Multiply {
+  value {{parent.MultiplyBottom_value.r} {parent.MultiplyBottom_value.g} {parent.MultiplyBottom_value.b} {parent.MultiplyBottom_value.a}}
+  name MultiplyBottom
+  xpos 605
+  ypos 726
+ }
+set N180dd550 [stack 0]
+push 0
+push $N17ff9440
+ Dot {
+  name Dot6
+  xpos 363
+  ypos 236
+ }
+set N180dd8c0 [stack 0]
+ Matrix {
+  matrix {
+      {-1 -2 -1}
+      {0 1 0}
+      {1 2 1}
+    }
+  maskChannelMask -rgba.alpha
+  name Top
+  xpos 329
+  ypos 364
+ }
+push $N180dc420
+ Transform {
+  translate {0 {-parent.TransformBottom.translate.y i}}
+  center {960 540}
+  name TransformTop
+  xpos 244
+  ypos 436
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos 329
+  ypos 593
+ }
+ Premult {
+  name Premult2
+  xpos 329
+  ypos 664
+ }
+set N180de680 [stack 0]
+push $N17ff9440
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle1
+  xpos 462
+  ypos 593
+ }
+ Dot {
+  name Dot12
+  xpos 496
+  ypos 651
+ }
+set N180ded60 [stack 0]
+ Merge2 {
+  inputs 3+1
+  operation atop
+  name Top_Bottom
+  xpos 526
+  ypos 826
+ }
+push $N17ff97b0
+ Dot {
+  name Dot4
+  xpos 864
+  ypos 236
+ }
+ Matrix {
+  matrix {
+      {1 0 -1}
+      {2 1 -2}
+      {1 0 -1}
+    }
+  name Right
+  xpos 830
+  ypos 372
+ }
+push $N180dc790
+ Dot {
+  name Dot7
+  xpos 798
+  ypos 407
+ }
+ Transform {
+  translate {{-parent.TransformLeft.translate.x i} 0}
+  center {960 540}
+  name TransformRight
+  xpos 764
+  ypos 439
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy5
+  xpos 830
+  ypos 604
+ }
+ Premult {
+  name Premult5
+  xpos 830
+  ypos 677
+ }
+ Multiply {
+  value {{parent.MultiplyRight_value.r} {parent.MultiplyRight_value.g} {parent.MultiplyRight_value.b} {parent.MultiplyRight_value.a}}
+  name MultiplyRight
+  xpos 830
+  ypos 703
+ }
+set N1816f990 [stack 0]
+push 0
+push $N180dd8c0
+ Dot {
+  name Dot1
+  xpos 161
+  ypos 236
+ }
+ Matrix {
+  matrix {
+      {-1 0 1}
+      {-2 1 2}
+      {-1 0 1}
+    }
+  name Left
+  xpos 127
+  ypos 359
+ }
+push $N180dc0b0
+ Transform {
+  translate {{parent.TransformController.Horizontal i} 0}
+  center {960 540}
+  name TransformLeft
+  xpos 46
+  ypos 445
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 127
+  ypos 604
+ }
+ Premult {
+  name Premult3
+  xpos 127
+  ypos 664
+ }
+ Multiply {
+  value {{parent.MultiplyLeft_value.r} {parent.MultiplyLeft_value.g} {parent.MultiplyLeft_value.b} {parent.MultiplyLeft_value.a}}
+  name MultiplyLeft
+  xpos 127
+  ypos 706
+ }
+set N18170e30 [stack 0]
+push $N180ded60
+ Merge2 {
+  inputs 3+1
+  operation atop
+  name Left_Right
+  xpos 172
+  ypos 843
+ }
+push $N180de680
+ Multiply {
+  value {{parent.MultiplyTop_value.r} {parent.MultiplyTop_value.g} {parent.MultiplyTop_value.b} {parent.MultiplyTop_value.a}}
+  name MultiplyTop
+  xpos 329
+  ypos 722
+ }
+push $N1816f990
+ Dot {
+  name Dot10
+  xpos 864
+  ypos 783
+ }
+push $N180dd550
+push 0
+push $N18170e30
+ Dot {
+  name Dot11
+  xpos 161
+  ypos 783
+ }
+push $N180ded60
+ Merge2 {
+  inputs 5+1
+  operation atop
+  name All
+  xpos 329
+  ypos 788
+ }
+ Switch {
+  inputs 3
+  which {{parent.MethodControl}}
+  name Selector
+  xpos 328
+  ypos 900
+ }
+ Dot {
+  name Dot13
+  xpos 362
+  ypos 1072
+ }
+push $N180dc0b0
+ Merge2 {
+  inputs 2
+  Achannels {rgba.red rgba.green rgba.blue rgba.alpha}
+  Bchannels {rgba.red rgba.green rgba.blue rgba.alpha}
+  output {rgba.red rgba.green rgba.blue rgba.alpha}
+  name Merge1
+  xpos -11
+  ypos 1068
+ }
+ Switch {
+  inputs 2
+  which {{parent.CenterWeight}}
+  name Switch1
+  xpos -11
+  ypos 1240
+ }
+ Output {
+  name Output1
+  xpos -11
+  ypos 1319
+ }
+ Transform {
+  inputs 0
+  translate {{parent.TransformController1.Horizontal i} 0}
+  center {960 540}
+  name TransformLeft1
+  xpos 981
+  ypos 500
+ }
+ Transform {
+  inputs 0
+  translate {0 {-parent.TransformController1.Vertical}}
+  center {960 540}
+  name TransformTop1
+  xpos 1078
+  ypos 504
+ }
+push $N17f6bfa0
+push $N17f6b1e0
+push $N17ff7550
+ Viewer {
+  inputs 3
+  viewerProcess rec709
+  input_process false
+  name Viewer2
+  xpos -280
+  ypos 1354
+ }
+end_group

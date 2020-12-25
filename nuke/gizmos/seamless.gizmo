@@ -1,0 +1,180 @@
+#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
+version 7.0 v4
+Gizmo {
+ inputs 2
+ postage_stamp true
+ addUserKnob {20 Mode l User}
+ addUserKnob {41 format l "output format" T Reformat1.format}
+ addUserKnob {41 resize l "resize type" T Reformat1.resize}
+ addUserKnob {41 softness T Radial1.softness}
+ addUserKnob {41 mask l "Use input Mask" T NoOp1.mask}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x7171c600
+  label Seamless
+  note_font_size 42
+  xpos -287
+  ypos -521
+  bdwidth 598
+  bdheight 554
+ }
+ Input {
+  inputs 0
+  name Mask
+  label Mask
+  xpos 179
+  ypos -147
+  number 1
+ }
+ Radial {
+  inputs 0
+  output alpha
+  premult rgba
+  invert true
+  area {{width} {height} 0 0}
+  softness 0.4
+  name Radial1
+  xpos 56
+  ypos -202
+ }
+set N187b5160 [stack 0]
+ Switch {
+  inputs 2
+  which {{NoOp1.mask}}
+  name Switch1
+  xpos 56
+  ypos -141
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -91
+  ypos -571
+ }
+ Reformat {
+  format "2438 1200 0 0 2438 1200 1 "
+  resize fill
+  name Reformat1
+  xpos -91
+  ypos -452
+ }
+set N2b2d44c0 [stack 0]
+ Crop {
+  box {{width/2} 0 {width} {height/2}}
+  name Crop4
+  xpos -35
+  ypos -352
+ }
+ Transform {
+  translate {{width/2 i} {-height/2 i}}
+  scale -1
+  center {{width/2 i} {height/2 i}}
+  name Transform4
+  xpos -35
+  ypos -280
+ }
+push $N2b2d44c0
+ Crop {
+  box {0 0 {width/2} {height/2}}
+  name Crop3
+  xpos -145
+  ypos -352
+ }
+ Transform {
+  translate {{-width/2 i} {-height/2 i}}
+  scale -1
+  center {{width/2 i} {height/2 i}}
+  name Transform3
+  xpos -145
+  ypos -280
+ }
+push 0
+push $N2b2d44c0
+ Crop {
+  box {{width/2 i} {height/2 i} {width i} {height i}}
+  name Crop1
+  xpos 75
+  ypos -352
+ }
+ Transform {
+  translate {{width/2 i} {height/2 i}}
+  scale -1
+  center {{width/2 i} {height/2 i}}
+  name Transform1
+  xpos 75
+  ypos -280
+ }
+push $N2b2d44c0
+ Crop {
+  box {0 {height/2} {width/2} {height}}
+  name Crop2
+  xpos -255
+  ypos -352
+ }
+ Transform {
+  translate {{-width/2 i} {height/2 i}}
+  scale -1
+  center {{width/2 i} {height/2 i}}
+  name Transform2
+  xpos -255
+  ypos -280
+ }
+ Merge2 {
+  inputs 4+1
+  name Merge1
+  xpos -91
+  ypos -191
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -93
+  ypos -147
+ }
+push $N2b2d44c0
+ Dot {
+  name Dot1
+  xpos -277
+  ypos -443
+ }
+ Dot {
+  name Dot2
+  xpos -277
+  ypos -59
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos -91
+  ypos -62
+ }
+ Shuffle {
+  alpha black
+  name Shuffle1
+  xpos -91
+  ypos -28
+ }
+ NoOp {
+  name NoOp1
+  xpos -91
+  ypos 5
+  addUserKnob {20 User}
+  addUserKnob {6 mask l "Use input Mask" +STARTLINE}
+ }
+ Output {
+  name Output1
+  xpos -91
+  ypos 97
+ }
+push $N187b5160
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos 128
+  ypos 130
+ }
+end_group

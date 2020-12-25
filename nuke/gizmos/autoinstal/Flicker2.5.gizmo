@@ -1,0 +1,197 @@
+Group {
+ name Flicker4
+ help "This tool allows you to run the curve too and maps the intensity values to the white point and gain. Then holds on a reference frame and either adds or removes flicker from there. The ability to alter these values has been added with the Tint, Multiply and Add options. you can also normalize the curve data to fit between 0 and 1 and then used to switch operations that will be used for either the darkest or lightest moments in your shot."
+ selected true
+ xpos -502
+ ypos -35
+ addUserKnob {20 flickercontrols l "Flicker Controls" t "This tool allows you to run the curve too and maps the intensity values to the white point and gain. Then holds on a reference frame and either adds or removes flicker from there."}
+ addUserKnob {41 channels_1 l channels T Grade1.channels}
+ addUserKnob {41 go l Go! t "Run the curve tool to calculate the average intensities" T CurveTool.go}
+ addUserKnob {41 ROI t "Area to sample" -STARTLINE T CurveTool.ROI}
+ addUserKnob {41 resetROI l Reset t "reset sample area" -STARTLINE T CurveTool.resetROI}
+ addUserKnob {26 br l "" +STARTLINE T " "}
+ addUserKnob {4 operation l Operation t "Add flicker or remove flicker. Inverts which values are being modified.  (White point or Gain)" M {Deflicker "Add Flicker" "" ""}}
+ addUserKnob {3 first_frame_1 l "Reference Frame" t "Select reference frame for Deflicker or add flicker"}
+ first_frame_1 1
+ addUserKnob {22 currentframe l "Current Frame" t "Select current frame" -STARTLINE T nuke.thisNode().knob('first_frame_1').setValue(nuke.frame())}
+ addUserKnob {6 tint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {20 modifiers l Modifiers t "Modify the sampled curves by tinting, adding and multiplying the values." n 1}
+ modifiers 0
+ addUserKnob {18 tint l Tint t "Add color to the flicker or deflicker. This is useful if you need to boost or change the color."}
+ tint {0 0 0}
+ addUserKnob {6 tint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 valuemultiplier l Multiply t "Increase or decrease the intensity of the effect. This stretches the curves based on your reference frame. Careful because the values could dip below 0 and then your black point should be clamped." R 0 10}
+ valuemultiplier 1
+ addUserKnob {7 add l Add t "This adds values to the curve. This will move the curve up or down in the curve editor." R 0 10}
+ addUserKnob {7 flickerGradeMix l mix t "This will mix the result in the Flicker Grade node allowing you to have less affect on the deflicker or add flicker."}
+ flickerGradeMix 1
+ addUserKnob {6 flickerBlackClamp l "black clamp" t "Clamp your black point on your internal and external grade nodes created with this tool." +STARTLINE}
+ addUserKnob {6 flickerWhiteClamp l "white clamp" t "Clamp your white point on your internal and external grade nodes." -STARTLINE}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 AVG l "AVG Intensity Data: Apply to external grade node" t "collection of data generated with the curve tool and different sliders in this tool. You can create an external grade node with the button or copy the values for your own use outside of the tool.\n" n 1}
+ AVG 0
+ addUserKnob {22 createGrade l "Create Flicker Grade" t "This creates a grade node based on the curve tool data. The values are set 1 for the refence point and also take into account the settings you have applied above." T "def bakeCurve( curve, first, last, inc ):\n    '''bake an expresison curve into a keyframes curve'''\n    for f in xrange( first, last, inc ):\n        curve.setKey( f, curve.evaluate( f ) )\n    curve.setExpression( 'curve' )\n\n####################################################\ndef getCurves( knob, views ):\n    '''return a list of all animation curves found in the given knob'''\n    curves = \[]\n    for v in views:\n        curves.extend( knob.animations( v ) )\n    return curves\n\n####################################################\ndef bakeExpressionKnobs( node, first, last, inc, views ):  \n    '''bake all knobs in node that carry expressions'''\n    # GET ALL KNOBS WITH EXPRESSIONS IN THEM\n    expKnobs = \[ k for k in node.knobs().values() if k.hasExpression() ]\n\n    # GET ALL CURVES INSIDE THAT KNOB INCLUDING SPLIT FIELDS AND VIEWS\n    allCurves = \[]\n    for k in expKnobs:\n        allCurves += getCurves( k, views )\n\n    # BAKE ALL CURVES\n    for c in allCurves:\n        bakeCurve( c, first, last, inc )\n\n####################################################\ndef bakeDependentNodes():\n    '''Add this to onUserDestroy callback - not yet implemented'''\n    parentNode = nuke.thisNode() # THIS IS GIVEN TO US BY THE CALLBACK, i.e. WHEN A NODE IS DELETED - WELL, NOT YET\n    depNodes  = parentNode.dependent( nuke.EXPRESSIONS )\n    \n    ret = nuke.getFramesAndViews( 'bake curves in dependent nodes?', '%s-%s' % (parentNode.firstFrame(), parentNode.lastFrame()) )\n    if not ret:\n        return\n    fRange = nuke.FrameRange( ret\[0] )\n    views = ret\[1]\n\n    for n in depNodes:\n        bakeExpressionKnobs( n, fRange.first(), fRange.last(), fRange.increment(), views )\n        \n\n####################################################\ndef bakeSelectedNodes():\n    '''bake selected nodes' knobs that carry expressions'''\n    ret = nuke.getFramesAndViews( 'bake curves in selected nodes?', '%s-%s' % (nuke.root().firstFrame(), nuke.root().lastFrame()) )\n    if not ret:\n        return\n    fRange = nuke.FrameRange( ret\[0] )\n    views = ret\[1]\n\n    for n in nuke.selectedNodes():\n        bakeExpressionKnobs( n, fRange.first(), fRange.last(), fRange.increment(), views )\n\n\nflickerNodeName = nuke.thisNode().name()\nn = nuke.thisNode().knob('link').value()\n\n\nnuke.root().begin()\nfg = nuke.createNode('Grade', inpanel = False)\nfg\['label'].setValue('FlickerGrade')\n\nfg\['white'].setValue(1, 0)\nfg\['white'].setValue(1, 1)\nfg\['white'].setValue(1, 2)\n\nfg\['white'].setExpression('\{\}.values.r'.format(flickerNodeName), 0)\nfg\['white'].setExpression('\{\}.values.g'.format(flickerNodeName), 1)\nfg\['white'].setExpression('\{\}.values.b'.format(flickerNodeName), 2)\n\nfg\['mix'].setExpression('\{\}.flickerGradeMix'.format(flickerNodeName))\n\nfg\['black_clamp'].setExpression('\{\}.flickerBlackClamp'.format(flickerNodeName))\nfg\['white_clamp'].setExpression('\{\}.flickerWhiteClamp'.format(flickerNodeName))\n\nif n == 0:\n\tbakeSelectedNodes()\nelse:\n\tpass\n" +STARTLINE}
+ addUserKnob {6 link l "link output" t "Use and expression instead of copying animation" -STARTLINE}
+ link true
+ addUserKnob {18 values l "Flicker Data" t "This is the values from the curve tool that have been normalized to 1 based on your selected reference frame. You can drag these into your own grade node."}
+ values {{"((((avgGain.r/avgWhite.r)*valuemultiplier)+add) - valuemultiplier + 1)+tint.r"} {"((((avgGain.g/avgWhite.g)*valuemultiplier)+add) - valuemultiplier + 1)+tint.g"} {"((((avgGain.b/avgWhite.b)*valuemultiplier)+add) - valuemultiplier + 1)+tint.b"}}
+ addUserKnob {6 values_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {41 intensitydata l "Original Curvetool data" t "sampled intensity data from the curve tool" T CurveTool.intensitydata}
+ addUserKnob {19 avgWhite l INVISIBLE +INVISIBLE}
+ avgWhite {{operation==0?CurveTool.intensitydata.r:(CurveTool.intensitydata.r(first_frame_1))} {operation==0?CurveTool.intensitydata.g:(CurveTool.intensitydata.g(first_frame_1))} {operation==0?CurveTool.intensitydata.b:(CurveTool.intensitydata.b(first_frame_1))} 0}
+ addUserKnob {6 avgWhite_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 avgGain l INVISIBLE +INVISIBLE}
+ avgGain {{operation==0?(CurveTool.intensitydata.r(first_frame_1)):CurveTool.intensitydata.r} {operation==0?(CurveTool.intensitydata.g(first_frame_1)):CurveTool.intensitydata.g} {operation==0?(CurveTool.intensitydata.b(first_frame_1)):CurveTool.intensitydata.b} 0}
+ addUserKnob {6 avgGain_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 normGroup l "Normalize Data" t "Inside this group you can normalize your curve to fit between 0 and 1. This can be useful to define different operations tobe used during the brightest and darkest values in your shot. (Differnt keying setups, grades etc)" n 1}
+ normGroup 0
+ addUserKnob {22 Normalize t "Normalize a set range on a curve to fit between 0 and 1." T "orig_knob = nuke.thisNode()\['controller']\n\nif nuke.thisNode()\['normValues'].isAnimated():\n    nuke.thisNode()\['normValues'].clearAnimated()\n    anim = None\n    orig_knob.clearAnimated()\n    orig_knob.setAnimated(True)\n\nr = nuke.getInput('Enter Frame Range:')\nrstr = r.split(\"-\")\n\nstart = float(rstr\[0])\nend = float(rstr\[1])\n\nfor fr in range(int(start), int(end)+1):\n    orig_knob.setExpression('(CurveTool.intensitydata.r+CurveTool.intensitydata.g+CurveTool.intensitydata.b)/3')\n    orig_knob.animation(0).setKey(fr, orig_knob.animation(0).evaluate(fr))\n\nfor view in nuke.views():\n    # There's currently no way to ask a knob if it has an\n    # expression at a given view, so we have to check the\n    # AnimationCurve objects for that. However, we can still\n    # use knob.isAnimated() to partially optimize this.\n    if orig_knob.isAnimated(view=view):\n        aSize = 1 if orig_knob.singleValue(view) else orig_knob.arraySize()\n        for index in range(aSize):\n            anim = orig_knob.animation(index, view=view)\n            if anim is None or anim.noExpression():\n                continue\n            for f in range(int(start), int(end) + 1):\n                #knob.setValueAt(anim.evaluate(f), f, index)\n                anim.setKey(f, anim.evaluate(f))\n            orig_knob.setExpression('curve', channel=index, view=view)\n            # Even if the expression would have evaluated to a\n            # constant (flat) curve, we can't tell until after\n            # it has been baked and the expression is gone.\n            if anim.constant():\n                orig_knob.clearAnimated(index, view=view)\n\ntarget_knob = nuke.thisNode()\['normValues']\ntarget_knob.setAnimated()\nanim_list = orig_knob.animations()\n\nindex = 0\n\nfor a in anim_list:\n  anim = a.keys()\n  print anim\n\n  vals = list()\n  for val in anim:\n     vals.append(val.y)\n\n  high = max(vals)\n  low = min(vals)\n  diff = 1\n  low_val = 0\n\n  cvals = list()\n  for cval in vals:\n     cvals.append( cval - low )\n\n  chigh = max(cvals)\n  ratio = None\n  if (chigh > 0):\n     ratio = float(diff) / float(chigh)\n  else:\n     continue\n  print 'ratio is ' + str(ratio)\n  \n  for rvals in anim:\n     v = ( (rvals.y-low)*ratio ) + low_val\n     print v, rvals.x, index\n     target_knob.setValueAt( v , rvals.x)\n  index += 1\n" +STARTLINE}
+ addUserKnob {7 controller l INVISIBLE +INVISIBLE}
+ controller 0.0001
+ addUserKnob {22 dissolve l "create dissolve" t "Create a dissolve and use the normValues to dissolve between high and low values." -STARTLINE T "a = nuke.thisNode().name()\nb = nuke.thisNode()\nn = nuke.thisNode().knob('link2').getValue()\n\ndef flickerDissolve():\n\tdz = nuke.createNode('Dissolve', inpanel = False)\n\tdz\['label'].setValue('FlickerDissolve')\n\tdz\['which'].fromScript(b\['normValues'].toScript())\n\ndef flickerDissolveExp():\n\tdz = nuke.createNode('Dissolve', inpanel = False)\n\tdz\['label'].setValue('FlickerDissolve')\n\tdz\['which'].setExpression('\{\}.normValues'.format(a))\n\nnuke.root().begin()\n\nif n == 1:\n\tflickerDissolveExp()\nelse:\n\tflickerDissolve()\n"}
+ addUserKnob {6 link2 l "link output" t "Use and expression instead of copying animation" -STARTLINE}
+ link2 true
+ addUserKnob {7 normValues l "Normalized 0-1" t "This is where the normalized curve data is stored to be used in switch, dissolve and blend nodes"}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 br1 l "" +STARTLINE T "  "}
+ addUserKnob {41 alpha l "Unpremult by" T Unpremult1.alpha}
+ addUserKnob {41 maskChannel l "mask channel" t "The mask channel can alsobe used to further define a region to be sampled." T Keymix1.maskChannel}
+ addUserKnob {41 invertMask l invert -STARTLINE T Keymix1.invertMask}
+ addUserKnob {20 info}
+ addUserKnob {26 creator l "" +STARTLINE T "\nFlicker Version 2.5\nCreated by Rob Bannister"}
+ addUserKnob {26 site l "" +STARTLINE T "<a href=\"http://www.bannisterpost.com\" style=\"color:white\">www.bannisterpost.com</a>"}
+ addUserKnob {26 help_1 l "" +STARTLINE T "<a href=\"http://www.bannisterpost.com/downloads/flicker/\" style=\"color:white\">HELP</a>"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -106
+  ypos 123
+ }
+ Dot {
+  name Dot11
+  xpos -72
+  ypos 286
+ }
+set N35f2700 [stack 0]
+ Dot {
+  name Dot16
+  xpos -72
+  ypos 385
+ }
+set N35f2380 [stack 0]
+ Unpremult {
+  alpha none
+  name Unpremult1
+  xpos -374
+  ypos 381
+ }
+ Dot {
+  name Dot4
+  xpos -340
+  ypos 481
+ }
+set N35f2e00 [stack 0]
+ Grade {
+  white {{"((((avgGain.r/avgWhite.r)*valuemultiplier)+add) - valuemultiplier + 1)+tint.r"} {"((((avgGain.g/avgWhite.g)*valuemultiplier)+add) - valuemultiplier + 1)+tint.g"} {"((((avgGain.b/avgWhite.b)*valuemultiplier)+add) - valuemultiplier + 1)+tint.b"} 0}
+  black_clamp false
+  mix {{parent.flickerGradeMix}}
+  name Grade1
+  selected true
+  xpos -374
+  ypos 700
+ }
+ Premult {
+  alpha {{{parent.Unpremult1.alpha}}}
+  name Premult1
+  xpos -374
+  ypos 1071
+ }
+set N35f3c00 [stack 0]
+ Dot {
+  name Dot7
+  xpos -340
+  ypos 1300
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos 170
+  ypos 1071
+  number 1
+ }
+set N35f3500 [stack 0]
+push $N35f3c00
+push $N35f2380
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -106
+  ypos 1065
+ }
+ Switch {
+  inputs 2
+  which {{"!\[exists parent.input1]"}}
+  name Switch2
+  xpos -106
+  ypos 1296
+ }
+ Output {
+  name Output1
+  xpos -106
+  ypos 1458
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "Add Flicker"
+  xpos -256
+  ypos 698
+ }
+push $N35f3c00
+push $N35f2e00
+ Viewer {
+  inputs 2
+  frame_range 1-89
+  fps 23.97602463
+  name Viewer1
+  xpos -951
+  ypos 736
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label deFlicker
+  xpos -505
+  ypos 698
+ }
+push $N35f3500
+ Dot {
+  name Dot14
+  xpos 204
+  ypos 194
+ }
+ Dot {
+  name Dot15
+  xpos -196
+  ypos 194
+ }
+push $N35f2700
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge1
+  xpos -230
+  ypos 283
+  disable {{"!\[exists parent.input1]"}}
+ }
+ CurveTool {
+  ROI {200 200 1720 880}
+  autocropdata {{curve x1 0} {curve x1 0} {curve x1 0} {curve x1 0}}
+  intensitydata {0.0001 0.0001 0.0001 0}
+  name CurveTool
+  xpos -374
+  ypos 283
+ }
+end_group

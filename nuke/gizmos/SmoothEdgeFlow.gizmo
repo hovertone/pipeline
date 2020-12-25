@@ -1,0 +1,120 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Gizmo {
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 User}
+ addUserKnob {41 red l Red T NoOp1.red}
+ addUserKnob {41 green l Green -STARTLINE T NoOp1.green}
+ addUserKnob {41 blue l Blue -STARTLINE T NoOp1.blue}
+ addUserKnob {41 alpha l Alpha -STARTLINE T NoOp1.alpha}
+ addUserKnob {41 amount l "Smooth Amount" T NoOp1.amount}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 534
+  ypos 122
+ }
+ OFXuk.co.thefoundry.tinderbox3.t_mattetool_v201 {
+  Channels 1
+  process RGBA
+  processRed {{parent.NoOp1.red i}}
+  processGreen {{parent.NoOp1.green i}}
+  processBlue {{parent.NoOp1.blue i}}
+  processAlpha {{parent.NoOp1.alpha i}}
+  radius {{-parent.NoOp1.amount i}}
+  method Shrink/Grow
+  shape Circle
+  softness {0.01919999951 0.01079999973}
+  negate false
+  blurBeforeHaloCut false
+  despeckleBlack 0
+  despeckleWhite 0
+  clipRollback 0
+  clipMin 0
+  clipMax 1
+  Blending 0
+  blendMethod None
+  blendMix 0.5
+  blendSrcGain 1
+  blendEffectGain 1
+  blendClampValues false
+  Crops 0
+  SourceXMethod Colour
+  SourceYMethod Colour
+  SourceEdgeColour 0
+  SourceCropL 0
+  SourceCropR 1
+  SourceCropB 0
+  SourceCropT 1
+  cacheBreaker true
+  name T_MatteTool1
+  xpos 534
+  ypos 167
+ }
+ OFXuk.co.thefoundry.tinderbox3.t_mattetool_v201 {
+  Channels 1
+  process RGBA
+  processRed {{parent.NoOp1.red i}}
+  processGreen {{parent.NoOp1.green i}}
+  processBlue {{parent.NoOp1.blue i}}
+  processAlpha {{parent.NoOp1.alpha i}}
+  radius {{parent.NoOp1.amount i}}
+  method Shrink/Grow
+  shape Circle
+  softness {0.01919999951 0.01079999973}
+  negate false
+  blurBeforeHaloCut false
+  despeckleBlack 0
+  despeckleWhite 0
+  clipRollback 0
+  clipMin 0
+  clipMax 1
+  Blending 0
+  blendMethod None
+  blendMix 0.5
+  blendSrcGain 1
+  blendEffectGain 1
+  blendClampValues false
+  Crops 0
+  SourceXMethod Colour
+  SourceYMethod Colour
+  SourceEdgeColour 0
+  SourceCropL 0
+  SourceCropR 1
+  SourceCropB 0
+  SourceCropT 1
+  cacheBreaker true
+  name T_MatteTool2
+  xpos 534
+  ypos 208
+ }
+ NoOp {
+  name NoOp1
+  xpos 534
+  ypos 259
+  addUserKnob {20 User}
+  addUserKnob {6 red l Red +STARTLINE}
+  addUserKnob {6 green l Green -STARTLINE}
+  addUserKnob {6 blue l Blue -STARTLINE}
+  addUserKnob {6 alpha l Alpha -STARTLINE}
+  alpha true
+  addUserKnob {14 amount l Amount R 0 100}
+  amount {2.4}
+ }
+set N1ea3e110 [stack 0]
+ Output {
+  name Output1
+  xpos 534
+  ypos 298
+ }
+push $N1ea3e110
+ Viewer {
+  viewerProcess None
+  input_process false
+  name Viewer1
+  xpos 894
+  ypos 288
+ }
+end_group
