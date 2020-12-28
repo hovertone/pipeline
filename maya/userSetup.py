@@ -30,12 +30,12 @@ import soundImport
 
 _MODULE_LIST = ['assetDailies', 'previzToMontage', 'camera_publisher', 'zshotmask', 'setShotInOut', 'soundImport']  #
 
-# try:
-#     ppath = os.getenv("MAYA_PLUG_IN_PATH")
-#     ppath += ";" + "X:/app/win/Pipeline/maya/plugins"
-#     os.environ["MAYA_PLUG_IN_PATH"] = ppath
-# except:
-#     os.environ["MAYA_PLUG_IN_PATH"] = "X:/app/win/Pipeline/maya/plugins"
+try:
+    ppath = os.getenv("MAYA_PLUG_IN_PATH")
+    ppath += ";" + "X:/app/win/Pipeline/maya/plugins"
+    os.environ["MAYA_PLUG_IN_PATH"] = ppath
+except:
+    os.environ["MAYA_PLUG_IN_PATH"] = "X:/app/win/Pipeline/maya/plugins"
 
 
 def createUI():
