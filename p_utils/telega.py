@@ -18,9 +18,10 @@ def telegramReport(filePath, tp, args = None):
     tpS : 'anim', 'cache', 'fx', 'render', 'comp'
     argsL : file path, node name, version, user name
     '''
-    tokenFile = open("X:/app/win/Pipeline/bot" + '/token.txt', 'r')
+
+    tokenFile = open(path + '/token.txt', 'r')
     tokenData = tokenFile.read()
-    chatidFile = open("X:/app/win/Pipeline/bot" + '/chatid.txt', 'r')
+    chatidFile = open(path + '/chatid.txt', 'r')
     chatidData = chatidFile.read()
     bot = telegram.Bot(token=tokenData)
     usr = socket.gethostname().lower()
