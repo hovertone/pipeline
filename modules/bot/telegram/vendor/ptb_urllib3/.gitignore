@@ -1,4 +1,4 @@
-.hgtags
+.*
 *.py[co]
 *.egg
 *.egg-info
