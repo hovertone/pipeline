@@ -1,10 +1,10 @@
 import os
 import sys
 import re
-path = os.environ["PIPELINE_ROOT"] + "/bot"
+path = os.environ["PIPELINE_ROOT"] + "/modules/bot"
 if not path in sys.path:
     sys.path.append(path)
-from modules.bot import telegram
+import telegram
 import socket
 try:
     import hou
@@ -18,9 +18,10 @@ def telegramReport(filePath, tp, args = None):
     tpS : 'anim', 'cache', 'fx', 'render', 'comp'
     argsL : file path, node name, version, user name
     '''
-    tokenFile = open("X:/app/win/Pipeline/bot" + '/token.txt', 'r')
+
+    tokenFile = open(path + '/token.txt', 'r')
     tokenData = tokenFile.read()
-    chatidFile = open("X:/app/win/Pipeline/bot" + '/chatid.txt', 'r')
+    chatidFile = open(path + '/chatid.txt', 'r')
     chatidData = chatidFile.read()
     bot = telegram.Bot(token=tokenData)
     usr = socket.gethostname().lower()

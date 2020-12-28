@@ -226,10 +226,10 @@ def bakeAnim_ui():
 
 def makeDailise():
 	import os, shutil
-    import subprocess as sp
+	import subprocess as sp
 	import datetime
-    from modules.pyseq import pyseq
-    date = datetime.datetime.now().strftime("%y-%m-%H-%M-%S")
+	from modules.pyseq import pyseq
+	date = datetime.datetime.now().strftime("%y-%m-%H-%M-%S")
 	shotEnv = hou.getenv("SHOT")
 	hip = hou.getenv("HIP")
 	if shotEnv is None:
@@ -272,11 +272,12 @@ def makeDailise():
 
 	seqs = pyseq.get_sequences(sequence_path)
 	print seqs
+	print "SQ PATH: ", sequence_path
 	files = os.listdir(sequence_path)
 	f = os.path.join(sequence_path, files[0]).replace("\\", "/")
 	for s in seqs:
 		print s
-		print "SQ PATH: ", sequence_path
+
 		print "SEQUENCE: ", (s.format('%h%p%t'))
 		sq = os.path.join(sequence_path, s.format('%h%p%t'))
 
