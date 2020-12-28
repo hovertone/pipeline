@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import os, sys, time, subprocess
+
+if os.environ["PIPELINE_ROOT"] not in sys.path:
+    sys.path.append(os.environ["PIPELINE_ROOT"])
+
+
 try:
     from PySide2.QtGui import *
     from PySide2.QtCore import *
@@ -16,7 +22,7 @@ except:
     pass
 
 from modules.pyseq import pyseq
-import os, sys, time, subprocess
+
 from functools import partial
 from  loader_v003_UIs import Ui_FileManager
 from loader_preferences import LoaderPrefs

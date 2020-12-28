@@ -73,7 +73,7 @@ def main(argv):
         try:
             dest_dir = os.path.dirname(os.environ['GAE_PYTHONPATH'])
         except IndexError:
-            dest_dir = ''
+            dest_dir = '.'
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
 

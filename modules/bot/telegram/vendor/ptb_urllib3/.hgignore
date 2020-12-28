@@ -1,5 +1,5 @@
 syntax: glob
-.hgtags
+.*
 *.pyc
 *.egg-info
 *.log
