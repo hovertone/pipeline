@@ -1,10 +1,10 @@
 import os
 import sys
 import re
-path = os.environ["PIPELINE_ROOT"] + "/bot"
+path = os.environ["PIPELINE_ROOT"] + "/modules/bot"
 if not path in sys.path:
     sys.path.append(path)
-from modules.bot import telegram
+import telegram
 import socket
 try:
     import hou

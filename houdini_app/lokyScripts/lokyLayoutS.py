@@ -272,11 +272,12 @@ def makeDailise():
 
 	seqs = pyseq.get_sequences(sequence_path)
 	print seqs
+	print "SQ PATH: ", sequence_path
 	files = os.listdir(sequence_path)
 	f = os.path.join(sequence_path, files[0]).replace("\\", "/")
 	for s in seqs:
 		print s
-		print "SQ PATH: ", sequence_path
+
 		print "SEQUENCE: ", (s.format('%h%p%t'))
 		sq = os.path.join(sequence_path, s.format('%h%p%t'))
 
