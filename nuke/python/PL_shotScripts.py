@@ -77,7 +77,7 @@ class shotScripts(QtWidgets.QWidget):
         self.precompFrame.setLayout(self.precompLayout)
 
         self.combobox = QtWidgets.QComboBox()
-        self.combobox.addItems(['.exr', '.exr Alpha', '.exr All', '.jpg', '.png Alpha'])
+        self.combobox.addItems(['.exr Alpha', '.exr', '.exr All', '.jpg', '.png Alpha'])
         self.precompLayout.addWidget(self.combobox)
 
         self.switch_check = QtWidgets.QCheckBox()
