@@ -283,7 +283,7 @@ class NukeManager(Filemanager):
 
         root['colorManagement'].setValue('OCIO')
         root['OCIO_config'].setValue('custom')
-        root['customOCIOConfigPath'].setValue('X:/app/win/Pipeline/nuke/lib/aces_1.0.3/config.ocio')
+        root['customOCIOConfigPath'].setValue('%s/aces_1.0.3/config.ocio' % os.environ['PIPELINE_ROOT'])
 
         root['monitorLut'].setValue('ACES/Rec.709')
 
