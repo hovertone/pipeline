@@ -50,10 +50,10 @@ IMAGEMAGICK_BINARY
 
 import os
 
-#os.environ["FFMPEG_BINARY"] = os.environ["PIPELINE_ROOT"] + "/modules/ffmpeg/bin/ffmpeg.exe"
-print "SUKANAH", os.getenv('FFMPEG_BINARY')
+os.environ["FFMPEG_BINARY"] = os.environ["PIPELINE_ROOT"] + "/modules/ffmpeg/bin/ffmpeg.exe"
+
 
 FFMPEG_BINARY = os.getenv('FFMPEG_BINARY', 'ffmpeg-imageio')
-print "XXXX", FFMPEG_BINARY
+
 
 IMAGEMAGICK_BINARY = os.getenv('IMAGEMAGICK_BINARY', 'auto-detect')

@@ -114,6 +114,7 @@ def concatenate_videoclips(clips, method="chain", transition=None,
 
     fpss = [c.fps for c in clips if getattr(c, 'fps', None) is not None]
     result.fps = max(fpss) if fpss else None
+
     return result
 
 

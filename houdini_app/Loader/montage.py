@@ -115,7 +115,7 @@ class MakeMontage(QDialog):
         pathMp4 = path+"/"+self.sequence+".mp4"
         pathMov = path + "/"+self.sequence + ".mov"
 
-        final_clip.to_videofile(pathMp4, fps=24, remove_temp=False)
+        final_clip.to_videofile(pathMp4, fps=24, remove_temp=False, temp_audiofile=os.path.expanduser("~")+"/montage_temp.mp3")
         mpg = "X:/app/win/Pipeline/modules/ffmpeg/bin/ffmpeg -y -i " + pathMp4 + " -f mov " + pathMov
         subprocess.call(mpg, shell=True)
         subprocess.call([r"X:\app\win\rv\rv7.1.1\bin\rv.exe", path + "/"+self.sequence + ".mov"])
