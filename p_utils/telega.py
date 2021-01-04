@@ -1,7 +1,9 @@
 import os
 import sys
 import re
-path = os.environ["PIPELINE_ROOT"] + "/modules/bot"
+
+path = "X:/app/win/Pipeline/modules/bot"
+
 if not path in sys.path:
     sys.path.append(path)
 import telegram
