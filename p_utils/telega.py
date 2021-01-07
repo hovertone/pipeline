@@ -3,9 +3,11 @@ import sys
 import re
 
 path = "X:/app/win/Pipeline/modules/bot"
+path2 = "X:/app/win/Pipeline"
 
 if not path in sys.path:
     sys.path.append(path)
+    sys.path.append(path2)
 import telegram
 import socket
 try:
