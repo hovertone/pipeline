@@ -1,3 +1,4 @@
+print 'KLJASFLKJSHFLKSHFLKSJHFLKSJGF LKSJHKSJFLSGFLSF'
 import os
 import maya.cmds as cmds
 import random
@@ -213,8 +214,8 @@ def proceedToMov(pValue):
     #     os.remove('/'.join([jpeg_folder, f]))
 
     if not os.path.exists(jpeg_folder): os.makedirs(jpeg_folder)
-    temp_mov = '%s/%s' % (jpeg_folder, 'montageDaily.mov')
-    print 'TEMP MOV\n%s' % temp_mov
+    temp_mov = '%s/%s' % (jpeg_folder, '%s_%s_%s_tempPlayblast.mov' % (project, seq, shot))
+    #print 'TEMP MOV\n%s' % temp_mov
     #cmds.playblast(f="C:/temp/preview.mov", format='qt', percent=100, quality=75, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd)
     if soundExists:
         cmds.playblast(f=temp_mov, format='qt', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd)
@@ -224,19 +225,19 @@ def proceedToMov(pValue):
     mpg = "X:/app/win/ffmpeg/bin/ffmpeg"
 
     # SOUND
-    soundFolder = '%s/%s/sequences/%s/%s/sound/' % (drive, project, seq, shot)
-    if os.path.exists(soundFolder):
-        files = filter(os.path.isfile, glob.glob(soundFolder + "*.wav"))
-        files.sort(key=lambda x: os.path.getmtime(x))
-        lastSoundFile = files[-1].replace('\\', '/')
-    else:
-        print 'There is no folder for sound'
-        lastSoundFile = False
+    # soundFolder = '%s/%s/sequences/%s/%s/sound/' % (drive, project, seq, shot)
+    # if os.path.exists(soundFolder):
+    #     files = filter(os.path.isfile, glob.glob(soundFolder + "*.wav"))
+    #     files.sort(key=lambda x: os.path.getmtime(x))
+    #     lastSoundFile = files[-1].replace('\\', '/')
+    # else:
+    #     print 'There is no folder for sound'
+    #     lastSoundFile = False
 
     #sq = '%s/%s' % (jpeg_folder, 'playblast.%04d.jpg')
-    print 'mpg ' + mpg
-    print 'lastSoundFile ' + str(lastSoundFile)
-    print 'start ' + start
+    # print 'mpg ' + mpg
+    #print 'lastSoundFile ' + str(lastSoundFile)
+    # print 'start ' + start
     print 'temp_mov ' + temp_mov
     print 'shotPath ' + shotPath
 
