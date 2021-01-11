@@ -7,8 +7,7 @@ from houdini_app.Loader import loader_preferences as prefs
 class produce_daily(object):
     def __init__(self, sq, out_path, fps=24, resolution=[1920, 1080], comment=''):
         ok_codecs = ['.mov', '.mp4']
-        pipe_root = os.environ['PIPELINE_ROOT']
-        print "X"
+        pipe_root = os.environ['PIPELINE_ROOT'].replace('\\', '/')
         #pipe_root = 'D:/my/git/pipeline'
         mpg = '%s/modules/ffmpeg/bin/ffmpeg' % pipe_root
 
