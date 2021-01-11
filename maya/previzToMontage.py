@@ -214,13 +214,13 @@ def proceedToMov(pValue):
     #     os.remove('/'.join([jpeg_folder, f]))
 
     if not os.path.exists(jpeg_folder): os.makedirs(jpeg_folder)
-    temp_mov = '%s/%s' % (jpeg_folder, '%s_%s_%s_tempPlayblast.mov' % (project, seq, shot))
+    temp_mov = '%s/%s' % (jpeg_folder, '%s-%s-%s-tempPlayblast.mov' % (project, seq, shot))
     #print 'TEMP MOV\n%s' % temp_mov
     #cmds.playblast(f="C:/temp/preview.mov", format='qt', percent=100, quality=75, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd)
     if soundExists:
-        cmds.playblast(f=temp_mov, format='qt', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd)
+        cmds.playblast(f=temp_mov, format='qt', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd, viewer=False)
     else:
-        cmds.playblast(f=temp_mov, format='qt', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True)
+        cmds.playblast(f=temp_mov, format='qt', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, viewer=False)
 
     mpg = "X:/app/win/ffmpeg/bin/ffmpeg"
 

@@ -18,9 +18,9 @@ class produce_daily(object):
         # GETTING FIRST FRAME NUMBER
         drive = prefs.LoaderPrefs().load()['storage']['projects']
         if 'C:/' in sq and '/maya/' in sq: # MAYA LOCAL MOV EXCEPTION
-            # C:/Users/vfx09/Documents/maya/2019/temp/montageDaily.mov
+            # C:/Users/vfx09/Documents/maya/2019/temp/Raid_serenade_sh040_tempPlayblast.mov
             f = os.path.split(sq)[-1]
-            project, seq, shot, temp = f.split('_')
+            project, seq, shot, temp = f.split('-')
         else:
             split = sq.split('/')
             project = split[1]

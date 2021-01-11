@@ -94,9 +94,10 @@ class projectDict(object):
         return shotData[0]
 
     def getSpecificShotData(self, seq, shot, key):
+        #print 'test %s %s %s' % (seq, shot, key)
         shots = self.d[seq]
         #print shots
-        shotData = [i for i in shots if i['shot'] == shot]
+        shotData = [i for i in shots if i['name'] == shot]
         return shotData[0][key]
 
     def getDict(self):
@@ -135,6 +136,23 @@ class projectDict(object):
             self.d[seq].append(shot_d)
 
             print 'Shot %s added to %s seq' % (shot_name, seq)
+
+    def setSpecificShotData(self, seq, shot, data, value):
+        if seq not in self.d.keys():
+            print 'ERROR :: There is no %s seq in dict' % seq
+            return
+        elif shot not in self.getShots(seq):
+            print 'ERROR :: There is no %s shot in %s seq' % (shot, seq)
+            return
+        else:
+            self.backupCSV()
+            for s in self.d[seq]:
+                if s['name'] == shot:
+                    s[data] = value
+                    break
+            self.update_proj()
+
+
 
     def writeCSV(self):
         print 'Begining to write CSV...'
@@ -269,7 +287,10 @@ if __name__ == '__main__':
     # print 'SHOTs'
     # print projD.getShots('BGN')
 
-    projD.addShot('angerManagement', 'sh010', '1001', '1031', '10')
-    projD.print_dict()
-    projD.update_proj()
+    # projD.addShot('angerManagement', 'sh010', '1001', '1031', '10')
+    # projD.print_dict()
+    # projD.update_proj()
+
+    # projD.setSpecificShotData('serenade', 'sh010', 'first_frame', '1001')
+    print projD.getSpecificShotData('serenade', 'sh040', 'first_frame')
 
