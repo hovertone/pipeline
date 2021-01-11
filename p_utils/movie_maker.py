@@ -8,6 +8,7 @@ class produce_daily(object):
     def __init__(self, sq, out_path, fps=24, resolution=[1920, 1080], comment=''):
         ok_codecs = ['.mov', '.mp4']
         pipe_root = os.environ['PIPELINE_ROOT']
+        print "X"
         #pipe_root = 'D:/my/git/pipeline'
         mpg = '%s/modules/ffmpeg/bin/ffmpeg' % pipe_root
 
