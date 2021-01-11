@@ -1,4 +1,4 @@
-print 'in movie maker'
+#print 'in movie maker'
 import os
 import subprocess
 import csv_parser

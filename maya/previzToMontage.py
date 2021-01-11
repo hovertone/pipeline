@@ -10,6 +10,7 @@ import pymel.core as pm
 import telega
 from p_utils.csv_parser_bak import projectDict
 from pymel import versions #for maya version
+from p_utils.movie_maker import produce_daily
 
 import subprocess as sp
 import glob
@@ -238,6 +239,8 @@ def proceedToMov(pValue):
     print 'start ' + start
     print 'temp_mov ' + temp_mov
     print 'shotPath ' + shotPath
+
+    """
     if lastSoundFile:
         #if sound exists
         cmd = mpg + " -threads 8 -r 24 -i " + lastSoundFile + " -i " + temp_mov + " -threads 8 -y -r 24 -c:v libx264 -pix_fmt yuv420p -vf scale=1920:1080 -preset ultrafast -crf 30 " + shotPath
@@ -248,6 +251,9 @@ def proceedToMov(pValue):
     print cmd
     print 'shotpath %s' % shotPath
     print sp.call(cmd, shell=True)
+    """
+
+    produce_daily(temp_mov, shotPath)
 
     # RV
     print 'RV PART BEGINS'
