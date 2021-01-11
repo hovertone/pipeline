@@ -188,7 +188,7 @@ class Filemanager(QDialog, Ui_FileManager):
                     if sound:
                         cmd = mpg + " -threads 8 -r 24 -i " + sound + " -start_number " + s.format(
                             '%s') + " -i " + sq + \
-                            ''' -vf "drawtext=fontfile=fontfile=c\:/Windows/Fonts/courbd.ttf: \
+                            ''' -vf "drawtext=fontfile=c\:/Windows/Fonts/courbd.ttf: \
                             text=''' + shotName + ''''       Frame\: %{eif\:n+1001\:d}': fontcolor=white: fontsize=24: box=1: boxcolor=black@0.5: \
                             boxborderw=5: x=50: y=(h-text_h)-25" ''' + \
                             " -threads 8 -y -c:v libx264 -s 3200x1800 -r 24 -pix_fmt " \
@@ -201,6 +201,8 @@ class Filemanager(QDialog, Ui_FileManager):
                             boxborderw=5: x=(w-=text_w)/2: y=(h-text_h)/2" ''' + \
                             " -threads 8 -y -c:v libx264 -s 1920x1080 -r 24 -pix_fmt " \
                             "yuv420p -preset ultrafast -crf 23 " + out_path
+
+                    print cmd
 
                     subprocess.call(cmd, shell=True)
                     self.get_list()

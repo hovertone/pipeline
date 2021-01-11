@@ -9,6 +9,7 @@ import socket
 from pyseq import pyseq
 from PL_scripts import inPipeline, getPipelineAttrs
 from p_utils.csv_parser_bak import projectDict
+from p_utils.movie_maker import produce_daily
 from houdini_app.Loader import loader_preferences as prefs
 
 try:
@@ -132,24 +133,9 @@ def makeDailyFromRead():
         print 'There is no folder for sound'
         lastSoundFile = False
 
-    print 'Daily is in progress...'
-    # Create string command to create mov
-    if lastSoundFile:
-        cmd = mpg + " -threads 8 -r 24 -i " + lastSoundFile + " -start_number " + s.format('%s') + " -i " + sq + " -threads 8 -y -framerate 24 -c:v libx264 -pix_fmt yuv420p -vf scale=1920:1080 -preset ultrafast -crf 20 " + out_path_daily + "/"+out_file
-    else:
-        cmd = mpg + " -threads 8 -r 24 -start_number " + s.format(
-            '%s') + " -i " + sq + " -threads 8 -y -framerate 24 -c:v libx264 -pix_fmt yuv420p -vf scale=1920:1080 -preset ultrafast -crf 20 " + out_path_daily + "/" + out_file
-    #-vf lutrgb=r=gammaval(0.45454545):g=gammaval(0.45454545):b=gammaval(0.45454545)
+    print 'Daily is in progress with movie_maker'
+    produce_daily(sq, out_path_daily + "/" + out_file)
 
-    # DEV TESTS
-    # if dev:
-    #     nuke.tprint(cmd)
-    #     return
-
-    nuke.tprint(cmd)
-    sp.call(cmd, shell=True)
-
-    #print '%s done' % out_file
 
     # NUKE RESAVE
     currentPath = nuke.root().name()
@@ -162,10 +148,6 @@ def makeDailyFromRead():
     #print '%s saved BACK' % currentPath
 
     shutil.copy2(out_path_daily + "/"+out_file, out_path_daily_ftrack + "/"+out_file_ftrack)
-
-    cmd = mpg + " -threads 8 -r 24 -start_number " + s.format('%s') + " -i " + sq + " -threads 8 -y -framerate 24 -c:v libx264 -pix_fmt yuv420p -preset ultrafast -crf 10 " + out_path_daily_ftrack + "/"+out_file_ftrack
-    #sp.call(cmd, shell=True)
-    #print '%s done' % out_file_ftrack
 
     # COPY PATH TO CLIPBOARD
     clipboard = QtWidgets.QApplication.clipboard()
