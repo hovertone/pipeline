@@ -1,6 +1,7 @@
 import os
 import fnmatch
 import nuke
+import shutil
 from PL_scripts import getPipelineAttrs
 
 # import PL_rendersCleanup
@@ -36,8 +37,9 @@ def get_size(start_path = '.'):
     return round(total_size/(1024*1024*1024.0), 2)
 
 
-def main():
+def main(remove_precomps = False):
     #fixMissingPaths()
+    newSize = 0.0
     root = nuke.root().name()
     try:
         drive, project, seq, shot, assetName, version = getPipelineAttrs()
@@ -52,9 +54,9 @@ def main():
             return
 
 
-    print 'path %s' % path
+    #print 'path %s' % path
     paths = sorted([i['file'].value() for i in nuke.allNodes('Read') + nuke.allNodes('DeepRead') if path in i['file'].value()])
-    print 'PATHSS %s' % paths
+    #print 'PATHSS %s' % paths
     oldSize = get_size(path)
 
     # Get a list of all files in directory
@@ -69,7 +71,7 @@ def main():
                     p = pat.split('.')[0]
                     fullpath = '%s/%s' % (rootDir, f)
                     fullpath = fullpath.replace('\\', '/')
-                    print 'FULLPATH %s' % fullpath
+                    #print 'FULLPATH %s' % fullpath
                     if p in fullpath:
                         in_script = True
                 if in_script:
@@ -83,14 +85,32 @@ def main():
 
             print '----------------------------------------'
 
+    print 'DIR REMOVING BEGINS'
+    if remove_precomps:
+        # PRECOMPS PART
+        precomps_dir = '%s/%s/sequences/%s/%s/comp/%s/precomp' % (drive, project, seq, shot, assetName)
+
+        for bdn in nuke.allNodes('BackdropNode'):
+            for n in bdn.getNodes():
+                nuke.delete(n)
+            nuke.delete(bdn)
+        print 'PRECOMP NODES REMOVED'
+
+        if os.path.exists(precomps_dir):
+            newSize += get_size(precomps_dir)
+            shutil.rmtree(precomps_dir)
+            print 'PRECOMPS FOLDER REMOVED'
+    else:
+        precomps_dir_size_old = 0
+
     for d in dirsToRemove:
         try:
-            #os.removedirs(d)
+            os.removedirs(d)
             print 'REMOVE %s' % d
         except:
             print 'Cant be removed %s' % d
 
-    newSize = get_size(path)
+    newSize += get_size(path)
     nuke.message('Old size: %s Gb\nNewSize: %s Gb' % (oldSize, newSize))
 
 def main2():

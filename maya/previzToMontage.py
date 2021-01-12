@@ -203,26 +203,29 @@ def proceedToMov(pValue):
 
     v = str(versions.current())[:4]
     #print 'V %s' % v
-    jpeg_folder = os.path.join(docs, 'maya', v, 'temp').replace('\\', '/')
+    #jpeg_folder = os.path.join(docs, 'maya', v, 'temp').replace('\\', '/')
 
     #print jpeg_folder
-    if not os.path.exists(jpeg_folder): os.makedirs(jpeg_folder)
+    # if not os.path.exists(jpeg_folder): os.makedirs(jpeg_folder)
     #print 'removing...'
     # for f in os.listdir(jpeg_folder):
     #     print '\t%s' % os.path.join(jpeg_folder, f)
     #     #os.remove(os.path.join(jpeg_folder, f))
     #     os.remove('/'.join([jpeg_folder, f]))
 
-    if not os.path.exists(jpeg_folder): os.makedirs(jpeg_folder)
-    temp_mov = '%s/%s' % (jpeg_folder, '%s-%s-%s-tempPlayblast.mov' % (project, seq, shot))
+    #temp_mov = '%s/%s' % (jpeg_folder, '%s-%s-%s-tempPlayblast.mov' % (project, seq, shot))
     #print 'TEMP MOV\n%s' % temp_mov
     #cmds.playblast(f="C:/temp/preview.mov", format='qt', percent=100, quality=75, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd)
-    if soundExists:
-        cmds.playblast(f=temp_mov, format='qt', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd, viewer=False)
-    else:
-        cmds.playblast(f=temp_mov, format='qt', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, viewer=False)
+    # if soundExists:
+    #     cmds.playblast(f=temp_mov, format='qt', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd, viewer=False)
+    # else:
+    #     cmds.playblast(f=temp_mov, format='qt', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, viewer=False)
 
-    mpg = "X:/app/win/ffmpeg/bin/ffmpeg"
+    jpeg_path = os.path.join(docs, 'maya', v, 'temp', '%s-%s-%s' % (project, seq, shot), '%s-%s-%s-tempPlayblast' % (project, seq, shot)).replace('\\', '/')
+    if not os.path.exists(os.path.split(jpeg_path)[0]): os.makedirs(os.path.split(jpeg_path)[0])
+    cmds.playblast(f=jpeg_path, format='image', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, viewer=False)
+
+    #mpg = "X:/app/win/ffmpeg/bin/ffmpeg"
 
     # SOUND
     # soundFolder = '%s/%s/sequences/%s/%s/sound/' % (drive, project, seq, shot)
@@ -238,7 +241,7 @@ def proceedToMov(pValue):
     # print 'mpg ' + mpg
     #print 'lastSoundFile ' + str(lastSoundFile)
     # print 'start ' + start
-    print 'temp_mov ' + temp_mov
+    # print 'temp_mov ' + temp_mov
     print 'shotPath ' + shotPath
 
     """
@@ -254,13 +257,13 @@ def proceedToMov(pValue):
     print sp.call(cmd, shell=True)
     """
 
-    produce_daily(temp_mov, shotPath)
+    produce_daily(jpeg_path + '.####.jpg', shotPath)
 
     # RV
     print 'RV PART BEGINS'
     try:
         rv_path = "X:/app/win/rv/rv7.1.1/bin/rv.exe"
-        rv_cmd = rv_path + ' ' + temp_mov
+        rv_cmd = rv_path + ' ' + shotPath
         print rv_cmd
         sp.call(rv_cmd, shell=True)
     except:
