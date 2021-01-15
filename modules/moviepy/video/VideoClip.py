@@ -141,6 +141,7 @@ class VideoClip(Clip):
                         write_logfile=False, verbose=True,
                         threads=None, ffmpeg_params=None,
                         logger='bar'):
+
         """Write the clip to a videofile.
 
         Parameters
@@ -297,6 +298,7 @@ class VideoClip(Clip):
                                        verbose=verbose,
                                        logger=logger)
 
+
         ffmpeg_write_video(self, filename, fps, codec,
                            bitrate=bitrate,
                            preset=preset,
@@ -305,6 +307,7 @@ class VideoClip(Clip):
                            verbose=verbose, threads=threads,
                            ffmpeg_params=ffmpeg_params,
                            logger=logger)
+
 
         if remove_temp and make_audio:
             if os.path.exists(audiofile):

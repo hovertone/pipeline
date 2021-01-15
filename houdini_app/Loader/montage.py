@@ -23,6 +23,8 @@ from montage_item import MontageItem
 
 
 
+
+
 class MakeMontage(QDialog):
     def __init__(self, parent=None):
         super(MakeMontage, self).__init__(parent)
@@ -38,17 +40,15 @@ class MakeMontage(QDialog):
         self.lb_progress = QLabel(self)
         self.progressBar = QProgressBar(self)
 
-
         self.layoutMain.addWidget(self.list_dailies)
         self.layoutButtonsBottom.addWidget(self.pb_montage_hd)
         self.layoutButtonsBottom.addWidget(self.pb_montage_3K)
         self.layoutProgressBar.addWidget(self.lb_progress)
         self.layoutProgressBar.addWidget(self.progressBar)
+
         self.layoutMain.addLayout(self.layoutButtonsTop)
         self.layoutMain.addLayout(self.layoutButtonsBottom)
         self.layoutMain.addLayout(self.layoutProgressBar)
-
-
 
         self.pb_montage_hd.setText("1920x1080")
         self.pb_montage_3K.setText("3200x1800")
@@ -56,7 +56,7 @@ class MakeMontage(QDialog):
 
         self.pb_montage_hd.setMinimumHeight(30)
         self.pb_montage_3K.setMinimumHeight(30)
-        self.progressBar.setRange(0, 1)
+        self.progressBar.setRange(0, 100)
         self.progressBar.setVisible(False)
         self.lb_progress.setVisible(False)
         self.list_dailies.setSelectionMode(QAbstractItemView.ExtendedSelection)
@@ -93,41 +93,74 @@ class MakeMontage(QDialog):
 
 
     def make_montage(self, size):
-        print "SSSSIZE", size['height'], size['width']
         path = self.project_path + "/edit/" + self.sequence
 
         if not os.path.exists(path):
             os.makedirs(path)
         videos = []
 
+
         for i in self.list_dailies.selectedItems():
-            print self.list_dailies.itemWidget(i).dailies
-            videos.append(self.list_dailies.itemWidget(i).dailies)
+            if os.path.isfile(self.list_dailies.itemWidget(i).dailies):
+                videos.append(self.list_dailies.itemWidget(i).dailies)
+            else:
+                pass
+
         videos = sorted(videos)
 
         clips = []
         for i in videos:
             clips.append(VideoFileClip(i, target_resolution=(size['height'], size['width'])))
 
-
         final_clip = concatenate_videoclips(clips)
 
         pathMp4 = path+"/"+self.sequence+".mp4"
-        pathMov = path + "/"+self.sequence + ".mov"
+
+        files = os.listdir(path)
+        versions = []
+        version = "001"
+        if files:
+            for f in files:
+                if ".mov" in f:
+                    v = f.rsplit(".", 1)[0]
+                    if "_v" in v:
+                        v = v.rsplit("_v", 1)[1]
+                        if v.isdigit():
+                            versions.append(v)
+            if versions:
+                versions.sort()
+                version = str(int(versions[-1])+1).zfill(3)
+
+
+        pathMov = path + "/" + self.sequence + "_v" + version + ".mov"
 
         final_clip.to_videofile(pathMp4, fps=24, remove_temp=False, temp_audiofile=os.path.expanduser("~")+"/montage_temp.mp3")
+
+        self.progressBar.setRange(0,100)
+        self.progressBar.setVisible(50)
         mpg = "X:/app/win/Pipeline/modules/ffmpeg/bin/ffmpeg -y -i " + pathMp4 + " -f mov " + pathMov
         subprocess.call(mpg, shell=True)
-        subprocess.call([r"X:\app\win\rv\rv7.1.1\bin\rv.exe", path + "/"+self.sequence + ".mov"])
+        self.progressBar.setValue(90)
+        subprocess.call([r"X:\app\win\rv\rv7.1.1\bin\rv.exe", pathMov])
+
+    def check_version(self, path):
+        os.listdir(path)
+
 
 
     def onStart(self, btn):
-        self.progressBar.setVisible(True)
-        self.lb_progress.setVisible(True)
-        self.repaint()
-        self.progressBar.setRange(0,0)
-        self.myLongTask.setSize(width=int(btn.split("x")[0]), height=int(btn.split("x")[1]))
-        self.myLongTask.start()
+        if self.list_dailies.selectedItems():
+            self.progressBar.setVisible(True)
+            self.lb_progress.setVisible(True)
+            self.repaint()
+            self.progressBar.setRange(0,0)
+            self.myLongTask.setSize(width=int(btn.split("x")[0]), height=int(btn.split("x")[1]))
+            self.myLongTask.start()
+        else:
+            message = QMessageBox(self)
+            message.setStyleSheet("QPushButton{ width:100px; font-size: 16px; }")
+            message.setText("Please select files.")
+            message.show()
 
 
     def onFinished(self):

@@ -30,11 +30,6 @@ class FFMPEG_VideoReader:
                  target_resolution=None, resize_algo='bicubic',
                  fps_source='tbr'):
 
-        print "PARSER", filename
-        print "INFOS", print_infos
-        print "CHECLDURATION", check_duration
-        print "FPS SRC", fps_source
-
         self.filename = filename
         self.proc = None
         infos = ffmpeg_parse_infos(filename, print_infos, check_duration,
@@ -261,9 +256,7 @@ def ffmpeg_parse_infos(filename, print_infos=False, check_duration=True,
 
     proc = sp.Popen(cmd, **popen_params)
     (output, error) = proc.communicate()
-    print "ERROR", error
-    infos = unicode(error)
-    #infos = error.decode('utf8')
+    infos = error.decode('utf8')
 
     del proc
 

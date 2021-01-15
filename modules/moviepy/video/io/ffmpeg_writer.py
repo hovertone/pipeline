@@ -131,6 +131,7 @@ class FFMPEG_VideoWriter:
 
     def write_frame(self, img_array):
         """ Writes one frame in the file."""
+
         try:
             if PY3:
                self.proc.stdin.write(img_array.tobytes())
@@ -226,6 +227,7 @@ def ffmpeg_write_video(clip, filename, fps, codec="libx264", bitrate=None,
                 frame = np.dstack([frame,mask])
 
             writer.write_frame(frame)
+
 
     if write_logfile:
         logfile.close()

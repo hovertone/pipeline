@@ -1,10 +1,10 @@
 import numpy as np
 
-from moviepy.audio.AudioClip import CompositeAudioClip
-from moviepy.tools import deprecated_version_of
-from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
-from moviepy.video.compositing.on_color import on_color
-from moviepy.video.VideoClip import ColorClip, VideoClip
+from modules.moviepy.audio.AudioClip import CompositeAudioClip
+from modules.moviepy.tools import deprecated_version_of
+from modules.moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
+from modules.moviepy.video.compositing.on_color import on_color
+from modules.moviepy.video.VideoClip import ColorClip, VideoClip
 
 try:               # Python 2
    reduce
@@ -82,6 +82,7 @@ def concatenate_videoclips(clips, method="chain", transition=None,
             i = max([i for i, e in enumerate(tt) if e <= t])
             return clips[i].get_frame(t - tt[i])
 
+
         def get_mask(c):
             mask = c.mask or ColorClip([1, 1], color=1, ismask=True)
             if mask.duration is None:
@@ -89,11 +90,13 @@ def concatenate_videoclips(clips, method="chain", transition=None,
             return mask
 
         result = VideoClip(ismask = ismask, make_frame = make_frame)
+
         if any([c.mask is not None for c in clips]):
             masks = [get_mask(c) for c in clips]
             result.mask = concatenate_videoclips(masks, method="chain",
                                                  ismask=True)
             result.clips = clips
+
     elif method == "compose":
         result = CompositeVideoClip( [c.set_start(t).set_position('center')
                                 for (c, t) in zip(clips, tt)],
@@ -114,6 +117,7 @@ def concatenate_videoclips(clips, method="chain", transition=None,
 
     fpss = [c.fps for c in clips if getattr(c, 'fps', None) is not None]
     result.fps = max(fpss) if fpss else None
+
 
     return result
 
