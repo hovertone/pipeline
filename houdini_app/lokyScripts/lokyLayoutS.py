@@ -1,4 +1,4 @@
-import hou, glob
+import hou, glob, shutil
 
 
 def bakeAnimKeys():
@@ -308,6 +308,8 @@ def makeDailise():
 	deiliespath = "Deilies path - "+out_path + "/"+out_file
 	print deiliespath
 	finalpath = out_path + "/"+out_file
+	if os.environ["ASSETTYPE"] == "fx":
+		shutil.copy(finalpath, os.environ["SHOT"]+"/out/DAILIES_"+os.environ["SN"]+"_fx.mov")
 	return finalpath
 
 

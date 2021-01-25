@@ -105,7 +105,6 @@ class MakeMontage(QDialog):
                 videos.append(self.list_dailies.itemWidget(i).dailies)
             else:
                 pass
-
         videos = sorted(videos)
 
         clips = []
@@ -113,7 +112,6 @@ class MakeMontage(QDialog):
             clips.append(VideoFileClip(i, target_resolution=(size['height'], size['width'])))
 
         final_clip = concatenate_videoclips(clips)
-
         pathMp4 = path+"/"+self.sequence+".mp4"
 
         files = os.listdir(path)
@@ -133,19 +131,13 @@ class MakeMontage(QDialog):
 
 
         pathMov = path + "/" + self.sequence + "_v" + version + ".mov"
-
         final_clip.to_videofile(pathMp4, fps=24, remove_temp=False, temp_audiofile=os.path.expanduser("~")+"/montage_temp.mp3")
-
         self.progressBar.setRange(0,100)
-        self.progressBar.setVisible(50)
+        self.progressBar.setVisible(True)
         mpg = "X:/app/win/Pipeline/modules/ffmpeg/bin/ffmpeg -y -i " + pathMp4 + " -f mov " + pathMov
         subprocess.call(mpg, shell=True)
         self.progressBar.setValue(90)
         subprocess.call([r"X:\app\win\rv\rv7.1.1\bin\rv.exe", pathMov])
-
-    def check_version(self, path):
-        os.listdir(path)
-
 
 
     def onStart(self, btn):
