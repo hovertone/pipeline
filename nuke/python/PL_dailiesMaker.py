@@ -67,6 +67,7 @@ def makeDailyFromRead():
     #sequence_path = '%s/%s/sequences/%s/%s/out/hires/' % (drive, project, seq, shot)
     #sequence_path = 'P:/Raid/sequences/absentPlayer2/sh050/comp/mainComp/precomp/forDaily'
     sequence_path = '%s/%s/sequences/%s/%s/comp/%s/precomp/forDaily/' % (drive, project, seq, shot, assetName)
+    print 'SEQ PATH %s' % sequence_path
     if not os.path.exists(sequence_path):
         nuke.message('There is no FOR DAILY folder')
         return
@@ -214,7 +215,8 @@ def createProxyStill(n = None):
     return True
 
 def masterDaily():
-    w_list = [n for n in nuke.allNodes('Write') if '_forDaily' in n['file'].value()]
+    drive, project, seq, shot, assetname, ver = getPipelineAttrs()
+    w_list = [n for n in nuke.allNodes('Write') if '%s/precomp/forDaily' % (assetname) in n['file'].value()]
     if len(w_list) == 0:
         #w = createDailyWrite()
         createEXRforDaily()

@@ -1,8 +1,19 @@
+try:
+    from PySide2.QtGui import *
+    from PySide2.QtCore import *
+    from PySide2.QtWidgets import *
+except:
+    from PySide.QtGui import *
+    from PySide.QtCore import *
+
 import os
 import fnmatch
 import nuke
 import shutil
+import threading
+
 from PL_scripts import getPipelineAttrs
+
 
 # import PL_rendersCleanup
 # reload(PL_rendersCleanup)
@@ -37,58 +48,226 @@ def get_size(start_path = '.'):
     return round(total_size/(1024*1024*1024.0), 2)
 
 
-def main(remove_precomps = False):
-    #fixMissingPaths()
-    newSize = 0.0
-    root = nuke.root().name()
-    try:
-        drive, project, seq, shot, assetName, version = getPipelineAttrs()
-        path = '%s/%s/sequences/%s/%s/render' % (drive, project, seq, shot)
-    except:
-        if 'vikings' in root:
-            split = root.split('/')
-            path = '/'.join(split[:-2]) + '/render'
+# def main(remove_precomps = False):
+#     #fixMissingPaths()
+#     newSize = 0.0
+#     root = nuke.root().name()
+#     try:
+#         drive, project, seq, shot, assetName, version = getPipelineAttrs()
+#         path = '%s/%s/sequences/%s/%s/render' % (drive, project, seq, shot)
+#     except:
+#         if 'vikings' in root:
+#             split = root.split('/')
+#             path = '/'.join(split[:-2]) + '/render'
+#
+#         else:
+#             print 'dont have shot attrs. EXIT'
+#             return
+#
+#
+#     #print 'path %s' % path
+#     paths = sorted([i['file'].value() for i in nuke.allNodes('Read') + nuke.allNodes('DeepRead') if path in i['file'].value()])
+#     #print 'PATHSS %s' % paths
+#     oldSize = get_size(path)
+#
+#     # Get a list of all files in directory
+#     dirsToRemove = []
+#     for rootDir, subdirs, filenames in os.walk(path):
+#         # Find the files that matches the given patterm
+#         if filenames:
+#             deleteFolder = False
+#             for f in filenames:
+#                 in_script = False
+#                 for pat in paths:
+#                     p = pat.split('.')[0]
+#                     fullpath = '%s/%s' % (rootDir, f)
+#                     fullpath = fullpath.replace('\\', '/')
+#                     #print 'FULLPATH %s' % fullpath
+#                     if p in fullpath:
+#                         in_script = True
+#                 if in_script:
+#                     print 'KEEP %s' % fullpath
+#                 else:
+#                     print 'DELETE %s' % fullpath
+#                     os.remove(fullpath)
+#                     folder = os.path.dirname(fullpath)
+#                     if folder not in dirsToRemove:
+#                         dirsToRemove.append(folder)
+#
+#             print '----------------------------------------'
+#
+#     # PRECOMPS
+#     if remove_precomps:
+#         # PRECOMPS PART
+#         precomps_dir = '%s/%s/sequences/%s/%s/comp/%s/precomp' % (drive, project, seq, shot, assetName)
+#
+#         for bdn in nuke.allNodes('BackdropNode'):
+#             for n in bdn.getNodes():
+#                 nuke.delete(n)
+#             nuke.delete(bdn)
+#         print 'PRECOMP NODES REMOVED'
+#
+#         if os.path.exists(precomps_dir):
+#             newSize += get_size(precomps_dir)
+#             shutil.rmtree(precomps_dir)
+#             print 'PRECOMPS FOLDER REMOVED'
+#     else:
+#         precomps_dir_size_old = 0
+#
+#     newSize += get_size(path)
+#     nuke.message('Old size: %s Gb\nNewSize: %s Gb' % (oldSize, newSize))
 
+# ==================================================================================================================
+
+class removeFiles(threading.Thread):
+    def __init__(self, files):
+        threading.Thread.__init__(self)
+        self.iter = 0
+
+        self.files_to_remove = files
+
+        #self.glob_path = path
+        #self.collect_files_to_remove(self.glob_path)
+
+    #def collect_files_to_remove(self, path, remove_precomps = False):
+        #fixMissingPaths()
+        # newSize = 0.0
+        # root = nuke.root().name()
+        # try:
+        #     drive, project, seq, shot, assetName, version = getPipelineAttrs()
+        #     path = '%s/%s/sequences/%s/%s/render' % (drive, project, seq, shot)
+        # except:
+        #     if 'vikings' in root:
+        #         split = root.split('/')
+        #         path = '/'.join(split[:-2]) + '/render'
+        #
+        #     else:
+        #         print 'dont have shot attrs. EXIT'
+        #         return
+        #
+        #
+        # #print 'path %s' % path
+        # paths = sorted([i['file'].value() for i in nuke.allNodes('Read') + nuke.allNodes('DeepRead') if path in i['file'].value()])
+        # #print 'PATHSS %s' % paths
+        # oldSize = get_size(path)
+        #
+        # # Get a list of all files and directories to remove
+        # self.files_to_remove = list()
+        # dirsToRemove = list()
+        # for rootDir, subdirs, filenames in os.walk(path):
+        #     # Find the files that matches the given patterm
+        #     if filenames:
+        #         deleteFolder = False
+        #         for f in filenames:
+        #             in_script = False
+        #             for pat in paths:
+        #                 p = pat.split('.')[0]
+        #                 fullpath = '%s/%s' % (rootDir, f)
+        #                 fullpath = fullpath.replace('\\', '/')
+        #                 #print 'FULLPATH %s' % fullpath
+        #                 if p in fullpath:
+        #                     in_script = True
+        #             if in_script:
+        #                 print 'KEEP %s' % fullpath
+        #             else:
+        #                 print 'DELETE %s' % fullpath
+        #                 #os.remove(fullpath)
+        #                 self.files_to_remove.append(fullpath)
+        #                 folder = os.path.dirname(fullpath)
+        #                 if folder not in dirsToRemove:
+        #                     dirsToRemove.append(folder)
+        #
+        #         print '----------------------------------------'
+        # self.files_to_remove += dirsToRemove
+        #
+        # if remove_precomps:
+        #     self.remove_precomps = True
+        #     # PRECOMPS PART
+        #     precomps_dir = '%s/%s/sequences/%s/%s/comp/%s/precomp' % (drive, project, seq, shot, assetName)
+        #     self.precomps_dir_size_old = get_size(precomps_dir)
+        #
+        #     for bdn in nuke.allNodes('BackdropNode'):
+        #         for n in bdn.getNodes():
+        #             nuke.delete(n)
+        #         nuke.delete(bdn)
+        #     print 'PRECOMP NODES REMOVED'
+        #
+        #     if os.path.exists(precomps_dir):
+        #         newSize += get_size(precomps_dir)
+        #         shutil.rmtree(precomps_dir)
+        #         print 'PRECOMPS FOLDER REMOVED'
+        #     self.precomps_dir_size_new = get_size(precomps_dir)
+        # else:
+        #     self.remove_precomps = False
+
+    def rmv(self, p):
+        #print 'ITER BEFORE %s' % self.iter
+        if os.path.isfile(p):
+            os.remove(p)
+            print 'FILE removed %s' % p
+        elif os.path.isdir(p):
+            shutil.rmtree(p)
+            print 'FOLDER removed %s' % p
+        #self.iter += 1
+        #print 'ITER AFTER %s' % self.iter
+
+    def run(self):
+        for i, e in enumerate(self.files_to_remove):
+            nuke.executeInMainThread(self.rmv, e)
+            #return i, len(self.files_to_remove)
+
+class cleanup_progress_bar(QDialog):
+    def __init__(self, parent=None, remove_precomps=False):
+        super(cleanup_progress_bar, self).__init__(parent)
+
+        self.resize(400, 240)
+
+        self.layout = QVBoxLayout()
+
+        self.status_label =QLabel()
+        self.layout.addWidget(self.status_label)
+        self.progressBar = QProgressBar()
+        self.progressBar.setGeometry(200, 80, 250, 20)
+        self.layout.addWidget(self.progressBar)
+        self.cancel = QPushButton()
+        self.cancel.setText('Cancel')
+        self.cancel.clicked.connect(self.close)
+        self.layout.addWidget(self.cancel)
+
+        self.setLayout(self.layout)
+        self.remove_precomps = remove_precomps
+        #self.show()
+        #self.tread = TaskThread(self.rmv)
+
+        #self.tread.start()
+        self.progressBar.setValue(1)
+
+        self.collect_files_to_remove()
+        self.progressBar.setValue(33)
+
+        if self.remove_precomps:
+            self.deal_with_precomps()
+        self.progressBar.setValue(66)
+
+        rf = removeFiles(self.files_to_remove)
+        rf.start()
+
+        self.progressBar.setValue(100)
+
+        self.renders_dir_size_new = get_size(self.render_path)
+
+        if self.remove_precomps:
+            nuke.message('Old size: %s Gb\nNewSize: %s Gb\n\nPrecomps were %s Gb' % (self.renders_dir_size_old, self.renders_dir_size_new, self.precomps_dir_size_old))
         else:
-            print 'dont have shot attrs. EXIT'
-            return
+            nuke.message('Old size: %s Gb\nNewSize: %s Gb' % (self.renders_dir_size_old, self.renders_dir_size_new))
+
+        self.close()
 
 
-    #print 'path %s' % path
-    paths = sorted([i['file'].value() for i in nuke.allNodes('Read') + nuke.allNodes('DeepRead') if path in i['file'].value()])
-    #print 'PATHSS %s' % paths
-    oldSize = get_size(path)
-
-    # Get a list of all files in directory
-    dirsToRemove = []
-    for rootDir, subdirs, filenames in os.walk(path):
-        # Find the files that matches the given patterm
-        if filenames:
-            deleteFolder = False
-            for f in filenames:
-                in_script = False
-                for pat in paths:
-                    p = pat.split('.')[0]
-                    fullpath = '%s/%s' % (rootDir, f)
-                    fullpath = fullpath.replace('\\', '/')
-                    #print 'FULLPATH %s' % fullpath
-                    if p in fullpath:
-                        in_script = True
-                if in_script:
-                    print 'KEEP %s' % fullpath
-                else:
-                    print 'DELETE %s' % fullpath
-                    os.remove(fullpath)
-                    folder = os.path.dirname(fullpath)
-                    if folder not in dirsToRemove:
-                        dirsToRemove.append(folder)
-
-            print '----------------------------------------'
-
-    print 'DIR REMOVING BEGINS'
-    if remove_precomps:
+    def deal_with_precomps(self):
         # PRECOMPS PART
-        precomps_dir = '%s/%s/sequences/%s/%s/comp/%s/precomp' % (drive, project, seq, shot, assetName)
+        precomps_dir = '%s/%s/sequences/%s/%s/comp/%s/precomp' % (self.drive, self.project, self.seq, self.shot, self.assetName)
+        self.precomps_dir_size_old = get_size(precomps_dir)
 
         for bdn in nuke.allNodes('BackdropNode'):
             for n in bdn.getNodes():
@@ -97,74 +276,80 @@ def main(remove_precomps = False):
         print 'PRECOMP NODES REMOVED'
 
         if os.path.exists(precomps_dir):
-            newSize += get_size(precomps_dir)
+            #newSize += get_size(precomps_dir)
             shutil.rmtree(precomps_dir)
             print 'PRECOMPS FOLDER REMOVED'
-    else:
-        precomps_dir_size_old = 0
+        self.precomps_dir_size_new = get_size(precomps_dir)
 
-    for d in dirsToRemove:
-        try:
-            os.removedirs(d)
-            print 'REMOVE %s' % d
-        except:
-            print 'Cant be removed %s' % d
-
-    newSize += get_size(path)
-    nuke.message('Old size: %s Gb\nNewSize: %s Gb' % (oldSize, newSize))
-
-def main2():
-    print 'inMAIN2'
-    try:
-        drive, project, seq, shot, assetName, version = getPipelineAttrs()
-    except:
+    def collect_files_to_remove(self):
+        # rf = removeFiles('D:/my/progress_bar_tests/start')
+        # rf.start()
+        # fixMissingPaths()
+        newSize = 0.0
         root = nuke.root().name()
-        split = root.split('/')
-        drive = 'P:'
-        project = split[1]
-        seq = split[2]
-        shot = split[4]
-
-    path = '%s/%s/%s/shots/%s/render' % (drive, project, seq, shot)
-
-    #path = '%s/%s/sequences/%s/%s/render' % (drive, project, seq, shot)
-    #print 'path %s' % path
-    paths = sorted([i['file'].value() for i in nuke.allNodes('Read') if path in i['file'].value()])
-    #print 'pathsss %s' % paths
-    oldSize = get_size(path)
-
-    # Get a list of all files in directory
-    dirsToRemove = []
-    for rootDir, subdirs, filenames in os.walk(path):
-        # Find the files that matches the given patterm
-        if filenames:
-            deleteFolder = False
-            for f in filenames:
-                in_script = False
-                for pat in paths:
-                    p = pat.split('.')[0]
-                    fullpath = '%s/%s' % (rootDir, f)
-                    fullpath = fullpath.replace('\\', '/')
-                    #print 'FULLPATH ' + fullpath
-                    if p in fullpath:
-                        in_script = True
-                if in_script:
-                    print 'KEEP %s' % fullpath
-                else:
-                    print 'DELETE %s' % fullpath
-                    os.remove(fullpath)
-                    folder = os.path.dirname(fullpath)
-                    if folder not in dirsToRemove:
-                        dirsToRemove.append(folder)
-
-            print '----------------------------------------'
-
-    for d in dirsToRemove:
         try:
-            os.removedirs(d)
-            print 'REMOVE %s' % d
+            self.drive, self.project, self.seq, self.shot, self.assetName, self.version = getPipelineAttrs()
+            self.render_path = '%s/%s/sequences/%s/%s/render' % (self.drive, self.project, self.seq, self.shot)
         except:
-            print 'Cant be removed %s' % d
+            if 'vikings' in root:
+                split = root.split('/')
+                render_path = '/'.join(split[:-2]) + '/render'
 
-    newSize = get_size(path)
-    nuke.message('Old size: %s Gb\nNewSize: %s Gb' % (oldSize, newSize))
+            else:
+                print 'dont have shot attrs. EXIT'
+                return
+
+        # print 'path %s' % path
+        paths = sorted([i['file'].value() for i in nuke.allNodes('Read') + nuke.allNodes('DeepRead') if
+                        self.render_path in i['file'].value()])
+
+        # Get a list of all files and directories to remove
+        self.files_to_remove = list()
+        dirsToRemove = list()
+        for rootDir, subdirs, filenames in os.walk(self.render_path):
+            # Find the files that matches the given patterm
+            if filenames:
+                deleteFolder = False
+                for f in filenames:
+                    in_script = False
+                    for pat in paths:
+                        p = pat.split('.')[0]
+                        fullpath = '%s/%s' % (rootDir, f)
+                        fullpath = fullpath.replace('\\', '/')
+                        # print 'FULLPATH %s' % fullpath
+                        if p in fullpath:
+                            in_script = True
+
+                    if in_script:
+                        print 'KEEP %s' % fullpath
+                    else:
+                        print 'DELETE %s' % fullpath
+                        # os.remove(fullpath)
+                        self.files_to_remove.append(fullpath)
+                        folder = os.path.dirname(fullpath)
+                        if folder not in dirsToRemove:
+                            dirsToRemove.append(folder)
+
+                print '----------------------------------------'
+        self.files_to_remove += dirsToRemove
+
+        self.renders_dir_size_old = get_size(self.render_path)
+        # if self.remove_precomps:
+        #     # PRECOMPS PART
+        #     precomps_dir = '%s/%s/sequences/%s/%s/comp/%s/precomp' % (drive, project, seq, shot, assetName)
+        #     self.precomps_dir_size_old = get_size(precomps_dir)
+        #
+        #     for bdn in nuke.allNodes('BackdropNode'):
+        #         for n in bdn.getNodes():
+        #             nuke.delete(n)
+        #         nuke.delete(bdn)
+        #     print 'PRECOMP NODES REMOVED'
+        #
+        #     if os.path.exists(precomps_dir):
+        #         newSize += get_size(precomps_dir)
+        #         shutil.rmtree(precomps_dir)
+        #         print 'PRECOMPS FOLDER REMOVED'
+        #     self.precomps_dir_size_new = get_size(precomps_dir)
+
+
+
