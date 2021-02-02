@@ -183,6 +183,7 @@ class Filemanager(QDialog, Ui_FileManager):
                     subprocess.call(cmd, shell=True)
 
                     sq = os.path.join(s.format('%D'), s.format('%h%p%t'))
+                    print  "SQSQ", s.format('%s')
                     shotName = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).text
 
                     if sound:
@@ -300,6 +301,8 @@ class Filemanager(QDialog, Ui_FileManager):
             return self.get_list(path=self._path, folder_type="asset")
         else:
             return self.get_list()
+
+
 
 
     def get_path(self, shot=None):
@@ -494,6 +497,7 @@ class Filemanager(QDialog, Ui_FileManager):
                 self.pb_save.setVisible(True)
                 self.pb_open.setVisible(True)
                 self.pb_select_shot.setVisible(True)
+                self.pb_new.setMinimumSize(120, 25)
 
         if folder_type == "asset":
             self.pb_back.setEnabled(True)
@@ -509,8 +513,7 @@ class Filemanager(QDialog, Ui_FileManager):
             self.pb_save.setVisible(True)
             self.pb_open.setVisible(True)
             self.pb_select_shot.setVisible(True)
-
-            self.pb_new.setMinimumSize(100,25)
+            self.pb_new.setMinimumSize(120,25)
             if self.cbox_sequence == "assetBuilds":
                 self._path = os.path.join(item_path, item_text).replace("\\", "/")
             else:

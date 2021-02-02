@@ -49,6 +49,7 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
         self.le_root.textChanged.connect(self.project_name)
         self.le_projectName.textChanged.connect(self.project_name)
         self.pb_Sq_add.clicked.connect(self.add_sequence)
+        self.pb_Sq_add.setDefault(False)
         self.pb_sq_remove.clicked.connect(self.remove_sq)
         self.pb_sq_clear.clicked.connect(self.clear_sq)
         self.pb_Shots_add.clicked.connect(self.add_shot)
@@ -58,6 +59,9 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
         self.pb_cancel.clicked.connect(self.close)
         self.listWidgetSq.itemClicked.connect(self.sqClicked)
         self.listWidgetShots.itemClicked.connect(self.shotClicked)
+
+    def keyPressEvent(self, *args, **kwargs):
+        pass
 
 
 
@@ -104,6 +108,13 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
         self.listWidgetSq.addItem(listItem)
         listItem.setSizeHint(QSize(0, 55))
         self.listWidgetSq.setItemWidget(listItem, model)
+
+
+
+
+
+
+
 
 
 

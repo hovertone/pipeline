@@ -238,7 +238,7 @@ class Ui_FileManager(object):
         self.pb_save.setObjectName("pb_save")
         self.horizontalLayout_5.addWidget(self.pb_save)
         self.pb_select_shot = QPushButton(self.frame_bottom)
-        self.pb_select_shot.setMinimumSize(QSize(80, 25))
+        self.pb_select_shot.setMinimumSize(QSize(100, 25))
         self.pb_select_shot.setObjectName("pb_select_shot")
         self.horizontalLayout_5.addWidget(self.pb_select_shot)
         spacerItem6 = QSpacerItem(30, 20, QSizePolicy.Minimum, QSizePolicy.Minimum)

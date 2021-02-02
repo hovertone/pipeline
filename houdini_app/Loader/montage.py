@@ -131,10 +131,11 @@ class MakeMontage(QDialog):
 
 
         pathMov = path + "/" + self.sequence + "_v" + version + ".mov"
-        final_clip.to_videofile(pathMp4, fps=24, remove_temp=False, temp_audiofile=os.path.expanduser("~")+"/montage_temp.mp3")
+        final_clip.to_videofile(pathMp4, fps=24, remove_temp=False, temp_audiofile=os.path.expanduser("~")+"/montage_temp.wav")
+        #final_clip.write_videofile("output3.mp4", fps=24, audio_codec='pcm_s16le', remove_temp=False, temp_audiofile=os.path.expanduser("~")+"/montage_temp.wav")  # will use 16-bit WAV
         self.progressBar.setRange(0,100)
         self.progressBar.setVisible(True)
-        mpg = "X:/app/win/Pipeline/modules/ffmpeg/bin/ffmpeg -y -i " + pathMp4 + " -f mov " + pathMov
+        mpg = "X:/app/win/Pipeline/modules/ffmpeg/bin/ffmpeg -y -r 24 -i " + pathMp4 + " -f mov " + pathMov
         subprocess.call(mpg, shell=True)
         self.progressBar.setValue(90)
         subprocess.call([r"X:\app\win\rv\rv7.1.1\bin\rv.exe", pathMov])
