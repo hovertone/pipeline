@@ -9,6 +9,7 @@ import re
 
 def main(save = True):
     usr = getpass.getuser()
+    if usr == 'sashok': usr = 'Admin'
     my_local_machine_name = 'desktop-p247okt'
     houdini_local_folder = 'G:/houdini'
     temp = 'C:/Users/%s/AppData/Local/Temp/houdini_temp/' % usr

@@ -362,9 +362,33 @@ def fillExistingTpSet(tp, nodes):
         except Exception as e:
             print e
 
+def fixButtonPaths(tp):
+    print 'in fix button paths'
+    pwd = os.environ['shopScriptsPWD']
+    grp = tp.parmTemplateGroup()
+    for p in grp.parmTemplates():
+
+        if p.type() == hou.parmTemplateType.Button:
+            pn = grp.find(p.name())
+            pp = p
+            cb = p.scriptCallback()
+            s = cb.replace('execfile("', '').replace('")', '')
+            path, script = os.path.split(s)
+            if not os.path.exists(path):
+                print 'SDSFSFSDFDSFSDFSD   $$$$$$$$'
+                newcb = 'execfile("%s")' % '/'.join((pwd, script))
+                pp.setScriptCallback(newcb)
+                grp.replace(pn, pp)
+                print '%s button callback path was replaced by %s' % (p.name(), '/'.join((pwd, script)))
+    tp.setParmTemplateGroup(grp)
+
 def main():
     print '\t\t\t\tMAIN'
     nodes = hou.selectedNodes()
+
+    pwd = os.environ['shopScriptsPWD']
+    print 'PWD %s' % pwd
+
 
     if len(nodes) == 0:
         # if no nodes were selected. The empty tp node should be created on a proper level if all conditions are met.
@@ -381,13 +405,14 @@ def main():
             hou.ui.displayMessage('No Network View found')
             return
     elif nodes[0].type().name() == 'arnold_vopnet' or nodes[0].type().name() == 'arnold_materialbuilder':
-        # if proper nodes selected. All subshildren image nodes filenames will be linked to tp
+        # if proper nodes selected. All subchildren image nodes filenames will be linked to tp
         parent = nodes[0].parent()
         tp_list = [c for c in parent.children() if c.name() == 'tp']
         if tp_list == []:
             tp = createEmptyTp(parent)
         else:
             tp = tp_list[0]
+            fixButtonPaths(nodes[0])
         fillExistingTpSet(tp, nodes)
         return
 
