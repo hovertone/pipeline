@@ -285,47 +285,11 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
 
 
     def export_geo(self, path):
-        if not self.ch_box.isChecked():
 
-            start = cmds.playbackOptions(query=True, minTime=True)
-            end = cmds.playbackOptions(query=True, maxTime=True)
-            cmds.select(hi=True)
+        start = cmds.playbackOptions(query=True, minTime=True)
+        end = cmds.playbackOptions(query=True, maxTime=True)
+        self.export_reference(cmds.ls(sl=True)[0], path, str(start), str(start), "1")
 
-            motionblurKeyframesBake.addExtraKeys(first=int(start), last=int(end))
-
-            objects = cmds.ls(sl=True, type="mesh")
-            cmds.select(objects)
-            cmds.pickWalk(d="Up")
-            selLong = cmds.ls(sl=True, l=True)
-            selString = str(' -root '.join(selLong))
-
-            if self.ch_box_namespace.isChecked():
-                command = (
-                    "-frameRange {0} {1} -step {2} -attr matGroup -writeVisibility -uvWrite -stripNamespaces -writeFaceSets -wholeFrameGeo -worldSpace -writeUVSets -dataFormat ogawa -root {3} -file  {4}").format(
-                    str(int(1)), str(int(2)), str(1), selString, str(path))
-                print "ALEMBIC COMMAND ", command
-                cmds.AbcExport(j=command)
-            else:
-                command = (
-                    "-frameRange {0} {1} -step {2} -attr matGroup -writeVisibility -uvWrite -writeFaceSets -wholeFrameGeo -worldSpace -writeUVSets -dataFormat ogawa -root {3} -file  {4}").format(
-                    str(int(1)), str(int(2)), str(1), selString, str(path))
-                print "ALEMBIC COMMAND ", command
-                cmds.AbcExport(j=command)
-        else:
-        #objects = self.getSelectGeo()
-            selLong = cmds.ls(sl=True, visible=True, l=True)
-            selString = str(' -root '.join(selLong))
-
-            if self.ch_box_namespace.isChecked():
-                command = (
-                    "-frameRange {0} {1} -step {2} -attr matGroup -writeVisibility -uvWrite -stripNamespaces -writeFaceSets -wholeFrameGeo -worldSpace -writeUVSets -dataFormat ogawa -root {3} -file  {4}").format(
-                    str(int(1)), str(int(2)), str(1), selString, str(path))
-                cmds.AbcExport(j=command)
-            else:
-                command = (
-                    "-frameRange {0} {1} -step {2} -attr matGroup -writeVisibility -uvWrite -writeFaceSets -wholeFrameGeo -worldSpace -writeUVSets -dataFormat ogawa -root {3} -file  {4}").format(
-                    str(int(1)), str(int(2)), str(1), selString, str(path))
-                cmds.AbcExport(j=command)
 
         if self.ch_box_message.isChecked():
             telega.telegramReport(path, tp='cache')
@@ -336,30 +300,78 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
         start = cmds.playbackOptions(query=True, minTime=True)
         end = cmds.playbackOptions(query=True, maxTime=True)
 
-        cmds.select(hi=True)
-        #motionblurKeyframesBake.addExtraKeys(first=int(start), last=int(end))
-        objects = cmds.ls(sl=True, type="mesh")
-        cmds.select(objects)
-        cmds.pickWalk(d="Up")
-
-        selLong = cmds.ls(sl=True, l=True)
-        selString = str(' -root '.join(selLong))
-
-
-        if self.ch_box_namespace.isChecked():
-            command = (
-                "-frameRange {0} {1} -step {2} -uvWrite -stripNamespaces -writeFaceSets -wholeFrameGeo -worldSpace -dataFormat ogawa -root {3} -file  {4}").format(
-                str(int(start) - 1), str(int(end) + 1), str(1), selString, str(path))
-        else:
-            command = (
-                "-frameRange {0} {1} -step {2} -uvWrite -writeFaceSets -wholeFrameGeo -worldSpace -dataFormat ogawa -root {3} -file  {4}").format(
-                str(int(start)-1), str(int(end)+1), str(1), selString, str(path))
-        print "ALEMBIC COMMAND ", command
-        cmds.AbcExport(j=command)
+        self.export_reference(cmds.ls(sl=True)[0], path, str(start-1), str(end+1), "1")
 
         mel.eval("paneLayout -e -manage true $gMainPane")
         if self.ch_box_message.isChecked():
             telega.telegramReport(path, tp = 'cache')
+
+
+    def get_export_nodes(self, nodes):
+        '''Return selection set nodes or all nodes.'''
+        for selection_set in cmds.ls(nodes, exactType="objectSet"):
+            selection_set_name = selection_set.rsplit(':', 1)[-1].lower()
+            if 'export' in selection_set_name or 'abc' in selection_set_name:
+                export_nodes = cmds.sets(selection_set, query=True)
+                print(
+                    'Found export set: "{}" ({} nodes)'.format(
+                        selection_set, len(export_nodes)
+                    )
+                )
+                if export_nodes:
+                    return cmds.ls(export_nodes, type='transform', long=True)
+        return nodes
+
+
+    def get_roots(self, nodes):
+        '''Return roots from *nodes*.'''
+        all_nodes = cmds.ls(nodes, long=True, transforms=True, dag=True)
+        roots = []
+        for node in all_nodes:
+            parent_nodes = cmds.listRelatives(node, parent=True, fullPath=True)
+            if not parent_nodes or parent_nodes[0] not in all_nodes:
+                roots.append(node)
+        return roots
+
+
+    def export_reference(self, reference_node, export_alembic_path, frame_start, frame_end, frame_step):
+        '''Export reference to Alembic.'''
+        namespace = cmds.referenceQuery(reference_node, namespace=True)
+        roots = cmds.ls(namespace + ":rig|mdl", recursive=True, long=True)
+        nodes = cmds.ls(
+            cmds.referenceQuery(reference_node, nodes=True), type='transform', long=True
+        )
+        all_nodes = nodes
+        # If export selection set is present, then apply it
+        # otherwise just use "|rig|mdl"
+        nodes = self.get_export_nodes(nodes)
+        # Save the selection to restore when we are done
+        saved_selection = cmds.ls(selection=True, long=True)
+        alembic_job_args = [
+            '-uvWrite',
+            '-writeFaceSets',
+            '-worldSpace',
+            '-writeVisibility',
+            '-stripNamespaces',
+            '-uvWrite',
+            '-frameRange',
+            str(frame_start),
+            str(frame_end),
+            '-step',
+            str(frame_step),
+        ]
+        alembic_job_args += ['-selection']
+        print('Alembic roots:')
+        for n in roots or self.get_roots(all_nodes):
+            print(n)
+            alembic_job_args += ['-root', n]
+        alembic_job_args += ['-file ' + export_alembic_path]
+        # Select objects to include
+        cmds.select(nodes, hierarchy=True)
+        print('cmds.AbcExport(j={})'.format(repr(' '.join(alembic_job_args))))
+        cmds.AbcExport(j=' '.join(alembic_job_args))
+        cmds.select(saved_selection)
+
 
     def save_params(self):
         data = [self.comboSource.currentIndex(),
@@ -372,6 +384,7 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
         conf = os.path.join(os.path.expanduser("~"), "exporter.config")
         with open(conf, 'w') as f:
             json.dump(data, f, indent=4)
+
 
     def load_params(self):
         c = os.path.join(os.path.expanduser("~"), "exporter.config")

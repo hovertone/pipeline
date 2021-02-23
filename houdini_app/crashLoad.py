@@ -15,6 +15,7 @@ def main(save = True):
     temp = 'C:/Users/%s/AppData/Local/Temp/houdini_temp/' % usr
     files = list(filter(os.path.isfile, glob.glob(temp + "*.hip")))
     files.sort(key=lambda x: os.path.getmtime(x))
+    print 'FILES %s' % str(files)
     last_file = files[-1]
 
     fileStatsObj = os.stat(last_file)
