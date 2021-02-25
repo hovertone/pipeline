@@ -365,21 +365,33 @@ def fillExistingTpSet(tp, nodes):
 def fixButtonPaths(tp):
     print 'in fix button paths'
     pwd = os.environ['shopScriptsPWD']
+    #print 'path %s' % tp.path()
     grp = tp.parmTemplateGroup()
+    button_parms = list()
     for p in grp.parmTemplates():
-
+        #print 'P %s' % p
         if p.type() == hou.parmTemplateType.Button:
-            pn = grp.find(p.name())
-            pp = p
-            cb = p.scriptCallback()
-            s = cb.replace('execfile("', '').replace('")', '')
-            path, script = os.path.split(s)
-            if not os.path.exists(path):
-                print 'SDSFSFSDFDSFSDFSD   $$$$$$$$'
-                newcb = 'execfile("%s")' % '/'.join((pwd, script))
-                pp.setScriptCallback(newcb)
-                grp.replace(pn, pp)
-                print '%s button callback path was replaced by %s' % (p.name(), '/'.join((pwd, script)))
+            button_parms.append(p)
+        if p.type() == hou.parmTemplateType.Folder:
+            #print 'inside folder'
+            for pp in p.parmTemplates():
+                #print 'checking %s' % pp.name()
+                if pp.type() == hou.parmTemplateType.Button:
+                    button_parms.append(pp)
+
+    for p in button_parms:
+        pn = grp.find(p.name())
+        #print 'in %s' % p.name()
+        pp = p
+        cb = p.scriptCallback()
+        s = cb.replace('execfile("', '').replace('")', '')
+        path, script = os.path.split(s)
+        if not os.path.exists(path):
+            newcb = 'execfile("%s")' % '/'.join((pwd, script))
+            pp.setScriptCallback(newcb)
+            grp.replace(pn, pp)
+            print '%s button callback path was replaced by %s' % (p.name(), '/'.join((pwd, script)))
+
     tp.setParmTemplateGroup(grp)
 
 def main():
