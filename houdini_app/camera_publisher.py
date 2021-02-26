@@ -50,8 +50,14 @@ def importCamHoudini(camFolder, lastFBXVersion, renameTo = 'cam1', scale = '1', 
     cam =  hou.copyNodesTo([cam], hou.node('/obj'))[0] # copeNodesTo returns tuple. In this case it's camera only. So we take a first item
     node[0].destroy()
     cam.setName(renameTo)
+
     cam.parm('resx').set(1920)
     cam.parm('resy').set(1080)
+
+    pwd = hou.ui.paneTabOfType(hou.paneTabType.NetworkEditor, 0)
+    vb = hou.ui.findPaneTab(pwd.name()).visibleBounds()
+
+    cam.setPosition(vb.center())
 
     setGobalFrangeExpr = 'tset `(%d-1)/$FPS` `%d/$FPS`' % (first_frame, last_frame)
     hou.hscript(setGobalFrangeExpr)
