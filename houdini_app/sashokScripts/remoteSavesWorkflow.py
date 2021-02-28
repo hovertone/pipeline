@@ -26,7 +26,7 @@ class basic_workflow:
         self.workst = 'sashok'
         self.local_host = 'desktop-p247okt'
         self.workst_host = 'sashok'
-        self.local_drive = 'D:'
+        self.local_drive = 'G:'
         self.netw_drive = 'P:'
 
     def weLocal(self):
