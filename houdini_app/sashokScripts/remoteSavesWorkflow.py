@@ -93,8 +93,8 @@ class basic_workflow:
             print 'from work'
 
     def saveToWork(self):
-        if not self.weLocal():
-            print 'from work'
+        if self.weLocal():
+            print 'from home'
             if self.local_drive in hou.hipFile.path(): #
                 if hou.ui.displayMessage("Want to resave to work network?", buttons=("Yes", "No")) == 0:
                     spl = os.environ['SHOT'].split('/')
@@ -114,8 +114,7 @@ class basic_workflow:
 
                     hou.hipFile.save(netw_hip_filepath)
         else:
-            print 'from home'
-
+            print 'from work'
 
 if __name__ == '__main__':
     bw = basic_workflow()
