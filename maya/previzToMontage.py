@@ -301,6 +301,8 @@ def proceedToMov(pValue):
         # else:
         telega.telegramReport(shotPath, tp='anim')
 
+    shutil.rmtree(os.path.split(jpeg_path)[0])
+
 
     # except:
     #     cmds.confirmDialog(message='SANEK NAPISAL KAKAYU-TO HUJNYU V CODE)))')
