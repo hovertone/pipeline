@@ -96,7 +96,7 @@ class MayaManager2(Filemanager):
         print "ENTER EVENT TO NEW ASSET"
         name = self.new_asset.le_assetName.text()
         user = os.environ['COMPUTERNAME'].lower()
-        v_ext = "v001.mb"
+        v_ext = "v001.ma"
 
         if self.cbox_sequence.currentText() == "assetBuilds":
             file_name = '_'.join([name, user, v_ext])
@@ -149,11 +149,13 @@ class MayaManager2(Filemanager):
         except:
             str_version = "001"
 
+        print "LASTVERSION", str_version
+
         if not self._shot:
             if self.cbox_sequence.currentText() == "assetBuilds":
                 self._shot = item_path.split("/" +self.cbox_type.currentText()+"/")[1].split("/")[0]
 
-        fileName = "_".join([self._shot, item_text, user, "v"+str_version+".mb"])
+        fileName = "_".join([self._shot, item_text, user, "v"+str_version+".ma"])
 
         full_path = os.path.join(path, fileName).replace("\\", "/")
         if cmds.file(rename=full_path):

@@ -133,14 +133,16 @@ def saveUp():
 
     for f in all_files:
         if not "afanasy" in f:
-            if ".mb" in f:
+            if ".mb" in f or ".ma" in f:
                 v = f.split(".")[0][-3:]
                 if v.isdigit() == True:
                     versions.append(int(v))
 
     versions = sorted(versions)
+    print "VERISONS", versions
     up_version = str(versions[-1] + 1).zfill(3)
-    mb_name = names[0] + "_" + names[1] + "_" + usr + "_v" + up_version + ".mb"
+    print "UP", up_version
+    mb_name = names[0] + "_" + names[1] + "_" + usr + "_v" + up_version + ".ma"
     full_path = os.path.join(path, mb_name).replace("\\", "/")
     cmds.file(rename=full_path)
     cmds.file(save=True)

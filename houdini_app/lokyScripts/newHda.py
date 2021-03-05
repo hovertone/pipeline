@@ -409,10 +409,16 @@ def hdaAddVersion():
 		latestVersion = int(versions[-1][-1]) # from myAsset::1.4 -> 1
 		
 	hdaNewVersion = str((latestVersion+1)).zfill(3)
-
 	hdaNewName = versions[-1][0]+"::"+hdaNewVersion
+	#hdaNewName = versions[-1][0]
+	newHdaFile = hdaFile.rsplit("/", 1)[0]+"/"+versions[-1][0]+".v"+hdaNewVersion+".hda"
+	#print "newFile: "+newHdaFile
+	#print "oldFile: "+hdaFile
+	#newDefinition = definition.copyToHDAFile(newHdaFile, new_name=hdaNewName ) #return None no matter what but set for readability
 	newDefinition = definition.copyToHDAFile(hdaFile, new_name=hdaNewName ) #return None no matter what but set for readability
+	#latestDefinition = hou.hda.definitionsInFile(newHdaFile)
 	latestDefinition = hou.hda.definitionsInFile(hdaFile)
+	#node = node.changeNodeType(hdaNewName , keep_network_contents=False)
 	node = node.changeNodeType(hdaNewName , keep_network_contents=False)
 	last = latestDefinition[-1]
 	last.setVersion(str(hdaNewVersion))
