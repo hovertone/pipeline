@@ -22,7 +22,7 @@ from ma_filemanager_v2 import MayaManager2
 from Exporter.asset_exporter import AssetExporter
 import assetDailies
 import playblastWithRV
-import previzToMontage
+import animation_daily
 import camera_publisher
 import zshotmask
 import setShotInOut
@@ -51,7 +51,7 @@ def createMenuTool():
     cmds.menuItem(parent=tfx_mMenu, label='Add Attr', c='mg.addAttrMatGroup()')
     cmds.menuItem(parent=tfx_mMenu, label='Set MatGrp', c='mg.setAttrUI()')
     cmds.menuItem(parent=tfx_mMenu, label='Playblast', c='playblastWithRV.createUI(playblastWithRV.applyCallback)')
-    cmds.menuItem(parent=tfx_mMenu, label='Make montage Daily',
+    cmds.menuItem(parent=tfx_mMenu, label='Make Animation Daily',
                   c='previzToMontage.createUI(previzToMontage.applyCallback)')
     cmds.menuItem(parent=tfx_mMenu, label='Make Asset Daily',
                   c='assetDailies.createUI("Make Daily", assetDailies.applyCallback)')

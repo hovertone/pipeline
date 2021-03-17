@@ -44,7 +44,10 @@ def sendTelegramMessage(filePath):
     bot.send_video(chatidData, file, width=99, height=56, caption='<b>%s</b> COMP' % shot.upper(), parse_mode=telegram.ParseMode.HTML)
     #bot.send_message(chat_id=chatidData, text="<i>Testing: "+filePath+"</i>", parse_mode=telegram.ParseMode.HTML)
 
-def makeDailyFromRead():
+def makeDailies():
+    pass
+
+def beginDailyProccess():
     dev = False
 
     # VAR FOR DEVELOPMENT PURPOSES
@@ -58,31 +61,31 @@ def makeDailyFromRead():
     if [i for i in nuke.allNodes('Write') if 'forDaily' in i['file'].value()] == []:
         nuke.message('You need to create a DailyEXR Write node')
 
-    mpg = "X:/app/win/ffmpeg/bin/ffmpeg"
-    drive, project, seq, shot, assetName, ver = getPipelineAttrs()
 
+    #pipe_root = os.environ['PIPELINE_ROOT'].replace('\\', '/')
+    #mpg = '%s/modules/ffmpeg/bin/ffmpeg' % pipe_root
+    # PIPELINE ATTRS ACQUISITION
+    drive, project, seq, shot, assetName, ver = getPipelineAttrs()
     os.environ['SHOT'] = '%s/%s/sequences/%s/%s' % (drive, project, seq, shot)
 
-    d = projectDict(project)
-    #sequence_path = '%s/%s/sequences/%s/%s/out/hires/' % (drive, project, seq, shot)
-    #sequence_path = 'P:/Raid/sequences/absentPlayer2/sh050/comp/mainComp/precomp/forDaily'
+    # SEQUENCE PATH ASSEMBLY
     sequence_path = '%s/%s/sequences/%s/%s/comp/%s/precomp/forDaily/' % (drive, project, seq, shot, assetName)
-    print 'SEQ PATH %s' % sequence_path
     if not os.path.exists(sequence_path):
         nuke.message('There is no FOR DAILY folder')
         return
-    # if len(os.listdir(sequence_path)) != int(d.getSpecificShotData(seq, shot, 'last_frame')) - int(d.getSpecificShotData(seq, shot, 'first_frame')) + 1:
-    #     nuke.message("Malo frejmov")
-    #     return
 
+    # ALL PATHS FOR DAILIES CREATION
     curTime = strftime("%Y-%m-%d_%H-%M-%S", gmtime())
+    all_dailies_folder = '%s/%s/sequences/%s/%s/out/allDailies' % (drive, project, seq, shot)
+    if not os.path.exists(all_dailies_folder): os.makedirs(all_dailies_folder)
+    all_dailies_file = os.path.basename(nuke.root().name()).strip('.nk') + '_' + curTime + '.mov'
+    all_dailies_path = all_dailies_folder + "/" + all_dailies_file
+    
+    main_dailies_folder = '%s/%s/sequences/%s/%s/out' % (drive, project, seq, shot)    
+    main_dailies_file = 'DAILIES_%s_comp.mov' % shot
+    main_dailies_path = main_dailies_folder + "/" + main_dailies_file
 
-    out_path_daily = '%s/%s/sequences/%s/%s/out/allDailies' % (drive, project, seq, shot)
-    if not os.path.exists(out_path_daily): os.makedirs(out_path_daily)
-    out_path_daily_ftrack = 'P:/%s/sequences/%s/%s/out' % (project, seq, shot)
-    out_file = os.path.basename(nuke.root().name()).strip('.nk') + '_' + curTime + '.mov'
-    out_file_ftrack = 'DAILIES_%s_comp.mov' % shot
-
+    # NUKE # MAKE SURE THAT FOR DAILY WRITE CONNECTED TO SMTH
     w_list = [n for n in nuke.allNodes('Write') if '_forDaily' in n['file'].value()]
     if w_list[0].dependencies() != []:
         tn = w_list[0].dependencies()[0]
@@ -103,7 +106,7 @@ def makeDailyFromRead():
         os.remove(path_to_file)
         print 'REMOVING .tmp FILE: %s' % path_to_file
 
-
+    
     seqs = pyseq.get_sequences(sequence_path)
     if len(seqs) > 1:
         nuke.message('There are to many sequences in folder.\nInache govorya, dve sekvencii c papke kakbe, bratok.')
@@ -112,31 +115,20 @@ def makeDailyFromRead():
     s = seqs[0]
     sq = os.path.join(sequence_path, s.format('%h%p%t'))
 
-    # CHECK FOR AVAILABILITY OF THE OUTPUT FILE
+    # CHECK FOR AVAILABILITY OF THE MAIN OUTPUT FILE OVERIDE
     try:
-        if os.path.exists(out_path_daily_ftrack + "/"+out_file_ftrack):
+        if os.path.exists(main_dailies_folder):
             # file is not used by other application. So we can overwrite it
             #nuke.tprint('it exists')
-            f = open(out_path_daily_ftrack + "/"+out_file_ftrack, 'w')
+            f = open(main_dailies_path, 'w')
             f.close()
             #nuke.tprint('can be written')
     except IOError:
-        nuke.message('%s is in use by another application' % (out_path_daily_ftrack + "/"+out_file_ftrack))
+        nuke.message('%s is in use by another application' % main_dailies_path)
         return
 
-    # SOUND
-    soundFolder = '%s/%s/sequences/%s/%s/sound/' % (drive, project, seq, shot)
-    if os.path.exists(soundFolder) and len(filter(os.path.isfile, glob.glob(soundFolder + "*.wav"))) > 0:
-        files = filter(os.path.isfile, glob.glob(soundFolder + "*.wav"))
-        files.sort(key=lambda x: os.path.getmtime(x))
-        lastSoundFile = files[-1].replace('\\', '/')
-    else:
-        print 'There is no folder for sound'
-        lastSoundFile = False
-
     print 'Daily is in progress with movie_maker'
-    produce_daily(sq, out_path_daily + "/" + out_file)
-
+    produce_daily(sq, all_dailies_path)
 
     # NUKE RESAVE
     currentPath = nuke.root().name()
@@ -144,23 +136,22 @@ def makeDailyFromRead():
     dailynkPath = '%s/%s/sequences/%s/%s/comp/%s/dailiesComps/%s' % (drive, project, seq, shot, assetName, nkname[:-3] + '_' + curTime + '.nk')
     if not os.path.exists(os.path.dirname(dailynkPath)): os.makedirs(os.path.dirname(dailynkPath))
     nuke.scriptSaveAs(dailynkPath, 1)
-    #print '%s saved to DAILY' % dailynkPath
     nuke.scriptSaveAs(currentPath, 1)
-    #print '%s saved BACK' % currentPath
 
-    shutil.copy2(out_path_daily + "/"+out_file, out_path_daily_ftrack + "/"+out_file_ftrack)
+    # DUPLICATE ALL DAILY TO MAIN OUT DAILY
+    shutil.copy2(all_dailies_path, main_dailies_path)
 
     # COPY PATH TO CLIPBOARD
     clipboard = QtWidgets.QApplication.clipboard()
-    fullPath = out_path_daily_ftrack + "/"+out_file_ftrack
+    fullPath = main_dailies_path
     clipboard.setText(fullPath)
 
     sp.Popen([r"X:\app\win\rv\rv7.1.1\bin\rv.exe", fullPath])
 
     phrases = ['Vot eto tu harosh!', 'Mozhet ne nado tak zhossko?', 'Vou Vou, polegche!', 'Teper v mire na odin topovuj deiliz bolshe!', 'A smotrel(a) chto poluchilos?', 'Da pribudet s toboi sila!' , "Tak derzhat'! Rabotaem."]
     if nuke.ask('Daily done! %s\nZapostim eto v telegy?' % phrases[random.randrange(len(phrases))]):
-        print 'OUT OUT %s' % (out_path_daily + "/" + out_file)
-        telega.telegramReport(filePath = out_path_daily +"/"+ out_file, tp = 'comp')
+        print 'OUT OUT %s' % (all_dailies_folder + "/" + all_dailies_file)
+        telega.telegramReport(filePath = all_dailies_folder +"/"+ all_dailies_file, tp = 'comp')
         #sendTelegramMessage()
 
 
@@ -187,19 +178,25 @@ def createEXRforDaily():
 
 def createProxyStill(n = None):
     drive, project, seq, shot, assetname, ver = getPipelineAttrs()
+    path = '%s/%s/sequences/%s/%s/comp/%s/precomp/forDaily/%s_%s_forDaily.%s.exr' % (drive, project, seq, shot, assetname, seq, shot, str(int(nuke.root()['first_frame'].value())))
     if n == None:
         ww = nuke.thisNode()
     else:
         ww = n
 
-    if ww.dependencies() != []:
-        tn = ww.dependencies()[0]
-    else:
-        nuke.message('Daily write has to be connected to Read node')
-        return None
+    # if ww.dependencies() != []:
+    #     tn = ww.dependencies()[0]
+    # else:
+    #     nuke.message('Daily write has to be connected to Read node')
+    #     return None
+
+    read = nuke.createNode('Read')
+    read['postage_stamp'].setValue(False)
+    read['file'].setValue(path)
+    read['colorspace'].setValue('Output - Rec.709')
 
     ref = nuke.createNode('Reformat')
-    ref.setInput(0, tn)
+    ref.setInput(0, read)
     ref['type'].setValue('to box')
     ref['box_fixed'].setValue(True)
     ref['box_width'].setValue(512)
@@ -212,6 +209,7 @@ def createProxyStill(n = None):
     nuke.execute(w.name(), int(nuke.root()['first_frame'].value()), int(nuke.root()['first_frame'].value()))
     nuke.delete(w)
     nuke.delete(ref)
+    nuke.delete(read)
     return True
 
 def masterDaily():
@@ -223,6 +221,6 @@ def masterDaily():
         return
     else:
         createProxyStill(w_list[-1])
-        makeDailyFromRead()
+        beginDailyProccess()
 
     #print w.name()

@@ -1,4 +1,3 @@
-print 'KLJASFLKJSHFLKSHFLKSJHFLKSJGF LKSJHKSJFLSGFLSF'
 import os
 import maya.cmds as cmds
 import random
@@ -167,96 +166,31 @@ def proceedToMov(pValue):
 
     curTime = strftime("%Y-%m-%d_%H-%M-%S", gmtime())
 
-    shotPath = '%s/%s/sequences/%s/%s/out/allDailies/%s_previz_v%s_%s.mov' % (drive, project, seq, shot, shot, str(version).zfill(3), curTime )
-    shotFtrackPath = '%s/%s/sequences/%s/%s/out/DAILIES_%s_previz.mov' % (drive, project, seq, shot, shot)
-    #previzMontagePath = '%s/%s/preproduction/previz/out/%s_v%s.mov' % (drive, project, shot, str(version).zfill(3))
+    shotPath = '%s/%s/sequences/%s/%s/out/allDailies/%s_animation_v%s_%s.mov' % (drive, project, seq, shot, shot, str(version).zfill(3), curTime )
+    shotFtrackPath = '%s/%s/sequences/%s/%s/out/DAILIES_%s_animation.mov' % (drive, project, seq, shot, shot)
 
     # CHECK FOR AVAILABILITY OF THE OUTPUT FILE
     try:
         if os.path.exists(shotFtrackPath):
             # file is not used by other application. So we can overwrite it
-            #nuke.tprint('it exists')
             f = open(shotFtrackPath, 'w')
             f.close()
-            #nuke.tprint('can be written')
     except IOError:
         cmds.confirmDialog(message='Poprosite zakrut montazh. Inache muvka ne perezapishetsya')
         return
 
-    for i in (shotPath, shotFtrackPath): #, previzMontagePath):
-        #print i
+    for i in (shotPath, shotFtrackPath):
         if not os.path.exists(os.path.dirname(i)):
             os.makedirs(os.path.dirname(i))
-            #print '%s folder created' % os.path.dirname(i)
 
-    #SOUND
-    if cmds.ls(type='audio') != []:
-        sd = cmds.ls(type='audio')[-1]
-        soundExists = True
-    else:
-        soundExists = False
-        print 'No audio nodes in scene. Playblasting without sound'
-
-    #try:
     docs = os.path.expanduser("~")
-    #print 'DOCS %s' % docs
-
     v = str(versions.current())[:4]
-    #print 'V %s' % v
-    #jpeg_folder = os.path.join(docs, 'maya', v, 'temp').replace('\\', '/')
-
-    #print jpeg_folder
-    # if not os.path.exists(jpeg_folder): os.makedirs(jpeg_folder)
-    #print 'removing...'
-    # for f in os.listdir(jpeg_folder):
-    #     print '\t%s' % os.path.join(jpeg_folder, f)
-    #     #os.remove(os.path.join(jpeg_folder, f))
-    #     os.remove('/'.join([jpeg_folder, f]))
-
-    #temp_mov = '%s/%s' % (jpeg_folder, '%s-%s-%s-tempPlayblast.mov' % (project, seq, shot))
-    #print 'TEMP MOV\n%s' % temp_mov
-    #cmds.playblast(f="C:/temp/preview.mov", format='qt', percent=100, quality=75, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd)
-    # if soundExists:
-    #     cmds.playblast(f=temp_mov, format='qt', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd, viewer=False)
-    # else:
-    #     cmds.playblast(f=temp_mov, format='qt', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, viewer=False)
-
     jpeg_path = os.path.join(docs, 'maya', v, 'temp', '%s-%s-%s' % (project, seq, shot), '%s-%s-%s-tempPlayblast' % (project, seq, shot)).replace('\\', '/')
     if not os.path.exists(os.path.split(jpeg_path)[0]): os.makedirs(os.path.split(jpeg_path)[0])
     cmds.playblast(f=jpeg_path, format='image', percent=100, quality=85, width=1920, height=1080, startTime=int(start), endTime=int(end), forceOverwrite=True, viewer=False)
+    print 'shotPath is:' + shotPath
 
-    #mpg = "X:/app/win/ffmpeg/bin/ffmpeg"
-
-    # SOUND
-    # soundFolder = '%s/%s/sequences/%s/%s/sound/' % (drive, project, seq, shot)
-    # if os.path.exists(soundFolder):
-    #     files = filter(os.path.isfile, glob.glob(soundFolder + "*.wav"))
-    #     files.sort(key=lambda x: os.path.getmtime(x))
-    #     lastSoundFile = files[-1].replace('\\', '/')
-    # else:
-    #     print 'There is no folder for sound'
-    #     lastSoundFile = False
-
-    #sq = '%s/%s' % (jpeg_folder, 'playblast.%04d.jpg')
-    # print 'mpg ' + mpg
-    #print 'lastSoundFile ' + str(lastSoundFile)
-    # print 'start ' + start
-    # print 'temp_mov ' + temp_mov
-    print 'shotPath ' + shotPath
-
-    """
-    if lastSoundFile:
-        #if sound exists
-        cmd = mpg + " -threads 8 -r 24 -i " + lastSoundFile + " -i " + temp_mov + " -threads 8 -y -r 24 -c:v libx264 -pix_fmt yuv420p -vf scale=1920:1080 -preset ultrafast -crf 30 " + shotPath
-    else:
-        cmd = mpg + " -threads 8 -r 24 -i " + temp_mov + " -threads 8 -y -r 24 -c:v libx264 -pix_fmt yuv420p -vf scale=1920:1080 -preset ultrafast -crf 30 " + shotPath
-
-    print '--- CMD ---'
-    print cmd
-    print 'shotpath %s' % shotPath
-    print sp.call(cmd, shell=True)
-    """
-
+    # PRODUCE DAILY
     produce_daily(jpeg_path + '.####.jpg', shotPath)
 
     # RV
@@ -269,15 +203,6 @@ def proceedToMov(pValue):
     except:
         print 'rv part failed'
 
-    #REMOVE JPEG FILES
-    # print 'removing...'
-    # for f in os.listdir(jpeg_folder):
-    #     print '\t%s' % os.path.join(jpeg_folder, f)
-    #     try:
-    #         os.remove(os.path.join(jpeg_folder, f))
-    #     except:
-    #         print 'cant remove for some reason...'
-
     #MOV COPYING
     try:
         shutil.copy2(shotPath, shotFtrackPath)
@@ -286,100 +211,13 @@ def proceedToMov(pValue):
     except:
         print "ftrack mov has not been created"
 
-
-    #folder_to_open = os.path.dirname(shotFtrackPath).replace('/', '\\')
     sp.Popen(r'explorer  /select,"%s\"' % shotFtrackPath.replace('/', '\\'))
 
     answer = cmds.confirmDialog(title='Confirm', message='Chetko! Zapostim v telegu?',
                                 button=['Samo Soboi!', 'Luchshe ne nado'], defaultButton='Samo Soboi!',
                                 cancelButton='Luchshe ne nado', dismissString='Luchshe ne nado')
     if answer == 'Samo Soboi!':
-        #cmds.confirmDialog(message='answer YES')
-        # if socket.gethostname() == 'sashok':
-        #     #cmds.confirmDialog(message='this is sashok')
-        #     telega.telegramReport(shotPath, tp='anim', args=['dev'])
-        # else:
         telega.telegramReport(shotPath, tp='anim')
 
+    # TEMP LOCAL FILES DELETION
     shutil.rmtree(os.path.split(jpeg_path)[0])
-
-
-    # except:
-    #     cmds.confirmDialog(message='SANEK NAPISAL KAKAYU-TO HUJNYU V CODE)))')
-
-# ==========================================================================================
-
-def proceedToMovDev(pValue):
-    start, end = pValue.strip(' ').split('-')
-    setPrePlaybackAttrs()
-    drive, project, seq, shot, version = getPipelineAttrs()
-
-    curTime = strftime("%Y-%m-%d_%H-%M-%S", gmtime())
-
-    shotPath = '%s/%s/sequences/%s/%s/out/allDailies/%s_previz_v%s_%s.mov' % (drive, project, seq, shot, shot, str(version).zfill(3), curTime )
-    shotFtrackPath = '%s/%s/sequences/%s/%s/out/DAILIES_%s_previz.mov' % (drive, project, seq, shot, shot)
-    previzMontagePath = '%s/%s/preproduction/previz/out/%s_v%s.mov' % (drive, project, shot, str(version).zfill(3))
-
-    for i in (shotPath, shotFtrackPath, previzMontagePath):
-        #print i
-        if not os.path.exists(os.path.dirname(i)):
-            os.makedirs(os.path.dirname(i))
-            #print '%s folder created' % os.path.dirname(i)
-
-    #SOUND
-    if cmds.ls(type='audio') != []:
-        sd = cmds.ls(type='audio')[-1]
-        soundExists = True
-    else:
-        soundExists = False
-        print 'No audio nodes in scene. Playblasting without sound'
-
-    #try:
-    cmds.playblast(f='C:/temp/maya_playblast/test_01', format='image', percent=100, quality=75, width=1476, height=830, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd)
-
-    mpg = "X:/app/win/ffmpeg/bin/ffmpeg"
-
-    # SOUND
-    soundFolder = '%s/%s/sequences/%s/%s/sound/' % (drive, project, seq, shot)
-    if os.path.exists(soundFolder):
-        files = filter(os.path.isfile, glob.glob(soundFolder + "*.wav"))
-        files.sort(key=lambda x: os.path.getmtime(x))
-        lastSoundFile = files[-1].replace('\\', '/')
-    else:
-        print 'There is no folder for sound'
-        lastSoundFile = False
-
-    sq = 'C:/temp/maya_playblast/test_01.%04d.jpg'
-    cmd = mpg + " -threads 8 -r 24 -i " + lastSoundFile + " -start_number " + start + " -i " + sq + " -threads 8 -y -framerate 24 -c:v libx264 -pix_fmt yuv420p -vf scale=1920:1080 -preset ultrafast -crf 20 " + "C:/temp/maya_playblast/result.mov"
-
-    print cmd
-    print sp.call(cmd, shell=True)
-    # if soundExists:
-    #     cmds.playblast(f=shotPath, format='qt', percent=100, quality=75, width=1476, height=830, startTime=int(start), endTime=int(end), forceOverwrite=True, s=sd)
-    # else:
-    #     cmds.playblast(f=shotPath, format='qt', percent=100, quality=75, width=1476, height=830, startTime = int(start), endTime = int(end), forceOverwrite=True)
-    #
-    # try:
-    #     shutil.copy2(shotPath, shotFtrackPath)
-    #     shutil.copy2(shotPath, previzMontagePath)
-    #     print 'movs copied'
-    # except:
-    #     print "movs has not been copied"
-    # #cmds.confirmDialog(message='Daily done!\n%s' % shotFtrackPath.replace('/', '\\'))
-    # answer = cmds.confirmDialog(title='Confirm', message='Chetko! Zapostim v telegu?',
-    #                             button=['Samo Soboi!', 'Luchshe ne nado'], defaultButton='Samo Soboi!',
-    #                             cancelButton='Luchshe ne nado', dismissString='Luchshe ne nado')
-    # if answer == 'Samo Soboi!':
-    #     #cmds.confirmDialog(message='answer YES')
-    #     if socket.gethostname() == 'sashok':
-    #         #cmds.confirmDialog(message='this is sashok')
-    #         telega.telegramReport(shotPath, tp='anim', args=['dev'])
-    #     else:
-    #         telega.telegramReport(shotPath, tp='anim')
-    # except:
-    #     cmds.confirmDialog(message='SANEK NAPISAL KAKAYU-TO HUJNYU V CODE)))')
-
-#createUI('Set Frames', applyCallback)
-#assetDailies.createUI('Make Daily', assetDailies.applyCallback)
-
-#X:/app/win/ffmpeg/bin/ffmpeg -threads 8 -r 24 -i P:/Raid/sequences/neverGetPicked/sh130/sound/shot_130_audio.wav -start_number 1001  -i C:/temp/maya_playblast/test_01.%04d.jpg -threads 8 -y -r 24 -c:v libx264 -pix_fmt yuv420p -vf scale=1920:1080 -preset ultrafast -crf 20 C:/temp/maya_playblast/result.mov
