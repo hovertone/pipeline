@@ -28,7 +28,7 @@ import zshotmask
 import setShotInOut
 import soundImport
 
-_MODULE_LIST = ['assetDailies', 'previzToMontage', 'camera_publisher', 'zshotmask', 'setShotInOut', 'soundImport']  #
+_MODULE_LIST = ['assetDailies', 'animation_daily', 'camera_publisher', 'zshotmask', 'setShotInOut', 'soundImport']  #
 
 try:
     ppath = os.getenv("MAYA_PLUG_IN_PATH")
@@ -52,7 +52,7 @@ def createMenuTool():
     cmds.menuItem(parent=tfx_mMenu, label='Set MatGrp', c='mg.setAttrUI()')
     cmds.menuItem(parent=tfx_mMenu, label='Playblast', c='playblastWithRV.createUI(playblastWithRV.applyCallback)')
     cmds.menuItem(parent=tfx_mMenu, label='Make Animation Daily',
-                  c='previzToMontage.createUI(previzToMontage.applyCallback)')
+                  c='animation_daily.createUI(animation_daily.applyCallback)')
     cmds.menuItem(parent=tfx_mMenu, label='Make Asset Daily',
                   c='assetDailies.createUI("Make Daily", assetDailies.applyCallback)')
     cmds.menuItem(parent=tfx_mMenu, label='Import camera', c='camera_publisher.importLastCamVersionMaya()')
