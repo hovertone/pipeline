@@ -181,6 +181,7 @@ class Ui_AssetExportDialog(object):
 
     def retranslateUi(self, AssetExportDialog):
         AssetExportDialog.setWindowTitle("AssetExporter")
+        self.comboBoxGeoType.addItems(["PROPS", "ENV", "CHAR"])
         self.lb_source.setText("SOURCE PATH")
         self.comboSource.setItemText(0, "ASSETBUILDS")
         self.comboSource.setItemText(1, "SHOT")

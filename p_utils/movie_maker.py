@@ -8,6 +8,7 @@ class produce_daily(object):
     def __init__(self, sq, out_path, fps=24, resolution=[1920, 1080], comment=''):
         ok_codecs = ['.mov', '.mp4']
         pipe_root = os.environ['PIPELINE_ROOT'].replace('\\', '/')
+        #pipe_root = 'D:/my/git/pipeline'
         mpg = '%s/modules/ffmpeg/bin/ffmpeg' % pipe_root
 
         folder = os.path.dirname(sq)
@@ -54,8 +55,8 @@ class produce_daily(object):
                 raise ValueError('SQ must contain #### or %04d type of syntax')
 
             # SQ FILES EXISTENCE CHECK
-            #print sq
-            #print padd, ff
+            print sq
+            print padd, ff
             first_frame_path = sq.replace(padd, ff)
             if not os.path.exists(first_frame_path):
                 raise OSError("First frame not exists (%s)!" % first_frame_path)
@@ -76,7 +77,7 @@ class produce_daily(object):
                     last_tweak = os.stat(full_file_path).st_atime
                     sound = '%s/%s' % (soundFolder, s)
             #print 'last modified file is %s' % most_recent
-            sound_line = ' -i %s ' % sound
+            sound_line = ' -i %s' % sound
         else:
             sound_line = ''
             print 'WARNING :: SOUND NOT FOUND'
@@ -88,19 +89,12 @@ class produce_daily(object):
 
         # CMD FORMATING
         if file_sequence: # IF WE'RE WORKING WITH FILE SEQS
-            # cmd = mpg + " -threads 8 -r " + str(fps) + sound_line + " -start_number " + ff + " -i " + sq + \
-            #   ''' -vf "drawtext=fontfile=c\:/Windows/Fonts/courbd.ttf: \
-            #   text=''' + shot + ''''       Frame\: %{eif\:n+1001\:d}'    ''' + comment + '''': fontcolor=white: fontsize=24: box=1: boxcolor=black@0.5: \
-            #                         boxborderw=5: x=50: y=(h-text_h)-25" ''' + \
-            #   " -threads 8 -y -c:v libx264 -s " + str('%sx%s' % (resolution[0], resolution[1])) + " -r " + str(fps) + " -pix_fmt " \
-            #   "yuv420p -preset ultrafast -crf 23 " + out_path
-            overlay_line = ''' -vf "drawtext=fontfile=c\:/Windows/Fonts/courbd.ttf: \
-               text=''' + shot + ''''       Frame\: %{eif\:n+1001\:d}'    ''' + comment + '''': fontcolor=white: fontsize=24: box=1: boxcolor=black@0.5: \
-                                     boxborderw=5: x=50: y=(h-text_h)-25" '''
-            video_line = ' -start_number ' + ff + ' -i ' + sq
-            fps_line = ' -r ' + str(fps)
-            compressions_line = '-c:v libx264 -s ' + str('%sx%s' % (resolution[0], resolution[1])) + ' -c:a aac -pix_fmt yuv420p -preset ultrafast -crf 23'
-            cmd = mpg + fps_line + video_line + sound_line + overlay_line + compressions_line + fps_line + ' -shortest ' + ' -y %s' % out_path
+            cmd = mpg + " -threads 8 -r " + str(fps) + sound_line + " -start_number " + ff + " -i " + sq + \
+              ''' -vf "drawtext=fontfile=c\:/Windows/Fonts/courbd.ttf: \
+              text=''' + shot + ''''       Frame\: %{eif\:n+1001\:d}'    ''' + comment + '''': fontcolor=white: fontsize=24: box=1: boxcolor=black@0.5: \
+                                    boxborderw=5: x=50: y=(h-text_h)-25" ''' + \
+              " -threads 8 -y -c:v libx264 -s " + str('%sx%s' % (resolution[0], resolution[1])) + " -r " + str(fps) + " -pix_fmt " \
+              "yuv420p -preset ultrafast -crf 23 " + out_path
         else:    # IF WE'RE WORKING WITH SINGLE VIDEO FILE INPUT
             cmd = mpg + " -threads 8 -r " + str(fps) + sound_line + " -i " + sq + \
                   ''' -vf "drawtext=fontfile=c\:/Windows/Fonts/courbd.ttf: \
@@ -112,7 +106,6 @@ class produce_daily(object):
 
 
         print 'CMD %s' % cmd
-        #subprocess.call(cmd, shell=True)
 
         result = subprocess.call(cmd, shell=True)
         if result==0:
@@ -120,26 +113,6 @@ class produce_daily(object):
         else:
             raise ValueError('ERROR :: problem subproccess.call(cmd)')
 
-def test_ffmpeg():
-    sq = 'P:/Raid/sequences/Delivery/sh020/comp/mainComp/precomp/forDaily/Delivery_sh020_forDaily.%04d.exr'
-    out_path = 'D:/temp/test_mov_v006.mov'
-    fps = 24
-
-    pipe_root = os.environ['PIPELINE_ROOT'].replace('\\', '/')
-    mpg = '%s/modules/ffmpeg/bin/ffmpeg' % pipe_root
-
-    sound_line = ' -i %s' % "P:/Raid/sequences/Delivery/sh020/sound/sh020_sound_v004.wav"
-    overlay_line = ''' -vf "drawtext=fontfile=c\:/Windows/Fonts/courbd.ttf: \
-                   text=''' + 'sh020' + ''''       Frame\: %{eif\:n+1001\:d}'    ''' + 'siski piski' + '''': fontcolor=white: fontsize=24: box=1: boxcolor=black@0.5: \
-                                         boxborderw=5: x=50: y=(h-text_h)-25" '''
-
-    #cmd = mpg + " -threads 8 -r " + str(fps) + sound_line + " -start_number 1001" + " -i " + sq + " -threads 8 -y -c:v libx264" + " -r " + str(fps) + " -pix_fmt yuv420p -preset ultrafast -crf 23 " + out_path
-    cmd = mpg + ' -r 24 -start_number 1001 -i ' + sq + sound_line + overlay_line + ' -c:v libx264 -c:a aac -pix_fmt yuv420p -crf 23 -r 24 -shortest -y %s' % out_path
-    print "CMD"
-    print cmd
-
-    subprocess.call(cmd, shell=True)
 
 if __name__ == '__main__':
-    p = produce_daily(sq='P:/Raid/sequences/Delivery/sh020/comp/mainComp/precomp/forDaily/Delivery_sh020_forDaily.####.exr', out_path='D:/temp/test_mov_v008.mov', resolution=[1920, 1020])
-    #test_ffmpeg()
+    p = produce_daily(sq='P:/Raid/sequences/serenade/sh120/comp/mainComp/precomp/forDaily/serenade_sh120_forDaily.#####.exr', out_path='D:/temp/test_mov_v10.mov', resolution=[3200, 1800])

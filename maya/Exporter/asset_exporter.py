@@ -64,7 +64,6 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
         self.pb_setLastVer.clicked.connect(self.get_last_version)
         self.pb_tool.clicked.connect(self.get_nameList)
 
-        self.comboBoxGeoType.addItems(["PROPS", "ENV", "CHAR"])
         self.le_filePath.setText("NO VARIABLE FOUND. US <Pipeline/FileManager>")
         self.pb_export.setEnabled(False)
 
@@ -78,17 +77,12 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
         self.ch_box_message.setChecked(True)
         self.ch_box_namespace.setChecked(True)
 
-
-
         self.set_filePath()
         if not name:
             try:
                 self.load_params()
             except:
                 pass
-
-
-
 
 
     def get_object_name(self):
@@ -104,7 +98,6 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
             self.objNameList.show()
         except:
             pass
-
 
 
     def get_component_name(self):
@@ -135,7 +128,6 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
             self.le_objectName.setText(item)
 
 
-
     def compName_fromList(self):
         if self.compNameList.list.currentItem():
             item = self.compNameList.list.currentItem().text()
@@ -149,12 +141,10 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
         versions = []
         for f in folders:
             versions.append(int(f.replace("v", "")))
-
         if not new:
             self.horizontalSlider.setValue(versions[-1])
         else:
             self.horizontalSlider.setValue(versions[-1]+1)
-
 
 
     def set_version_value(self):
@@ -212,7 +202,6 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
             self.pb_export.setEnabled(False)
 
 
-
     def export_action(self):
         self.save_params()
         path = self.le_filePath.text().split("/")[:-1]
@@ -266,30 +255,15 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
         if self.ch_box_message.isChecked():
             telega.telegramReport(path, tp='cache')
 
-    # def getSelectGeo(self):
-    #     object_for_select = cmds.ls(sl=True)
-    #     cmds.select(object_for_select, hi=True)
-    #     all_objects = cmds.ls(sl=True)
-    #     objects = cmds.ls(type='mesh')
-    #     cmds.select(objects)
-    #     cmds.pickWalk(d='Up')
-    #     to_export = []
-    #     for i in cmds.ls(sl=True):
-    #         if i in all_objects:
-    #             to_export.append(i)
-    #         else:
-    #             pass
-    #     cmds.select(to_export)
-    #     return to_export
-
 
 
     def export_geo(self, path):
-
         start = cmds.playbackOptions(query=True, minTime=True)
-        end = cmds.playbackOptions(query=True, maxTime=True)
-        self.export_reference(cmds.ls(sl=True)[0], path, str(start), str(start), "1")
 
+        if self.comboBoxGeoType.currentText() == "CHAR":
+            self.export_reference(cmds.ls(sl=True)[0], path, str(start), str(start), "1")
+        else:
+            self.export_static(frame_start=str(start), path=path)
 
         if self.ch_box_message.isChecked():
             telega.telegramReport(path, tp='cache')
@@ -371,6 +345,28 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
         print('cmds.AbcExport(j={})'.format(repr(' '.join(alembic_job_args))))
         cmds.AbcExport(j=' '.join(alembic_job_args))
         cmds.select(saved_selection)
+
+
+    def export_static(self, frame_start, path):
+        alembic_job_args = [
+            '-uvWrite',
+            '-writeFaceSets',
+            '-worldSpace',
+            '-writeVisibility',
+            '-stripNamespaces',
+            '-uvWrite',
+            '-frameRange',
+            str(frame_start),
+            str(frame_start),
+            '-step',
+            str("1"),
+            path]
+
+        nodes = cmds.ls(sl=True)
+        for n in self.get_roots(nodes):
+            print(n)
+            alembic_job_args += ['-root', n]
+        cmds.AbcExport(j=' '.join(alembic_job_args))
 
 
     def save_params(self):
