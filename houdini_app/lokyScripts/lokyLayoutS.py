@@ -639,7 +639,8 @@ def geoToFileCache():
 					targetNodeName = targetNode.type().name().split("::")[0]
 					if targetNodeName == "geo":
 						output.setInput(counter, filecache, 0)
-			filecache.moveToGoodPosition(relative_to_inputs=True, move_inputs=True, move_outputs=True, move_unconnected=True)
+			#filecache.moveToGoodPosition(relative_to_inputs=True, move_inputs=True, move_outputs=True, move_unconnected=True)
+			filecache.setPosition(node.position())
 			delNodeList.append(node)
 	for denNode in delNodeList:
 		denNode.destroy()
