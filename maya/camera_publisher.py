@@ -28,15 +28,15 @@ def exportCamMaya():
     else:
         #check if selected camera is a rig (inside some parent system) object
         par = cmds.listRelatives(sel[0], parent=True)
-        if par != None:
-            print 'camera rig object'
-            cam_bake.camBake()
-        else:
-            print 'root level object selected'
+        # if par != None:
+        #     print 'camera rig object'
+        #     cam_bake.camBake()
+        # else:
+        #     print 'root level object selected'
 
 
         #if cmds.objExists('cam1') and cmds.objectType('%s|%s' % ('cam1', cmds.listRelatives('cam1')[0])) == 'camera':
-        cmds.select('cam1')
+        #cmds.select(sel[0])
         try:
             shotPath = os.environ['SHOT']
         except:
@@ -113,6 +113,10 @@ def importCamMaya(camFolder, lastFBXVersion):
     cmds.setAttr('%s.camFilepath' % newCamName, lock=0)
     cmds.setAttr('%s.camFilepath' % newCamName, importPath, type='string')
     cmds.setAttr('%s.camFilepath' % newCamName, lock=1)
+
+    group = cmds.group()
+    cmds.rename(group, 'cam_group')
+
 
     #cmds.setAttr('%s.nearClipPlane' % (cmds.listRelatives(newCamName)[0]), 0.1)
     #cmds.setAttr('%s.farClipPlane' % (cmds.listRelatives(newCamName)[0]), 5000)
