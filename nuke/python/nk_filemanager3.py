@@ -228,6 +228,7 @@ class NukeManager(Filemanager):
 
         item_path = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).path
         item_text = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).text
+        print 'ITEM TEXT %s' % item_text
         asset_type = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).asset_type
         folder_type = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).folder_type
         item_date = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).date
@@ -240,8 +241,9 @@ class NukeManager(Filemanager):
         fileName = "_".join([self.cbox_sequence.currentText(), self._shot, item_text, user, "v"+str(version+1).zfill(3)+".nk"])
 
         full_path = os.path.join(path, fileName).replace("\\", "/")
+
+        self.setup_scene()
         nuke.root()['assetName'].setValue(item_text)
-        #self.setup_scene()
         nuke.scriptSaveAs(full_path)
         sceneUnwrap()
         self.close()

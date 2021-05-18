@@ -84,7 +84,7 @@ def makePrecomp(precompName, precompType, switch = True):
 	#pcname = root['precompName'].value()
 
 	drive, project, seq, shot, assetName, ver = getPipelineAttrs()
-	path = '%s/%s/sequences/%s/%s/comp/%s/precomp/%s/%s_%s_%s.####.%s' % (drive, project, seq, shot, assetName, precompName, seq, shot, precompName, types[precompType]['ext'])
+	path = '%s/%s/sequences/%s/%s/comp/%s/precomp/%s/v001/%s_%s_%s_v001.####.%s' % (drive, project, seq, shot, assetName, precompName, seq, shot, precompName, types[precompType]['ext'])
 	folder = os.path.dirname(path)
 	if not os.path.exists(folder): os.makedirs(folder)
 
