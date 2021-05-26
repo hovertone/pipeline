@@ -22,9 +22,6 @@ from montage_item import MontageItem
 
 
 
-
-
-
 class MakeMontage(QDialog):
     def __init__(self, parent=None):
         super(MakeMontage, self).__init__(parent)

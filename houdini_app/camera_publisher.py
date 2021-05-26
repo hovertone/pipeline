@@ -14,8 +14,11 @@ import recursiveInput
 import sys
 sys.path.append('X:/app/win/Pipeline/p_utils')
 
+
 import telega
 reload(telega)
+
+
 
 
 # def getLastCamVersion(path):
@@ -129,6 +132,10 @@ def importCamHoudini(camFolder, lastFBXVersion, renameTo = 'cam1', scale = '1', 
 
 
 def importLastCamVersionHoudini(force=True):
+
+    setShotFrameRange()
+
+
     first_frame = hou.playbar.playbackRange().x()
     last_frame = hou.playbar.playbackRange().y()
     try:
@@ -178,6 +185,26 @@ def importLastCamAtStartup():
             okOptions = ['Spasibo, zhelezka', 'Oy, davaj ne zaebuvaj', 'Mne pohuy']
             sayOptions = ['Tvoya kamera prosrochena, chuvak.', 'Nuzhno perezamenit kameru, kozhanuj meshok.']
             hou.ui.displayMessage(sayOptions[random.randrange(len(sayOptions))], buttons=[okOptions[random.randrange(len(okOptions))]])
+
+
+def setShotFrameRange():
+    project = os.environ["PROJECT"].rsplit("/", 1)[1]
+    seq = os.environ["SQ"]
+    shot = os.environ["SN"]
+    p_dict = parser.projectDict(project)
+    shot_data = p_dict.getAllShotData(seq=seq, shot=shot)
+    ff = int(shot_data["first_frame"])
+    lf = int(shot_data["last_frame"])
+    hou.hscript("setenv FSTART = " + shot_data["first_frame"])
+    hou.hscript("setenv FEND = " + shot_data["last_frame"])
+    hou.hscript("setenv START = " + shot_data["first_frame"])
+    hou.hscript("setenv END = " + shot_data["last_frame"])
+    setGobalFrangeExpr = "tset `({0}-1)/$FPS` `{1}/$FPS`".format(ff, lf)
+    hou.hscript(setGobalFrangeExpr)
+    hou.playbar.setPlaybackRange(ff, lf)
+    print("SHOT UPDATE FRAMERANGE")
+
+
 
 
 def bakeWithScale(cam):
