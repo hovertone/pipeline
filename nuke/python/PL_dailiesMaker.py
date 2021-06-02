@@ -25,7 +25,7 @@ except:
 
 from time import gmtime, strftime
 
-def makeCompDaily(project, seq, shot, auto=False):
+def makeCompDaily(project, seq, shot, assetName, auto=False):
     print '________________ IN MAKE COMP DAILY _____________________'
     drive = getPipelineAttrs()[0]
     comp_assetnames = os.listdir('%s/%s/sequences/%s/%s/comp/' % (drive, project, seq, shot))
@@ -33,7 +33,7 @@ def makeCompDaily(project, seq, shot, auto=False):
         print 'ERROR :: No assetnames in comp'
         return
     else:
-        assetName = comp_assetnames[0] # HARDCODE
+        #assetName = comp_assetnames[0] # HARDCODE
         sequence_path = '%s/%s/sequences/%s/%s/comp/%s/precomp/forDaily/' % (drive, project, seq, shot, assetName)
         if not os.path.exists(sequence_path):
             nuke.message('There is no FOR DAILY folder')
@@ -116,7 +116,7 @@ def beginDailyProccess():
         return
 
     # ACTUAL MAKE DAILY MOVS
-    all_dailies_path, main_out_path = makeCompDaily(project, seq, shot)
+    all_dailies_path, main_out_path = makeCompDaily(project, seq, shot, assetName)
 
     # NUKE RESAVE
     curTime = strftime("%Y-%m-%d_%H-%M-%S", gmtime())
@@ -204,7 +204,7 @@ def sequenceDailies(project, seq):
 
     for s in shots:
         print 'doing comp daily for %s' % s
-        makeCompDaily(project, seq, s, auto = True)
+        makeCompDaily(project, seq, s, 'mainComp', auto = True) #hardcode
 
 def masterDaily():
     drive, project, seq, shot, assetname, ver = getPipelineAttrs()
