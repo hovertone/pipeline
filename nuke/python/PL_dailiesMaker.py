@@ -50,7 +50,7 @@ def makeCompDaily(project, seq, shot, assetName, auto=False):
         all_dailies_path = all_dailies_folder + "/" + all_dailies_file
 
         main_dailies_folder = '%s/%s/sequences/%s/%s/out' % (drive, project, seq, shot)
-        if assetName.lower() == 'mainComp':
+        if assetName.lower() == 'mainсomp':
             main_dailies_file = 'DAILIES_%s_comp.mov' % shot
         else:
             main_dailies_file = 'DAILIES_%s_%s.mov' % (shot, assetName)
