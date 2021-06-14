@@ -149,20 +149,35 @@ def getPipelineAttrsFromPath(path):
         return ret
 
 def addFavoriteFolders():
+    print 'in add favourite folders'
     if getPipelineAttrs():
         drive, project, seq, shot, assetName, ver= getPipelineAttrs()
-        shotPath = '%s/%s/sequences/%s/%s' % (drive, project, seq, shot)
-        rendersPath = '%s/%s/sequences/%s/%s/render' % (drive, project, seq, shot)
-        compPath = '%s/%s/sequences/%s/%s/comp/%s' % (drive, project, seq, shot, assetName)
-        precompPath = '%s/%s/sequences/%s/%s/comp/%s/precomp' % (drive, project, seq, shot, assetName)
-        srcPath = '%s/%s/sequences/%s/%s/src' % (drive, project, seq, shot)
+        if 'assetBuilds' not in seq:
+            shotPath = '%s/%s/sequences/%s/%s' % (drive, project, seq, shot)
+            rendersPath = '%s/%s/sequences/%s/%s/render' % (drive, project, seq, shot)
+            compPath = '%s/%s/sequences/%s/%s/comp/%s' % (drive, project, seq, shot, assetName)
+            precompPath = '%s/%s/sequences/%s/%s/comp/%s/precomp' % (drive, project, seq, shot, assetName)
+            srcPath = '%s/%s/sequences/%s/%s/src' % (drive, project, seq, shot)
 
-        nuke.addFavoriteDir('_shot', shotPath)
-        nuke.addFavoriteDir('_renders', rendersPath)
-        nuke.addFavoriteDir('_comp', compPath)
-        nuke.addFavoriteDir('_precomp', precompPath)
-        nuke.addFavoriteDir('_src', srcPath)
-        print 'favourite folders added'
+            nuke.addFavoriteDir('_shot', shotPath)
+            nuke.addFavoriteDir('_renders', rendersPath)
+            nuke.addFavoriteDir('_comp', compPath)
+            nuke.addFavoriteDir('_precomp', precompPath)
+            nuke.addFavoriteDir('_src', srcPath)
+            print 'shot favourite folders added'
+        else:
+            shotPath = '%s/%s/%s/%s' % (drive, project, seq, shot)
+            rendersPath = '%s/%s/%s/%s/lookdev/render' % (drive, project, seq, shot)
+            compPath = '%s/%s/%s/%s/%s' % (drive, project, seq, shot, assetName)
+            precompPath = '%s/%s/%s/%s/%s/precomp' % (drive, project, seq, shot, assetName)
+            for p in [shotPath, rendersPath, compPath, precompPath]:
+                print p
+
+            nuke.addFavoriteDir('_shot', shotPath)
+            nuke.addFavoriteDir('_renders', rendersPath)
+            nuke.addFavoriteDir('_comp', compPath)
+            nuke.addFavoriteDir('_precomp', precompPath)
+            print 'assetbuilds favourite folders added'
     else:
         print "can't add favourite folders"
 

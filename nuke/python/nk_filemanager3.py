@@ -10,6 +10,8 @@ except:
 
 import os, sys, time, nuke, re
 from houdini_app.Loader.filemanager_v3 import Filemanager
+from houdini_app.Loader.itemShot import FileItemShot
+from houdini_app.Loader.itemDetail import ItemDetail
 from p_utils.csv_parser_bak import projectDict
 from PL_shotsInitiation import attachStringAttr, attachTab
 from PL_scripts import get_last_version, getPipelineAttrs, addFavoriteFolders, fixDailyWrite
@@ -19,31 +21,48 @@ from PL_scripts import get_last_version, getPipelineAttrs, addFavoriteFolders, f
 class NukeManager(Filemanager):
     def __init__(self, parent=None):
         super(NukeManager, self).__init__(parent)
+        #print 'IN NUKE MANAGER START'
 
         result = getPipelineAttrs()
         if result and result[1] != '':
-            try:
-                drive, project, seq, shot, assetName, version = getPipelineAttrs()
+            drive, project, seq, shot, assetName, version = getPipelineAttrs()
+            if 'assetBuilds' not in seq:
+                try:
+                    project_i = [self.cbox_project.itemText(i) for i in range(self.cbox_project.count())].index(project)
+                    self.cbox_project.setCurrentIndex(project_i)
 
+                    seq_i = [self.cbox_sequence.itemText(i) for i in range(self.cbox_sequence.count())].index(seq)
+                    self.cbox_sequence.setCurrentIndex(seq_i)
+
+                    shot_i = [self.cbox_shot.itemText(i) for i in range(self.cbox_shot.count())].index(shot)
+                    self.cbox_shot.setCurrentIndex(shot_i)
+
+                    self.cbox_type.setCurrentIndex(4)
+                except Exception as e:
+                    print('ERROR :: %s' % e)
+            else:
                 project_i = [self.cbox_project.itemText(i) for i in range(self.cbox_project.count())].index(project)
                 self.cbox_project.setCurrentIndex(project_i)
 
-                seq_i = [self.cbox_sequence.itemText(i) for i in range(self.cbox_sequence.count())].index(seq)
-                self.cbox_sequence.setCurrentIndex(seq_i)
+                self.cbox_sequence.setCurrentIndex(0)
 
-                shot_i = [self.cbox_shot.itemText(i) for i in range(self.cbox_shot.count())].index(shot)
-                self.cbox_shot.setCurrentIndex(shot_i)
+                #shot_i = [self.cbox_shot.itemText(i) for i in range(self.cbox_shot.count())].index(shot)
+                #self.cbox_shot.setCurrentIndex(shot_i)
 
-                self.cbox_type.setCurrentIndex(4)
-            except Exception as e:
-                print('ERROR :: %s' % e)
+                type = seq.split('/')[-1]
+                shot_i = [self.cbox_type.itemText(i) for i in range(self.cbox_type.count())].index(type)
+                self.cbox_type.setCurrentIndex(shot_i)
         else:
             self.loader_preferences(save=False)
             # self.cbox_project.setCurrentIndex(4)
             # self.cbox_sequence.setCurrentIndex(2)
             # self.cbox_shot.setCurrentIndex(0)
 
-        self.cbox_type.setCurrentIndex(4)
+            if self.cbox_sequence.currentText() == "assetBuilds":
+                print 'get in buddy'
+                self.cbox_type.setCurrentIndex(2)
+            else:
+                self.cbox_type.setCurrentIndex(4)
 
     def get_types(self):
         Filemanager.get_types(self)
@@ -51,15 +70,28 @@ class NukeManager(Filemanager):
 
 
     def item_clicked(self):
+        item_path = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).path
         item_text = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).text
-        item_type = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).folder_type
-        if item_text[-2:] == "nk":
-            #print 'item click :: .nk'
-            self.pb_open.setEnabled(True)
+        asset_type = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).asset_type
+        folder_type = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).folder_type
+        #print '=== in item clicked!   ::   path:%s        asset_type:%s        text:%s        folder_type:%s' % (item_path, asset_type, item_text, folder_type)
 
-        if item_type == "asset":
-            #print 'item click :: asset'
-            self.pb_save.setEnabled(True)
+        if '/assetBuilds/' in item_path:
+            self.asb = True
+        else:
+            self.asb = False
+
+    #     item_text = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).text
+    #     print 'item_text %s' % item_text
+    #     item_type = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).folder_type
+    #     print 'item_type %s' % item_type
+    #     if item_text[-2:] == "nk":
+    #         print 'item click :: .nk'
+    #         self.pb_open.setEnabled(True)
+    #
+    #     if item_type == "asset":
+    #         print 'item click :: asset'
+    #         self.pb_save.setEnabled(True)
 
 
 
@@ -67,23 +99,29 @@ class NukeManager(Filemanager):
         item_path = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).path
         item_text = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).text
         asset_type = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).asset_type
-        folder_type = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).folder_type
+        folder_type = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).folder_type # SHOTROOT ASSET
         item_date = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).date
+        # print 'path %s' % item_path
+        # print 'text %s' % item_text
+        # print 'asset type %s' % asset_type
+        # print 'folder_type %s' % folder_type
+        #print '=== in load_scene (double click)   ::   path:%s        asset_type:%s        text:%s        folder_type:%s' % (item_path, asset_type, item_text, folder_type)
 
         #nuke.tprint('%s\n%s\n%s\n%s' % (item_path, item_text, item_type, item_date))
 
         if folder_type == "asset":
-            #print 'load_scene :: folder type :: asset'
+            #print 'load_scene :: asset'
             self.pb_back.setEnabled(True)
             self.pb_new.setText("Add Component")
             self.pb_save.setVisible(True)
             self.pb_open.setVisible(True)
             self.pb_select_shot.setVisible(True)
             self._path = os.path.join(item_path, item_text).replace("\\", "/")
+            #print 'load_scene :: _path send %s' % self._path
             return self.get_list(path=self._path, folder_type="asset")
 
         elif folder_type == "shot":
-            #print 'load_scene :: folder type :: shot'
+            #print 'load_scene :: shot'
             self.h_slider_zoomView.setValue(50)
             self.slider_value()
             self.pb_back.setEnabled(True)
@@ -91,15 +129,19 @@ class NukeManager(Filemanager):
             self.pb_save.setVisible(True)
             self.pb_open.setVisible(True)
             self.pb_select_shot.setVisible(True)
-            if self.cbox_sequence == "assetBuilds":
+            if self.cbox_sequence.currentText() == "assetBuilds":
                 self._path = os.path.join(item_path, item_text).replace("\\", "/")
             else:
                 self._path = os.path.join(item_path, item_text).replace("\\", "/")
                 self._path = os.path.join(self._path, asset_type).replace("\\", "/")
             self._shot = item_text
+            #self.lb_path.setText('%s/%s' % (item_path, item_text))
+            #print 'return %s %s' % (self._shot, str(self.get_list(path=self._path, folder_type="asset")))
+            #print 'load_scene :: _path send %s' % self._path
             return self._shot, self.get_list(path=self._path, folder_type="asset")
 
         elif folder_type == "file":
+            #print 'load_scene :: file'
             if item_text[-2:] == "nk":
                 #print 'load_scene :: folder type :: file nk'
                 self.loader_preferences(save=True)
@@ -169,6 +211,118 @@ class NukeManager(Filemanager):
                                                      self._shot])
 
 
+    def get_list(self, path=None, asset_type=None, text=None, folder_type=None):
+        #print '=== in get list   ::   path:%s        asset_type:%s        text:%s        folder_type:%s' % (path, asset_type, text, folder_type)
+        self.listWidget_files.clear()
+        self.pb_open.setEnabled(False)
+        self.pb_save.setEnabled(False)
+        self.pb_new.setEnabled(True)
+        self.pb_select_shot.setEnabled(True)
+        self.pb_playHires.setEnabled(False)
+
+        if not path:
+            self._path = self.get_path()
+        else:
+            self._path = path
+
+        self.lb_path.setText(self._path)
+        #print 'LB PATH is %s' % self._path
+        if not folder_type:
+            f_type = "shot"
+        else:
+            f_type = folder_type
+
+        # Checking keys in path, for "Up to" button
+        tags = self._path.rsplit("/", 2)
+        #print '=== in get list   :: tags: %s' % tags
+
+        if tags[1] == "assetBuilds" and tags[2] == self.cbox_type.currentText():
+            f_type = "shot"
+            self.pb_back.setEnabled(False)
+            self.pb_new.setText("Add Asset")
+            self.pb_new.setMinimumSize(70, 25)
+        elif tags[2] == self.cbox_sequence.currentText():
+            f_type = "shot"
+            self.pb_new.setText("Add Shot")
+            self.pb_new.setMinimumSize(70, 25)
+            self.pb_back.setEnabled(False)
+            self.pb_save.setVisible(False)
+            self.pb_open.setVisible(False)
+            self.pb_select_shot.setVisible(False)
+
+
+        # List View - Grid or List
+        #print 'f_type %s' % f_type
+        if f_type == "shot":
+            #print 'been here'
+            self.listWidget_files.setFlow(QListView.LeftToRight)
+            self.listWidget_files.setProperty("isWrapping", True)
+            self.listWidget_files.setResizeMode(QListView.Adjust)
+            self.listWidget_files.setLayoutMode(QListView.Batched)
+        else:
+            #print 'havnt been here bofore'
+            self.listWidget_files.setFlow(QListView.TopToBottom)
+            self.listWidget_files.setProperty("isWrapping", False)
+            self.listWidget_files.setResizeMode(QListView.Adjust)
+            self.listWidget_files.setLayoutMode(QListView.Batched)
+
+        if not asset_type:
+            a_type = self.cbox_type.currentText()
+        else:
+            a_type = asset_type
+        #print 'a_type %s' % a_type
+
+        #LIST DIR AND REMOVE TECHNICAL FOLDERS FROM LIST
+        list = []
+        if os.path.exists(self._path):
+            for item in os.listdir(self._path):
+                if item[:1] == "!":
+                    pass
+                elif "afanasy" in item:
+                    pass
+                else:
+                    list.append(item)
+            for i in list:
+                # GET DATE AND TIME
+                stats = os.stat(self._path + "/" + i)
+                d = time.localtime(stats[8])
+                dd = ".".join([str(d[2]), str(d[1]), str(d[0])])
+                dt = ":".join([str(d[3]), str(d[4])])
+                date = dict(day=dd, time=dt)
+                # GET TYPE IS FILE OR FOLDER
+                full_path = os.path.join(self._path, i)
+                if os.path.isdir(full_path):
+                    pass
+                    # f_type = "asset"
+                else:
+                    f_type = "file"
+                # LIST ITEM MODEL BASE
+                if f_type == "asset" or f_type == "file":
+                    #print '=== in get list   :: list ASSET or FILE'
+                    model = ItemDetail(path=self._path, asset_type=a_type, text=i, folder_type=f_type, date=date)
+                    # CREATE BUTTON IN LIST ITEM FOR LOAD LAST VERSION
+                    if f_type == "asset":
+                        model.loadSignal.connect(self.load_last)
+                    self.h_slider_zoomView.setValue(40)
+                    listItem = QListWidgetItem()
+                    self.listWidget_files.addItem(listItem)
+                    listItem.setSizeHint(QSize(0, 40))
+                    self.listWidget_files.setItemWidget(listItem, model)
+                else:
+                    #print '=== in get list   :: %s' % f_type
+                    model = FileItemShot(path=self._path, asset_type=a_type, text=i, folder_type=f_type, date=date)
+                    self.h_slider_zoomView.setValue(140)
+                    listItem = QListWidgetItem()
+                    self.listWidget_files.addItem(listItem)
+                    value = self.h_slider_zoomView.value()
+                    listItem.setSizeHint(QSize(value, value / 1.35))
+                    self.listWidget_files.setItemWidget(listItem, model)
+
+
+
+        if folder_type == "asset":
+            self.sorting_btn_clicked(btn="Date")
+            self.sorting_btn_clicked(btn="Reverse")
 
     # SAVE SCENE AS NEW
     def save_new_asset(self):
@@ -181,12 +335,23 @@ class NukeManager(Filemanager):
 
 
         if self.cbox_sequence.currentText() == "assetBuilds":
-            file_name = '_'.join([name, user, v_ext])
+            splited = self._path.split('/')
+            asset_name = splited[4]
+            if len(splited) < 6:
+                component = 'main'
+            else:
+                component = splited[5]
+
+            file_name = '_'.join([asset_name, component, name, user, v_ext])
             path = "/".join([self._storage,
                              self.cbox_project.currentText(),
                              self.cbox_sequence.currentText(),
                              self.cbox_type.currentText().lower(),
+                             asset_name,
+                             component,
                              name])
+            # print 'path %s' % path
+            # print 'file_name %s' % file_name
         else:
             file_name = '_'.join([self.cbox_sequence.currentText(), self._shot, name, user, v_ext])
             massPath = [self._storage, self.cbox_project.currentText(), "sequences",
@@ -199,7 +364,7 @@ class NukeManager(Filemanager):
             try:
                 os.makedirs(path)
             except:
-                "PATH CREATE ERROR"
+                print "PATH CREATE ERROR"
 
         if not os.path.exists(path+'/precomp'):
             os.makedirs(path+'/precomp')
@@ -278,10 +443,10 @@ class NukeManager(Filemanager):
 
         # SHOT STUFF
         root['lock_range'].setValue(True)
-        root['fps'].setValue(24)
         root['format'].setValue('PL 3k')
         root['first_frame'].setValue(int(first_frame))
         root['last_frame'].setValue(int(last_frame))
+        root['fps'].setValue(24)
 
         root['colorManagement'].setValue('OCIO')
         root['OCIO_config'].setValue('custom')
@@ -315,7 +480,7 @@ class NukeManager(Filemanager):
 def fillPipelineAttrsFromScriptPath():
     scriptPath = nuke.root().name()
     if '/sequences/' in scriptPath and '/comp/' in scriptPath:
-        print 'Scene is pipeline based. Unwrapping shot callback...'
+        #print 'Scene is pipeline based. Unwrapping shot callback...'
         scriptName = os.path.split(scriptPath)[-1]
         splitted = scriptPath.split('/')
         drive = splitted[0]
@@ -338,9 +503,32 @@ def fillPipelineAttrsFromScriptPath():
         attachStringAttr('assetName', assetName, enabled=False)
 
         return True
+    elif '/assetBuilds/' in scriptPath:
+        #print 'Scene is pipeline based. Unwrapping shot callback...'
+        scriptName = os.path.split(scriptPath)[-1]
+        splitted = scriptPath.split('/')
+        drive = splitted[0]
+        project = splitted[1]
+        seq = '%s/%s' % (splitted[2], splitted[3])
+        shot = '%s/%s' % (splitted[4], splitted[5])
+        assetName = 'comp'
+        try:
+            match = re.match(r'(\w*)_(\w*)_v(\d*)', scriptName)
+            version = int(match.group(3))
+        except:
+            version = -1
+
+        # PIPELINE STUFF
+        root = nuke.root()
+        attachTab(root, 'PIPELINE')
+        attachStringAttr('project', project, enabled=False)
+        attachStringAttr('seq', seq, enabled=False)
+        attachStringAttr('shot', shot, enabled=False)
+        attachStringAttr('assetName', assetName, enabled=False)
+
+        return True
     else:
-        print 'This scene is not pipeline based'
-        return False
+        return True
 
 def shotSettings():
     # SHOT STUFF
@@ -348,12 +536,13 @@ def shotSettings():
 
     root = nuke.root()
     pd = projectDict(root['project'].value())
-    first_frame = pd.getSpecificShotData(seq, shot, 'first_frame')
-    last_frame = pd.getSpecificShotData(seq, shot, 'last_frame')
+    if 'assetBuilds' not in seq:
+        first_frame = pd.getSpecificShotData(seq, shot, 'first_frame')
+        last_frame = pd.getSpecificShotData(seq, shot, 'last_frame')
 
-    root['lock_range'].setValue(True)
-    root['first_frame'].setValue(int(first_frame))
-    root['last_frame'].setValue(int(last_frame))
+        root['lock_range'].setValue(True)
+        root['first_frame'].setValue(int(first_frame))
+        root['last_frame'].setValue(int(last_frame))
 
     # PROJECT BASED SETTINGS
     #root['format'].setValue('PL 3k')
@@ -375,6 +564,7 @@ def shotSettings():
 
 def sceneUnwrap():
     if fillPipelineAttrsFromScriptPath():
+        print 'in fill pipe attrs from script path'
         shotSettings()
         addFavoriteFolders()
         fixDailyWrite()

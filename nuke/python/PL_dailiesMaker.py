@@ -50,7 +50,10 @@ def makeCompDaily(project, seq, shot, assetName, auto=False):
         all_dailies_path = all_dailies_folder + "/" + all_dailies_file
 
         main_dailies_folder = '%s/%s/sequences/%s/%s/out' % (drive, project, seq, shot)
-        main_dailies_file = 'DAILIES_%s_comp.mov' % shot
+        if assetName.lower() == 'mainComp':
+            main_dailies_file = 'DAILIES_%s_comp.mov' % shot
+        else:
+            main_dailies_file = 'DAILIES_%s_%s.mov' % (shot, assetName)
         main_dailies_path = main_dailies_folder + "/" + main_dailies_file
 
         # REMOVE SOME .TMP FILES
