@@ -15,7 +15,7 @@ session = ftrack_api.Session(server_url='https://ftrack.x-plarium.com/',
 #     print i
 
 active_projects = session.query('Project where status is active')
-
+print(active_projects)
 # print active_projects[4]['name']
 # print active_projects[4]['children'][1]['children']
 #

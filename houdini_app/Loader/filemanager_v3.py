@@ -114,7 +114,7 @@ class Filemanager(QDialog, Ui_FileManager):
         self.pref = LoaderPrefs()
         data = self.pref.load()["indexes"]
         self._storage = self.pref.load()["storage"]["projects"]
-        print "Project storage: ", self._storage
+        print("Project storage: ", self._storage)
         proj = os.listdir(self._storage)
         self._projects = []
 
@@ -183,7 +183,7 @@ class Filemanager(QDialog, Ui_FileManager):
                     subprocess.call(cmd, shell=True)
 
                     sq = os.path.join(s.format('%D'), s.format('%h%p%t'))
-                    print  "SQSQ", s.format('%s')
+                    print("SQSQ", s.format('%s'))
                     shotName = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).text
 
                     if sound:
@@ -203,7 +203,7 @@ class Filemanager(QDialog, Ui_FileManager):
                             " -threads 8 -y -c:v libx264 -s 1920x1080 -r 24 -pix_fmt " \
                             "yuv420p -preset ultrafast -crf 23 " + out_path
 
-                    print cmd
+                    print(cmd)
 
                     subprocess.call(cmd, shell=True)
                     self.get_list()
@@ -526,7 +526,7 @@ class Filemanager(QDialog, Ui_FileManager):
             if item_text[-3:] == "hip":
                 self._file_path = os.path.join(item_path, item_text).replace("\\", "/")
                 self.close()
-                hou.hipFile.load(self.file_path, suppress_save_prompt=True, ignore_load_warnings=False)
+                hou.hipFile.load(self.file_path)
                 try:
                     importLastCamAtStartup()
                 except:
@@ -536,7 +536,7 @@ class Filemanager(QDialog, Ui_FileManager):
 
     def load_last(self, full_path):
         if os.path.isfile(full_path):
-            hou.hipFile.load(full_path, suppress_save_prompt=True, ignore_load_warnings=False)
+            hou.hipFile.load(full_path)
             return self.setup_scene(full_path.rsplit("/", 1)[0])
 
 
@@ -584,6 +584,8 @@ class Filemanager(QDialog, Ui_FileManager):
             else:
                 ff = int(shot_data["first_frame"])
                 lf = int(shot_data["last_frame"])
+
+            print ("FRAMERANGE:", ff, lf)
 
             hou.hscript("setenv FSTART = " + shot_data["first_frame"])
             hou.hscript("setenv FEND = " + shot_data["last_frame"])
@@ -731,7 +733,7 @@ class Filemanager(QDialog, Ui_FileManager):
             for item in filedata:
                 self._config.append(item.split(","))
         except:
-            print "NO CONFIG FILE"
+            print("NO CONFIG FILE")
 
 
     def loader_preferences(self, save=False):
