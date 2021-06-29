@@ -89,9 +89,9 @@ class NukeManager(Filemanager):
     #         print 'item click :: .nk'
     #         self.pb_open.setEnabled(True)
     #
-    #     if item_type == "asset":
-    #         print 'item click :: asset'
-    #         self.pb_save.setEnabled(True)
+        # if asset_type == "asset": # HERE
+        #     print 'item click :: asset'
+        #     self.pb_save.setEnabled(True)
 
 
 
@@ -215,7 +215,7 @@ class NukeManager(Filemanager):
         #print '=== in get list   ::   path:%s        asset_type:%s        text:%s        folder_type:%s' % (path, asset_type, text, folder_type)
         self.listWidget_files.clear()
         self.pb_open.setEnabled(False)
-        self.pb_save.setEnabled(False)
+        self.pb_save.setEnabled(True) #HERE
         self.pb_new.setEnabled(True)
         self.pb_select_shot.setEnabled(True)
         self.pb_playHires.setEnabled(False)
@@ -327,7 +327,7 @@ class NukeManager(Filemanager):
     # SAVE SCENE AS NEW
     def save_new_asset(self):
         self.listWidget_files.clearSelection()
-        #print "ENTER EVENT TO NEW ASSET"
+        print "ENTER EVENT TO NEW ASSET"
         name = self.new_asset.le_assetName.text()
         user = os.environ['COMPUTERNAME'].lower()
         v_ext = "v001.nk"
@@ -386,6 +386,7 @@ class NukeManager(Filemanager):
 
     # SAVE SCENE TO EXISTING
     def save_scene(self, exists=False):
+        print 'IN SAVE SCENE    '
         # item_path = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).path
         # item_text = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).text
         # item_type = self.listWidget_files.itemWidget(self.listWidget_files.currentItem()).folder_type
