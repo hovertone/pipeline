@@ -305,4 +305,7 @@ nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Standard_Degree_4", "nuke.cre
 nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Fisheye_Degree_8", "nuke.createNode('LD_3DE4_Radial_Fisheye_Degree_8')")
 nuke.menu("Nodes").addCommand("3DE4/LD_3DE_Classic_LD_Model", "nuke.createNode('LD_3DE_Classic_LD_Model')")
 
-
+# OPTICAL FLARES
+toolbar = nuke.toolbar("Nodes")
+toolbar.addMenu("VideoCopilot", icon="VideoCopilot.png")
+toolbar.addCommand( "VideoCopilot/OpticalFlares", "nuke.createNode('OpticalFlares')", icon="OpticalFlares.png")s')", icon="OpticalFlares.png")
