@@ -11,5 +11,4 @@
 import PL_rendersCleanup
 reload(PL_rendersCleanup)
 if nuke.ask('Sure you want to cleanup renders?'):
-    w = PL_rendersCleanup.cleanup_progress_bar()
-    w.show()
+    PL_rendersCleanup.startWithThis()
