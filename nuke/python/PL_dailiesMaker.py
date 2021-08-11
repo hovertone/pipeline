@@ -119,6 +119,7 @@ def beginDailyProccess():
         return
 
     # ACTUAL MAKE DAILY MOVS
+    print 'ARGUMENTS %s %s %s %s' % (project, seq, shot, assetName)
     all_dailies_path, main_out_path = makeCompDaily(project, seq, shot, assetName)
 
     # NUKE RESAVE

@@ -19,7 +19,7 @@ class projectDict(object):
         if not dr:
             self.drive = 'P:'
         else:
-            self.drive = dr
+           self.drive = dr
 
         self.csvpath = "%s/%s/project_config.csv" % (self.drive, project)
         if not os.path.exists(self.csvpath):
