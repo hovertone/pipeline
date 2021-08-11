@@ -291,7 +291,7 @@ class Filemanager(QDialog, Ui_FileManager):
             self.cbox_type.clear()
             path = "/".join([self._storage, self.cbox_project.currentText(), "assetBuilds"])
             list_dir = os.listdir(path)
-            self.cbox_type.addItems("fx")
+            self.cbox_type.addItems(list_dir)
         return self._shot, self.type_action()
 
 
