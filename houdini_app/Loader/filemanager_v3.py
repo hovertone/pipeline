@@ -291,7 +291,7 @@ class Filemanager(QDialog, Ui_FileManager):
             self.cbox_type.clear()
             path = "/".join([self._storage, self.cbox_project.currentText(), "assetBuilds"])
             list_dir = os.listdir(path)
-            self.cbox_type.addItems(list_dir)
+            self.cbox_type.addItems("fx")
         return self._shot, self.type_action()
 
 
@@ -574,7 +574,7 @@ class Filemanager(QDialog, Ui_FileManager):
         # SETUP SCENE IF IS SHOT #
         if self.cbox_sequence.currentText() != "assetBuilds":
 
-            config = projectDict(self.cbox_project.currentText())
+            config = projectDict(self.cbox_project.currentText(), dr=self._storage)
             config.getSequences()
             shot_data = config.getAllShotData(seq=self.cbox_sequence.currentText(), shot=self._shot)
 
@@ -599,6 +599,7 @@ class Filemanager(QDialog, Ui_FileManager):
             hou.hscript(setGobalFrangeExpr)
             hou.playbar.setPlaybackRange(ff, lf)
             hou.hscript("setenv SQ = " + self.cbox_sequence.currentText())
+            print"SZAZAZAZA"
             hou.hscript("setenv SHOT = " + "/".join([self._storage, self.cbox_project.currentText(), "sequences",
                                                      self.cbox_sequence.currentText(), self._shot]))
             hou.hscript("setenv SN = " + self._shot)

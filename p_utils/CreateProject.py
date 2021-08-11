@@ -22,7 +22,7 @@ from projectCreateUI import Ui_ProjectCreate
 from sq_item import SequenceItem
 from shot_item import ShotItem
 from csv_parser import projectDict
-
+from houdini_app.Loader.loader_pref import LoaderPrefs
 
 
 
@@ -60,6 +60,10 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
         self.listWidgetSq.itemClicked.connect(self.sqClicked)
         self.listWidgetShots.itemClicked.connect(self.shotClicked)
 
+        self.pref = LoaderPrefs()
+        self._storage = self.pref.load()["storage"]["projects"]
+
+
     def keyPressEvent(self, *args, **kwargs):
         pass
 
@@ -75,7 +79,7 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
             self.pb_sq_clear.setEnabled(True)
             self.pb_create.setEnabled(True)
             if self.le_projectName.text() in project_root_folders:
-                self.existing_project_dict = projectDict(self.le_projectName.text(), self.le_root.text())
+                self.existing_project_dict = projectDict(self.le_projectName.text(), path)
                 print '%s project exists' % self.le_projectName.text()
                 #print self.existing_project_dict
                 self.fill_with_existing()
@@ -248,7 +252,7 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
                 print "SHOTS: ", i["shots"]
 
 
-            p_d = projectDict(project_data["project_name"])
+            p_d = projectDict(project_data["project_name"], dr=self.le_root.text())
             for d in project_data["data"]:
                 p_d.addSequence(d["sequence"])
 
@@ -268,6 +272,7 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
 
 
     def create_root(self, path, project_name):
+        print "CREATE ROOT", path
         if os.path.exists(path):
             p_path = os.path.join(path, project_name)
             if not os.path.exists(p_path):
