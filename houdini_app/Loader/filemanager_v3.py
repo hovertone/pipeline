@@ -574,7 +574,7 @@ class Filemanager(QDialog, Ui_FileManager):
         # SETUP SCENE IF IS SHOT #
         if self.cbox_sequence.currentText() != "assetBuilds":
 
-            config = projectDict(self.cbox_project.currentText())
+            config = projectDict(self.cbox_project.currentText(), dr=self._storage)
             config.getSequences()
             shot_data = config.getAllShotData(seq=self.cbox_sequence.currentText(), shot=self._shot)
 
