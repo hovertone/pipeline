@@ -8,8 +8,7 @@ import json
 def createEmptyTp(parent_shop):
     print 'CREATING TP NODE'
 
-    PATH_TO_SHOPSCRIPTS = 'X:/app/win/Pipeline/houdini_app/shopScripts'
-    print 'AUTO PATH', os.path.abspath(os.getcwd())
+    PATH_TO_SHOPSCRIPTS = os.environ['shopScriptsPWD']
 
     if parent_shop.type().name() == 'shopnet':
         tp = parent_shop.createNode('arnold_vopnet')
@@ -111,7 +110,7 @@ def createEmptyTp(parent_shop):
     return tp
 
 
-def collectParms(nodes):
+def collectPathParms(nodes):
     shaders_images = dict()
     for n in nodes:
         if n.type().name() != 'arnold_vopnet' and n.type().name() != 'arnold_materialbuilder':
@@ -133,6 +132,28 @@ def collectParms(nodes):
 
     return shaders_images
 
+# def collectPathParms(nodes):
+#     shaders_images = dict()
+#     for n in nodes:
+#         if n.type().name() != 'arnold_vopnet' and n.type().name() != 'arnold_materialbuilder':
+#             print 'ERROR :: wrong type nodes selected %s' % (n.path())
+#             return
+#
+#         shaders_images[n] = dict()
+#         for i in [j for j in n.children() if j.type().name() == 'arnold::image']:
+#             p = i.parm('filename')
+#             # print '\t%s link %s' % (i.name(), i.parm('filename').eval() == i.parm('filename').rawValue())
+#             if p.eval() != p.rawValue():  # whick means filename parameter has a link
+#                 # LINKED PARMS BAKING
+#                 val = p.eval()
+#                 p.revertToDefaults()
+#                 p.set(val)
+#                 print "\t%s's filename parameter has been baked" % i.name()
+#
+#             shaders_images[n][p] = p.rawValue()
+#
+#     return shaders_images
+
 def fillExistingTp(tp, nodes):
     '''
     Creates per shader parameters. Not uniqes. Repeated paths would be duplicated. Only for debug usage
@@ -142,7 +163,7 @@ def fillExistingTp(tp, nodes):
     :return:
     '''
     print '\t\t\t\tFILL EXISTING TP'
-    shaders_images = collectParms(nodes)
+    shaders_images = collectPathParms(nodes)
 
     values = []
     toNuke = dict()
@@ -255,17 +276,19 @@ def fillExistingTp(tp, nodes):
 
 
 def fillExistingTpSet(tp, nodes):
-    print '\t\t\t\tFILL EXISTING TP'
-    shaders_images = collectParms(nodes)
-    print 'SHADERS IMAGE %s' % str(shaders_images)
+    print '\t\t\t\tFILL EXISTING TP /////////////////'
+    shaders_images = collectPathParms(nodes)
+    #print 'SHADERS IMAGE %s' % str(shaders_images)
 
-    # for k, v in ii.iteritems():
-    #     print '%s %s' % (k, v)
 
     # GETTING ALL THE FILE PATHS AND ASSIGN TO VALUES VAR
     ii = dict()
     for s, vv in shaders_images.iteritems():
         ii.update(vv)
+
+    print 'II '
+    for k, v in ii.iteritems():
+        print '%s %s' % (k, v)
 
     for key, value in ii.iteritems():
         print key
@@ -299,6 +322,7 @@ def fillExistingTpSet(tp, nodes):
                 break
 
         if not match:
+            cf = [key.node().parm('color_family').eval() for (key, value) in ii.iteritems() if value == t][0]
             cs = [key.node().parm('color_space').eval() for (key, value) in ii.iteritems() if value == t][0]
 
             ext = os.path.splitext(t)[-1]
@@ -324,22 +348,42 @@ def fillExistingTpSet(tp, nodes):
             print 'adding %s' % parm_name
             grp.insertBefore(grp.find('textures_end'), texP)
 
-            listOfKeys = [key for key, value in ii.iteritems() if value == t] #
+            listOfKeys = [key for key, value in ii.iteritems() if value == t]  #
+            print '************** LIST OF KEYS %s' % listOfKeys
             for k in listOfKeys:
                 k.set('`chs("../../%s/%s")`' % (tp.name(), parm_name))
 
-            # CREATING CS PARM
-            #print 'T ' + t
-            #print [key.eval() for (key, value) in ii.iteritems() if value == t]
-            #cs = [key.eval() for (key, value) in ii.items() if value == t][0]
-            csP = hou.StringParmTemplate(name='%s_cs' % parm_name, label='space', num_components=1,
+            # CREATING COLOR FAMILY PARM
+            cfP = hou.StringParmTemplate(name='%s_cf' % parm_name, label='Family', num_components=1,
+                                         menu_items=('ACES', 'Utility'),
+                                         menu_labels=('ACES', 'Utility'),
+                                         default_value=(cf, ),
+                                         string_type=hou.stringParmType.Regular, join_with_next=True)
+
+            # CREATING COLOR SPACE PARM
+            csP = hou.StringParmTemplate(name='%s_cs' % parm_name, label='Space', num_components=1,
                                          menu_items=('Utility - Raw', 'Utility - sRGB - Texture', 'Utility - Linear - sRGB'),
                                          menu_labels=('Raw', 'sRGB - Texture', 'Linear - sRGB'),
                                          default_value=(cs, ),
                                          string_type=hou.stringParmType.Regular, join_with_next=False)
             #pt = csP.parmTemplate()
             #csP.setMenuItems(('Utility - Raw', 'Utility - sRGB - Texture', 'Utility - Linear - sRGB'))
+            grp.insertBefore(grp.find('textures_end'), cfP)
             grp.insertBefore(grp.find('textures_end'), csP)
+
+            csP_name = csP.name()
+            cfP_name = cfP.name()
+
+            for k in listOfKeys:
+                print 'PAAAATH %s' % k.path()
+                cf_path = '/'.join(str(k.path()).split('/')[:-1]) + '/color_family'
+                cs_path = '/'.join(str(k.path()).split('/')[:-1]) + '/color_space'
+                #print 'CF path %s' % cf_path
+                cf_k = hou.parm(cf_path)
+                cs_k = hou.parm(cs_path)
+                #print 'CFK P %s' % cf_k.path()
+                cf_k.set('`chs("../../%s/%s")`' % (tp.name(), parm_name + '_cf'))
+                cs_k.set('`chs("../../%s/%s")`' % (tp.name(), parm_name + '_cs'))
 
         else:
             print 'exists %s' % pn
@@ -364,8 +408,11 @@ def fillExistingTpSet(tp, nodes):
 
 def fixButtonPaths(tp):
     print 'in fix button paths'
+    print 'path %s' % tp.path()
+
     pwd = os.environ['shopScriptsPWD']
-    #print 'path %s' % tp.path()
+    print 'PWD %s' % pwd
+
     grp = tp.parmTemplateGroup()
     button_parms = list()
     for p in grp.parmTemplates():
@@ -381,12 +428,12 @@ def fixButtonPaths(tp):
 
     for p in button_parms:
         pn = grp.find(p.name())
-        #print 'in %s' % p.name()
+        print 'FIXING %s' % p.name()
         pp = p
         cb = p.scriptCallback()
         s = cb.replace('execfile("', '').replace('")', '')
         path, script = os.path.split(s)
-        if not os.path.exists(path):
+        if os.path.exists(path):
             newcb = 'execfile("%s")' % '/'.join((pwd, script))
             pp.setScriptCallback(newcb)
             grp.replace(pn, pp)
@@ -399,7 +446,7 @@ def main():
     nodes = hou.selectedNodes()
 
     pwd = os.environ['shopScriptsPWD']
-    print 'PWD %s' % pwd
+    #print 'PWD %s' % pwd
 
 
     if len(nodes) == 0:
@@ -424,7 +471,7 @@ def main():
             tp = createEmptyTp(parent)
         else:
             tp = tp_list[0]
-            fixButtonPaths(nodes[0])
+            fixButtonPaths(tp)
         fillExistingTpSet(tp, nodes)
         return
 

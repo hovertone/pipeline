@@ -212,10 +212,12 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
         if "BGEO" in self.comboBoxExt.currentText():
             self.bgeo_export(self.le_filePath.text())
         else:
-            if self.comboBoxType.currentText() == "ANIMATION":
+            if self.comboBoxType.currentText() == "ANIMATION" and self.comboBoxGeoType.currentText() == "CHAR":
                 self.export_anim(self.le_filePath.text())
-            else:
+            elif self.comboBoxType.currentText() == "GEO" and self.comboBoxGeoType.currentText() == "CHAR":
                 self.export_geo(self.le_filePath.text())
+            else:
+                self.export_props(self.le_filePath.text())
 
 
 
@@ -254,6 +256,34 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
             pass
         if self.ch_box_message.isChecked():
             telega.telegramReport(path, tp='cache')
+
+
+    def export_props(self, path):
+        if not self.ch_box.isChecked():
+
+            start = cmds.playbackOptions(query=True, minTime=True)
+            end = cmds.playbackOptions(query=True, maxTime=True)
+            cmds.select(hi=True)
+            objects = cmds.ls(sl=True, type="mesh")
+            cmds.select(objects)
+            cmds.pickWalk(d="Up")
+            selLong = cmds.ls(sl=True, visible=True, l=True)
+            selString = str(' -root '.join(selLong))
+
+            command = (
+                "-frameRange {0} {1} -step {2} -attr matGroup -writeVisibility -uvWrite -writeFaceSets -wholeFrameGeo -worldSpace -writeUVSets -dataFormat ogawa -root {3} -file  {4}").format(
+                str(int(1)), str(int(2)), str(1), selString, str(path))
+            print "ALEMBIC COMMAND ", command
+            cmds.AbcExport(j=command)
+        else:
+        #objects = self.getSelectGeo()
+            selLong = cmds.ls(sl=True, visible=True, l=True)
+            selString = str(' -root '.join(selLong))
+            command = (
+                "-frameRange {0} {1} -step {2} -attr matGroup -writeVisibility -uvWrite -writeFaceSets -wholeFrameGeo -worldSpace -writeUVSets -dataFormat ogawa -root {3} -file  {4}").format(
+                str(int(1)), str(int(2)), str(1), selString, str(path))
+            cmds.AbcExport(j=command)
+
 
 
 

@@ -228,9 +228,6 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
             start = cmds.playbackOptions(query=True, minTime=True)
             end = cmds.playbackOptions(query=True, maxTime=True)
             cmds.select(hi=True)
-
-            motionblurKeyframesBake.addExtraKeys(first=int(start), last=int(end))
-
             objects = cmds.ls(sl=True, type="mesh")
             cmds.select(objects)
             cmds.pickWalk(d="Up")
@@ -246,7 +243,6 @@ class AssetExporter(QDialog, Ui_AssetExportDialog):
         #objects = self.getSelectGeo()
             selLong = cmds.ls(sl=True, visible=True, l=True)
             selString = str(' -root '.join(selLong))
-
             command = (
                 "-frameRange {0} {1} -step {2} -attr matGroup -writeVisibility -uvWrite -writeFaceSets -wholeFrameGeo -worldSpace -writeUVSets -dataFormat ogawa -root {3} -file  {4}").format(
                 str(int(1)), str(int(2)), str(1), selString, str(path))
