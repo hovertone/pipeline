@@ -62,6 +62,7 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
 
         self.pref = LoaderPrefs()
         self._storage = self.pref.load()["storage"]["projects"]
+        print "STORAGE: ", self._storage
 
 
     def keyPressEvent(self, *args, **kwargs):
@@ -79,7 +80,8 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
             self.pb_sq_clear.setEnabled(True)
             self.pb_create.setEnabled(True)
             if self.le_projectName.text() in project_root_folders:
-                self.existing_project_dict = projectDict(self.le_projectName.text(), path)
+                print path
+                self.existing_project_dict = projectDict(self.le_projectName.text(), dr=self._storage)
                 print '%s project exists' % self.le_projectName.text()
                 #print self.existing_project_dict
                 self.fill_with_existing()
