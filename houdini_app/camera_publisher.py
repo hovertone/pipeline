@@ -12,7 +12,8 @@ reload(cam_bake)
 import recursiveInput
 
 import sys
-sys.path.append('X:/app/win/Pipeline/p_utils')
+if os.environ["PIPELINE_ROOT"] + "/p_utils" not in sys.path:
+    sys.path.append(os.environ["PIPELINE_ROOT"] + "/p_utils")
 
 
 import telega

@@ -113,16 +113,8 @@ class Filemanager(QDialog, Ui_FileManager):
         # UI PREFERENCES
         self.pref = LoaderPrefs()
         data = self.pref.load()["indexes"]
-        self._storage = self.pref.load()["storage"]["projects"]
-        print("Project storage: ", self._storage)
-        proj = os.listdir(self._storage)
-        self._projects = []
 
-        for p in proj:
-            fp = os.path.join(self._storage, p)
-            fp = os.path.join(fp, "project_config.csv")
-            if os.path.isfile(fp):
-                self._projects.append(p)
+
 
         # CALL CLASS FUNCTIONS #
         self.get_projects()
@@ -266,8 +258,24 @@ class Filemanager(QDialog, Ui_FileManager):
 
 
     def get_projects(self):
-        self.cbox_project.addItems(self._projects)
-        self.lb_path.setText(self.cbox_project.currentText())
+        self.cbox_project.clear()
+        self._storage = self.pref.load()["storage"]["projects"]
+        self._projects = []
+        print("Project storage: ", self._storage)
+        if len(self._storage)<3 or not "/" in self._storage:
+            self._storage = self._storage + "/"
+            files = os.listdir(str(self._storage + "/"))
+            print files
+
+            for p in files:
+                fp = os.path.join(self._storage + "/", p)
+                cv = os.path.join(fp, "project_config.csv")
+                if os.path.isfile(cv):
+                    print p
+                    self._projects.append(p)
+
+            self.cbox_project.addItems(self._projects)
+            self.lb_path.setText(self._storage + self.cbox_project.currentText())
 
 
     def get_sequence(self):
@@ -275,9 +283,10 @@ class Filemanager(QDialog, Ui_FileManager):
         self._last_selected = None
         config = projectDict(self.cbox_project.currentText(), dr=self._storage)
         sqs = config.getSequences()
-        sqs = sorted(sqs)
-        sqs.insert(0, "assetBuilds")
-        self.cbox_sequence.addItems(sqs)
+        if sqs:
+            sqs = sorted(sqs)
+            sqs.insert(0, "assetBuilds")
+            self.cbox_sequence.addItems(sqs)
 
 
 
@@ -316,7 +325,7 @@ class Filemanager(QDialog, Ui_FileManager):
             else:
                 path = "/".join([self._storage, self.cbox_project.currentText(), "sequences",
                                  self.cbox_sequence.currentText(), shot, self.cbox_type.currentText()])
-        return path
+        return path.replace("//", "/").replace("\\", "/")
 
 
     def get_list(self, path=None, asset_type=None, text=None, folder_type=None):
@@ -768,7 +777,9 @@ class Filemanager(QDialog, Ui_FileManager):
     def loader_preferences_UI(self):
         global pref
         pref = LoaderPreferencesUI()
+        pref.pb_save.clicked.connect(self.get_projects)
         pref.show()
+
 
 
     # Button "ADD SHOT, ADD ASSET, ADD CMPONENT"

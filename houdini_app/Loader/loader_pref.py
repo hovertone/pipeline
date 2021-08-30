@@ -20,16 +20,16 @@ class LoaderPreferencesUI (QWidget, Ui_Preferences):
         super(LoaderPreferencesUI, self).__init__(parent)
         self.setupUi(self)
 
+
         self.pref = LoaderPrefs()
-        print "PATH", self.pref.path
+        print "Preferences path: ", self.pref.path
         try:
             data = self.pref.load()["storage"]
-            user = self.pref.load()['login']
             self.le_projects.setText(data["projects"])
             self.le_caches.setText(data["caches"])
             self.le_lib.setText(data["lib"])
-            self.le_name.setText(user["username"])
-            self.le_key.setText(user["key"])
+            self.le_name.setText("username")
+            self.le_key.setText("key")
         except:
             self.le_projects.setText("P:")
             self.le_caches.setText("Q:")

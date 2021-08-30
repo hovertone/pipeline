@@ -14,9 +14,8 @@ except:
 from functools import partial
 import sys, os
 
-path = "X:/app/win/Pipeline/p_utils"
-sys.path.append(path)
-
+if os.environ["PIPELINE_ROOT"] + "/p_utils" not in sys.path:
+    sys.path.append(os.environ["PIPELINE_ROOT"] + "/p_utils")
 
 from projectCreateUI import Ui_ProjectCreate
 from sq_item import SequenceItem
@@ -80,7 +79,6 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
             self.pb_sq_clear.setEnabled(True)
             self.pb_create.setEnabled(True)
             if self.le_projectName.text() in project_root_folders:
-                print path
                 self.existing_project_dict = projectDict(self.le_projectName.text(), dr=self._storage)
                 print '%s project exists' % self.le_projectName.text()
                 #print self.existing_project_dict
@@ -98,7 +96,6 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
         seqs = data.keys()
         for seq in seqs:
             shots_data = data[seq]
-
             model = SequenceItem(name = seq, data = shots_data)
             listItem = QListWidgetItem()
             self.listWidgetSq.addItem(listItem)
