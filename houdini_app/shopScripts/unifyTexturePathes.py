@@ -332,6 +332,7 @@ def fillExistingTpSet(tp, nodes):
             #print 'T ' + t
             #print [key.eval() for (key, value) in ii.iteritems() if value == t]
             #cs = [key.eval() for (key, value) in ii.items() if value == t][0]
+            print "TEST"
             csP = hou.StringParmTemplate(name='%s_cs' % parm_name, label='space', num_components=1,
                                          menu_items=('Utility - Raw', 'Utility - sRGB - Texture', 'Utility - Linear - sRGB'),
                                          menu_labels=('Raw', 'sRGB - Texture', 'Linear - sRGB'),
