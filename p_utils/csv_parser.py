@@ -94,7 +94,7 @@ class projectDict(object):
         return shotData[0]
 
     def getSpecificShotData(self, seq, shot, key):
-        #print 'test %s %s %s' % (seq, shot, key)
+        #print '|||||||| spec shot data %s %s %s' % (seq, shot, key)
         shots = self.d[seq]
         #print shots
         shotData = [i for i in shots if i['name'] == shot]

@@ -12,7 +12,7 @@ import os, sys, time, nuke, re
 from houdini_app.Loader.filemanager_v3 import Filemanager
 from houdini_app.Loader.itemShot import FileItemShot
 from houdini_app.Loader.itemDetail import ItemDetail
-from p_utils.csv_parser_bak import projectDict
+from p_utils.csv_parser import projectDict
 from PL_shotsInitiation import attachStringAttr, attachTab
 from PL_scripts import get_last_version, getPipelineAttrs, addFavoriteFolders, fixDailyWrite
 
@@ -480,8 +480,8 @@ class NukeManager(Filemanager):
 
 def fillPipelineAttrsFromScriptPath():
     scriptPath = nuke.root().name()
+    scriptPath = scriptPath.replace('//', '/')
     if '/sequences/' in scriptPath and '/comp/' in scriptPath:
-        #print 'Scene is pipeline based. Unwrapping shot callback...'
         scriptName = os.path.split(scriptPath)[-1]
         splitted = scriptPath.split('/')
         drive = splitted[0]
@@ -496,6 +496,7 @@ def fillPipelineAttrsFromScriptPath():
             version = -1
 
         # PIPELINE STUFF
+        #print 'VALS ARE %s %s %s %s %s' % (drive, project, seq, shot, assetName)
         root = nuke.root()
         attachTab(root, 'PIPELINE')
         attachStringAttr('project', project, enabled=False)
@@ -505,7 +506,6 @@ def fillPipelineAttrsFromScriptPath():
 
         return True
     elif '/assetBuilds/' in scriptPath:
-        #print 'Scene is pipeline based. Unwrapping shot callback...'
         scriptName = os.path.split(scriptPath)[-1]
         splitted = scriptPath.split('/')
         drive = splitted[0]

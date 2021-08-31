@@ -83,7 +83,8 @@ def makeCompDaily(project, seq, shot, assetName, auto=False):
                 # nuke.tprint('can be written')
         except IOError:
             print '%s is in use by another application' % main_dailies_path
-            return
+            nuke.message('Oshibka otkrutogo montaga. Nuzhno zarkut Resolve!')
+            return False
 
         print 'Daily is in progress with movie_maker'
         produce_daily(sq, all_dailies_path)
@@ -120,7 +121,10 @@ def beginDailyProccess():
 
     # ACTUAL MAKE DAILY MOVS
     print 'ARGUMENTS %s %s %s %s' % (project, seq, shot, assetName)
-    all_dailies_path, main_out_path = makeCompDaily(project, seq, shot, assetName)
+    try:
+        all_dailies_path, main_out_path = makeCompDaily(project, seq, shot, assetName)
+    except:
+        return
 
     # NUKE RESAVE
     curTime = strftime("%Y-%m-%d_%H-%M-%S", gmtime())
