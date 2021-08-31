@@ -424,6 +424,7 @@ def main():
     elif nodes[0].type().name() == 'arnold_materialbuilder' and nodes[0].name() == 'tp' and len(nodes) == 1:
         print '+++++++++ only tp was selected'
         fixButtonPaths(nodes[0])
+        print 'lallalaal'
 
     elif nodes[0].type().name() == 'arnold_vopnet' or nodes[0].type().name() == 'arnold_materialbuilder':
         # if proper nodes selected. All subchildren image nodes filenames will be linked to tp
