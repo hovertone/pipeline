@@ -446,3 +446,4 @@ def main():
         hou.ui.displayMessage('Something goes wrong! Sorry! Have a nice evening)')
         return
 
+print "TEST"
