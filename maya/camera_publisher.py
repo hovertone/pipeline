@@ -4,7 +4,7 @@ import os
 import cam_bake
 from p_utils.common_utils import getLastCamVersion
 import  motionblurKeyframesBake #import addExtraKeys
-from p_utils.csv_parser_bak import projectDict
+from p_utils.csv_parser import projectDict
 from playblastWithRV import getPipelineAttrs
 import telega
 reload(telega)
@@ -44,8 +44,10 @@ def exportCamMaya():
             return
 
         drive, project, seq, shot, ver = getPipelineAttrs()
+        print '\t\t\t\t %s | %s | %s | %s | %s' %  (drive, project, seq, shot, ver)
         #print drive, project, seq, shot, ver
         config = projectDict(project)
+
         shot_data = config.getAllShotData(seq, shot)
         first = shot_data['first_frame']
         last = shot_data['last_frame']

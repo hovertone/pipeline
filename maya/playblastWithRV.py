@@ -43,9 +43,10 @@ def getCurrentCamera():
         return cmds.listRelatives(camShape, parent=True, path=True)[0]
 
 def getPipelineAttrs():
-    print 'in get pipeline attrs'
+    print 'in get pipeline attrs222222'
     try:
-        shotString = os.environ['SHOT']
+        shotString = os.environ['SHOT'].replace('//', '/')
+        print 'shot string assigned based on a os.environ variable'
     except:
         return None
     #print shotString.split('/')
@@ -55,7 +56,7 @@ def getPipelineAttrs():
     shot = shotString.split('/')[-1]
 
     scriptPath = cmds.file(query=True, sn=True)
-    scriptName = os.path.split(scriptPath)[-1].replace('-', '') # BARONOV NAMING FIX
+    scriptName = os.path.split(scriptPath)[-1]#.replace('-', '') # BARONOV NAMING FIX
 
     match = re.match(r'(\w*)_(\w*)_v(\d*)', scriptName)
     try:
