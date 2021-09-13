@@ -278,6 +278,7 @@ class Filemanager(QDialog, Ui_FileManager):
             self.lb_path.setText(self._storage + self.cbox_project.currentText())
 
 
+
     def get_sequence(self):
         self.cbox_sequence.clear()
         self._last_selected = None
@@ -298,7 +299,7 @@ class Filemanager(QDialog, Ui_FileManager):
             self.cbox_type.addItems(['fx', "light", "animation", "model", "comp"])
         else:
             self.cbox_type.clear()
-            path = "/".join([self._storage, self.cbox_project.currentText(), "assetBuilds"])
+            path = "/".join([self._storage, self.cbox_project.currentText(), "assetBuilds"]).replace("//", "/")
             list_dir = os.listdir(path)
             self.cbox_type.addItems(list_dir)
         return self._shot, self.type_action()
@@ -566,15 +567,18 @@ class Filemanager(QDialog, Ui_FileManager):
             viewer.setAutoSavePath("$SHOT/out/ipr/$SNAPNAME.$HIPNAME.$F4.$SAVENUM.exr")
         except:
             pass
-        hou.hscript("setenv PROJECT = " + "/".join([self._storage, self.cbox_project.currentText()]))
-        hou.hscript("setenv ASSETBUILDS = " + "/".join([self._storage, self.cbox_project.currentText(),"assetBuilds"]))
-        storage = self.pref.load()["storage"]
-        cache = "/".join([storage["caches"], self.cbox_project.currentText()])
+        hou.hscript("setenv PROJECT = " + "/".join([self._storage,
+                                                    self.cbox_project.currentText()])).replace("//", "/")
+        hou.hscript("setenv ASSETBUILDS = " + "/".join([self._storage,
+                                                        self.cbox_project.currentText(),
+                                                        "assetBuilds"])).replace("//", "/")
+        storage = self.pref.load()["storage"].replace("//", "/")
+        cache = "/".join([storage["caches"], self.cbox_project.currentText()]).replace("//", "/")
         hou.hscript("setenv CACHE = " + cache)
         hou.hscript("setenv LIB = " + storage["lib"])
         hou.setFps(24)
 
-        path = "/".join([self._storage, self.cbox_project.currentText(), "assetBuilds/hda"])
+        path = "/".join([self._storage, self.cbox_project.currentText(), "assetBuilds/hda"]).replace("//", "/")
         hda = os.environ["HOUDINI_OTLSCAN_PATH"] + ";" + path + "/props;" + path + "/fx;" + path + "/char;"
         os.environ["HOUDINI_OTLSCAN_PATH"] = hda
         #hou.hscript("setenv HOUDINI_OTLSCAN_PATH = " + path +"/".join([self._storage, self.cbox_project.currentText(),"assetBuilds/hda"]))
@@ -610,7 +614,7 @@ class Filemanager(QDialog, Ui_FileManager):
             hou.hscript("setenv SQ = " + self.cbox_sequence.currentText())
             print"SZAZAZAZA"
             hou.hscript("setenv SHOT = " + "/".join([self._storage, self.cbox_project.currentText(), "sequences",
-                                                     self.cbox_sequence.currentText(), self._shot]))
+                                                     self.cbox_sequence.currentText(), self._shot])).replace("//", "/")
             hou.hscript("setenv SN = " + self._shot)
 
         # SETUP SCENE IF IS ASSET BUILDS
