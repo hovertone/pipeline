@@ -568,11 +568,11 @@ class Filemanager(QDialog, Ui_FileManager):
         except:
             pass
         hou.hscript("setenv PROJECT = " + "/".join([self._storage,
-                                                    self.cbox_project.currentText()])).replace("//", "/")
+                                                    self.cbox_project.currentText()]).replace("//", "/"))
         hou.hscript("setenv ASSETBUILDS = " + "/".join([self._storage,
                                                         self.cbox_project.currentText(),
-                                                        "assetBuilds"])).replace("//", "/")
-        storage = self.pref.load()["storage"].replace("//", "/")
+                                                        "assetBuilds"]).replace("//", "/"))
+        storage = self.pref.load()["storage"]
         cache = "/".join([storage["caches"], self.cbox_project.currentText()]).replace("//", "/")
         hou.hscript("setenv CACHE = " + cache)
         hou.hscript("setenv LIB = " + storage["lib"])
@@ -614,7 +614,7 @@ class Filemanager(QDialog, Ui_FileManager):
             hou.hscript("setenv SQ = " + self.cbox_sequence.currentText())
             print"SZAZAZAZA"
             hou.hscript("setenv SHOT = " + "/".join([self._storage, self.cbox_project.currentText(), "sequences",
-                                                     self.cbox_sequence.currentText(), self._shot])).replace("//", "/")
+                                                     self.cbox_sequence.currentText(), self._shot]).replace("//", "/"))
             hou.hscript("setenv SN = " + self._shot)
 
         # SETUP SCENE IF IS ASSET BUILDS
