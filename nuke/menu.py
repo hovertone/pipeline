@@ -309,3 +309,5 @@ nuke.menu("Nodes").addCommand("3DE4/LD_3DE_Classic_LD_Model", "nuke.createNode('
 toolbar = nuke.toolbar("Nodes")
 toolbar.addMenu("VideoCopilot", icon="VideoCopilot.png")
 toolbar.addCommand( "VideoCopilot/OpticalFlares", "nuke.createNode('OpticalFlares')", icon="OpticalFlares.png")
+
+print 'git test01'
