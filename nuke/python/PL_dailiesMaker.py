@@ -27,6 +27,7 @@ from time import gmtime, strftime
 
 def makeCompDaily(project, seq, shot, assetName, auto=False):
     print '________________ IN MAKE COMP DAILY _____________________'
+    print '________________ c=================3 _____________________'
     drive = getPipelineAttrs()[0]
     comp_assetnames = os.listdir('%s/%s/sequences/%s/%s/comp/' % (drive, project, seq, shot))
     if len(comp_assetnames) == 0:
@@ -56,9 +57,7 @@ def makeCompDaily(project, seq, shot, assetName, auto=False):
             main_dailies_file = 'DAILIES_%s_%s.mov' % (shot, assetName)
         main_dailies_path = main_dailies_folder + "/" + main_dailies_file
 
-        main_dailies_path = main_dailies_folder + "/" + main_dailies_file
-
-        ftrackreview_file = 'ftrackreview-mp4.mov' % (shot, assetName)
+        ftrackreview_file = 'ftrackreview-mp4.mov'
         ftrackreview_path = main_dailies_folder + "/" + ftrackreview_file
 
         # REMOVE SOME .TMP FILES
@@ -98,6 +97,7 @@ def makeCompDaily(project, seq, shot, assetName, auto=False):
         shutil.copy2(all_dailies_path, main_dailies_path)
 
         # DUPLICATE DAILY FOR FTRACK (ftrackreview-mp4)
+        print 'ftrack review part'
         shutil.copy2(all_dailies_path, ftrackreview_path)
 
         # COPY PATH TO CLIPBOARD
