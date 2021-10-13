@@ -56,6 +56,11 @@ def makeCompDaily(project, seq, shot, assetName, auto=False):
             main_dailies_file = 'DAILIES_%s_%s.mov' % (shot, assetName)
         main_dailies_path = main_dailies_folder + "/" + main_dailies_file
 
+        main_dailies_path = main_dailies_folder + "/" + main_dailies_file
+
+        ftrackreview_file = 'ftrackreview-mp4.mov' % (shot, assetName)
+        ftrackreview_path = main_dailies_folder + "/" + ftrackreview_file
+
         # REMOVE SOME .TMP FILES
         files_in_directory = os.listdir(sequence_path)
         filtered_files = [file for file in files_in_directory if file.endswith(".tmp")]
@@ -91,6 +96,9 @@ def makeCompDaily(project, seq, shot, assetName, auto=False):
 
         # DUPLICATE ALL DAILY TO MAIN OUT DAILY
         shutil.copy2(all_dailies_path, main_dailies_path)
+
+        # DUPLICATE DAILY FOR FTRACK (ftrackreview-mp4)
+        shutil.copy2(all_dailies_path, ftrackreview_path)
 
         # COPY PATH TO CLIPBOARD
         clipboard = QtWidgets.QApplication.clipboard()
