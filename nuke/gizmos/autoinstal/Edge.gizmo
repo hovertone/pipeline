@@ -1,12 +1,11 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
 Group {
- inputs 4
  name Edge2
  help "Edge allows you to extend the proper color out over transparent edges or areas with a lot of motionblur without eroding away the nice detail. This edge extend has some more advanced features like splitting the core matte and final key which allows you to work on motion blur without effecting small details like hair or a swinging rope for example. There is also more control over how you blend the core detail to the extended edge color. This was shown to me years ago by an old comp sup I had and is the same as the edge extend by Frank Reuter. This is my version of it that has evolved a little bit over the years.\n\nInputs\nThere are multiple inputs to Edge but you can just plug in your FG with alpha if you want to use it simplified. Separating Core and Softer keys or using roto with and without motionblur has advantages in certain situations. ie: If you have a thin object this will help maintain solid alpha where you need it.\n\nFG – Foreground plate with Spill suppression applied\nCore – This is like a core matte, it helps identify the leading edge and where the edge tool should start from. It is important to add this core so that small details are not lost like a thin rope or hair.\nKey – This is your Key with fine hair details and transparent motion blurred edges. For Roto you want to have motion blur turned on.\nBG – This is where your Background goes if you are using the node as Final Result\nMask - Currently this only works if you are using Edge in Final result."
  tile_color 0x990000
  label "\[value iterations]"
  selected true
- xpos -91
- ypos 92
  addUserKnob {20 User l Extend}
  addUserKnob {6 xxx_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {41 in l channels T Shuffle2.in}
@@ -19,17 +18,14 @@ Group {
  addUserKnob {6 clamped l "clamp alpha" t "Select this if your alpha has values below 0 or above 1." -STARTLINE}
  addUserKnob {26 ""}
  addUserKnob {14 edgeStart l "slice start" t "Determines where you would like to start bleeding out the color from the inside of your key. It does this with a series of unpremult, blur, premult operations instead of a standard erode." R 0 100}
- edgeStart {1}
+ edgeStart 1
  addUserKnob {41 iterations l "slice iterations" t "Sets how large the edge with the color bleeding will be from the edge grow start or core matte and how many times this will be duplicated." T EdgeExpansion.iterations}
  addUserKnob {41 sliceWidth l "slice width" t "The slice width is the amount of blur being applied per slice." T EdgeExpansion.sliceWidth}
  addUserKnob {41 sliceBlur l INVISIBLE +INVISIBLE T EdgeExpansion.sliceBlur}
  addUserKnob {26 ""}
  addUserKnob {7 blurEdgeBlend l "edge blend" t "Helps to soften the transition from the original to the new edge. It tends to erode the bleeding color back inwards if you use high values." R 0 10}
- blurEdgeBlend {0}
  addUserKnob {7 blurEdgeBlur l "edge blur" t "This helps soften the transition bringing back original detail. This can sometimes bring back some lighting information instead of having it completely replaced." R 0 10}
- blurEdgeBlur {0}
  addUserKnob {7 filterErodeEdgeSmooth l "edge smooth" t "This one will help with extremely large motionblur and completely takes away detail. This should not be used in most cases but if you do use it sparingly." R -10 10}
- filterErodeEdgeSmooth {0}
  addUserKnob {26 ""}
  addUserKnob {41 maskChannelMask l mask -STARTLINE T Merge3.maskChannelMask}
  addUserKnob {41 inject -STARTLINE T Merge3.inject}
@@ -43,16 +39,13 @@ Group {
  addUserKnob {6 colorpreview l preview t "Preview the edge being used for blending with the BG. This helps if you want to modify it further." -STARTLINE}
  addUserKnob {41 operation_1 l operation t "This is the merge operation you want to use for blending. It is set to average by default but you can use anything you like ie: plus, max, min." T ColorMerge.operation}
  addUserKnob {7 erodeExpandEdge l "expand edge" t "You can expand or contract the edge created in the extend tab." R -100 100}
- erodeExpandEdge {0}
  addUserKnob {7 blurSoftenEdge l "soften edge" t "This blur will help soften the transition of the inside blending edge." R 0 100}
- blurSoftenEdge {0}
  addUserKnob {41 mix_1 l "mix fg luma" t "At a value of 1 this will only blend the chroma information but you can mix this back to include the luma info as well." T Copy5.mix}
  addUserKnob {7 mergeBlendingMix l mix t "Mix Edge Blending result"}
  mergeBlendingMix 1
- addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 ""}
  addUserKnob {7 BlurBG l "blur bg" t "Blur the details in the background when you blend them so your foreground doesnt look transparent." R 0 100}
- BlurBG {0}
- addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 ""}
  addUserKnob {20 AdjustBGColor l "adjust bg color" t "Here you can modify the color and saturation of the bg being used for blending. This will anly affect the blending not the actual bg." n 1}
  AdjustBGColor 0
  addUserKnob {41 white l gain T GradeEdgeColor.white}
@@ -71,12 +64,11 @@ Group {
  addUserKnob {20 endGroup_1 l endGroup n -1}
  addUserKnob {20 info l Info}
  addUserKnob {26 ""}
- addUserKnob {26 info_1 l "" +STARTLINE T "\nEdge Version 6.8\nCreated by Rob Bannister\nwww.bannisterpost.com"}
+ addUserKnob {26 info_1 l "" +STARTLINE T "\nEdge Version 6.9\nCreated by Rob Bannister\nwww.bannisterpost.com"}
  addUserKnob {26 help_1 l "" +STARTLINE T "<a href=\"http://www.bannisterpost.com/downloads/edge/\" style=\"color:white\">HELP</a>"}
 }
  Histogram {
   inputs 0
-  out {0 1}
   name controler
   xpos -982
   ypos 561
@@ -98,7 +90,7 @@ Group {
   xpos 410
   ypos -224
  }
-set N3683880 [stack 0]
+set N209dd000 [stack 0]
  Input {
   inputs 0
   name Key
@@ -119,7 +111,7 @@ set N3683880 [stack 0]
   xpos -215
   ypos -61
  }
-set N36eca80 [stack 0]
+set N209dd800 [stack 0]
  Shuffle {
   red alpha
   green alpha
@@ -128,14 +120,14 @@ set N36eca80 [stack 0]
   xpos -215
   ypos 237
  }
-set N36ec700 [stack 0]
+set N20a19000 [stack 0]
  Dot {
   name Dot6
   xpos -181
   ypos 477
  }
-set N36ec380 [stack 0]
-push $N36eca80
+set N20a18c00 [stack 0]
+push $N209dd800
  Input {
   inputs 0
   name Core
@@ -171,7 +163,7 @@ push $N36eca80
   xpos 787
   ypos 126
  }
-set N36ed180 [stack 0]
+set N20a19800 [stack 0]
  Blur {
   channels alpha
   size {{parent.blurEdgeBlend}}
@@ -188,8 +180,8 @@ set N36ed180 [stack 0]
   xpos 591
   ypos 224
  }
-set N371f180 [stack 0]
-push $N36ec700
+set N20a4b800 [stack 0]
+push $N20a19000
  ChannelMerge {
   inputs 2
   operation stencil
@@ -209,7 +201,7 @@ push $N36ec700
   xpos -30
   ypos 691
  }
-set N371e700 [stack 0]
+set N20a4a800 [stack 0]
  Dot {
   name Dot11
   xpos -30
@@ -227,13 +219,13 @@ set N371e700 [stack 0]
   xpos -1047
   ypos 293
  }
-set N371fc00 [stack 0]
+set N20a4bc00 [stack 0]
  Dot {
   name Dot12
   xpos -1047
   ypos 644
  }
-set N371f880 [stack 0]
+set N20a6bc00 [stack 0]
  Keyer {
   operation "luminance key"
   range {{parent.controler.out.0} {parent.controler.out.1} 1 1}
@@ -249,14 +241,14 @@ set N371f880 [stack 0]
   xpos -717
   ypos 634
  }
-set N14721880 [stack 0]
-push $N371f180
+set N20a6b400 [stack 0]
+push $N20a4b800
  Dot {
   name Dot7
   xpos 625
   ypos 344
  }
-set N14721500 [stack 0]
+set N20a6b000 [stack 0]
  Dilate {
   channels alpha
   size {{parent.erodeExpandEdge}}
@@ -273,8 +265,8 @@ set N14721500 [stack 0]
   xpos -498
   ypos 327
  }
-push $N36ed180
-push $N3683880
+push $N20a19800
+push $N209dd000
  Shuffle {
   name Shuffle2
   xpos 376
@@ -291,7 +283,7 @@ push $N3683880
   xpos 410
   ypos 459
  }
-set N14754a80 [stack 0]
+set N32be1c00 [stack 0]
  Group {
   inputs 2
   name EdgeExpansion
@@ -304,9 +296,9 @@ set N14754a80 [stack 0]
   firstrun {{"!\[exists parent.input0]"}}
   addUserKnob {6 exp t "The exponential check box will add a variable to the duplicated blurs that increases as they move outwards from the original edge. This might help if you have a large distance to extend." +STARTLINE}
   addUserKnob {7 iterations t "Sets how large the edge with the color bleeding will be from the edge grow start or core matte and how many times this will be duplicated. The smaller the width the more detail is preserved.This should be just big enough to reach the edge of the largest areas of motionblur." R 1 25}
-  iterations {5}
+  iterations 5
   addUserKnob {7 sliceWidth l "slice width" t "The slice width is the amount of blur being applied per slice." R 1 10}
-  sliceWidth {1}
+  sliceWidth 1
   addUserKnob {7 sliceBlur l "slice blur" t "The slice width is the amount of blur being applied per slice." R 1 10}
   sliceBlur 1
  }
@@ -362,7 +354,7 @@ set N14754a80 [stack 0]
    xpos -64
    ypos -523
   }
-set N1477a380 [stack 0]
+set N32be0000 [stack 0]
   Blur {
    channels {rgba.red rgba.green rgba.blue depth.Z}
    size {{parent.sliceWidth}}
@@ -377,7 +369,7 @@ set N1477a380 [stack 0]
    xpos -30
    ypos -336
   }
-push $N1477a380
+push $N32be0000
   Blur {
    channels {rgba.red rgba.green rgba.blue depth.Z}
    size {{parent.sliceWidth}}
@@ -403,7 +395,7 @@ push $N1477a380
    xpos 46
    ypos -435
   }
-set N147ab180 [stack 0]
+set N32c06c00 [stack 0]
   Blur {
    channels rgba
    size {{parent.sliceWidth}}
@@ -426,7 +418,7 @@ set N147ab180 [stack 0]
    xpos 80
    ypos -237
   }
-push $N147ab180
+push $N32c06c00
   Blur {
    channels rgba
    size {{parent.sliceWidth}}
@@ -451,7 +443,7 @@ push $N147ab180
    xpos 156
    ypos -350
   }
-set N147e1c00 [stack 0]
+set N32c37400 [stack 0]
   Blur {
    channels {rgba.red rgba.green rgba.blue depth.Z}
    size {{parent.sliceWidth}}
@@ -467,7 +459,7 @@ set N147e1c00 [stack 0]
    xpos 156
    ypos -247
   }
-push $N147e1c00
+push $N32c37400
   Blur {
    channels {rgba.red rgba.green rgba.blue depth.Z}
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -484,11 +476,11 @@ push $N147e1c00
    name Shuffle4
   }
   Unpremult {
-   channels {rgba.red rgba.green rgba.blue rgba.alpha}
+   channels rgba
    alpha depth.Z
    name Unpremult5
   }
-set N4693a700 [stack 0]
+set N32c36000 [stack 0]
   Blur {
    channels rgba
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -503,7 +495,7 @@ set N4693a700 [stack 0]
    Achannels {rgba.red rgba.green rgba.blue depth.Z}
    name Merge3
   }
-push $N4693a700
+push $N32c36000
   Blur {
    channels rgba
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -523,7 +515,7 @@ push $N4693a700
    channels {rgba.red rgba.green rgba.blue depth.Z}
    name Unpremult6
   }
-set Nc18c380 [stack 0]
+set N32c68c00 [stack 0]
   Blur {
    channels {rgba.red rgba.green rgba.blue depth.Z}
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -537,7 +529,7 @@ set Nc18c380 [stack 0]
    inputs 2
    name Merge4
   }
-push $Nc18c380
+push $N32c68c00
   Blur {
    channels {rgba.red rgba.green rgba.blue depth.Z}
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -554,11 +546,11 @@ push $Nc18c380
    name Shuffle6
   }
   Unpremult {
-   channels {rgba.red rgba.green rgba.blue rgba.alpha}
+   channels rgba
    alpha depth.Z
    name Unpremult7
   }
-set Na7e17c00 [stack 0]
+set N32ca3800 [stack 0]
   Blur {
    channels rgba
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -573,7 +565,7 @@ set Na7e17c00 [stack 0]
    Achannels {rgba.red rgba.green rgba.blue depth.Z}
    name Merge5
   }
-push $Na7e17c00
+push $N32ca3800
   Blur {
    channels rgba
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -593,7 +585,7 @@ push $Na7e17c00
    channels {rgba.red rgba.green rgba.blue depth.Z}
    name Unpremult8
   }
-set N56d4c700 [stack 0]
+set N32ca2400 [stack 0]
   Blur {
    channels {rgba.red rgba.green rgba.blue depth.Z}
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -607,7 +599,7 @@ set N56d4c700 [stack 0]
    inputs 2
    name Merge6
   }
-push $N56d4c700
+push $N32ca2400
   Blur {
    channels {rgba.red rgba.green rgba.blue depth.Z}
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -624,11 +616,11 @@ push $N56d4c700
    name Shuffle8
   }
   Unpremult {
-   channels {rgba.red rgba.green rgba.blue rgba.alpha}
+   channels rgba
    alpha depth.Z
    name Unpremult9
   }
-set Nd3d61880 [stack 0]
+set N32cd7000 [stack 0]
   Blur {
    channels rgba
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -643,7 +635,7 @@ set Nd3d61880 [stack 0]
    Achannels {rgba.red rgba.green rgba.blue depth.Z}
    name Merge7
   }
-push $Nd3d61880
+push $N32cd7000
   Blur {
    channels rgba
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -663,7 +655,7 @@ push $Nd3d61880
    channels {rgba.red rgba.green rgba.blue depth.Z}
    name Unpremult10
   }
-set Nd1636380 [stack 0]
+set N32d11c00 [stack 0]
   Blur {
    channels {rgba.red rgba.green rgba.blue depth.Z}
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -677,7 +669,7 @@ set Nd1636380 [stack 0]
    inputs 2
    name Merge8
   }
-push $Nd1636380
+push $N32d11c00
   Blur {
    channels {rgba.red rgba.green rgba.blue depth.Z}
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -694,11 +686,11 @@ push $Nd1636380
    name Shuffle10
   }
   Unpremult {
-   channels {rgba.red rgba.green rgba.blue rgba.alpha}
+   channels rgba
    alpha depth.Z
    name Unpremult11
   }
-set N59d19180 [stack 0]
+set N32d10800 [stack 0]
   Blur {
    channels rgba
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -713,7 +705,7 @@ set N59d19180 [stack 0]
    Achannels {rgba.red rgba.green rgba.blue depth.Z}
    name Merge9
   }
-push $N59d19180
+push $N32d10800
   Blur {
    channels rgba
    size {{parent.sliceWidth*(parent.exp==0?1:exp_value)}}
@@ -754,8 +746,8 @@ push $N59d19180
    ypos 4217
   }
  end_group
-set N36ce400 [stack 0]
-push $N36ec700
+set N209ee900 [stack 0]
+push $N20a19000
  Switch {
   inputs 2
   which {{parent.FinalSwitch.which}}
@@ -771,7 +763,7 @@ push $N36ec700
   ypos 224
   disable true
  }
-set N14720a80 [stack 0]
+set N32d44000 [stack 0]
  ChannelMerge {
   inputs 2
   operation stencil
@@ -792,13 +784,13 @@ set N14720a80 [stack 0]
   xpos -574
   ypos 702
  }
-set N14720000 [stack 0]
+set N32d75400 [stack 0]
  Dot {
   name Dot10
   xpos -573
   ypos 1057
  }
-push $N14721880
+push $N20a6b400
  Dot {
   name Dot13
   xpos -683
@@ -809,16 +801,16 @@ push $N14721880
   xpos -971
   ypos 990
  }
-push $N14720000
-push $N36ec380
-push $N371e700
-push $N14754a80
+push $N32d75400
+push $N20a18c00
+push $N20a4a800
+push $N32be1c00
  Dot {
   name Dot1
   xpos 410
   ypos 565
  }
-set N14754700 [stack 0]
+set N32d74400 [stack 0]
  Dot {
   name Dot18
   xpos 190
@@ -830,14 +822,14 @@ set N14754700 [stack 0]
   xpos 156
   ypos 596
  }
-push $N14721500
+push $N20a6b000
  Dot {
   name Dot8
   xpos 625
   ypos 602
  }
-push $N14754700
-push $N36ce400
+push $N32d74400
+push $N209ee900
  Dot {
   name Dot15
   xpos 821
@@ -899,14 +891,14 @@ add_layer {edge edge.red edge.green edge.blue edge.alpha edge.matte}
   xpos -472
   ypos 733
  }
-set N345e2380 [stack 0]
+set N32dbf400 [stack 0]
  Colorspace {
   colorspace_out YCbCr
   name Colorspace4
   xpos -506
   ypos 434
  }
-push $N371fc00
+push $N20a4bc00
  Colorspace {
   colorspace_out YCbCr
   name Colorspace6
@@ -927,7 +919,6 @@ push $N371fc00
   to0 rgba.red
   from1 rgba.alpha
   to1 rgba.alpha
-  mix {1}
   name Copy5
   xpos -790
   ypos 421
@@ -939,21 +930,17 @@ push $N371fc00
   ypos 487
  }
  Grade {
-  black {0}
-  white {1}
-  gamma {1}
   black_clamp false
   name GradeEdgeColor
   xpos -790
   ypos 525
  }
  Saturation {
-  saturation {1}
   name EdgeSat
   xpos -790
   ypos 563
  }
-push $N345e2380
+push $N32dbf400
  Merge2 {
   inputs 2+1
   operation average
@@ -966,7 +953,7 @@ push $N345e2380
   ypos 730
   disable {{!parent.enablecolor}}
  }
-set N39ec6700 [stack 0]
+set N32dfd400 [stack 0]
  Dot {
   name Dot2
   xpos -757
@@ -979,13 +966,13 @@ set N39ec6700 [stack 0]
   ypos 730
   number 4
  }
-push $N39ec6700
+push $N32dfd400
  Premult {
   name Premult3
   xpos -956
   ypos 730
  }
-push $N371f880
+push $N20a6bc00
  Merge2 {
   inputs 2+1
   also_merge edge
@@ -1036,8 +1023,8 @@ push $N371f880
   xpos -1081
   ypos 1947
  }
-push $N14720a80
-push $N39ec6700
+push $N32d44000
+push $N32dfd400
  Viewer {
   inputs 2
   frame 1
