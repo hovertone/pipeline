@@ -27,7 +27,8 @@ def createHiresWrite():
 
 			#selectOnly(ref)
 			w = nuke.createNode('Write')
-			w['file'].setValue('%s/%s/sequences/%s/%s/out/hires/%s_%s_hires_acescg.####.exr' % (drive, project, seq, shot, seq, shot))
+			#w['file'].setValue('%s/%s/sequences/%s/%s/out/hires/%s_%s_hires_acescg.####.exr' % (drive, project, seq, shot, seq, shot))
+			w['file'].setValue('%s/%s/sequences/%s/%s/out/hires/sequence.####.exr' % (drive, project, seq, shot))
 			w['colorspace'].setValue('ACES - ACEScg')
 			w['tile_color'].setValue(255)
 			#w['raw'].setValue(True)
