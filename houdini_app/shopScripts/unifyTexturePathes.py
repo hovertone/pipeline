@@ -366,6 +366,13 @@ def fillExistingTpSet(tp, nodes):
                                          menu_labels=('Raw', 'sRGB - Texture', 'Linear - sRGB'),
                                          default_value=(cs, ),
                                          string_type=hou.stringParmType.Regular, join_with_next=False)
+
+            # cfP.setItemGeneratorScript(
+            #     "__import__('htoa.ocio').ocio.imageFamilyMenu(kwargs['node'])")
+            csP.setItemGeneratorScript(
+                "__import__('htoa.ocio').ocio.imageColorSpaceMenu(kwargs['node'].parm('%s_cf').eval())" % parm_name )
+
+
             #pt = csP.parmTemplate()
             #csP.setMenuItems(('Utility - Raw', 'Utility - sRGB - Texture', 'Utility - Linear - sRGB'))
             grp.insertBefore(grp.find('textures_end'), cfP)
