@@ -1,0 +1,534 @@
+[1mdiff --git a/houdini_app/AssetsLoader/__init__.pyc b/houdini_app/AssetsLoader/__init__.pyc[m
+[1mindex f87b054..03fab1b 100644[m
+Binary files a/houdini_app/AssetsLoader/__init__.pyc and b/houdini_app/AssetsLoader/__init__.pyc differ
+[1mdiff --git a/houdini_app/AssetsLoader/lib_item.pyc b/houdini_app/AssetsLoader/lib_item.pyc[m
+[1mindex e935eec..5fd2c03 100644[m
+Binary files a/houdini_app/AssetsLoader/lib_item.pyc and b/houdini_app/AssetsLoader/lib_item.pyc differ
+[1mdiff --git a/houdini_app/AssetsLoader/ui/AssetsLib_v002_UIs.pyc b/houdini_app/AssetsLoader/ui/AssetsLib_v002_UIs.pyc[m
+[1mindex c52d27b..13df0f7 100644[m
+Binary files a/houdini_app/AssetsLoader/ui/AssetsLib_v002_UIs.pyc and b/houdini_app/AssetsLoader/ui/AssetsLib_v002_UIs.pyc differ
+[1mdiff --git a/houdini_app/AssetsLoader/ui/__init__.pyc b/houdini_app/AssetsLoader/ui/__init__.pyc[m
+[1mindex ce022de..4f401b0 100644[m
+Binary files a/houdini_app/AssetsLoader/ui/__init__.pyc and b/houdini_app/AssetsLoader/ui/__init__.pyc differ
+[1mdiff --git a/houdini_app/AssetsUpdater/__init__.pyc b/houdini_app/AssetsUpdater/__init__.pyc[m
+[1mindex d596908..40ed97b 100644[m
+Binary files a/houdini_app/AssetsUpdater/__init__.pyc and b/houdini_app/AssetsUpdater/__init__.pyc differ
+[1mdiff --git a/houdini_app/AssetsUpdater/assets_update.pyc b/houdini_app/AssetsUpdater/assets_update.pyc[m
+[1mindex 4b82511..a700ea1 100644[m
+Binary files a/houdini_app/AssetsUpdater/assets_update.pyc and b/houdini_app/AssetsUpdater/assets_update.pyc differ
+[1mdiff --git a/houdini_app/AssetsUpdater/item.pyc b/houdini_app/AssetsUpdater/item.pyc[m
+[1mindex 98b13e6..ed574cf 100644[m
+Binary files a/houdini_app/AssetsUpdater/item.pyc and b/houdini_app/AssetsUpdater/item.pyc differ
+[1mdiff --git a/houdini_app/AssetsUpdater/updaterUi_UIs.pyc b/houdini_app/AssetsUpdater/updaterUi_UIs.pyc[m
+[1mindex e707c38..08a6c7d 100644[m
+Binary files a/houdini_app/AssetsUpdater/updaterUi_UIs.pyc and b/houdini_app/AssetsUpdater/updaterUi_UIs.pyc differ
+[1mdiff --git a/houdini_app/Loader/__init__.pyc b/houdini_app/Loader/__init__.pyc[m
+[1mindex b68a51c..450056a 100644[m
+Binary files a/houdini_app/Loader/__init__.pyc and b/houdini_app/Loader/__init__.pyc differ
+[1mdiff --git a/houdini_app/Loader/add_shot_UIs.pyc b/houdini_app/Loader/add_shot_UIs.pyc[m
+[1mindex 7f78ae3..1dbc3c9 100644[m
+Binary files a/houdini_app/Loader/add_shot_UIs.pyc and b/houdini_app/Loader/add_shot_UIs.pyc differ
+[1mdiff --git a/houdini_app/Loader/assetName_v001_UIs.pyc b/houdini_app/Loader/assetName_v001_UIs.pyc[m
+[1mindex b027305..3c3b6d5 100644[m
+Binary files a/houdini_app/Loader/assetName_v001_UIs.pyc and b/houdini_app/Loader/assetName_v001_UIs.pyc differ
+[1mdiff --git a/houdini_app/Loader/assetSave.pyc b/houdini_app/Loader/assetSave.pyc[m
+[1mindex b4df0a4..cf65724 100644[m
+Binary files a/houdini_app/Loader/assetSave.pyc and b/houdini_app/Loader/assetSave.pyc differ
+[1mdiff --git a/houdini_app/Loader/filemanager_v3.pyc b/houdini_app/Loader/filemanager_v3.pyc[m
+[1mindex 49fbefe..e6ab70b 100644[m
+Binary files a/houdini_app/Loader/filemanager_v3.pyc and b/houdini_app/Loader/filemanager_v3.pyc differ
+[1mdiff --git a/houdini_app/Loader/itemDetail.pyc b/houdini_app/Loader/itemDetail.pyc[m
+[1mindex d5f5198..652f17d 100644[m
+Binary files a/houdini_app/Loader/itemDetail.pyc and b/houdini_app/Loader/itemDetail.pyc differ
+[1mdiff --git a/houdini_app/Loader/itemShot.pyc b/houdini_app/Loader/itemShot.pyc[m
+[1mindex 532ba5e..c2fda99 100644[m
+Binary files a/houdini_app/Loader/itemShot.pyc and b/houdini_app/Loader/itemShot.pyc differ
+[1mdiff --git a/houdini_app/Loader/loader_pref.pyc b/houdini_app/Loader/loader_pref.pyc[m
+[1mindex fda0fe5..b7ced6d 100644[m
+Binary files a/houdini_app/Loader/loader_pref.pyc and b/houdini_app/Loader/loader_pref.pyc differ
+[1mdiff --git a/houdini_app/Loader/loader_pref_UIs.pyc b/houdini_app/Loader/loader_pref_UIs.pyc[m
+[1mindex ede9d85..08d652e 100644[m
+Binary files a/houdini_app/Loader/loader_pref_UIs.pyc and b/houdini_app/Loader/loader_pref_UIs.pyc differ
+[1mdiff --git a/houdini_app/Loader/loader_preferences.pyc b/houdini_app/Loader/loader_preferences.pyc[m
+[1mindex 6a425ed..0e7906b 100644[m
+Binary files a/houdini_app/Loader/loader_preferences.pyc and b/houdini_app/Loader/loader_preferences.pyc differ
+[1mdiff --git a/houdini_app/Loader/loader_v003_UIs.pyc b/houdini_app/Loader/loader_v003_UIs.pyc[m
+[1mindex 1376d33..69e1b66 100644[m
+Binary files a/houdini_app/Loader/loader_v003_UIs.pyc and b/houdini_app/Loader/loader_v003_UIs.pyc differ
+[1mdiff --git a/houdini_app/Loader/montage.pyc b/houdini_app/Loader/montage.pyc[m
+[1mindex e7dfb20..b92012b 100644[m
+Binary files a/houdini_app/Loader/montage.pyc and b/houdini_app/Loader/montage.pyc differ
+[1mdiff --git a/houdini_app/Loader/montage_item.pyc b/houdini_app/Loader/montage_item.pyc[m
+[1mindex 892c8d4..b5a843a 100644[m
+Binary files a/houdini_app/Loader/montage_item.pyc and b/houdini_app/Loader/montage_item.pyc differ
+[1mdiff --git a/houdini_app/__init__.pyc b/houdini_app/__init__.pyc[m
+[1mindex 390ede8..a779597 100644[m
+Binary files a/houdini_app/__init__.pyc and b/houdini_app/__init__.pyc differ
+[1mdiff --git a/modules/__init__.pyc b/modules/__init__.pyc[m
+[1mindex 41e7356..5a7bf94 100644[m
+Binary files a/modules/__init__.pyc and b/modules/__init__.pyc differ
+[1mdiff --git a/modules/chardet/__init__.pyc b/modules/chardet/__init__.pyc[m
+[1mindex a7a3e16..daf5c21 100644[m
+Binary files a/modules/chardet/__init__.pyc and b/modules/chardet/__init__.pyc differ
+[1mdiff --git a/modules/chardet/big5freq.pyc b/modules/chardet/big5freq.pyc[m
+[1mindex 9d7026d..6f5af09 100644[m
+Binary files a/modules/chardet/big5freq.pyc and b/modules/chardet/big5freq.pyc differ
+[1mdiff --git a/modules/chardet/big5prober.pyc b/modules/chardet/big5prober.pyc[m
+[1mindex 8c006f9..f82c221 100644[m
+Binary files a/modules/chardet/big5prober.pyc and b/modules/chardet/big5prober.pyc differ
+[1mdiff --git a/modules/chardet/chardistribution.pyc b/modules/chardet/chardistribution.pyc[m
+[1mindex 21c3b1c..bea3f34 100644[m
+Binary files a/modules/chardet/chardistribution.pyc and b/modules/chardet/chardistribution.pyc differ
+[1mdiff --git a/modules/chardet/charsetgroupprober.pyc b/modules/chardet/charsetgroupprober.pyc[m
+[1mindex 2c9c2c1..5e2e524 100644[m
+Binary files a/modules/chardet/charsetgroupprober.pyc and b/modules/chardet/charsetgroupprober.pyc differ
+[1mdiff --git a/modules/chardet/charsetprober.pyc b/modules/chardet/charsetprober.pyc[m
+[1mindex 0ae20e7..a9d43f9 100644[m
+Binary files a/modules/chardet/charsetprober.pyc and b/modules/chardet/charsetprober.pyc differ
+[1mdiff --git a/modules/chardet/codingstatemachine.pyc b/modules/chardet/codingstatemachine.pyc[m
+[1mindex 9cc06dd..242921b 100644[m
+Binary files a/modules/chardet/codingstatemachine.pyc and b/modules/chardet/codingstatemachine.pyc differ
+[1mdiff --git a/modules/chardet/compat.pyc b/modules/chardet/compat.pyc[m
+[1mindex c990865..9642af8 100644[m
+Binary files a/modules/chardet/compat.pyc and b/modules/chardet/compat.pyc differ
+[1mdiff --git a/modules/chardet/cp949prober.pyc b/modules/chardet/cp949prober.pyc[m
+[1mindex 8e2b034..3d324ae 100644[m
+Binary files a/modules/chardet/cp949prober.pyc and b/modules/chardet/cp949prober.pyc differ
+[1mdiff --git a/modules/chardet/enums.pyc b/modules/chardet/enums.pyc[m
+[1mindex 23865cc..276dc30 100644[m
+Binary files a/modules/chardet/enums.pyc and b/modules/chardet/enums.pyc differ
+[1mdiff --git a/modules/chardet/escprober.pyc b/modules/chardet/escprober.pyc[m
+[1mindex de4a672..0080f96 100644[m
+Binary files a/modules/chardet/escprober.pyc and b/modules/chardet/escprober.pyc differ
+[1mdiff --git a/modules/chardet/escsm.pyc b/modules/chardet/escsm.pyc[m
+[1mindex cda51c2..dd5ac7d 100644[m
+Binary files a/modules/chardet/escsm.pyc and b/modules/chardet/escsm.pyc differ
+[1mdiff --git a/modules/chardet/eucjpprober.pyc b/modules/chardet/eucjpprober.pyc[m
+[1mindex 5fd7c56..0896873 100644[m
+Binary files a/modules/chardet/eucjpprober.pyc and b/modules/chardet/eucjpprober.pyc differ
+[1mdiff --git a/modules/chardet/euckrfreq.pyc b/modules/chardet/euckrfreq.pyc[m
+[1mindex bf8479c..7995d79 100644[m
+Binary files a/modules/chardet/euckrfreq.pyc and b/modules/chardet/euckrfreq.pyc differ
+[1mdiff --git a/modules/chardet/euckrprober.pyc b/modules/chardet/euckrprober.pyc[m
+[1mindex b8d1c80..c2642e9 100644[m
+Binary files a/modules/chardet/euckrprober.pyc and b/modules/chardet/euckrprober.pyc differ
+[1mdiff --git a/modules/chardet/euctwfreq.pyc b/modules/chardet/euctwfreq.pyc[m
+[1mindex 629ce8b..5d31069 100644[m
+Binary files a/modules/chardet/euctwfreq.pyc and b/modules/chardet/euctwfreq.pyc differ
+[1mdiff --git a/modules/chardet/euctwprober.pyc b/modules/chardet/euctwprober.pyc[m
+[1mindex 8f733d6..732eced 100644[m
+Binary files a/modules/chardet/euctwprober.pyc and b/modules/chardet/euctwprober.pyc differ
+[1mdiff --git a/modules/chardet/gb2312freq.pyc b/modules/chardet/gb2312freq.pyc[m
+[1mindex 3b5ffe8..80737f6 100644[m
+Binary files a/modules/chardet/gb2312freq.pyc and b/modules/chardet/gb2312freq.pyc differ
+[1mdiff --git a/modules/chardet/gb2312prober.pyc b/modules/chardet/gb2312prober.pyc[m
+[1mindex 02d4065..2e4e7a6 100644[m
+Binary files a/modules/chardet/gb2312prober.pyc and b/modules/chardet/gb2312prober.pyc differ
+[1mdiff --git a/modules/chardet/hebrewprober.pyc b/modules/chardet/hebrewprober.pyc[m
+[1mindex 8bbcb8d..8724b88 100644[m
+Binary files a/modules/chardet/hebrewprober.pyc and b/modules/chardet/hebrewprober.pyc differ
+[1mdiff --git a/modules/chardet/jisfreq.pyc b/modules/chardet/jisfreq.pyc[m
+[1mindex da184ba..99c9f9e 100644[m
+Binary files a/modules/chardet/jisfreq.pyc and b/modules/chardet/jisfreq.pyc differ
+[1mdiff --git a/modules/chardet/jpcntx.pyc b/modules/chardet/jpcntx.pyc[m
+[1mindex 4005e8c..6d27129 100644[m
+Binary files a/modules/chardet/jpcntx.pyc and b/modules/chardet/jpcntx.pyc differ
+[1mdiff --git a/modules/chardet/langbulgarianmodel.pyc b/modules/chardet/langbulgarianmodel.pyc[m
+[1mindex 6a1544f..015a08d 100644[m
+Binary files a/modules/chardet/langbulgarianmodel.pyc and b/modules/chardet/langbulgarianmodel.pyc differ
+[1mdiff --git a/modules/chardet/langcyrillicmodel.pyc b/modules/chardet/langcyrillicmodel.pyc[m
+[1mindex 3373d82..583cf01 100644[m
+Binary files a/modules/chardet/langcyrillicmodel.pyc and b/modules/chardet/langcyrillicmodel.pyc differ
+[1mdiff --git a/modules/chardet/langgreekmodel.pyc b/modules/chardet/langgreekmodel.pyc[m
+[1mindex 3433652..128ab95 100644[m
+Binary files a/modules/chardet/langgreekmodel.pyc and b/modules/chardet/langgreekmodel.pyc differ
+[1mdiff --git a/modules/chardet/langhebrewmodel.pyc b/modules/chardet/langhebrewmodel.pyc[m
+[1mindex 501469d..e30c637 100644[m
+Binary files a/modules/chardet/langhebrewmodel.pyc and b/modules/chardet/langhebrewmodel.pyc differ
+[1mdiff --git a/modules/chardet/langthaimodel.pyc b/modules/chardet/langthaimodel.pyc[m
+[1mindex e4d4f07..d2adac6 100644[m
+Binary files a/modules/chardet/langthaimodel.pyc and b/modules/chardet/langthaimodel.pyc differ
+[1mdiff --git a/modules/chardet/langturkishmodel.pyc b/modules/chardet/langturkishmodel.pyc[m
+[1mindex 5c01052..470549c 100644[m
+Binary files a/modules/chardet/langturkishmodel.pyc and b/modules/chardet/langturkishmodel.pyc differ
+[1mdiff --git a/modules/chardet/latin1prober.pyc b/modules/chardet/latin1prober.pyc[m
+[1mindex d664633..ceb5195 100644[m
+Binary files a/modules/chardet/latin1prober.pyc and b/modules/chardet/latin1prober.pyc differ
+[1mdiff --git a/modules/chardet/mbcharsetprober.pyc b/modules/chardet/mbcharsetprober.pyc[m
+[1mindex 6562679..ad53685 100644[m
+Binary files a/modules/chardet/mbcharsetprober.pyc and b/modules/chardet/mbcharsetprober.pyc differ
+[1mdiff --git a/modules/chardet/mbcsgroupprober.pyc b/modules/chardet/mbcsgroupprober.pyc[m
+[1mindex 3790b52..b657b59 100644[m
+Binary files a/modules/chardet/mbcsgroupprober.pyc and b/modules/chardet/mbcsgroupprober.pyc differ
+[1mdiff --git a/modules/chardet/mbcssm.pyc b/modules/chardet/mbcssm.pyc[m
+[1mindex d8cabac..3e769ee 100644[m
+Binary files a/modules/chardet/mbcssm.pyc and b/modules/chardet/mbcssm.pyc differ
+[1mdiff --git a/modules/chardet/sbcharsetprober.pyc b/modules/chardet/sbcharsetprober.pyc[m
+[1mindex f89bc56..0de5cdf 100644[m
+Binary files a/modules/chardet/sbcharsetprober.pyc and b/modules/chardet/sbcharsetprober.pyc differ
+[1mdiff --git a/modules/chardet/sbcsgroupprober.pyc b/modules/chardet/sbcsgroupprober.pyc[m
+[1mindex 3546ab2..f890265 100644[m
+Binary files a/modules/chardet/sbcsgroupprober.pyc and b/modules/chardet/sbcsgroupprober.pyc differ
+[1mdiff --git a/modules/chardet/sjisprober.pyc b/modules/chardet/sjisprober.pyc[m
+[1mindex 207bd92..75a2178 100644[m
+Binary files a/modules/chardet/sjisprober.pyc and b/modules/chardet/sjisprober.pyc differ
+[1mdiff --git a/modules/chardet/universaldetector.pyc b/modules/chardet/universaldetector.pyc[m
+[1mindex d4565dc..7783785 100644[m
+Binary files a/modules/chardet/universaldetector.pyc and b/modules/chardet/universaldetector.pyc differ
+[1mdiff --git a/modules/chardet/utf8prober.pyc b/modules/chardet/utf8prober.pyc[m
+[1mindex 02468b9..6113c0c 100644[m
+Binary files a/modules/chardet/utf8prober.pyc and b/modules/chardet/utf8prober.pyc differ
+[1mdiff --git a/modules/chardet/version.pyc b/modules/chardet/version.pyc[m
+[1mindex 86c004e..6ce3d31 100644[m
+Binary files a/modules/chardet/version.pyc and b/modules/chardet/version.pyc differ
+[1mdiff --git a/modules/decorator.pyc b/modules/decorator.pyc[m
+[1mindex 41c347c..ae57079 100644[m
+Binary files a/modules/decorator.pyc and b/modules/decorator.pyc differ
+[1mdiff --git a/modules/idna/__init__.pyc b/modules/idna/__init__.pyc[m
+[1mindex 447ce45..7ca3121 100644[m
+Binary files a/modules/idna/__init__.pyc and b/modules/idna/__init__.pyc differ
+[1mdiff --git a/modules/idna/core.pyc b/modules/idna/core.pyc[m
+[1mindex 54cf4d2..ff0cc82 100644[m
+Binary files a/modules/idna/core.pyc and b/modules/idna/core.pyc differ
+[1mdiff --git a/modules/idna/idnadata.pyc b/modules/idna/idnadata.pyc[m
+[1mindex 85dbea6..d6e53b7 100644[m
+Binary files a/modules/idna/idnadata.pyc and b/modules/idna/idnadata.pyc differ
+[1mdiff --git a/modules/idna/intranges.pyc b/modules/idna/intranges.pyc[m
+[1mindex 885f6ed..1a2d05a 100644[m
+Binary files a/modules/idna/intranges.pyc and b/modules/idna/intranges.pyc differ
+[1mdiff --git a/modules/idna/package_data.pyc b/modules/idna/package_data.pyc[m
+[1mindex c2244d2..dc57736 100644[m
+Binary files a/modules/idna/package_data.pyc and b/modules/idna/package_data.pyc differ
+[1mdiff --git a/modules/imageio/__init__.pyc b/modules/imageio/__init__.pyc[m
+[1mindex 6c09a4d..0e00fed 100644[m
+Binary files a/modules/imageio/__init__.pyc and b/modules/imageio/__init__.pyc differ
+[1mdiff --git a/modules/imageio/core/__init__.pyc b/modules/imageio/core/__init__.pyc[m
+[1mindex 7f26d92..34a00a7 100644[m
+Binary files a/modules/imageio/core/__init__.pyc and b/modules/imageio/core/__init__.pyc differ
+[1mdiff --git a/modules/imageio/core/fetching.pyc b/modules/imageio/core/fetching.pyc[m
+[1mindex 7f56f4e..87f2960 100644[m
+Binary files a/modules/imageio/core/fetching.pyc and b/modules/imageio/core/fetching.pyc differ
+[1mdiff --git a/modules/imageio/core/findlib.pyc b/modules/imageio/core/findlib.pyc[m
+[1mindex 3891daa..af12e62 100644[m
+Binary files a/modules/imageio/core/findlib.pyc and b/modules/imageio/core/findlib.pyc differ
+[1mdiff --git a/modules/imageio/core/format.pyc b/modules/imageio/core/format.pyc[m
+[1mindex fab1a7a..2d58170 100644[m
+Binary files a/modules/imageio/core/format.pyc and b/modules/imageio/core/format.pyc differ
+[1mdiff --git a/modules/imageio/core/functions.pyc b/modules/imageio/core/functions.pyc[m
+[1mindex 0a33f39..ff0789d 100644[m
+Binary files a/modules/imageio/core/functions.pyc and b/modules/imageio/core/functions.pyc differ
+[1mdiff --git a/modules/imageio/core/request.pyc b/modules/imageio/core/request.pyc[m
+[1mindex ded17e8..1517214 100644[m
+Binary files a/modules/imageio/core/request.pyc and b/modules/imageio/core/request.pyc differ
+[1mdiff --git a/modules/imageio/core/util.pyc b/modules/imageio/core/util.pyc[m
+[1mindex 6f07908..ca575c5 100644[m
+Binary files a/modules/imageio/core/util.pyc and b/modules/imageio/core/util.pyc differ
+[1mdiff --git a/modules/imageio/plugins/__init__.pyc b/modules/imageio/plugins/__init__.pyc[m
+[1mindex cc1b192..db886d3 100644[m
+Binary files a/modules/imageio/plugins/__init__.pyc and b/modules/imageio/plugins/__init__.pyc differ
+[1mdiff --git a/modules/imageio/plugins/_freeimage.pyc b/modules/imageio/plugins/_freeimage.pyc[m
+[1mindex 0ef9d4b..5fc009f 100644[m
+Binary files a/modules/imageio/plugins/_freeimage.pyc and b/modules/imageio/plugins/_freeimage.pyc differ
+[1mdiff --git a/modules/imageio/plugins/avbin.pyc b/modules/imageio/plugins/avbin.pyc[m
+[1mindex f011c77..f4c8424 100644[m
+Binary files a/modules/imageio/plugins/avbin.pyc and b/modules/imageio/plugins/avbin.pyc differ
+[1mdiff --git a/modules/imageio/plugins/bsdf.pyc b/modules/imageio/plugins/bsdf.pyc[m
+[1mindex c8125b6..39f0f70 100644[m
+Binary files a/modules/imageio/plugins/bsdf.pyc and b/modules/imageio/plugins/bsdf.pyc differ
+[1mdiff --git a/modules/imageio/plugins/dicom.pyc b/modules/imageio/plugins/dicom.pyc[m
+[1mindex 41b30cf..b7f3f57 100644[m
+Binary files a/modules/imageio/plugins/dicom.pyc and b/modules/imageio/plugins/dicom.pyc differ
+[1mdiff --git a/modules/imageio/plugins/example.pyc b/modules/imageio/plugins/example.pyc[m
+[1mindex 5f236cf..8102c40 100644[m
+Binary files a/modules/imageio/plugins/example.pyc and b/modules/imageio/plugins/example.pyc differ
+[1mdiff --git a/modules/imageio/plugins/feisem.pyc b/modules/imageio/plugins/feisem.pyc[m
+[1mindex 4103a74..6023002 100644[m
+Binary files a/modules/imageio/plugins/feisem.pyc and b/modules/imageio/plugins/feisem.pyc differ
+[1mdiff --git a/modules/imageio/plugins/ffmpeg.pyc b/modules/imageio/plugins/ffmpeg.pyc[m
+[1mindex 08ab6c9..e5e8c3c 100644[m
+Binary files a/modules/imageio/plugins/ffmpeg.pyc and b/modules/imageio/plugins/ffmpeg.pyc differ
+[1mdiff --git a/modules/imageio/plugins/fits.pyc b/modules/imageio/plugins/fits.pyc[m
+[1mindex 9034047..5fead39 100644[m
+Binary files a/modules/imageio/plugins/fits.pyc and b/modules/imageio/plugins/fits.pyc differ
+[1mdiff --git a/modules/imageio/plugins/freeimage.pyc b/modules/imageio/plugins/freeimage.pyc[m
+[1mindex 0e765ff..a4db461 100644[m
+Binary files a/modules/imageio/plugins/freeimage.pyc and b/modules/imageio/plugins/freeimage.pyc differ
+[1mdiff --git a/modules/imageio/plugins/freeimagemulti.pyc b/modules/imageio/plugins/freeimagemulti.pyc[m
+[1mindex 989fb96..c6b927b 100644[m
+Binary files a/modules/imageio/plugins/freeimagemulti.pyc and b/modules/imageio/plugins/freeimagemulti.pyc differ
+[1mdiff --git a/modules/imageio/plugins/gdal.pyc b/modules/imageio/plugins/gdal.pyc[m
+[1mindex a7639e6..45b1821 100644[m
+Binary files a/modules/imageio/plugins/gdal.pyc and b/modules/imageio/plugins/gdal.pyc differ
+[1mdiff --git a/modules/imageio/plugins/grab.pyc b/modules/imageio/plugins/grab.pyc[m
+[1mindex 919984d..749e559 100644[m
+Binary files a/modules/imageio/plugins/grab.pyc and b/modules/imageio/plugins/grab.pyc differ
+[1mdiff --git a/modules/imageio/plugins/lytro.pyc b/modules/imageio/plugins/lytro.pyc[m
+[1mindex 434ee9d..d7e3fa3 100644[m
+Binary files a/modules/imageio/plugins/lytro.pyc and b/modules/imageio/plugins/lytro.pyc differ
+[1mdiff --git a/modules/imageio/plugins/npz.pyc b/modules/imageio/plugins/npz.pyc[m
+[1mindex 90d049b..24feadd 100644[m
+Binary files a/modules/imageio/plugins/npz.pyc and b/modules/imageio/plugins/npz.pyc differ
+[1mdiff --git a/modules/imageio/plugins/pillow.pyc b/modules/imageio/plugins/pillow.pyc[m
+[1mindex 4bf3a7d..3567b4a 100644[m
+Binary files a/modules/imageio/plugins/pillow.pyc and b/modules/imageio/plugins/pillow.pyc differ
+[1mdiff --git a/modules/imageio/plugins/pillow_info.pyc b/modules/imageio/plugins/pillow_info.pyc[m
+[1mindex 8c787d9..e9f42fd 100644[m
+Binary files a/modules/imageio/plugins/pillow_info.pyc and b/modules/imageio/plugins/pillow_info.pyc differ
+[1mdiff --git a/modules/imageio/plugins/pillowmulti.pyc b/modules/imageio/plugins/pillowmulti.pyc[m
+[1mindex b5d0633..36df771 100644[m
+Binary files a/modules/imageio/plugins/pillowmulti.pyc and b/modules/imageio/plugins/pillowmulti.pyc differ
+[1mdiff --git a/modules/imageio/plugins/simpleitk.pyc b/modules/imageio/plugins/simpleitk.pyc[m
+[1mindex 3190ad5..e7b756b 100644[m
+Binary files a/modules/imageio/plugins/simpleitk.pyc and b/modules/imageio/plugins/simpleitk.pyc differ
+[1mdiff --git a/modules/imageio/plugins/spe.pyc b/modules/imageio/plugins/spe.pyc[m
+[1mindex ee1f069..9a6b9dc 100644[m
+Binary files a/modules/imageio/plugins/spe.pyc and b/modules/imageio/plugins/spe.pyc differ
+[1mdiff --git a/modules/imageio/plugins/swf.pyc b/modules/imageio/plugins/swf.pyc[m
+[1mindex ea482fb..9600cdb 100644[m
+Binary files a/modules/imageio/plugins/swf.pyc and b/modules/imageio/plugins/swf.pyc differ
+[1mdiff --git a/modules/imageio/plugins/tifffile.pyc b/modules/imageio/plugins/tifffile.pyc[m
+[1mindex d3bfd28..bb87bf9 100644[m
+Binary files a/modules/imageio/plugins/tifffile.pyc and b/modules/imageio/plugins/tifffile.pyc differ
+[1mdiff --git a/modules/moviepy/Clip.pyc b/modules/moviepy/Clip.pyc[m
+[1mindex 8dfd42e..6b1dfea 100644[m
+Binary files a/modules/moviepy/Clip.pyc and b/modules/moviepy/Clip.pyc differ
+[1mdiff --git a/modules/moviepy/__init__.pyc b/modules/moviepy/__init__.pyc[m
+[1mindex 44753cc..d422185 100644[m
+Binary files a/modules/moviepy/__init__.pyc and b/modules/moviepy/__init__.pyc differ
+[1mdiff --git a/modules/moviepy/audio/AudioClip.pyc b/modules/moviepy/audio/AudioClip.pyc[m
+[1mindex ca620c0..e1c7682 100644[m
+Binary files a/modules/moviepy/audio/AudioClip.pyc and b/modules/moviepy/audio/AudioClip.pyc differ
+[1mdiff --git a/modules/moviepy/audio/__init__.pyc b/modules/moviepy/audio/__init__.pyc[m
+[1mindex 2d135ce..113ccc4 100644[m
+Binary files a/modules/moviepy/audio/__init__.pyc and b/modules/moviepy/audio/__init__.pyc differ
+[1mdiff --git a/modules/moviepy/audio/fx/__init__.pyc b/modules/moviepy/audio/fx/__init__.pyc[m
+[1mindex 0c21c79..ccbf2c7 100644[m
+Binary files a/modules/moviepy/audio/fx/__init__.pyc and b/modules/moviepy/audio/fx/__init__.pyc differ
+[1mdiff --git a/modules/moviepy/audio/fx/all/__init__.pyc b/modules/moviepy/audio/fx/all/__init__.pyc[m
+[1mindex dc53dc3..95e12ae 100644[m
+Binary files a/modules/moviepy/audio/fx/all/__init__.pyc and b/modules/moviepy/audio/fx/all/__init__.pyc differ
+[1mdiff --git a/modules/moviepy/audio/fx/audio_fadein.pyc b/modules/moviepy/audio/fx/audio_fadein.pyc[m
+[1mindex db5483d..768365b 100644[m
+Binary files a/modules/moviepy/audio/fx/audio_fadein.pyc and b/modules/moviepy/audio/fx/audio_fadein.pyc differ
+[1mdiff --git a/modules/moviepy/audio/fx/audio_fadeout.pyc b/modules/moviepy/audio/fx/audio_fadeout.pyc[m
+[1mindex 7fa2b86..a688a5b 100644[m
+Binary files a/modules/moviepy/audio/fx/audio_fadeout.pyc and b/modules/moviepy/audio/fx/audio_fadeout.pyc differ
+[1mdiff --git a/modules/moviepy/audio/fx/audio_left_right.pyc b/modules/moviepy/audio/fx/audio_left_right.pyc[m
+[1mindex 551fee5..a72f905 100644[m
+Binary files a/modules/moviepy/audio/fx/audio_left_right.pyc and b/modules/moviepy/audio/fx/audio_left_right.pyc differ
+[1mdiff --git a/modules/moviepy/audio/fx/audio_loop.pyc b/modules/moviepy/audio/fx/audio_loop.pyc[m
+[1mindex c19b7af..9c282f3 100644[m
+Binary files a/modules/moviepy/audio/fx/audio_loop.pyc and b/modules/moviepy/audio/fx/audio_loop.pyc differ
+[1mdiff --git a/modules/moviepy/audio/fx/audio_normalize.pyc b/modules/moviepy/audio/fx/audio_normalize.pyc[m
+[1mindex a08f411..ff590f7 100644[m
+Binary files a/modules/moviepy/audio/fx/audio_normalize.pyc and b/modules/moviepy/audio/fx/audio_normalize.pyc differ
+[1mdiff --git a/modules/moviepy/audio/fx/volumex.pyc b/modules/moviepy/audio/fx/volumex.pyc[m
+[1mindex 660e984..1641d63 100644[m
+Binary files a/modules/moviepy/audio/fx/volumex.pyc and b/modules/moviepy/audio/fx/volumex.pyc differ
+[1mdiff --git a/modules/moviepy/audio/io/AudioFileClip.pyc b/modules/moviepy/audio/io/AudioFileClip.pyc[m
+[1mindex 20c0510..db154c5 100644[m
+Binary files a/modules/moviepy/audio/io/AudioFileClip.pyc and b/modules/moviepy/audio/io/AudioFileClip.pyc differ
+[1mdiff --git a/modules/moviepy/audio/io/__init__.pyc b/modules/moviepy/audio/io/__init__.pyc[m
+[1mindex be163cb..4352751 100644[m
+Binary files a/modules/moviepy/audio/io/__init__.pyc and b/modules/moviepy/audio/io/__init__.pyc differ
+[1mdiff --git a/modules/moviepy/audio/io/ffmpeg_audiowriter.pyc b/modules/moviepy/audio/io/ffmpeg_audiowriter.pyc[m
+[1mindex c4b8468..76d6c94 100644[m
+Binary files a/modules/moviepy/audio/io/ffmpeg_audiowriter.pyc and b/modules/moviepy/audio/io/ffmpeg_audiowriter.pyc differ
+[1mdiff --git a/modules/moviepy/audio/io/preview.pyc b/modules/moviepy/audio/io/preview.pyc[m
+[1mindex 7407339..b4a743f 100644[m
+Binary files a/modules/moviepy/audio/io/preview.pyc and b/modules/moviepy/audio/io/preview.pyc differ
+[1mdiff --git a/modules/moviepy/audio/io/readers.pyc b/modules/moviepy/audio/io/readers.pyc[m
+[1mindex 553b6bf..1c86e18 100644[m
+Binary files a/modules/moviepy/audio/io/readers.pyc and b/modules/moviepy/audio/io/readers.pyc differ
+[1mdiff --git a/modules/moviepy/compat.pyc b/modules/moviepy/compat.pyc[m
+[1mindex f5346c4..86959ff 100644[m
+Binary files a/modules/moviepy/compat.pyc and b/modules/moviepy/compat.pyc differ
+[1mdiff --git a/modules/moviepy/config.pyc b/modules/moviepy/config.pyc[m
+[1mindex a8ce3a4..f1ef4af 100644[m
+Binary files a/modules/moviepy/config.pyc and b/modules/moviepy/config.pyc differ
+[1mdiff --git a/modules/moviepy/config_defaults.pyc b/modules/moviepy/config_defaults.pyc[m
+[1mindex 0e53a6f..0d3ea2f 100644[m
+Binary files a/modules/moviepy/config_defaults.pyc and b/modules/moviepy/config_defaults.pyc differ
+[1mdiff --git a/modules/moviepy/decorators.pyc b/modules/moviepy/decorators.pyc[m
+[1mindex 7325a11..c1f2a55 100644[m
+Binary files a/modules/moviepy/decorators.pyc and b/modules/moviepy/decorators.pyc differ
+[1mdiff --git a/modules/moviepy/editor.pyc b/modules/moviepy/editor.pyc[m
+[1mindex 5a8122f..efa9e45 100644[m
+Binary files a/modules/moviepy/editor.pyc and b/modules/moviepy/editor.pyc differ
+[1mdiff --git a/modules/moviepy/tools.pyc b/modules/moviepy/tools.pyc[m
+[1mindex 9dab4d5..243a6cc 100644[m
+Binary files a/modules/moviepy/tools.pyc and b/modules/moviepy/tools.pyc differ
+[1mdiff --git a/modules/moviepy/version.pyc b/modules/moviepy/version.pyc[m
+[1mindex 366a8a4..db01ead 100644[m
+Binary files a/modules/moviepy/version.pyc and b/modules/moviepy/version.pyc differ
+[1mdiff --git a/modules/moviepy/video/VideoClip.pyc b/modules/moviepy/video/VideoClip.pyc[m
+[1mindex 49d21da..09d8424 100644[m
+Binary files a/modules/moviepy/video/VideoClip.pyc and b/modules/moviepy/video/VideoClip.pyc differ
+[1mdiff --git a/modules/moviepy/video/__init__.pyc b/modules/moviepy/video/__init__.pyc[m
+[1mindex 2ec6bb5..a77eab5 100644[m
+Binary files a/modules/moviepy/video/__init__.pyc and b/modules/moviepy/video/__init__.pyc differ
+[1mdiff --git a/modules/moviepy/video/compositing/CompositeVideoClip.pyc b/modules/moviepy/video/compositing/CompositeVideoClip.pyc[m
+[1mindex af4423c..fc55870 100644[m
+Binary files a/modules/moviepy/video/compositing/CompositeVideoClip.pyc and b/modules/moviepy/video/compositing/CompositeVideoClip.pyc differ
+[1mdiff --git a/modules/moviepy/video/compositing/__init__.pyc b/modules/moviepy/video/compositing/__init__.pyc[m
+[1mindex 9bb5535..7c18378 100644[m
+Binary files a/modules/moviepy/video/compositing/__init__.pyc and b/modules/moviepy/video/compositing/__init__.pyc differ
+[1mdiff --git a/modules/moviepy/video/compositing/concatenate.pyc b/modules/moviepy/video/compositing/concatenate.pyc[m
+[1mindex 1cc2555..9c66b27 100644[m
+Binary files a/modules/moviepy/video/compositing/concatenate.pyc and b/modules/moviepy/video/compositing/concatenate.pyc differ
+[1mdiff --git a/modules/moviepy/video/compositing/on_color.pyc b/modules/moviepy/video/compositing/on_color.pyc[m
+[1mindex cb0e9ab..0defd2d 100644[m
+Binary files a/modules/moviepy/video/compositing/on_color.pyc and b/modules/moviepy/video/compositing/on_color.pyc differ
+[1mdiff --git a/modules/moviepy/video/compositing/transitions.pyc b/modules/moviepy/video/compositing/transitions.pyc[m
+[1mindex 3151eb8..dad7e59 100644[m
+Binary files a/modules/moviepy/video/compositing/transitions.pyc and b/modules/moviepy/video/compositing/transitions.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/__init__.pyc b/modules/moviepy/video/fx/__init__.pyc[m
+[1mindex e621af2..0237f18 100644[m
+Binary files a/modules/moviepy/video/fx/__init__.pyc and b/modules/moviepy/video/fx/__init__.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/accel_decel.pyc b/modules/moviepy/video/fx/accel_decel.pyc[m
+[1mindex 1654373..ba7a3f4 100644[m
+Binary files a/modules/moviepy/video/fx/accel_decel.pyc and b/modules/moviepy/video/fx/accel_decel.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/all/__init__.pyc b/modules/moviepy/video/fx/all/__init__.pyc[m
+[1mindex 2b258bc..7ecf957 100644[m
+Binary files a/modules/moviepy/video/fx/all/__init__.pyc and b/modules/moviepy/video/fx/all/__init__.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/blackwhite.pyc b/modules/moviepy/video/fx/blackwhite.pyc[m
+[1mindex aeceb8d..d77c48d 100644[m
+Binary files a/modules/moviepy/video/fx/blackwhite.pyc and b/modules/moviepy/video/fx/blackwhite.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/blink.pyc b/modules/moviepy/video/fx/blink.pyc[m
+[1mindex 6cc5e3b..7b0b45e 100644[m
+Binary files a/modules/moviepy/video/fx/blink.pyc and b/modules/moviepy/video/fx/blink.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/colorx.pyc b/modules/moviepy/video/fx/colorx.pyc[m
+[1mindex fc409db..ead599a 100644[m
+Binary files a/modules/moviepy/video/fx/colorx.pyc and b/modules/moviepy/video/fx/colorx.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/crop.pyc b/modules/moviepy/video/fx/crop.pyc[m
+[1mindex 5963f4b..3ab4c31 100644[m
+Binary files a/modules/moviepy/video/fx/crop.pyc and b/modules/moviepy/video/fx/crop.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/even_size.pyc b/modules/moviepy/video/fx/even_size.pyc[m
+[1mindex 190c27a..bf0dddf 100644[m
+Binary files a/modules/moviepy/video/fx/even_size.pyc and b/modules/moviepy/video/fx/even_size.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/fadein.pyc b/modules/moviepy/video/fx/fadein.pyc[m
+[1mindex 5af20dc..2a38221 100644[m
+Binary files a/modules/moviepy/video/fx/fadein.pyc and b/modules/moviepy/video/fx/fadein.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/fadeout.pyc b/modules/moviepy/video/fx/fadeout.pyc[m
+[1mindex a695fbb..ea79cb7 100644[m
+Binary files a/modules/moviepy/video/fx/fadeout.pyc and b/modules/moviepy/video/fx/fadeout.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/freeze.pyc b/modules/moviepy/video/fx/freeze.pyc[m
+[1mindex 530f779..d87e18b 100644[m
+Binary files a/modules/moviepy/video/fx/freeze.pyc and b/modules/moviepy/video/fx/freeze.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/freeze_region.pyc b/modules/moviepy/video/fx/freeze_region.pyc[m
+[1mindex 2c7643d..b3b091e 100644[m
+Binary files a/modules/moviepy/video/fx/freeze_region.pyc and b/modules/moviepy/video/fx/freeze_region.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/gamma_corr.pyc b/modules/moviepy/video/fx/gamma_corr.pyc[m
+[1mindex 71a17d0..eb5958d 100644[m
+Binary files a/modules/moviepy/video/fx/gamma_corr.pyc and b/modules/moviepy/video/fx/gamma_corr.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/headblur.pyc b/modules/moviepy/video/fx/headblur.pyc[m
+[1mindex 94e4a8b..851d6d6 100644[m
+Binary files a/modules/moviepy/video/fx/headblur.pyc and b/modules/moviepy/video/fx/headblur.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/invert_colors.pyc b/modules/moviepy/video/fx/invert_colors.pyc[m
+[1mindex 6a51d66..3254339 100644[m
+Binary files a/modules/moviepy/video/fx/invert_colors.pyc and b/modules/moviepy/video/fx/invert_colors.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/loop.pyc b/modules/moviepy/video/fx/loop.pyc[m
+[1mindex e48ef98..666f223 100644[m
+Binary files a/modules/moviepy/video/fx/loop.pyc and b/modules/moviepy/video/fx/loop.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/lum_contrast.pyc b/modules/moviepy/video/fx/lum_contrast.pyc[m
+[1mindex 114cde2..bc61d00 100644[m
+Binary files a/modules/moviepy/video/fx/lum_contrast.pyc and b/modules/moviepy/video/fx/lum_contrast.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/make_loopable.pyc b/modules/moviepy/video/fx/make_loopable.pyc[m
+[1mindex 39fc39e..1357a28 100644[m
+Binary files a/modules/moviepy/video/fx/make_loopable.pyc and b/modules/moviepy/video/fx/make_loopable.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/margin.pyc b/modules/moviepy/video/fx/margin.pyc[m
+[1mindex e0e55c0..6068c12 100644[m
+Binary files a/modules/moviepy/video/fx/margin.pyc and b/modules/moviepy/video/fx/margin.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/mask_and.pyc b/modules/moviepy/video/fx/mask_and.pyc[m
+[1mindex 21f078e..c3ef84f 100644[m
+Binary files a/modules/moviepy/video/fx/mask_and.pyc and b/modules/moviepy/video/fx/mask_and.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/mask_color.pyc b/modules/moviepy/video/fx/mask_color.pyc[m
+[1mindex 3fecf9a..7c3ce57 100644[m
+Binary files a/modules/moviepy/video/fx/mask_color.pyc and b/modules/moviepy/video/fx/mask_color.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/mask_or.pyc b/modules/moviepy/video/fx/mask_or.pyc[m
+[1mindex fe3fa00..702fc3b 100644[m
+Binary files a/modules/moviepy/video/fx/mask_or.pyc and b/modules/moviepy/video/fx/mask_or.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/mirror_x.pyc b/modules/moviepy/video/fx/mirror_x.pyc[m
+[1mindex 165d5e4..b8b0641 100644[m
+Binary files a/modules/moviepy/video/fx/mirror_x.pyc and b/modules/moviepy/video/fx/mirror_x.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/mirror_y.pyc b/modules/moviepy/video/fx/mirror_y.pyc[m
+[1mindex f439e59..aa33144 100644[m
+Binary files a/modules/moviepy/video/fx/mirror_y.pyc and b/modules/moviepy/video/fx/mirror_y.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/painting.pyc b/modules/moviepy/video/fx/painting.pyc[m
+[1mindex 69a9b0e..0010c6c 100644[m
+Binary files a/modules/moviepy/video/fx/painting.pyc and b/modules/moviepy/video/fx/painting.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/resize.pyc b/modules/moviepy/video/fx/resize.pyc[m
+[1mindex 9b201f8..911f080 100644[m
+Binary files a/modules/moviepy/video/fx/resize.pyc and b/modules/moviepy/video/fx/resize.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/rotate.pyc b/modules/moviepy/video/fx/rotate.pyc[m
+[1mindex 775914b..c7bcd9b 100644[m
+Binary files a/modules/moviepy/video/fx/rotate.pyc and b/modules/moviepy/video/fx/rotate.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/scroll.pyc b/modules/moviepy/video/fx/scroll.pyc[m
+[1mindex 74b02dd..df80425 100644[m
+Binary files a/modules/moviepy/video/fx/scroll.pyc and b/modules/moviepy/video/fx/scroll.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/speedx.pyc b/modules/moviepy/video/fx/speedx.pyc[m
+[1mindex 6f84ace..251d69e 100644[m
+Binary files a/modules/moviepy/video/fx/speedx.pyc and b/modules/moviepy/video/fx/speedx.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/supersample.pyc b/modules/moviepy/video/fx/supersample.pyc[m
+[1mindex 3b7b66b..7204d8a 100644[m
+Binary files a/modules/moviepy/video/fx/supersample.pyc and b/modules/moviepy/video/fx/supersample.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/time_mirror.pyc b/modules/moviepy/video/fx/time_mirror.pyc[m
+[1mindex 5daa897..eb6d134 100644[m
+Binary files a/modules/moviepy/video/fx/time_mirror.pyc and b/modules/moviepy/video/fx/time_mirror.pyc differ
+[1mdiff --git a/modules/moviepy/video/fx/time_symmetrize.pyc b/modules/moviepy/video/fx/time_symmetrize.pyc[m
+[1mindex d929eb2..70382f6 100644[m
+Binary files a/modules/moviepy/video/fx/time_symmetrize.pyc and b/modules/moviepy/video/fx/time_symmetrize.pyc differ
+[1mdiff --git a/modules/moviepy/video/io/ImageSequenceClip.pyc b/modules/moviepy/video/io/ImageSequenceClip.pyc[m
+[1mindex 1585119..1149574 100644[m
+Binary files a/modules/moviepy/video/io/ImageSequenceClip.pyc and b/modules/moviepy/video/io/ImageSequenceClip.pyc differ
+[1mdiff --git a/modules/moviepy/video/io/VideoFileClip.pyc b/modules/moviepy/video/io/VideoFileClip.pyc[m
+[1mindex ab19484..7a071e1 100644[m
+Binary files a/modules/moviepy/video/io/VideoFileClip.pyc and b/modules/moviepy/video/io/VideoFileClip.pyc differ
+[1mdiff --git a/modules/moviepy/video/io/__init__.pyc b/modules/moviepy/video/io/__init__.pyc[m
+[1mindex 9fd6878..a07fa59 100644[m
+Binary files a/modules/moviepy/video/io/__init__.pyc and b/modules/moviepy/video/io/__init__.pyc differ
+[1mdiff --git a/modules/moviepy/video/io/downloader.pyc b/modules/moviepy/video/io/downloader.pyc[m
+[1mindex e1115d6..4c2e3c1 100644[m
+Binary files a/modules/moviepy/video/io/downloader.pyc and b/modules/moviepy/video/io/downloader.pyc differ
+[1mdiff --git a/modules/moviepy/video/io/ffmpeg_reader.pyc b/modules/moviepy/video/io/ffmpeg_reader.pyc[m
+[1mindex fec379f..e40188c 100644[m
+Binary files a/modules/moviepy/video/io/ffmpeg_reader.pyc and b/modules/moviepy/video/io/ffmpeg_reader.pyc differ
+[1mdiff --git a/modules/moviepy/video/io/ffmpeg_tools.pyc b/modules/moviepy/video/io/ffmpeg_tools.pyc[m
+[1mindex 7bd1364..63066de 100644[m
+Binary files a/modules/moviepy/video/io/ffmpeg_tools.pyc and b/modules/moviepy/video/io/ffmpeg_tools.pyc differ
+[1mdiff --git a/modules/moviepy/video/io/ffmpeg_writer.pyc b/modules/moviepy/video/io/ffmpeg_writer.pyc[m
+[1mindex f56bae8..e8b14c0 100644[m
+Binary files a/modules/moviepy/video/io/ffmpeg_writer.pyc and b/modules/moviepy/video/io/ffmpeg_writer.pyc differ
+[1mdiff --git a/modules/moviepy/video/io/gif_writers.pyc b/modules/moviepy/video/io/gif_writers.pyc[m
+[1mindex 5e447ec..3cbca0e 100644[m
+Binary files a/modules/moviepy/video/io/gif_writers.pyc and b/modules/moviepy/video/io/gif_writers.pyc differ
+[1mdiff --git a/modules/moviepy/video/io/html_tools.pyc b/modules/moviepy/video/io/html_tools.pyc[m
+[1mindex b5cacaa..96aa747 100644[m
+Binary files a/modules/moviepy/video/io/html_tools.pyc and b/modules/moviepy/video/io/html_tools.pyc differ
+[1mdiff --git a/modules/moviepy/video/io/preview.pyc b/modules/moviepy/video/io/preview.pyc[m
+[1mindex df88efd..95052a0 100644[m
+Binary files a/modules/moviepy/video/io/preview.pyc and b/modules/moviepy/video/io/preview.pyc differ
+[1mdiff --git a/modules/moviepy/video/io/sliders.pyc b/modules/moviepy/video/io/sliders.pyc[m
+[1mindex f719441..4b4c903 100644[m
+Binary files a/modules/moviepy/video/io/sliders.pyc and b/modules/moviepy/video/io/sliders.pyc differ
+[1mdiff --git a/modules/moviepy/video/tools/__init__.pyc b/modules/moviepy/video/tools/__init__.pyc[m
+[1mindex 66714d6..4e81c57 100644[m
+Binary files a/modules/moviepy/video/tools/__init__.pyc and b/modules/moviepy/video/tools/__init__.pyc differ
+[1mdiff --git a/modules/moviepy/video/tools/drawing.pyc b/modules/moviepy/video/tools/drawing.pyc[m
+[1mindex 0b741f4..9c9012e 100644[m
+Binary files a/modules/moviepy/video/tools/drawing.pyc and b/modules/moviepy/video/tools/drawing.pyc differ
+[1mdiff --git a/modules/numpy/__config__.pyc b/modules/numpy/__config__.pyc[m
+[1mindex 1865dde..25790c5 100644[m
+Binary files a/modules/numpy/__config__.pyc and b/modules/numpy/__config__.pyc differ
+[1mdiff --git a/modules/numpy/__init__.pyc b/modules/numpy/__init__.pyc[m
+[1mindex 886fda4..c4f6ab0 100644[m
+Binary files a/modules/numpy/__init__.pyc and b/modules/numpy/__init__.pyc differ
+[1mdiff --git a/modules/numpy/_distributor_init.pyc b/modules/numpy/_distributor_init.pyc[m
+[1mindex 1bdc869..4e3b849 100644[m
+Binary files a/modules/numpy/_distributor_init.pyc and b/modules/numpy/_distributor_init.pyc differ
+[1mdiff --git a/modules/numpy/_globals.pyc b/modules/numpy/_globals.pyc[m
+[1mindex d3908bd..032a961 100644[m
+Binary files a/modules/numpy/_globals.pyc and b/modules/numpy/_globals.pyc differ
+[1mdiff --git a/modules/numpy/_import_tools.pyc b/modules/numpy/_import_tools.pyc[m
+[1mindex 0c8cb82..8f58a6c 100644[m
+Binary files a/modules/numpy/_import_tools.pyc
