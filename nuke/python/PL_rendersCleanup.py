@@ -57,11 +57,12 @@ class removeFiles(threading.Thread):
         #print 'ITER BEFORE %s' % self.iter
         if os.path.isfile(p):
             os.remove(p)
-            print 'FILE removed %s' % p
-            pass
+            #print 'FILE removed %s' % p
+            #pass
         elif os.path.isdir(p):
             shutil.rmtree(p)
-            print 'FOLDER removed %s' % p
+            #print 'FOLDER removed %s' % p
+            #pass
 
         #self.iter += 1
         #print 'ITER AFTER %s' % self.iter
@@ -134,7 +135,7 @@ class cleanup_progress_bar(QDialog):
             for n in bdn.getNodes():
                 nuke.delete(n)
             nuke.delete(bdn)
-        print 'PRECOMP NODES REMOVED'
+        # 'PRECOMP NODES REMOVED'
 
         if os.path.exists(self.precomps_dir):
             #newSize += get_size(precomps_dir)
@@ -150,7 +151,9 @@ class cleanup_progress_bar(QDialog):
         root = nuke.root().name()
         try:
             self.drive, self.project, self.seq, self.shot, self.assetName, self.version = getPipelineAttrs()
+            self.drive = '//loky.plarium.local/project' # HARDCODE
             self.render_path = '%s/%s/sequences/%s/%s/render' % (self.drive, self.project, self.seq, self.shot)
+            #print 'render path %s' % self.render_path
         except:
             if 'vikings' in root:
                 split = root.split('/')
@@ -163,12 +166,18 @@ class cleanup_progress_bar(QDialog):
         # print 'path %s' % path
         paths = sorted([i['file'].value() for i in nuke.allNodes('Read') + nuke.allNodes('DeepRead') if
                         self.render_path in i['file'].value()])
+        # print 'PATHS'
+        # for ppp in paths:
+        #     print ppp
 
         # Get a list of all files and directories to remove
         self.files_to_remove = list()
         dirsToRemove = list()
+        #print 'GO INTO WALK'
         for rootDir, subdirs, filenames in os.walk(self.render_path):
             # Find the files that matches the given patterm
+            rootDir = rootDir.replace('\\', '/')
+            #print rootDir
             if filenames:
                 deleteFolder = False
                 for f in filenames:
@@ -177,9 +186,10 @@ class cleanup_progress_bar(QDialog):
                     fullpath = '%s/%s' % (rootDir, f)
                     fullpath = fullpath.replace('\\', '/')
                     for pat in paths:
-                        p = pat.split('.')[0]
+                        p = pat[:-9]
                         #print 'ROOTDIR %s %s' % (rootDir, f)
-                        # print 'FULLPATH %s' % fullpath
+                        #print 'FULLPATH %s' % fullpath
+                        #print 'P %s' % p
                         if p in fullpath:
                             in_script = True
 
@@ -193,7 +203,7 @@ class cleanup_progress_bar(QDialog):
                         if folder not in dirsToRemove:
                             dirsToRemove.append(folder)
 
-                print '----------------------------------------'
+                #print '----------------------------------------'
             else:
                 if subdirs == [] and filenames == []:
                     dirsToRemove.append(rootDir.replace('\\', '/'))
