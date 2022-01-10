@@ -58,9 +58,11 @@ class removeFiles(threading.Thread):
         if os.path.isfile(p):
             os.remove(p)
             print 'FILE removed %s' % p
+            pass
         elif os.path.isdir(p):
             shutil.rmtree(p)
             print 'FOLDER removed %s' % p
+
         #self.iter += 1
         #print 'ITER AFTER %s' % self.iter
 
@@ -136,7 +138,7 @@ class cleanup_progress_bar(QDialog):
 
         if os.path.exists(self.precomps_dir):
             #newSize += get_size(precomps_dir)
-            shutil.rmtree(self.precomps_dir)
+            #shutil.rmtree(self.precomps_dir)
             print 'PRECOMPS FOLDER REMOVED'
         self.precomps_dir_size_new = get_size(self.precomps_dir)
 
@@ -171,27 +173,39 @@ class cleanup_progress_bar(QDialog):
                 deleteFolder = False
                 for f in filenames:
                     in_script = False
+
+                    fullpath = '%s/%s' % (rootDir, f)
+                    fullpath = fullpath.replace('\\', '/')
                     for pat in paths:
                         p = pat.split('.')[0]
-                        print 'ROOTDIR %s %s' % (rootDir, f)
-                        fullpath = '%s/%s' % (rootDir, f)
-                        fullpath = fullpath.replace('\\', '/')
+                        #print 'ROOTDIR %s %s' % (rootDir, f)
                         # print 'FULLPATH %s' % fullpath
                         if p in fullpath:
                             in_script = True
 
-
                     if in_script:
-                        print 'KEEP %s' % fullpath
+                        #print 'KEEP %s' % fullpath
+                        pass
                     else:
-                        print 'DELETE %s' % fullpath
-                        # os.remove(fullpath)
+                        #print 'DELETE %s' % fullpath
                         self.files_to_remove.append(fullpath)
                         folder = os.path.dirname(fullpath)
                         if folder not in dirsToRemove:
                             dirsToRemove.append(folder)
 
                 print '----------------------------------------'
+            else:
+                if subdirs == [] and filenames == []:
+                    dirsToRemove.append(rootDir.replace('\\', '/'))
+
+        print '\t\t\tDIRS TO REMOVE'
+        for d in dirsToRemove:
+                print d
+
+        print '\t\t\tFILES TO REMOVE'
+        for d in self.files_to_remove:
+            print d
+
         self.files_to_remove += dirsToRemove
 
         self.renders_dir_size_old = get_size(self.render_path)
