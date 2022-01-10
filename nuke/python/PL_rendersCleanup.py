@@ -77,6 +77,8 @@ class cleanup_progress_bar(QDialog):
         super(cleanup_progress_bar, self).__init__(parent)
         global renders_size, precomps_size, renders_folder, precomps_folder
 
+        self.replace_read_filepaths()
+
         self.resize(400, 240)
 
         self.layout = QVBoxLayout()
@@ -125,6 +127,16 @@ class cleanup_progress_bar(QDialog):
 
         self.close()
 
+    def replace_read_filepaths(self):
+        nodes = nuke.allNodes('Read')
+        nodes += nuke.allNodes('DeepRead')
+        for n in nodes:
+            print n.name()
+            oldVal = n['file'].value()
+            if '//loky.plarium.local/project' in oldVal:
+                newVal = oldVal.replace('//loky.plarium.local/project', 'P:')
+                n['file'].setValue(newVal)
+                print '%s filepath was replaced' % n.name()
 
     def deal_with_precomps(self):
         # PRECOMPS PART
@@ -151,7 +163,7 @@ class cleanup_progress_bar(QDialog):
         root = nuke.root().name()
         try:
             self.drive, self.project, self.seq, self.shot, self.assetName, self.version = getPipelineAttrs()
-            self.drive = '//loky.plarium.local/project' # HARDCODE
+            #self.drive = '//loky.plarium.local/project' # HARDCODE
             self.render_path = '%s/%s/sequences/%s/%s/render' % (self.drive, self.project, self.seq, self.shot)
             #print 'render path %s' % self.render_path
         except:
@@ -186,7 +198,7 @@ class cleanup_progress_bar(QDialog):
                     fullpath = '%s/%s' % (rootDir, f)
                     fullpath = fullpath.replace('\\', '/')
                     for pat in paths:
-                        p = pat[:-9]
+                        p = pat.split('.')[0]
                         #print 'ROOTDIR %s %s' % (rootDir, f)
                         #print 'FULLPATH %s' % fullpath
                         #print 'P %s' % p
