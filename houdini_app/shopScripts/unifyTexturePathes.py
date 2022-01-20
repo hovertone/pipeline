@@ -47,7 +47,8 @@ def createEmptyTp(parent_shop):
     createEmptyShaderP = hou.ButtonParmTemplate("create_images", "Create Empty Shader", join_with_next=True,
                                                 help=u'Создает Image ноды с путями к каждый текстуре внутри tp ноды',
                                                 script_callback='execfile("%s/createEmptyShader.py")' % PATH_TO_SHOPSCRIPTS,
-                                                script_callback_language=hou.scriptLanguage.Python)
+                                                script_callback_language=hou.scriptLanguage.Python,
+                                                is_hidden=True)
     grp.append(createEmptyShaderP)
     listImagesP = hou.ButtonParmTemplate("list_images", "List all texture paths", join_with_next=True,
                                          help=u'В Python Shell выкидывает список текстур, использованных в каждом шейдере этого шопа',
@@ -67,7 +68,8 @@ def createEmptyTp(parent_shop):
     imagesToAcescgP = hou.ButtonParmTemplate("images_to_acescg", "Images to acescg", join_with_next=False,
                                                  help=u'Интерпретировать все текстуры как ACES CG',
                                                  script_callback='execfile("%s/imagesToAcescg.py")' % PATH_TO_SHOPSCRIPTS,
-                                                 script_callback_language=hou.scriptLanguage.Python)  # , tags={'sourceExt':True})
+                                                 script_callback_language=hou.scriptLanguage.Python,
+                                                 is_hidden=True)  # , tags={'sourceExt':True})
     grp.append(imagesToAcescgP)
     bakePathsP = hou.ButtonParmTemplate("bake_paths", "Bake Paths", join_with_next=True,
                                         help=u'Запекает все ссылки текстур и шейдеров в Image нодах. Удобно если нужно удалить эту tp ноду.',
@@ -82,7 +84,8 @@ def createEmptyTp(parent_shop):
     toacescgP = hou.ButtonParmTemplate("convert_to_acescg", "To ACEScg", join_with_next=True,
                                           help=u'Подмена значений в путях на текстуры',
                                           script_callback='execfile("%s/convertToAcescg.py")' % PATH_TO_SHOPSCRIPTS,
-                                          script_callback_language=hou.scriptLanguage.Python)
+                                          script_callback_language=hou.scriptLanguage.Python,
+                                       is_hidden=True)
     grp.append(toacescgP)
     toacescgP = hou.ButtonParmTemplate("copyTex", "Copy Textures", join_with_next=False,
                                        help=u'Копирование файлов',
@@ -419,35 +422,49 @@ def fixButtonPaths(tp):
     #print 'path %s' % tp.path()
     grp = tp.parmTemplateGroup()
     button_parms = list()
+    scriptsPaths = list()
     for p in grp.parmTemplates():
         #print 'P %s' % p
         if p.type() == hou.parmTemplateType.Button:
             button_parms.append(p)
+            scriptsPaths.append(p.scriptCallback())
         if p.type() == hou.parmTemplateType.Folder:
             #print 'inside folder'
             for pp in p.parmTemplates():
                 #print 'checking %s' % pp.name()
                 if pp.type() == hou.parmTemplateType.Button:
                     button_parms.append(pp)
+                    scriptsPaths.append(pp.scriptCallback())
+
+    folderExists = True
+    for sp in scriptsPaths:
+        splitedPath = sp.replace('execfile("', '')
+        splitedPath = splitedPath.replace('")', '')
+        if not os.path.exists(splitedPath):
+            folderExists = False
+            break
 
     #print 'button parms %s' % str(button_parms)
+    if not folderExists:
+        for p in button_parms:
+            pn = grp.find(p.name())
+            #print 'in %s' % p.name()
+            pp = p
+            cb = p.scriptCallback()
+            s = cb.replace('execfile("', '').replace('")', '')
+            path, script = os.path.split(s)
+            print 'path %s' % path
+            if not os.path.exists(path):
+                newcb = 'execfile("%s")' % '/'.join((pwd, script))
+                pp.setScriptCallback(newcb)
+                grp.replace(pn, pp)
+                print '%s button callback path was replaced by %s' % (p.name(), '/'.join((pwd, script)))
 
-    for p in button_parms:
-        pn = grp.find(p.name())
-        #print 'in %s' % p.name()
-        pp = p
-        cb = p.scriptCallback()
-        s = cb.replace('execfile("', '').replace('")', '')
-        path, script = os.path.split(s)
-        print 'path %s' % path
-        if not os.path.exists(path):
-            newcb = 'execfile("%s")' % '/'.join((pwd, script))
-            pp.setScriptCallback(newcb)
-            grp.replace(pn, pp)
-            print '%s button callback path was replaced by %s' % (p.name(), '/'.join((pwd, script)))
-
-    tp.setParmTemplateGroup(grp)
-    hou.ui.displayMessage('Button path were fixed. Should work now just fine.')
+        tp.setParmTemplateGroup(grp)
+        hou.ui.displayMessage('Button path were fixed. Should work now just fine.')
+    else:
+        tp.setParmTemplateGroup(grp)
+        print 'No need to fix Callback scripts paths. Everything is ok.'
 
 def main():
     print '\t\t\t\tMAIN'

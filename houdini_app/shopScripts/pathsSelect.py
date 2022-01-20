@@ -127,7 +127,7 @@ def active(app):
         grp = tp.parmTemplateGroup()
         folderP = grp.find('textures_folder')
         parms_to_avoid = tp.parm('parms_to_keep').eval().split(' ')
-        texture_paths = [tp.parm(p.name()).eval() for p in folderP.parmTemplates() if p.name() and p.name() not in parms_to_avoid and '_cs' not in p.name()]
+        texture_paths = [tp.parm(p.name()).eval() for p in folderP.parmTemplates() if p.name() and p.name() not in parms_to_avoid and '_cs' not in p.name() and '_cf' not in p.name()]
 
         print 'TEXTURE PATHS'
         for txp in texture_paths:

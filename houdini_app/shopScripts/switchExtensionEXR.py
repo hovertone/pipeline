@@ -10,10 +10,12 @@ replace_ext = '.exr'
 
 parm_names = []
 for t in folder.parmTemplates():
-    if t.type() == hou.parmTemplateType.String and t.name() != 'master_path':
+    if t.type() == hou.parmTemplateType.String and t.name() != 'master_path' and '_cf' not in t.name() and '_cs' not in t.name():
         parm_names.append(t.name())
 
 allPaths = len(parm_names)
+# for p in parm_names:
+#     print p
 
 non_c = 0
 for pn in parm_names:
