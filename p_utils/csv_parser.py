@@ -14,6 +14,7 @@ from time import gmtime, strftime
 class projectDict(object):
     def __init__(self, project, dr=None):
         self.d = dict()
+        self.fps = dict()
         self.project = project
 
         if not dr:
@@ -43,10 +44,20 @@ class projectDict(object):
                 pass
             else:
                 if 'seq' in l:
-                    seq = l.split(' ')[-1].strip(' ')
+                    splited = l.split(' ')
+                    if len(splited) == 2:
+                        #print '##### no fps'
+                        fps = 24
+                        seq = l.split(' ')[-1].strip(' ')
+                    else:
+                        #print '##### there is fps num'
+                        fps = splited[-1]
+                        seq = l.split(' ')[-2].strip(' ')
+
                     #print 'afafasff' + seq
                     if seq not in self.d.keys():
                         self.d[seq] = list()
+                        self.fps[seq] = fps
                 else:
                     line_splitted = l.split(',')
                     sh_d = dict()
@@ -100,14 +111,18 @@ class projectDict(object):
         shotData = [i for i in shots if i['name'] == shot]
         return shotData[0][key]
 
+    def getSequenceFPS(self, seq):
+        return self.fps[seq]
+
     def getDict(self):
         return self.d
 
-    def addSequence(self, seq):
+    def addSequence(self, seq, fps):
         if seq in self.d.keys():
             print '%s seq already exists' % seq
         else:
             self.d[seq] = list()
+            self.fps[seq] = fps
 
     def addShot(self, seq, shot_name, first_frame='1001', last_frame='1050', preroll='10'):
         if seq not in self.d.keys():
@@ -152,6 +167,8 @@ class projectDict(object):
                     break
             self.update_proj()
 
+    def setSequenceFPS(self, seq, fps):
+        self.fps[seq] = fps
 
 
     def writeCSV(self):
@@ -166,7 +183,7 @@ class projectDict(object):
         data_lines = []
         csv = open(self.csvpath, "w")
         for seq in sorted(self.d.keys()):
-            sq = "seq " + seq + "\n"
+            sq = "seq " + seq + " " + str(self.fps[seq]) + "\n"
             data_lines.append(sq)
             for shot in self.d[seq]:
                 shot_name = str(shot['name'])
@@ -191,7 +208,7 @@ class projectDict(object):
     def print_dict(self):
         print 'PROJECT: %s' % self.project
         for seq in sorted(self.d.keys()):
-            print '\tSEQ: %s' % seq
+            print '\tSEQ: %s @ %s' % (seq, self.fps[seq])
             for shot in self.d[seq]:
                 print '\t\tSH %s:' % shot['name']
                 print '\t\t\t first_frame: %s' % shot['first_frame']
@@ -260,6 +277,7 @@ class projectDict(object):
                     # print folder
                     if not os.path.exists(folder): os.makedirs(folder)
 
+
     def update_proj(self):
         self.writeCSV()
         self.folders_routine()
@@ -269,13 +287,13 @@ class projectDict(object):
 
 if __name__ == '__main__':
     # CREATE NEW PROJ
-    proj_name = 'Raid'
+    proj_name = 'rnd'
     projD = projectDict(proj_name)
     #
-    # print 'All shot data'
-    # print projD.getAllShotData('BGN', 'sh040')
+    #print 'All shot data'
+    #print projD.getAllShotData('BGN', 'sh040')
 
-    # projD.addSequence('BGN')
+    # projD.addSequence('BGN', 24)
     # for s in range(8, 22):
     #     projD.addShot(seq='BGN', shot_name='sh%s' % str(s*10).zfill(3))
     #
@@ -289,8 +307,10 @@ if __name__ == '__main__':
 
     # projD.addShot('angerManagement', 'sh010', '1001', '1031', '10')
     # projD.print_dict()
+    # projD.setSequenceFPS('jeffHydra', '23.976')
     # projD.update_proj()
 
     # projD.setSpecificShotData('serenade', 'sh010', 'first_frame', '1001')
-    print projD.getSpecificShotData('serenade', 'sh040', 'first_frame')
+    #print projD.getSpecificShotData('serenade', 'sh040', 'first_frame')
+    #projD.print_dict()
 
