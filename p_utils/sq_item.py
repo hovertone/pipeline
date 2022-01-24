@@ -16,6 +16,7 @@ import sys
 class SequenceItem(QWidget):
 
     _name = ""
+    _fps = ""
     _shots = None
 
 
@@ -67,6 +68,10 @@ class SequenceItem(QWidget):
     @property
     def name(self):
         return self.le_sqName.text()
+
+    @property
+    def fps(self):
+        return self.le_fps.text()
 
     @property
     def shots(self):
