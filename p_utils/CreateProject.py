@@ -95,8 +95,9 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
 
         seqs = data.keys()
         for seq in seqs:
+            fps = self.existing_project_dict.getSequenceFPS(seq)
             shots_data = data[seq]
-            model = SequenceItem(name = seq, data = shots_data)
+            model = SequenceItem(name = seq, data = shots_data, )
             listItem = QListWidgetItem()
             self.listWidgetSq.addItem(listItem)
             listItem.setSizeHint(QSize(0, 55))

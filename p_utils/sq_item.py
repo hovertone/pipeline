@@ -19,20 +19,27 @@ class SequenceItem(QWidget):
     _shots = None
 
 
-    def __init__(self, index=None, name=None, data=None, parent=None):
+    def __init__(self, index=None, name=None, data=None, fps=None, parent=None):
         super(SequenceItem, self).__init__(parent)
         self.lb_sqName = QLabel(self)
         self.lb_sqName.setText("Sequence Name: ")
         self.le_sqName = QLineEdit(self)
         if index:
             self.le_sqName.setText("SQ" + str(index))
+        self.lb_fps = QLabel(self)
+        self.lb_fps.setText("FPS")
+        self.le_fps = QLineEdit(self)
         self.hLayout = QHBoxLayout(self)
         self.hLayout.addWidget(self.lb_sqName)
         self.hLayout.addWidget(self.le_sqName)
+        self.hLayout.addWidget(self.lb_fps)
+        self.hLayout.addWidget(self.le_fps)
         self.setStyleSheet("""background:rgba(0,0,0,0);""")
 
         if data:
             self.le_sqName.setText(name)
+            if fps:
+                self.le_fps.setText(fps)
             self.set_shots(data)
 
 

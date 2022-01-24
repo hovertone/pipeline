@@ -11,7 +11,7 @@ except:
 import os, sys
 from houdini_app.Loader.filemanager_v3 import Filemanager
 
-from p_utils.csv_parser_bak import projectDict
+from p_utils.csv_parser import projectDict
 
 
 class MayaManager2(Filemanager):

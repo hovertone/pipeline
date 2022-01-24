@@ -590,6 +590,12 @@ class Filemanager(QDialog, Ui_FileManager):
             config = projectDict(self.cbox_project.currentText(), dr=self._storage)
             config.getSequences()
             shot_data = config.getAllShotData(seq=self.cbox_sequence.currentText(), shot=self._shot)
+            try:
+                fps = config.getSequenceFPS(self.cbox_sequence.currentText())
+                hou.setFps(float(fps))
+            except:
+                pass
+
 
             if self.cbox_type.currentText() == "fx":
                 ff = int(shot_data["first_frame"]) - int(shot_data["preroll"])
