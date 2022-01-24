@@ -247,7 +247,7 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
 
             p_d = projectDict(project_data["project_name"], dr=self.le_root.text())
             for d in project_data["data"]:
-                p_d.addSequence(d["sequence"])
+                p_d.addSequence(d["sequence"], d["fps"])
 
                 for shot in d["shots"]:
                     print "SHOTS DATA", shot
