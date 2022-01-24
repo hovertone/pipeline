@@ -97,7 +97,7 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
         for seq in seqs:
             fps = self.existing_project_dict.getSequenceFPS(seq)
             shots_data = data[seq]
-            model = SequenceItem(name = seq, data = shots_data, )
+            model = SequenceItem(name = seq, data = shots_data, fps=fps)
             listItem = QListWidgetItem()
             self.listWidgetSq.addItem(listItem)
             listItem.setSizeHint(QSize(0, 55))
@@ -112,14 +112,6 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
         self.listWidgetSq.addItem(listItem)
         listItem.setSizeHint(QSize(0, 55))
         self.listWidgetSq.setItemWidget(listItem, model)
-
-
-
-
-
-
-
-
 
 
 
@@ -230,13 +222,14 @@ class ProjectCreate(QDialog, Ui_ProjectCreate):
 
             for sq in range(self.listWidgetSq.count()):
                 sq_name = self.listWidgetSq.itemWidget(self.listWidgetSq.item(sq)).name
+                sq_fps = self.listWidgetSq.itemWidget(self.listWidgetSq.item(sq)).fps
                 if len(sq_name) > 2:
                     sq_shots = self.listWidgetSq.itemWidget(self.listWidgetSq.item(sq)).shots
                     print "NOT SORTED", sq_shots
                     if sq_shots:
                         new_list = sorted(sq_shots, key=lambda k: k['name'])
                         print "SORTED", new_list
-                        sq = dict(sequence=sq_name, shots=new_list)
+                        sq = dict(sequence=sq_name, fps=sq_fps, shots=new_list)
                         sq_data.append(sq)
 
 
