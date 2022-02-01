@@ -1,4 +1,6 @@
 # coding: utf-8
+# ver 1.1
+
 import hou
 import os
 import json
@@ -108,6 +110,11 @@ def createEmptyTp(parent_shop):
     grp.append(paramsToKeepListP)
 
     tp.setParmTemplateGroup(grp)
+
+    pwd = hou.ui.paneTabOfType(hou.paneTabType.NetworkEditor, 0)
+    vb = hou.ui.findPaneTab(pwd.name()).visibleBounds()
+
+    tp.setPosition(vb.center())
 
     print "Empty %s node created" % tp.name()
     return tp
@@ -279,7 +286,7 @@ def fillExistingTp(tp, nodes):
 
 
 def fillExistingTpSet(tp, nodes):
-    print '\t\t\t\tFILL EXISTING TP /////////////////'
+    #print '\t\t\t\tFILL EXISTING TP /////////////////'
     shaders_images = collectPathParms(nodes)
     #print 'SHADERS IMAGE %s' % str(shaders_images)
 
@@ -289,7 +296,6 @@ def fillExistingTpSet(tp, nodes):
     for s, vv in shaders_images.iteritems():
         ii.update(vv)
 
-    print 'II '
     for k, v in ii.iteritems():
         print '%s %s' % (k, v)
 
@@ -301,13 +307,6 @@ def fillExistingTpSet(tp, nodes):
     values = ii.values()
     val_set = sorted(list(set(values)))
     tex_amount = len(val_set)
-
-
-    # PRINT VAL SET
-    # print 'VALSET'
-    # for k in val_set:
-    #     print k
-    # print 'VALSET END'
 
     for t in val_set:
         print t
@@ -352,7 +351,7 @@ def fillExistingTpSet(tp, nodes):
             grp.insertBefore(grp.find('textures_end'), texP)
 
             listOfKeys = [key for key, value in ii.iteritems() if value == t]  #
-            print '************** LIST OF KEYS %s' % listOfKeys
+            #print '************** LIST OF KEYS %s' % listOfKeys
             for k in listOfKeys:
                 k.set('`chs("../../%s/%s")`' % (tp.name(), parm_name))
 
@@ -385,7 +384,7 @@ def fillExistingTpSet(tp, nodes):
             cfP_name = cfP.name()
 
             for k in listOfKeys:
-                print 'PAAAATH %s' % k.path()
+                #print 'PAAAATH %s' % k.path()
                 cf_path = '/'.join(str(k.path()).split('/')[:-1]) + '/color_family'
                 cs_path = '/'.join(str(k.path()).split('/')[:-1]) + '/color_space'
                 #print 'CF path %s' % cf_path
@@ -396,10 +395,19 @@ def fillExistingTpSet(tp, nodes):
                 cs_k.set('`chs("../../%s/%s")`' % (tp.name(), parm_name + '_cs'))
 
         else:
+            # IF TEXTURE IS ALREADY IN TP
             print 'exists %s' % pn
+            print 't %s' % t
+            print 'ii %s' % str(ii)
             listOfKeys = [key for key, value in ii.iteritems() if value == t]  #
+            print 'LIST OF KEYS %s' % str(listOfKeys)
             for k in listOfKeys:
                 k.set('`chs("../../%s/%s")`' % (tp.name(), pn))
+                parent = k.node()
+                cff = parent.parm('color_family')
+                css = parent.parm('color_space')
+                cff.set('`chs("../../%s/%s")`' % (tp.name(), pn+'_cf'))
+                css.set('`chs("../../%s/%s")`' % (tp.name(), pn + '_cs'))
 
             tags = grp.find(pn).tags()
             nodes_tag = tags['node'].split(' ')
@@ -415,6 +423,42 @@ def fillExistingTpSet(tp, nodes):
             tp.setParmTemplateGroup(grp)
         except Exception as e:
             print e
+
+    masterPathWithFtrackRoot(tp)
+    addAssetFolderPathParm(tp)
+
+def masterPathWithFtrackRoot(tp):
+    if 'FTRACK_ROOT_PATH' in os.environ:
+        grp = tp.parmTemplateGroup()
+        folderP = grp.find('textures_folder')
+
+        parms_to_avoid = tp.parm('parms_to_keep').eval().split(' ')
+        texture_parm_names = [p.name() for p in folderP.parmTemplates() if p.name() and p.name() not in parms_to_avoid and '_cf' not in p.name() and '_cs' not in p.name()]
+        #print 'TPN %s' % texture_parm_names
+        tp.parm('master_path').set('$FTRACK_ROOT_PATH')
+
+        for p in texture_parm_names:
+            val = tp.parm(p).eval()
+            if os.environ['FTRACK_ROOT_PATH'] in val:
+                newVal = val.replace(os.environ['FTRACK_ROOT_PATH'], '`chs("master_path")`')
+                tp.parm(p).set(newVal)
+
+def addAssetFolderPathParm(tp):
+    if tp.parent().parent() and tp.parent().parent().type().name() == 'subnet':
+        asset = tp.parent().parent()
+        folderPathParmName = 'texture_folder'
+        #print '33333' + folderPathParmName not in asset.parms()
+        if folderPathParmName not in [i.name() for i in asset.parms()]:
+            ptg = asset.parmTemplateGroup()
+            texP = hou.StringParmTemplate(name=folderPathParmName, label=folderPathParmName, num_components=1, default_value=('$FTRACK_ROOT_PATH',),
+                                          string_type=hou.stringParmType.FileReference, join_with_next=False)
+            ptg.append(texP)
+            asset.setParmTemplateGroup(ptg)
+
+            tp.parm('master_path').set('`chs("../../texture_folder")`')
+        else:
+            tp.parm('master_path').set('`chs("../../texture_folder")`')
+            print '%s parm is already exists on a %s node' % (folderPathParmName, asset.name())
 
 def fixButtonPaths(tp):
     print 'in fix button paths'
@@ -467,11 +511,11 @@ def fixButtonPaths(tp):
         print 'No need to fix Callback scripts paths. Everything is ok.'
 
 def main():
-    print '\t\t\t\tMAIN'
+    #print '\t\t\t\tMAIN'
     nodes = hou.selectedNodes()
 
     pwd = os.environ['shopScriptsPWD']
-    print 'PWD %s' % pwd
+    #print 'PWD %s' % pwd
 
 
     if len(nodes) == 0:
