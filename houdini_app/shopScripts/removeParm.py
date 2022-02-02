@@ -1,4 +1,5 @@
 #print '========= in remove parm =========='
+import hou
 
 node = hou.pwd()
 grp = node.parmTemplateGroup()

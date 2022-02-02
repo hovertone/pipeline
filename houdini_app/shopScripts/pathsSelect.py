@@ -9,7 +9,8 @@ except:
 
 import os
 import sys
-sys.path.append('%s/uis' % os.environ['shopScriptsPWD'])
+import hou
+
 import copyTexUI
 reload(copyTexUI)
 

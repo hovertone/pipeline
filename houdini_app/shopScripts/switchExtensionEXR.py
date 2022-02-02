@@ -1,5 +1,6 @@
 #print '\n\n\n ================ in switch extension ================'
 import os
+import hou
 
 #try:
 node = hou.pwd()

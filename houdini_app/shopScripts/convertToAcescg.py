@@ -1,6 +1,7 @@
 import linecache
 import sys
 import os
+import hou
 
 #print '======= in convert to acescg =========='
 

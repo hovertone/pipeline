@@ -1,3 +1,4 @@
+import hou
 import os
 
 #print '\n\n\n================== in list images ======================'

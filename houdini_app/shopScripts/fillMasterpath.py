@@ -1,3 +1,4 @@
+import hou
 from functools import reduce
 #print '=========== in fillMasterpath ============='
 

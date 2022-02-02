@@ -1,3 +1,5 @@
+import hou
+
 tp = hou.pwd()
 button_name = 'link_master_substring'
 

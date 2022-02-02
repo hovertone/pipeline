@@ -1,3 +1,4 @@
+import hou
 
 node = hou.pwd()
 parent = node.parent()

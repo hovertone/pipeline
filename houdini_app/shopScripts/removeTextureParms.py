@@ -1,4 +1,5 @@
 import os
+import hou
 
 node = hou.pwd()
 grp = node.parmTemplateGroup()
