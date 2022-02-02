@@ -448,15 +448,7 @@ def addAssetFolderPathParm(tp):
         asset = tp.parent().parent()
         folderPathParmName = 'texture_folder'
         #print '33333' + folderPathParmName not in asset.parms()
-        if folderPathParmName not in [i.name() for i in asset.parms()]:
-            ptg = asset.parmTemplateGroup()
-            texP = hou.StringParmTemplate(name=folderPathParmName, label=folderPathParmName, num_components=1, default_value=('$FTRACK_ROOT_PATH',),
-                                          string_type=hou.stringParmType.FileReference, join_with_next=False)
-            ptg.append(texP)
-            asset.setParmTemplateGroup(ptg)
-
-            tp.parm('master_path').set('`chs("../../texture_folder")`')
-        else:
+        if tp.parm('master_path').rawValue == '`chs("../../texture_folder")`':
             tp.parm('master_path').set('`chs("../../texture_folder")`')
             print '%s parm is already exists on a %s node' % (folderPathParmName, asset.name())
 
