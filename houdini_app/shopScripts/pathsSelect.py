@@ -12,7 +12,6 @@ import sys
 import hou
 
 import copyTexUI
-reload(copyTexUI)
 
 class pathsSelect_UI(object):
         def setupUI(self, Dialog):

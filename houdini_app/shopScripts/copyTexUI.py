@@ -11,10 +11,8 @@ except:
 import hou
 import os
 import uis.copyTex_ui04_UI
-reload(uis.copyTex_ui04_UI)
 
 import copyTex
-reload(copyTex)
 
 
 class copyTexUI(QDialog, uis.copyTex_ui04_UI.Ui_Dialog):

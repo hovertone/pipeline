@@ -1,5 +1,7 @@
 # coding: utf-8
 # ver 1.3
+# fixed sys.path.append stuff
+# no more reloads
 
 import hou
 import os

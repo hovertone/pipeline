@@ -11,17 +11,15 @@ except:
 import hou
 import sys
 import os
-sys.path.append('%s/uis' % os.environ['shopScriptsPWD'])
-import copyTex_ui04_UI
-reload(copyTex_ui04_UI)
+
+import uis.copyTex_ui04_UI
 
 import copyTex
-reload(copyTex)
 
 print('INSIDE COPYTEXUI')
 
 
-class copyTexUI(QDialog, copyTex_ui04_UI.Ui_Dialog):
+class copyTexUI(QDialog, uis.copyTex_ui04_UI.Ui_Dialog):
     def __init__(self, paths=None, parent=None):
         super(copyTexUI, self).__init__(parent)
         self.setupUi(self)
