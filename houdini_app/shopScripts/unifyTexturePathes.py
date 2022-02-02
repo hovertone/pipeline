@@ -1,5 +1,5 @@
 # coding: utf-8
-# ver 1.2
+# ver 1.3
 
 import hou
 import os
