@@ -2,7 +2,7 @@ import linecache
 import sys
 import os
 
-print '======= in convert to acescg =========='
+print('======= in convert to acescg ==========')
 
 def PrintException():
     exc_type, exc_obj, tb = sys.exc_info()
@@ -11,7 +11,7 @@ def PrintException():
     filename = f.f_code.co_filename
     linecache.checkcache(filename)
     line = linecache.getline(filename, lineno, f.f_globals)
-    print 'EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno, line.strip(), exc_obj)
+    print('EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno, line.strip(), exc_obj))
 
 
 tp = hou.pwd()
@@ -21,9 +21,9 @@ parms_to_avoid = tp.parm('parms_to_keep').eval().split(' ')
 parm_names = [p.name() for p in f.parmTemplates() if p.name() and p.name() not in parms_to_avoid]
 
 for pn in parm_names:
-    print pn
+    print(pn)
 
-print '\n==============\n'
+print('\n==============\n')
 
 i_n = hou.node('/img/tex_to_acescg') #HARDCODE
 oldTexturePath = tp.parm('master_path').eval()
@@ -35,11 +35,11 @@ try:
         name = tp.parm(pn).name()
         path = grp.find(pn).tags()['node'].split(' ')[0]
         newPath = '/'.join(path.split('/')[:-1])
-        print '---%s:' % pn
+        print('---%s:' % pn)
         cf = hou.node(newPath).parm('color_family').eval()
         cs = hou.node(newPath).parm('color_space').eval()
         #print '\t', hou.node(newPath).parm('color_family').eval(), '::', hou.node(newPath).parm('color_space').eval()
-        print '%s : %s' % (pn, cs)
+        print('%s : %s' % (pn, cs))
         f = i_n.createNode('file')
         oldPath = tp.parm(pn).eval().replace('<UDIM>', '$F')
         f.parm('filename1').set(oldPath)

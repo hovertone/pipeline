@@ -18,14 +18,14 @@ exist_values = [node.parm(j).rawValue() for j in existing_texture_names]
 
 if seqs[0] != '':
     for sq in seqs:
-        print '%s' % sq
+        #print('%s' % sq)
         if sq in exist_values:
-            print '\talready exists'
+            print('\talready exists')
         else:
             bn = os.path.basename(sq)
             name = bn[:bn.find('.')]
 
-            print '\t creating %s' % name
+            #print('\t creating %s' % name)
 
             # DIGITS TO END OF PARM NAME
             parm_digit = 1
@@ -61,9 +61,7 @@ if seqs[0] != '':
             csP.setItemGeneratorScript(
                 "__import__('htoa.ocio').ocio.imageColorSpaceMenu(kwargs['node'].parm('%s_cf').eval())" % parm_name )
 
-
-            #pt = csP.parmTemplate()
-            #csP.setMenuItems(('Utility - Raw', 'Utility - sRGB - Texture', 'Utility - Linear - sRGB'))
             grp.insertBefore(grp.find('textures_end'), cfP)
             grp.insertBefore(grp.find('textures_end'), csP)
+
             node.setParmTemplateGroup(grp)

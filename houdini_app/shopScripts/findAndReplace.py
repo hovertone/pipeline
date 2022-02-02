@@ -22,7 +22,7 @@ else:
                 found = True
                 newVal = oldVal.replace(find, replace)
                 node.parm(pn).set(newVal)
-                print '%s replaced' % pn
+                print('%s replaced' % pn)
 
         if not found:
             hou.ui.displayMessage('No path matches the pattern "%s"' % find)

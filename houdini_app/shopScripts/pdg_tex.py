@@ -9,7 +9,7 @@ def main():
     for n in nodes:
         # print n.name()
         if n.type().name() != 'arnold_vopnet':
-            print 'ERROR :: wrong type nodes selected'
+            print('ERROR :: wrong type nodes selected')
             return
 
         images = [i for i in n.allSubChildren() if i.type().name() == 'arnold::image']
@@ -21,7 +21,7 @@ def main():
                 val = p.eval()
                 p.revertToDefaults()
                 p.set(val)
-                print "\t%s's filename parameter has been baked" % i.name()
+                print("\t%s's filename parameter has been baked" % i.name())
 
             allImages[p] = p.rawValue()
 
@@ -29,12 +29,12 @@ def main():
     # for k, v in ii.iteritems():
     #     print '%s %s' % (k, v)
 
-    values = ii.values()
+    values = list(ii.values())
     val_set = sorted(list(set(values)))
     tex_amount = len(val_set)
 
     for k in val_set:
-       print k
+       print(k)
 
     to_pdg = dict()
     for v in val_set:

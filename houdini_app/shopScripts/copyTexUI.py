@@ -10,16 +10,18 @@ except:
 
 import hou
 import sys
-import houdini_app.shopScripts.uis.copyTex_ui04_UI
-reload(houdini_app.shopScripts.uis.copyTex_ui04_UI)
+import os
+sys.path.append('%s/uis' % os.environ['shopScriptsPWD'])
+import copyTex_ui04_UI
+reload(copyTex_ui04_UI)
 
 import copyTex
 reload(copyTex)
 
-print 'INSIDE COPYTEXUI'
+print('INSIDE COPYTEXUI')
 
 
-class copyTexUI(QDialog, houdini_app.shopScripts.uis.copyTex_ui04_UI.Ui_Dialog):
+class copyTexUI(QDialog, copyTex_ui04_UI.Ui_Dialog):
     def __init__(self, paths=None, parent=None):
         super(copyTexUI, self).__init__(parent)
         self.setupUi(self)
@@ -58,7 +60,7 @@ class copyTexUI(QDialog, houdini_app.shopScripts.uis.copyTex_ui04_UI.Ui_Dialog):
                 # RESIZING WINDOW TO CONTAIN ALL TABLE WIDGET
                 self.resize((self.table.sizeHintForColumn(0) + 70) * 2, self.height())
         else:
-            print 'in here'
+            print('in here')
             pattern = self.leReplaceThis.text()
 
             rows = self.table.rowCount()
@@ -76,7 +78,7 @@ class copyTexUI(QDialog, houdini_app.shopScripts.uis.copyTex_ui04_UI.Ui_Dialog):
             #     self.updateRight()
 
     def updateRight(self):
-        print 'IN UPDATE RIGHT'
+        print('IN UPDATE RIGHT')
         replaceThis = self.leReplaceThis.text()
         withThis = self.leWithThis.text()
         rows = self.table.rowCount()
@@ -118,9 +120,9 @@ class copyTexUI(QDialog, houdini_app.shopScripts.uis.copyTex_ui04_UI.Ui_Dialog):
                 if item.text() != 'No match found.':
                     paths.append(item.text())
 
-            print 'FOLDERS', src
-            print 'DEST', dest
-            print 'PATHS', str(paths)
+            print('FOLDERS', src)
+            print('DEST', dest)
+            print('PATHS', str(paths))
 
             if self.ckbTx.isChecked():
                 tx = True
@@ -158,7 +160,7 @@ def get_Houdini_Window():
 
 
 def wait_houdini_window(paths):
-    print 'IN WAIT HOUDINI WINDOW'
+    print('IN WAIT HOUDINI WINDOW')
     app = get_Houdini_Window()
     return active(app, paths)
 
