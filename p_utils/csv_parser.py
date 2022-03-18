@@ -117,7 +117,7 @@ class projectDict(object):
     def getDict(self):
         return self.d
 
-    def addSequence(self, seq, fps):
+    def addSequence(self, seq, fps=24):
         if seq in self.d.keys():
             print '%s seq already exists' % seq
         else:

@@ -7,9 +7,11 @@ except:
     from PySide.QtGui import *
     from PySide.QtCore import *
 
+import os
 import sys
-import houdini_app.shopScripts.copyTexUI
-reload(houdini_app.shopScripts.copyTexUI)
+import hou
+
+import copyTexUI
 
 class pathsSelect_UI(object):
         def setupUI(self, Dialog):
@@ -81,7 +83,7 @@ class pathsSelect_MainWindow(QDialog, pathsSelect_UI):
             #self.resize(self.width(), self.minimumSizeHint().height())
             self.resize(self.list_widget.sizeHintForColumn(0)+70, self.height())
 
-        self.okno = houdini_app.shopScripts.copyTexUI.copyTexUI(self.input_list, self)
+        self.okno = copyTexUI.copyTexUI(self.input_list, self)
 
     def openTexCopyWindow(self):
         selectedPaths = list()
@@ -107,7 +109,7 @@ class pathsSelect_MainWindow(QDialog, pathsSelect_UI):
             item(i).setCheckState(Qt.Checked)
 
     def uncheckAll(self):
-        print 'IN UNCHECK'
+        print('IN UNCHECK')
         item = self.list_widget.item
         #print 'TOTAL WIDGETS COUNT %s' % self.list_widget.count()
         for i in range(self.list_widget.count()):
@@ -129,9 +131,9 @@ def active(app):
         parms_to_avoid = tp.parm('parms_to_keep').eval().split(' ')
         texture_paths = [tp.parm(p.name()).eval() for p in folderP.parmTemplates() if p.name() and p.name() not in parms_to_avoid and '_cs' not in p.name() and '_cf' not in p.name()]
 
-        print 'TEXTURE PATHS'
+        print('TEXTURE PATHS')
         for txp in texture_paths:
-            print str(txp)
+            print(str(txp))
 
         w = pathsSelect_MainWindow(parent=app,inputList=texture_paths)
         w.show()
@@ -159,6 +161,6 @@ if __name__ == '__main__':
     w.show()
     sys.exit(app.exec_())
 else:
-    print 'HOUDINI !!!'
+    print('HOUDINI !!!')
     wait_houdini_window()
 

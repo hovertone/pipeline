@@ -85,12 +85,20 @@ def makePrecomp(precompName, precompType, switch = True):
 	#pcname = root['precompName'].value()
 
 	drive, project, seq, shot, assetName, ver = getPipelineAttrs()
-	path = '%s/%s/sequences/%s/%s/comp/%s/precomp/%s/v001/%s_%s_%s_v001.####.%s' % (drive, project, seq, shot, assetName, precompName, seq, shot, precompName, types[precompType]['ext'])
+	#path = '%s/%s/sequences/%s/%s/comp/%s/precomp/%s/v001/%s_%s_%s_v001.####.%s' % (drive, project, seq, shot, assetName, precompName, seq, shot, precompName, types[precompType]['ext'])
+
+	scriptPath = nuke.root().name()
+	sp = scriptPath.split('/')
+	shotPath = '/'.join(sp[:-3])
+	#path = '%s/nuke_render/%s/v001/%s_%s_v001.####.%s' % (shotPath, precompName, shot, precompName, types[precompType]['ext'])
+	path = '%s/nuke_render/%s/v001/%s_%s_v001.###.%s' % (shotPath, precompName, shot, precompName, types[precompType]['ext'])
+
 	folder = os.path.dirname(path)
 	if not os.path.exists(folder): os.makedirs(folder)
 
 	if switch == True:
-		nuke.loadToolset("X:/app/win/Pipeline/nuke/toolsets/basic/precomp.nk")
+		pipePath = os.environ['PIPELINE_ROOT']
+		nuke.loadToolset("%s/nuke/toolsets/basic/precomp.nk" % pipePath)
 		nodes = nuke.selectedNodes()
 		write = [i for i in nodes if i.Class() == 'Write'][0]
 		read = [i for i in nodes if i.Class() == 'Read'][0]

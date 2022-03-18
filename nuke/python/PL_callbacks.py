@@ -104,13 +104,13 @@ def marikLut():
 	root = nuke.root()
 
 	# VIEWERS SETUP
-	if 'UnderTheSea' in root['project'].value():
-		vv = [i for i in nuke.allNodes() if i.Class() == 'Viewer']
-		for v in vv:
-			print v['viewerProcess'].setValue('Rec.709 D60')
+	# if 'UnderTheSea' in root['project'].value():
+	# 	vv = [i for i in nuke.allNodes() if i.Class() == 'Viewer']
+	# 	for v in vv:
+	# 		print v['viewerProcess'].setValue('Rec.709 D60')
 
 	# DAILY WRITES
-	ww = [i for i in nuke.allNodes() if i.Class() == 'Write' and '/forDaily/' in i['file'].value()]
-	for w in ww:
-		# print w['colorspace'].value()
-		w['colorspace'].setValue('Output - Rec.709')
+	# ww = [i for i in nuke.allNodes() if i.Class() == 'Write' and '/forDaily/' in i['file'].value()]
+	# for w in ww:
+	# 	# print w['colorspace'].value()
+	# 	w['colorspace'].setValue('Output - Rec.709')

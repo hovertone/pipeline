@@ -292,7 +292,7 @@ except:
 #nuke.addOnCreate(viewerBinding.connectViewer, nodeClass="Viewer")
 
 #nk_filemanager
-nuke.addOnScriptLoad(nk_filemanager3.sceneUnwrap)
+#nuke.addOnScriptLoad(nk_filemanager3.sceneUnwrap)
 
 #CALLBACKS
 #nuke.addOnScriptLoad(PL_scripts.addFavoriteFolders)

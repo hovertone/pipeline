@@ -22,9 +22,9 @@ def main(src, dest, paths, tx = False, nonTx = False):
         else:
             pp.append(oldVal)
 
-    print 'PP'
+    print('PP')
     for i, p in enumerate(sorted(pp)):
-        print '%s :: %s' % (i, p)
+        print('%s :: %s' % (i, p))
 
     toCopy = list()
     for rootDir, subdirs, filenames in os.walk(src):
@@ -39,11 +39,11 @@ def main(src, dest, paths, tx = False, nonTx = False):
                         toCopy.append(fullPath)
                         break
 
-    print 'TO COPY'
+    print('TO COPY')
     for tc in toCopy:
-        print tc
+        print(tc)
 
-    print 'starting to copy...'
+    print('starting to copy...')
 
     # Create an interruptable operation.
     operation = hou.InterruptableOperation('Doing Work', long_operation_name ='Starting Tasks', open_interrupt_dialog = True)
@@ -52,14 +52,14 @@ def main(src, dest, paths, tx = False, nonTx = False):
 
     counter = 0
     num_tasks = len(toCopy)
-    print '%s in total' % num_tasks
+    print('%s in total' % num_tasks)
     for i, tc in enumerate(toCopy):
         percent = float(i) / float(num_tasks)
         destPath = tc.replace(src, dest)
         try:
             operation.updateLongProgress(percent, '%s' % destPath)
         except hou.OperationInterrupted:
-            print 'ABORTED BY USER'
+            print('ABORTED BY USER')
             operation.__exit__(None, None, None)
             return # EXIT
 
@@ -74,9 +74,9 @@ def main(src, dest, paths, tx = False, nonTx = False):
                     os.makedirs(folder)
 
                 if os.path.exists(destPath):
-                    print 'LOCATED :: %s' % destPath
+                    print('LOCATED :: %s' % destPath)
                 else:
-                    print 'MISSING :: %s' % destPath
+                    print('MISSING :: %s' % destPath)
 
                     try:
                         shutil.copy2(tc, destPath)

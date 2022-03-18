@@ -108,22 +108,26 @@ def getShotInfo():
         return None
 
 def getPipelineAttrs():
-    for i in ('project', 'seq', 'shot'):
-        if i not in nuke.root().knobs().keys():
-            return None
-    #print shotString.split('/')
-    drive = 'P:'
-    #project = shotString.split('/')[1]
-    #seq = shotString.split('/')[-2]
-    #shot = shotString.split('/')[-1]
+    # for i in ('project', 'seq', 'shot'):
+    #     if i not in nuke.root().knobs().keys():
+    #         return None
+
     r = nuke.root()
-    project = r['project'].value()
-    seq = r['seq'].value()
-    shot = r['shot'].value()
-    assetName = r['assetName'].value()
+    #project = r['project'].value()
+    #seq = r['seq'].value()
+    #shot = r['shot'].value()
+    #assetName = r['assetName'].value()
 
     scriptPath = nuke.root().name()
-    scriptName = os.path.split(scriptPath)[-1].replace('-', '') # BARONOV NAMING FIX
+    sp = scriptPath.split('/')
+    shotPath = '/'.join(sp[:-3])
+    scriptName = os.path.split(scriptPath)[-1]
+
+    project = sp[5]
+    seq = sp[7]
+    shot = sp[-4]
+    assetName = 'my ass'
+
     try:
         match = re.match(r'(\w*)_(\w*)_v(\d*)', scriptName)
         version = int(match.group(3))
@@ -131,6 +135,8 @@ def getPipelineAttrs():
         version = -1
 
     drive = prefs.LoaderPrefs().load()['storage']['projects']
+    drive = '//loky.plarium.local/project' # HARDCODE
+
     return drive, project, seq, shot, assetName, version
 
 def getPipelineAttrsFromPath(path):

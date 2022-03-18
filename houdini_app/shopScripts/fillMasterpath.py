@@ -1,3 +1,5 @@
+import hou
+from functools import reduce
 #print '=========== in fillMasterpath ============='
 
 def getcommonletters(strlist):
@@ -32,7 +34,7 @@ parm_d = dict()
 for p in parm_names:
     parm_d[tp.parm(p)] = tp.parm(p).rawValue()
 
-paths = parm_d.values()
+paths = list(parm_d.values())
 
 if button.label() == 'Fill Masterpath':
     common_start =  findcommonstart(paths)

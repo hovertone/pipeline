@@ -143,5 +143,5 @@ if nuke.GUI:
 	nuke.toNode('preferences')['maxPanels'].setValue(1)
 	# t = CUF.noteTime(t, 'end')
 
-	nuke.addOnScriptLoad(PL_callbacks.updateWriteBeforeRenderPython, nodeClass="Write")
-	nuke.addOnScriptLoad(PL_callbacks.marikLut)
+	#nuke.addOnScriptLoad(PL_callbacks.updateWriteBeforeRenderPython, nodeClass="Write")
+	#nuke.addOnScriptLoad(PL_callbacks.marikLut)

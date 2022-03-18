@@ -1,4 +1,5 @@
 import os
+import hou
 # '=========== CREATE PARM ============='
 
 node = hou.pwd()
@@ -18,14 +19,14 @@ exist_values = [node.parm(j).rawValue() for j in existing_texture_names]
 
 if seqs[0] != '':
     for sq in seqs:
-        print '%s' % sq
+        #print('%s' % sq)
         if sq in exist_values:
-            print '\talready exists'
+            print('\talready exists')
         else:
             bn = os.path.basename(sq)
             name = bn[:bn.find('.')]
 
-            print '\t creating %s' % name
+            #print('\t creating %s' % name)
 
             # DIGITS TO END OF PARM NAME
             parm_digit = 1
@@ -44,11 +45,24 @@ if seqs[0] != '':
             p = hou.StringParmTemplate(name=parm_name, label=parm_name, num_components=1, default_value=(def_value, ), join_with_next=True, string_type=hou.stringParmType.FileReference, tags={'ext': ext})
             grp.insertBefore(grp.find('textures_end'), p)
 
-            csP = hou.StringParmTemplate(name='%s_cs' % parm_name, label='space', num_components=1,
-                                         menu_items=(
-                                         'Utility - Raw', 'Utility - sRGB - Texture', 'Utility - Linear - sRGB'),
+            # CREATING COLOR FAMILY PARM
+            cfP = hou.StringParmTemplate(name='%s_cf' % parm_name, label='Family', num_components=1,
+                                         menu_items=('ACES', 'Utility'),
+                                         menu_labels=('ACES', 'Utility'),
+                                         string_type=hou.stringParmType.Regular, join_with_next=True)
+
+            # CREATING COLOR SPACE PARM
+            csP = hou.StringParmTemplate(name='%s_cs' % parm_name, label='Space', num_components=1,
+                                         menu_items=('Utility - Raw', 'Utility - sRGB - Texture', 'Utility - Linear - sRGB'),
                                          menu_labels=('Raw', 'sRGB - Texture', 'Linear - sRGB'),
-                                         default_value=('Utility - Raw',),
                                          string_type=hou.stringParmType.Regular, join_with_next=False)
+
+            # cfP.setItemGeneratorScript(
+            #     "__import__('htoa.ocio').ocio.imageFamilyMenu(kwargs['node'])")
+            csP.setItemGeneratorScript(
+                "__import__('htoa.ocio').ocio.imageColorSpaceMenu(kwargs['node'].parm('%s_cf').eval())" % parm_name )
+
+            grp.insertBefore(grp.find('textures_end'), cfP)
             grp.insertBefore(grp.find('textures_end'), csP)
+
             node.setParmTemplateGroup(grp)
