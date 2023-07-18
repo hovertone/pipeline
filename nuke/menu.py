@@ -1,8 +1,10 @@
 import socket
-import W_hotbox
+import getpass
+#import W_hotbox
 import AnimationMaker
 
 user_id = socket.gethostname()
+username = getpass.getuser()
 
 toolbar = nuke.menu("Nuke")
 menubar = nuke.menu("Nodes");
@@ -152,43 +154,44 @@ mymenulh.addCommand('autoComper', 'autoComper.autoComper()', icon='autoComper.pn
 mymenulh.addCommand('Pass Separator', "pass_sep.callPassSep()", '^+a', icon='Pass_Sep.png')
 mymenulh.addCommand('Split EXR Glezin', "split_layers.main()")
 
-from getpass import getuser
-username = getuser()
 
 # ASSIGNING A HOTKEY
-nuke.menu('Nodes').addCommand('Channel/ChannelMerge', 'nuke.createNode("ChannelMerge")', 'ctrl+shift+c', icon='ChannelMerge.png')
-nuke.menu('Nodes').addCommand('Merge/Premult', 'nuke.createNode("Premult")', 'y', icon='Premult.png')
-nuke.menu('Nodes').addCommand('Merge/Unpremult', 'nuke.createNode("Unpremult")', 'shift+y', icon='Unpremult.png')
-nuke.menu('Nodes').addCommand('Other/Expression', 'nuke.createNode("Expression")', 'e',)
-nuke.menu('Nodes').addCommand('Channel/Shuffle', 'nuke.createNode("Shuffle")', 'h', icon='Shuffle.png', shortcutContext = 2)
-nuke.menu('Nodes').addCommand('Channel/ShuffleCopy', 'nuke.createNode("ShuffleCopy")', 'shift+h', icon='ShuffleCopy.png')
-nuke.menu('Nodes').addCommand('Transform/Reformat', 'LH.createReformat()', 'shift+r', icon='Reformat.png')
-nuke.menu('Nodes').addCommand('Transform/Crop', 'nuke.createNode("Crop")', 'ctrl+r', icon='Crop.png')
-nuke.menu('Nodes').addCommand('Transform/Tracker', 'nuke.createNode("Tracker4")', 'v', icon='Tracker.png', shortcutContext = 2)
-nuke.menu('Nodes').addCommand('Transform/Tracker v6', 'nuke.createNode("Tracker3")', 'shift+v', icon='Tracker.png')
-#nuke.menu('Nodes').addCommand('Color/ColorLookup', 'nuke.createNode("ColorLookup")', 'shift+c', icon='ColorLookup.png')
-nuke.menu("Nodes").addCommand("Other/Keyer Bind", "nuke.createNode('Keyer')", 'z', icon='Keyer.png') 
-nuke.menu("Nodes").addCommand("Merge/KeyMix", "nuke.createNode('Keymix')", 'ctrl+shift+d', icon='KeyMix.png') 
-nuke.menu("Nodes").addCommand("Other/Backdrop", "nukescripts.autoBackdrop()", 'shift+z', icon='Backdrop.png') 
-nuke.menu('Nodes').addCommand('Image/CheckerBoard', 'nuke.createNode("CheckerBoard2")', 'shift+q', icon='CheckerBoard2.png')
-nuke.menu('Nodes').addCommand('Image/Constant', 'nuke.createNode("Constant")', 'q', icon='Constant.png')
-nuke.menu('Nodes').addCommand('Merge/Merges/Multiply', 'nuke.createNode("Multiply")', 'n', icon='Merge.png')
-nuke.menu('Nodes').addCommand('Merge/Merges/Plus', 'nuke.createNode("Merge2", "operation plus name Plus", False)', 'shift+n', icon='Merge.png')
-nuke.menu('Nodes').addCommand('Merge/Merges/Stencil', 'nuke.loadToolset("%s/basic/Stencil.nk" % toolsets_path)' , 'shift+m', icon='Merge.png')
-nuke.menu('Nodes').addCommand('Merge/Merges/Mask', 'nuke.loadToolset("%s/basic/mask.nk")' % toolsets_path, 'ctrl+m', icon='Merge.png')
-nuke.menu('Nodes').addCommand('Merge/Merges/Mask with bbox', 'premultRotoWithBBox.createSubset()', 'alt+o', icon='Merge.png')
-nuke.menu('Nodes').addCommand('Draw/Roto Premult', 'LH.createRotoPremult()', 'shift+o', icon='Roto.png')
-nuke.menu('Nodes').addCommand('Time/Time Offset', 'LH.createTimeOffset()', 'shift+t', icon='TimeOffset.png')
-nuke.menu('Nodes').addCommand('Filter/Erode (fast)', 'nuke.createNode("Erode")', 'ctrl+e', icon='Dilate.png')
-nuke.menu('Nodes').addCommand('Filter/Erode (filter)', 'nuke.createNode("FilterErode")', 'ctrl+shift+e', icon='Dilate.png')
+if (user_id != 'paul') and (username != 'd.ovcharenko'):
+	nuke.menu('Nodes').addCommand('Channel/ChannelMerge', 'nuke.createNode("ChannelMerge")', 'ctrl+shift+c', icon='ChannelMerge.png')
+	nuke.menu('Nodes').addCommand('Merge/Premult', 'nuke.createNode("Premult")', 'y', icon='Premult.png')
+	nuke.menu('Nodes').addCommand('Merge/Unpremult', 'nuke.createNode("Unpremult")', 'shift+y', icon='Unpremult.png')
+	nuke.menu('Nodes').addCommand('Other/Expression', 'nuke.createNode("Expression")', 'e',)
+	nuke.menu('Nodes').addCommand('Channel/Shuffle', 'nuke.createNode("Shuffle")', 'h', icon='Shuffle.png', shortcutContext = 2)
+	nuke.menu('Nodes').addCommand('Channel/ShuffleCopy', 'nuke.createNode("ShuffleCopy")', 'shift+h', icon='ShuffleCopy.png')
+	nuke.menu('Nodes').addCommand('Transform/Reformat', 'LH.createReformat()', 'shift+r', icon='Reformat.png')
+	nuke.menu('Nodes').addCommand('Transform/Crop', 'nuke.createNode("Crop")', 'ctrl+r', icon='Crop.png')
+	nuke.menu('Nodes').addCommand('Transform/Tracker', 'nuke.createNode("Tracker4")', 'v', icon='Tracker.png', shortcutContext = 2)
+	nuke.menu('Nodes').addCommand('Transform/Tracker v6', 'nuke.createNode("Tracker3")', 'shift+v', icon='Tracker.png')
+	#nuke.menu('Nodes').addCommand('Color/ColorLookup', 'nuke.createNode("ColorLookup")', 'shift+c', icon='ColorLookup.png')
+	nuke.menu("Nodes").addCommand("Other/Keyer Bind", "nuke.createNode('Keyer')", 'z', icon='Keyer.png')
+	nuke.menu("Nodes").addCommand("Merge/KeyMix", "nuke.createNode('Keymix')", 'ctrl+shift+d', icon='KeyMix.png')
+	nuke.menu("Nodes").addCommand("Other/Backdrop", "nukescripts.autoBackdrop()", 'shift+z', icon='Backdrop.png')
+	nuke.menu('Nodes').addCommand('Image/CheckerBoard', 'nuke.createNode("CheckerBoard2")', 'shift+q', icon='CheckerBoard2.png')
+	nuke.menu('Nodes').addCommand('Image/Constant', 'nuke.createNode("Constant")', 'q', icon='Constant.png')
+	nuke.menu('Nodes').addCommand('Merge/Merges/Multiply', 'nuke.createNode("Multiply")', 'n', icon='Merge.png')
+	nuke.menu('Nodes').addCommand('Merge/Merges/Plus', 'nuke.createNode("Merge2", "operation plus name Plus", False)', 'shift+n', icon='Merge.png')
+	nuke.menu('Nodes').addCommand('Merge/Merges/Stencil', 'nuke.loadToolset("%s/basic/Stencil.nk" % toolsets_path)' , 'shift+m', icon='Merge.png')
+	nuke.menu('Nodes').addCommand('Merge/Merges/Mask', 'nuke.loadToolset("%s/basic/mask.nk")' % toolsets_path, 'ctrl+m', icon='Merge.png')
+	nuke.menu('Nodes').addCommand('Merge/Merges/Mask with bbox', 'premultRotoWithBBox.createSubset()', 'alt+o', icon='Merge.png')
+	nuke.menu('Nodes').addCommand('Draw/Roto Premult', 'LH.createRotoPremult()', 'shift+o', icon='Roto.png')
+	nuke.menu('Nodes').addCommand('Time/Time Offset', 'LH.createTimeOffset()', 'shift+t', icon='TimeOffset.png')
+	nuke.menu('Nodes').addCommand('Filter/Erode (fast)', 'nuke.createNode("Erode")', 'ctrl+e', icon='Dilate.png')
+	nuke.menu('Nodes').addCommand('Filter/Erode (filter)', 'nuke.createNode("FilterErode")', 'ctrl+shift+e', icon='Dilate.png')
 
-nuke.menu('Nodes').addCommand('Time/FrameHold', 'nuke.createNode("FrameHold")', 'shift+f', icon='FrameHold.png')
-#premult_roto_with_bbox
+	nuke.menu('Nodes').addCommand('Time/FrameHold', 'nuke.createNode("FrameHold")', 'shift+f', icon='FrameHold.png')
+	#premult_roto_with_bbox
 
-menu = nuke.menu('Nuke')
-menu.addCommand('Nodes/Autoplace', 'LH.autoplace()', 'l')
+	menu = nuke.menu('Nuke')
+	menu.addCommand('Nodes/Autoplace', 'LH.autoplace()', 'l')
+else:
+	print '+++ No hotkey has been assigned'
 
-gzm.main(['X:/app/win/nuke/gizmos/autoinstal']) 
+gzm.main(['X:/app/win/nuke/gizmos/autoinstal'])
 
 
 ########################
