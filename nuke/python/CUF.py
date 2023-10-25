@@ -192,12 +192,12 @@ def randomColor(satIn = 1.0, valIn = 1.0, alpha = 1):
     hue = random.randint(0,360)
     sat = satIn
     val = valIn
-    print "HSV", hue, sat, val
+    print("HSV", hue, sat, val)
     color = []
     for i in LH.hsvToRGB(hue,sat,val):
         color.append(i)
     color.append(alpha)
-    print "RGB", color
+    print("RGB", color)
     r = color[0]
     g = color[1]
     b = color[2]
@@ -389,7 +389,7 @@ def getFreeInputs(node, *args):
     # If Unknown args are exist
     if unknownArgs != []:
         # print them
-        print 'Unknown args were provided: %s' % (unknownArgs)
+        print('Unknown args were provided: %s' % (unknownArgs))
 
     return freeInputs
 
@@ -767,7 +767,7 @@ def renameMochaCornerPin():
         if 'CornerPin2D' in n['name'].value():
             newName = n['name'].value().replace('CornerPin2D', 'M') + '_01'
             while checkNodesNameExistence(newName):
-                print newName[-2:]
+                print(newName[-2:])
                 if isNumber(newName[-2:]):
                     currentDigit = int(newName[-2:])
                     newDigit = str(currentDigit + 1).zfill(2)
@@ -798,7 +798,7 @@ def getMostBottomNode(nodes = None):
 
 def alignNodeToNode(n1, n2, axis = 'x', check = False):
     if axis != 'x' and axis != 'y':
-        print 'incorrent axis. No actions applied.'
+        print('incorrent axis. No actions applied.')
         return None
 
     if check == True:
@@ -863,7 +863,7 @@ def hotboxFix():
             for i in os.listdir(fullPath):
                 os.rename(os.path.join(fullPath, i), os.path.join(fullPath, i).strip('.tmp'))
 
-        print os.path.join(p, f)
+        print(os.path.join(p, f))
         os.rename(os.path.join(p, f), os.path.join(p, f).strip('.tmp'))
 
 

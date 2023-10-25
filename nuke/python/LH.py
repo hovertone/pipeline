@@ -45,7 +45,7 @@ def toggleSelectedInput():
         if h == False:
             n['hide_input'].setValue(True)    
             rgbColor = hsvToRGB(1, 1, 1)
-            n['tile_color'].setValue(int('%02x%02x%02x%02x' % (rgbColor[0]*255,rgbColor[1]*255,rgbColor[2]*255,1*255),16))
+            n['tile_color'].setValue(int('%02x%02x%02x%02x' % (int(rgbColor[0]*255),int(rgbColor[1]*255),int(rgbColor[2]*255),1*255),16))
             if n.dependencies()[0].Class() == 'Camera2' or n.dependencies()[0].Class() == 'Camera':
                 n['label'].setValue('CAM')
                 n['note_font_size'].setValue(33)
@@ -55,7 +55,7 @@ def toggleSelectedInput():
         else:
             n['hide_input'].setValue(False)    
             rgbColor = hsvToRGB(1, 0, 1)
-            n['tile_color'].setValue(int('%02x%02x%02x%02x' % (rgbColor[0]*255,rgbColor[1]*255,rgbColor[2]*255,1*255),16))
+            n['tile_color'].setValue(int('%02x%02x%02x%02x' % (int(rgbColor[0]*255),int(rgbColor[1]*255),int(rgbColor[2]*255),1*255),16))
             n['label'].setValue('')
             n['note_font_size'].setValue(11)
     
@@ -140,7 +140,7 @@ def setReadLabel(search = ''):
                 path = os.path.dirname(file)
                 
                 list = path.split('/')
-                print list
+                print(list)
                 
                 error = True
                 for i in range(0,len(list)):
@@ -188,7 +188,7 @@ def alignNodes(main, minor):
                 minor.setXpos(main.xpos()-90)
             else:
                 minor.setXpos(main.xpos()+90)
-    print "ALIGNED"
+    print("ALIGNED")
             
         
         
@@ -371,12 +371,12 @@ def randomColor(satIn = 1.0, valIn = 1.0, alpha = 1):
     hue = random.randint(0,360)
     sat = satIn
     val = valIn
-    print "HSV", hue, sat, val
+    print("HSV", hue, sat, val)
     color = []
     for i in LH.hsvToRGB(hue,sat,val):
         color.append(i)
     color.append(alpha)
-    print "RGB", color
+    print("RGB", color)
     r = color[0]
     g = color[1]
     b = color[2]
@@ -388,7 +388,7 @@ def shotSetup():
     if nuke.selectedNode().Class() == "Read":
         import os.path
         from time import sleep
-            
+
         v = nuke.toNode("Viewer1")
         read = nuke.selectedNode()
         lastNode = read
@@ -407,10 +407,9 @@ def shotSetup():
         fontSize = 2000/len(shotName)
         note['note_font_size'].setValue(int(fontSize))
         while note.screenWidth() > 300:
-            print "asda"
             fontSize -= 10
             note['note_font_size'].setValue(fontSize)
-        print note.screenWidth()
+        print(note.screenWidth())
         
             
         centerPos = read.xpos()+40
@@ -715,7 +714,7 @@ def createTimeOffset():
     '''
     
     if len(nuke.selectedNodes()) > 0:
-        print "many nodes selected"
+        print("many nodes selected")
         nodes = nuke.selectedNodes()
         for n in nodes:
             depFlag = False
@@ -759,7 +758,7 @@ def setAlphaChannel():
         dep = nuke.selectedNodes()[0]
 
     if len(dep) > 0:
-        print "in"
+        print("in")
         if knobExists(dep, 'channels'):
             if dep['channels'].value() == 'alpha':
                 try:
@@ -770,7 +769,7 @@ def setAlphaChannel():
         elif knobExists(dep, 'output'):
             if dep['output'].value() == 'alpha':
                 if node.Class() == 'Blur':
-                    print "1"
+                    print("1")
                     node['channels'].setValue('alpha')
 
 def renderWrites(glb = False):
@@ -879,7 +878,7 @@ def createJpegs():
         nuke.execute(w.name(), minFrame, maxFrame)
         w['createRead'].execute()
 
-        print ":: %s\n:__ [%s - %s] done." % (w['file'].value(), rFirst, rLast)
+        print(":: %s\n:__ [%s - %s] done." % (w['file'].value(), rFirst, rLast))
 
 def createThumbs(path, nodes = '', scaleValue = 0.2, jpegQuality = 90):
     if nodes == '':
@@ -912,7 +911,7 @@ def createThumbs(path, nodes = '', scaleValue = 0.2, jpegQuality = 90):
             nukescripts.cache_clear("")
 
         else:
-            print 'WARNING: Read %s is out of TFX pipeline structure.' % n.name()        
+            print('WARNING: Read %s is out of TFX pipeline structure.' % n.name())
 
 def addOpenEButton():
     if os.name == 'nt':
@@ -969,7 +968,6 @@ def normalizeDepth(node = '', chn = 'rgb', first = nuke.frame(), last  = nuke.fr
     if len(allNormalizers) == 0:
         name = 'Normalizer01'
     else:
-        print 
         name = 'Normalizer%s' % str(int(sorted(allNormalizers, key = getName)[-1].name().strip('Normalizer'))+1).zfill(2)
 
     return nuke.createNode( 'Expression', 'name %s temp_name0 minVal temp_expr0 %s temp_name1 maxVal temp_expr1 %s expr0 (r-minVal)/maxVal channel0 rgba channel1 none channel2 none' % (name, min, max))
@@ -1035,7 +1033,7 @@ def platformBasedSwitchReadPath(switchTo = None):
     for n in allNodes:
         if ('Read' or 'ReadGeo' or 'Camera2' or 'Camera1' or 'Camera3') in n.Class():
             neededNodes.append(n)
-    for n in neededNodes: print n.name()
+    for n in neededNodes: print(n.name())
 
     if switchTo == 'pc':
         for n in neededNodes:
@@ -1054,7 +1052,7 @@ def platformBasedSwitchReadPath(switchTo = None):
             except:
                 pass  
     elif switchTo == 'linux':
-        print 'In ToLinux part'
+        print('In ToLinux part')
         for n in neededNodes:
             try:
                 n['file'].setValue(n['file'].value().replace('P:', '/mnt/projects'))
@@ -1205,7 +1203,7 @@ def sendToPlatform():
             convertGizmosToGroups()
             platformBasedSwitchReadPath('linux')
             if save == True: # if user wants to save with different filename
-                print '__here'
+                print('__here')
                 if scriptFullPath != '':
                     nuke.scriptSaveAs(scriptFullPath[:-3] + '_lnx.nk')
                 else:
@@ -1247,7 +1245,7 @@ def saveSwitch():
         if popup == True:
             nuke.message("Now you're saved to network.")        
 
-    print "Now the project is saved to %s" % (newSavePath)
+    print("Now the project is saved to %s" % (newSavePath))
 
 def toggleSpecialNode():
     for n in nuke.allNodes():
@@ -1308,7 +1306,7 @@ def copyColor():
 def afanasyFromWrites():
     nnodes = nuke.selectedNodes('Write')
     selectOnly()
-    print nnodes
+    print(nnodes)
     for n in nnodes:
         first = n.firstFrame()
         last = n.lastFrame()
@@ -1322,12 +1320,13 @@ def executeAfanasyNodes():
     nodes = nuke.selectedNodes('afanasy')
     for n in nodes:
         w = n.dependencies()[0]
-	folder = os.path.dirname(w['file'].value())
-	if not os.path.exists(folder): os.makedirs(folder)
-        n['knob_1'].execute()
+        folder = os.path.dirname(w['file'].value())
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+            n['knob_1'].execute()
 
 def findReducenoise():
-    if nuke.allNodes('OFXcom.absoft.neatvideo4_v4') != []: print '__ There is at least one reduce noise node.'
+    if nuke.allNodes('OFXcom.absoft.neatvideo4_v4') != []: print('__ There is at least one reduce noise node.')
 
 def findReadWithPattern():
     pattern = nuke.getInput('Find:')
@@ -1351,7 +1350,7 @@ def renameHotboxFolders():
 nuke.addOnScriptLoad(viewportHotkey)
 
 def bbox_to_crop():
-    print 'in bbox to crop'
+    print('in bbox to crop')
     n = nuke.selectedNode()
     #n = nuke.toNode('Crop7')
     c = nuke.createNode('Crop')
@@ -1361,7 +1360,7 @@ def bbox_to_crop():
         ff = n.firstFrame()
         lf = n.lastFrame()
 
-        print '%s %s' % (ff, lf)
+        print('%s %s' % (ff, lf))
 
         for f in range(ff, lf+1):
             #nuke.frame(f)

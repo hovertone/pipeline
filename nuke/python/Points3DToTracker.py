@@ -48,7 +48,7 @@ def returnAxisPos(groupNodeName = 'Trackers'):
 def createAxis(nodes = []):
 	if nodes == []: nodes = nuke.selectedNodes()
 	selNodes = nodes
-	print nodes
+	print(nodes)
 	for n in nodes:
 		if n.Class() == 'Group':
 			groupNode = n
@@ -88,7 +88,7 @@ def reconcileFrom_4_Axis(nodes = []):
 			camera = n
 		elif n.Class() == 'Reformat' or n.Class() == 'Read':
 			ref = n
-		elif n.Class() == 'Axis2' or n.Class() == 'Axis':
+		elif n.Class() == 'Axis2' or n.Class() == 'Axis' or n.Class() == 'Axis4':
 			axiss.append(n)
 		elif n.Class() == 'LensDistortion':
 			lensDist = n
@@ -142,7 +142,7 @@ def reconcileFrom_4_Axis(nodes = []):
 		nuke.execute(rec3d.name(), frtFrame, lstFrame)
 		outTracker['enable' + str(i+1)].setValue(True)
 		outTracker['use_for' + str(i+1)].setValue('all')
-		print 'warpedLens %s' % warpedLens
+		print('warpedLens %s' % warpedLens)
 		if warpedLens == True:
 			distTrack = nuke.createNode('DistortTracks', inpanel = False)
 			distTrack.setInput(0, lensDist)
@@ -253,7 +253,7 @@ def copyTrackingToRoto(linkinp = False):
         	link = True
         	dot = n
 
-    print tr.name(), roto.name()
+    print(tr.name(), roto.name())
     if 'roto' not in locals() or 'tr' not in locals():
         nuke.message('Select proper nodes')
         return

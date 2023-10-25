@@ -8,7 +8,7 @@ except:
     from PySide import QtCore
 
 from models import LayersListModel
-from ui import SplitLayersUI
+from uii import SplitLayersUI
 import nuke_actions
 
 
@@ -18,10 +18,11 @@ def main():
     try:
         node = nuke.selectedNode()
     except ValueError as err:
-        print err
+        print(err)
         nuke.message('no node selected')
     if node:
         node_data = data_collect(node)
+        print('node data ' + str(node_data))
         main.panel = SplitLayers(node_data, nuke_actions.split_explicit, nuke_actions.split_implicit)
         main.panel.show()
 
@@ -60,7 +61,6 @@ class SplitLayers(SplitLayersUI):
         i = self.alpha_combobox.findText('rgba.alpha')
         self.alpha_combobox.setCurrentIndex(i)
         self.filter_lineedit.textChanged.connect(self.proxyModel.setFilterRegExp)
-
         self.split_pushbutton.clicked.connect(lambda: self.split(self.method_combobox.currentText()))
         self.cancel_pushbutton.clicked.connect(self.close)
         self.method_combobox.currentIndexChanged.connect(self.check_method)
@@ -80,8 +80,9 @@ class SplitLayers(SplitLayersUI):
             self.mirrortree_checkbox.setEnabled(True)
 
     def split(self, method):
+        #print('layers %s' % self.layers_for_split)
+
         if method == 'explicit':
-            print 'layers %s' % self.layers_for_split
             self.split_explicit(self.node, self.layers_for_split, self.alpha_combobox.currentText(),
                                 self.unpremult_checkbox.isChecked(), self.merge_checkbox.isChecked(),
                                 self.postagestamp_checkbox.isChecked(), self.mirrortree_checkbox.isChecked())

@@ -201,7 +201,7 @@ def renameMochaCornerPin():
         if 'CornerPin2D' in n['name'].value():
             newName = n['name'].value().replace('CornerPin2D', 'M') + '_01'
             while checkNodesNameExistence(newName):
-                print newName[-2:]
+                print(newName[-2:])
                 if isNumber(newName[-2:]):
                     currentDigit = int(newName[-2:])
                     newDigit = str(currentDigit + 1).zfill(2)
@@ -214,7 +214,7 @@ def renameMochaCornerPin():
 def afanasyFromWrites():
     nnodes = nuke.selectedNodes('Write')
     selectOnly()
-    print nnodes
+    print(nnodes)
     for n in nnodes:
         first = n.firstFrame()
         last = n.lastFrame()
@@ -230,9 +230,9 @@ def executeAfanasyNodes():
     nodes = nuke.selectedNodes('afanasy')
     for n in nodes:
         w = n.dependencies()[0]
-    folder = os.path.dirname(w['file'].value())
-    if not os.path.exists(folder): os.makedirs(folder)
-    n['knob_1'].execute()
+        folder = os.path.dirname(w['file'].value())
+        if not os.path.exists(folder): os.makedirs(folder)
+        n['knob_1'].execute()
 
 # ===============================================================================================
 

@@ -33,7 +33,13 @@ class LayersListModel(QtCore.QAbstractListModel):
         if row == -1:
             row = self.rowCount()
 
-        strings = str(data.data(self.Mimetype)).split('\n')
+
+        s = str(data.data(self.Mimetype)).replace("b'", "")
+        s = s.replace("'", "")
+        print ('s', s)
+
+        strings = s.split('\\n')
+        print('strings', strings)
         self.insertRows(row, len(strings))
         for i, text in enumerate(strings):
             self.setData(self.index(row + i, 0), text)
@@ -58,6 +64,8 @@ class LayersListModel(QtCore.QAbstractListModel):
             if index.isValid()], key=lambda index: index.row())
         encodedData = '\n'.join(self.data(index, QtCore.Qt.DisplayRole)
                 for index in sortedIndexes)
+        #print('enc_data %s' % encodedData)
+        encodedData = QtCore.QByteArray(encodedData.encode())
         mimeData = QtCore.QMimeData()
         mimeData.setData(self.Mimetype, encodedData)
         return mimeData
